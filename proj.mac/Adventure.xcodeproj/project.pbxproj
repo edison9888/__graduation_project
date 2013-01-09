@@ -26,17 +26,6 @@
 		41CD6C9615BF7793005E6F29 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8E15BF7793005E6F29 /* QuartzCore.framework */; };
 		41CD6C9915BF77CE005E6F29 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9715BF77CE005E6F29 /* libxml2.dylib */; };
 		41CD6C9A15BF77CE005E6F29 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9815BF77CE005E6F29 /* libz.dylib */; };
-		A36F3B47166F7A270074E72E /* CCButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B3E166F7A270074E72E /* CCButton.cpp */; };
-		A36F3B48166F7A270074E72E /* CCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B41166F7A270074E72E /* CCJoypad.cpp */; };
-		A36F3B49166F7A270074E72E /* CCSpiritedJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B43166F7A270074E72E /* CCSpiritedJoystick.cpp */; };
-		A36F3B4A166F7A270074E72E /* CCSpriteColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B45166F7A270074E72E /* CCSpriteColor.cpp */; };
-		A36F3B4F166F7A3E0074E72E /* ExitDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B4B166F7A3E0074E72E /* ExitDialog.cpp */; };
-		A36F3B50166F7A3E0074E72E /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B4D166F7A3E0074E72E /* HelpScene.cpp */; };
-		A36F3B55166F7A4F0074E72E /* MenuItemLabelColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B51166F7A4F0074E72E /* MenuItemLabelColor.cpp */; };
-		A36F3B56166F7A4F0074E72E /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B53166F7A4F0074E72E /* MenuScene.cpp */; };
-		A36F3B5D166F7A590074E72E /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B57166F7A590074E72E /* SplashScene.cpp */; };
-		A36F3B5E166F7A590074E72E /* TestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B59166F7A590074E72E /* TestScene.cpp */; };
-		A36F3B5F166F7A590074E72E /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B5B166F7A590074E72E /* Touch.cpp */; };
 		A36F3BAE166F7B370074E72E /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A36F3B94166F7B370074E72E /* bg.jpg */; };
 		A36F3BAF166F7B370074E72E /* button-a-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = A36F3B95166F7B370074E72E /* button-a-pressed.png */; };
 		A36F3BB0166F7B370074E72E /* button-a-pressed.xcf in Resources */ = {isa = PBXBuildFile; fileRef = A36F3B96166F7B370074E72E /* button-a-pressed.xcf */; };
@@ -115,17 +104,6 @@
 		A3E1DB67169DC0C800D43A27 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6315BF7574005E6F29 /* AppController.mm */; };
 		A3E1DB68169DC0C800D43A27 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6415BF7574005E6F29 /* main.m */; };
 		A3E1DB69169DC0C800D43A27 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */; };
-		A3E1DB6A169DC0C800D43A27 /* CCButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B3E166F7A270074E72E /* CCButton.cpp */; };
-		A3E1DB6B169DC0C800D43A27 /* CCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B41166F7A270074E72E /* CCJoypad.cpp */; };
-		A3E1DB6C169DC0C800D43A27 /* CCSpiritedJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B43166F7A270074E72E /* CCSpiritedJoystick.cpp */; };
-		A3E1DB6D169DC0C800D43A27 /* CCSpriteColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B45166F7A270074E72E /* CCSpriteColor.cpp */; };
-		A3E1DB6E169DC0C800D43A27 /* ExitDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B4B166F7A3E0074E72E /* ExitDialog.cpp */; };
-		A3E1DB6F169DC0C800D43A27 /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B4D166F7A3E0074E72E /* HelpScene.cpp */; };
-		A3E1DB70169DC0C800D43A27 /* MenuItemLabelColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B51166F7A4F0074E72E /* MenuItemLabelColor.cpp */; };
-		A3E1DB71169DC0C800D43A27 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B53166F7A4F0074E72E /* MenuScene.cpp */; };
-		A3E1DB72169DC0C800D43A27 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B57166F7A590074E72E /* SplashScene.cpp */; };
-		A3E1DB73169DC0C800D43A27 /* TestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B59166F7A590074E72E /* TestScene.cpp */; };
-		A3E1DB74169DC0C800D43A27 /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3B5B166F7A590074E72E /* Touch.cpp */; };
 		A3E1DB75169DC0C800D43A27 /* CCBAnimationManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3C97166F7FE80074E72E /* CCBAnimationManager.cpp */; };
 		A3E1DB76169DC0C800D43A27 /* CCBFileLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3C99166F7FE80074E72E /* CCBFileLoader.cpp */; };
 		A3E1DB77169DC0C800D43A27 /* CCBKeyframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36F3C9B166F7FE80074E72E /* CCBKeyframe.cpp */; };
@@ -219,7 +197,29 @@
 		A3E1DBD1169DC0C800D43A27 /* music in Resources */ = {isa = PBXBuildFile; fileRef = A36F3BAD166F7B370074E72E /* music */; };
 		A3E1DBDA169DC12900D43A27 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E1DB64169DC0B800D43A27 /* libcocos2dx.a */; };
 		A3E1DBDF169DC1D100D43A27 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A3E1DBDE169DC1D100D43A27 /* Default-568h@2x.png */; };
-		A3E1DD00169DC2B600D43A27 /* libcocos2dx copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E1DCFD169DC28800D43A27 /* libcocos2dx copy.a */; };
+		A3E1DD00169DC2B600D43A27 /* libcocos2dx-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A3E1DCFD169DC28800D43A27 /* libcocos2dx-iOS.a */; };
+		A3E1DD4F169DDB9200D43A27 /* CCButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD38169DDB9200D43A27 /* CCButton.cpp */; };
+		A3E1DD50169DDB9200D43A27 /* CCButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD38169DDB9200D43A27 /* CCButton.cpp */; };
+		A3E1DD51169DDB9200D43A27 /* CCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3B169DDB9200D43A27 /* CCJoypad.cpp */; };
+		A3E1DD52169DDB9200D43A27 /* CCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3B169DDB9200D43A27 /* CCJoypad.cpp */; };
+		A3E1DD53169DDB9200D43A27 /* CCSpiritedJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3D169DDB9200D43A27 /* CCSpiritedJoystick.cpp */; };
+		A3E1DD54169DDB9200D43A27 /* CCSpiritedJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3D169DDB9200D43A27 /* CCSpiritedJoystick.cpp */; };
+		A3E1DD55169DDB9200D43A27 /* CCSpriteColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3F169DDB9200D43A27 /* CCSpriteColor.cpp */; };
+		A3E1DD56169DDB9200D43A27 /* CCSpriteColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD3F169DDB9200D43A27 /* CCSpriteColor.cpp */; };
+		A3E1DD57169DDB9200D43A27 /* ExitDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD41169DDB9200D43A27 /* ExitDialog.cpp */; };
+		A3E1DD58169DDB9200D43A27 /* ExitDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD41169DDB9200D43A27 /* ExitDialog.cpp */; };
+		A3E1DD59169DDB9200D43A27 /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD43169DDB9200D43A27 /* HelpScene.cpp */; };
+		A3E1DD5A169DDB9200D43A27 /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD43169DDB9200D43A27 /* HelpScene.cpp */; };
+		A3E1DD5B169DDB9200D43A27 /* MenuItemLabelColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD45169DDB9200D43A27 /* MenuItemLabelColor.cpp */; };
+		A3E1DD5C169DDB9200D43A27 /* MenuItemLabelColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD45169DDB9200D43A27 /* MenuItemLabelColor.cpp */; };
+		A3E1DD5D169DDB9200D43A27 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD47169DDB9200D43A27 /* MenuScene.cpp */; };
+		A3E1DD5E169DDB9200D43A27 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD47169DDB9200D43A27 /* MenuScene.cpp */; };
+		A3E1DD5F169DDB9200D43A27 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD49169DDB9200D43A27 /* SplashScene.cpp */; };
+		A3E1DD60169DDB9200D43A27 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD49169DDB9200D43A27 /* SplashScene.cpp */; };
+		A3E1DD61169DDB9200D43A27 /* TestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD4B169DDB9200D43A27 /* TestScene.cpp */; };
+		A3E1DD62169DDB9200D43A27 /* TestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD4B169DDB9200D43A27 /* TestScene.cpp */; };
+		A3E1DD63169DDB9200D43A27 /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD4D169DDB9200D43A27 /* Touch.cpp */; };
+		A3E1DD64169DDB9200D43A27 /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E1DD4D169DDB9200D43A27 /* Touch.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -279,29 +279,6 @@
 		41CD6C8E15BF7793005E6F29 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		41CD6C9715BF77CE005E6F29 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		41CD6C9815BF77CE005E6F29 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		A36F3B3E166F7A270074E72E /* CCButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCButton.cpp; sourceTree = "<group>"; };
-		A36F3B3F166F7A270074E72E /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCButton.h; sourceTree = "<group>"; };
-		A36F3B40166F7A270074E72E /* CCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDebug.h; sourceTree = "<group>"; };
-		A36F3B41166F7A270074E72E /* CCJoypad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCJoypad.cpp; sourceTree = "<group>"; };
-		A36F3B42166F7A270074E72E /* CCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCJoypad.h; sourceTree = "<group>"; };
-		A36F3B43166F7A270074E72E /* CCSpiritedJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpiritedJoystick.cpp; sourceTree = "<group>"; };
-		A36F3B44166F7A270074E72E /* CCSpiritedJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpiritedJoystick.h; sourceTree = "<group>"; };
-		A36F3B45166F7A270074E72E /* CCSpriteColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCSpriteColor.cpp; sourceTree = "<group>"; };
-		A36F3B46166F7A270074E72E /* CCSpriteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteColor.h; sourceTree = "<group>"; };
-		A36F3B4B166F7A3E0074E72E /* ExitDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ExitDialog.cpp; sourceTree = "<group>"; };
-		A36F3B4C166F7A3E0074E72E /* ExitDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExitDialog.h; sourceTree = "<group>"; };
-		A36F3B4D166F7A3E0074E72E /* HelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelpScene.cpp; sourceTree = "<group>"; };
-		A36F3B4E166F7A3E0074E72E /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpScene.h; sourceTree = "<group>"; };
-		A36F3B51166F7A4F0074E72E /* MenuItemLabelColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuItemLabelColor.cpp; sourceTree = "<group>"; };
-		A36F3B52166F7A4F0074E72E /* MenuItemLabelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuItemLabelColor.h; sourceTree = "<group>"; };
-		A36F3B53166F7A4F0074E72E /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScene.cpp; sourceTree = "<group>"; };
-		A36F3B54166F7A4F0074E72E /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
-		A36F3B57166F7A590074E72E /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SplashScene.cpp; sourceTree = "<group>"; };
-		A36F3B58166F7A590074E72E /* SplashScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScene.h; sourceTree = "<group>"; };
-		A36F3B59166F7A590074E72E /* TestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestScene.cpp; sourceTree = "<group>"; };
-		A36F3B5A166F7A590074E72E /* TestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestScene.h; sourceTree = "<group>"; };
-		A36F3B5B166F7A590074E72E /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Touch.cpp; sourceTree = "<group>"; };
-		A36F3B5C166F7A590074E72E /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Touch.h; sourceTree = "<group>"; };
 		A36F3B94166F7B370074E72E /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		A36F3B95166F7B370074E72E /* button-a-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "button-a-pressed.png"; sourceTree = "<group>"; };
 		A36F3B96166F7B370074E72E /* button-a-pressed.xcf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "button-a-pressed.xcf"; sourceTree = "<group>"; };
@@ -441,6 +418,29 @@
 		A3E1DBD5169DC0C800D43A27 /* Adventure-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Adventure-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3E1DBD7169DC0CA00D43A27 /* Adventure copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Adventure copy-Info.plist"; path = "/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/Adventure copy-Info.plist"; sourceTree = "<absolute>"; };
 		A3E1DBDE169DC1D100D43A27 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A3E1DD38169DDB9200D43A27 /* CCButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCButton.cpp; path = ../Classes/CCButton.cpp; sourceTree = "<group>"; };
+		A3E1DD39169DDB9200D43A27 /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCButton.h; path = ../Classes/CCButton.h; sourceTree = "<group>"; };
+		A3E1DD3A169DDB9200D43A27 /* CCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDebug.h; path = ../Classes/CCDebug.h; sourceTree = "<group>"; };
+		A3E1DD3B169DDB9200D43A27 /* CCJoypad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCJoypad.cpp; path = ../Classes/CCJoypad.cpp; sourceTree = "<group>"; };
+		A3E1DD3C169DDB9200D43A27 /* CCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCJoypad.h; path = ../Classes/CCJoypad.h; sourceTree = "<group>"; };
+		A3E1DD3D169DDB9200D43A27 /* CCSpiritedJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSpiritedJoystick.cpp; path = ../Classes/CCSpiritedJoystick.cpp; sourceTree = "<group>"; };
+		A3E1DD3E169DDB9200D43A27 /* CCSpiritedJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSpiritedJoystick.h; path = ../Classes/CCSpiritedJoystick.h; sourceTree = "<group>"; };
+		A3E1DD3F169DDB9200D43A27 /* CCSpriteColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSpriteColor.cpp; path = ../Classes/CCSpriteColor.cpp; sourceTree = "<group>"; };
+		A3E1DD40169DDB9200D43A27 /* CCSpriteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSpriteColor.h; path = ../Classes/CCSpriteColor.h; sourceTree = "<group>"; };
+		A3E1DD41169DDB9200D43A27 /* ExitDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExitDialog.cpp; path = ../Classes/ExitDialog.cpp; sourceTree = "<group>"; };
+		A3E1DD42169DDB9200D43A27 /* ExitDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExitDialog.h; path = ../Classes/ExitDialog.h; sourceTree = "<group>"; };
+		A3E1DD43169DDB9200D43A27 /* HelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelpScene.cpp; path = ../Classes/HelpScene.cpp; sourceTree = "<group>"; };
+		A3E1DD44169DDB9200D43A27 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = ../Classes/HelpScene.h; sourceTree = "<group>"; };
+		A3E1DD45169DDB9200D43A27 /* MenuItemLabelColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuItemLabelColor.cpp; path = ../Classes/MenuItemLabelColor.cpp; sourceTree = "<group>"; };
+		A3E1DD46169DDB9200D43A27 /* MenuItemLabelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemLabelColor.h; path = ../Classes/MenuItemLabelColor.h; sourceTree = "<group>"; };
+		A3E1DD47169DDB9200D43A27 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuScene.cpp; path = ../Classes/MenuScene.cpp; sourceTree = "<group>"; };
+		A3E1DD48169DDB9200D43A27 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = ../Classes/MenuScene.h; sourceTree = "<group>"; };
+		A3E1DD49169DDB9200D43A27 /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SplashScene.cpp; path = ../Classes/SplashScene.cpp; sourceTree = "<group>"; };
+		A3E1DD4A169DDB9200D43A27 /* SplashScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScene.h; path = ../Classes/SplashScene.h; sourceTree = "<group>"; };
+		A3E1DD4B169DDB9200D43A27 /* TestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestScene.cpp; path = ../Classes/TestScene.cpp; sourceTree = "<group>"; };
+		A3E1DD4C169DDB9200D43A27 /* TestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestScene.h; path = ../Classes/TestScene.h; sourceTree = "<group>"; };
+		A3E1DD4D169DDB9200D43A27 /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Touch.cpp; path = ../Classes/Touch.cpp; sourceTree = "<group>"; };
+		A3E1DD4E169DDB9200D43A27 /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Touch.h; path = ../Classes/Touch.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -467,7 +467,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3E1DD00169DC2B600D43A27 /* libcocos2dx copy.a in Frameworks */,
+				A3E1DD00169DC2B600D43A27 /* libcocos2dx-iOS.a in Frameworks */,
 				A3E1DBA7169DC0C800D43A27 /* AppKit.framework in Frameworks */,
 				A3E1DBA8169DC0C800D43A27 /* AudioToolbox.framework in Frameworks */,
 				A3E1DBA9169DC0C800D43A27 /* Cocoa.framework in Frameworks */,
@@ -507,29 +507,29 @@
 				15A6969B1630E63B00D7A229 /* AppMacros.h */,
 				41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */,
 				41CD6C7215BF76FB005E6F29 /* AppDelegate.h */,
-				A36F3B3E166F7A270074E72E /* CCButton.cpp */,
-				A36F3B3F166F7A270074E72E /* CCButton.h */,
-				A36F3B40166F7A270074E72E /* CCDebug.h */,
-				A36F3B41166F7A270074E72E /* CCJoypad.cpp */,
-				A36F3B42166F7A270074E72E /* CCJoypad.h */,
-				A36F3B43166F7A270074E72E /* CCSpiritedJoystick.cpp */,
-				A36F3B44166F7A270074E72E /* CCSpiritedJoystick.h */,
-				A36F3B45166F7A270074E72E /* CCSpriteColor.cpp */,
-				A36F3B46166F7A270074E72E /* CCSpriteColor.h */,
-				A36F3B4B166F7A3E0074E72E /* ExitDialog.cpp */,
-				A36F3B4C166F7A3E0074E72E /* ExitDialog.h */,
-				A36F3B4D166F7A3E0074E72E /* HelpScene.cpp */,
-				A36F3B4E166F7A3E0074E72E /* HelpScene.h */,
-				A36F3B51166F7A4F0074E72E /* MenuItemLabelColor.cpp */,
-				A36F3B52166F7A4F0074E72E /* MenuItemLabelColor.h */,
-				A36F3B53166F7A4F0074E72E /* MenuScene.cpp */,
-				A36F3B54166F7A4F0074E72E /* MenuScene.h */,
-				A36F3B57166F7A590074E72E /* SplashScene.cpp */,
-				A36F3B58166F7A590074E72E /* SplashScene.h */,
-				A36F3B59166F7A590074E72E /* TestScene.cpp */,
-				A36F3B5A166F7A590074E72E /* TestScene.h */,
-				A36F3B5B166F7A590074E72E /* Touch.cpp */,
-				A36F3B5C166F7A590074E72E /* Touch.h */,
+				A3E1DD38169DDB9200D43A27 /* CCButton.cpp */,
+				A3E1DD39169DDB9200D43A27 /* CCButton.h */,
+				A3E1DD3A169DDB9200D43A27 /* CCDebug.h */,
+				A3E1DD3B169DDB9200D43A27 /* CCJoypad.cpp */,
+				A3E1DD3C169DDB9200D43A27 /* CCJoypad.h */,
+				A3E1DD3D169DDB9200D43A27 /* CCSpiritedJoystick.cpp */,
+				A3E1DD3E169DDB9200D43A27 /* CCSpiritedJoystick.h */,
+				A3E1DD3F169DDB9200D43A27 /* CCSpriteColor.cpp */,
+				A3E1DD40169DDB9200D43A27 /* CCSpriteColor.h */,
+				A3E1DD41169DDB9200D43A27 /* ExitDialog.cpp */,
+				A3E1DD42169DDB9200D43A27 /* ExitDialog.h */,
+				A3E1DD43169DDB9200D43A27 /* HelpScene.cpp */,
+				A3E1DD44169DDB9200D43A27 /* HelpScene.h */,
+				A3E1DD45169DDB9200D43A27 /* MenuItemLabelColor.cpp */,
+				A3E1DD46169DDB9200D43A27 /* MenuItemLabelColor.h */,
+				A3E1DD47169DDB9200D43A27 /* MenuScene.cpp */,
+				A3E1DD48169DDB9200D43A27 /* MenuScene.h */,
+				A3E1DD49169DDB9200D43A27 /* SplashScene.cpp */,
+				A3E1DD4A169DDB9200D43A27 /* SplashScene.h */,
+				A3E1DD4B169DDB9200D43A27 /* TestScene.cpp */,
+				A3E1DD4C169DDB9200D43A27 /* TestScene.h */,
+				A3E1DD4D169DDB9200D43A27 /* Touch.cpp */,
+				A3E1DD4E169DDB9200D43A27 /* Touch.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -818,7 +818,7 @@
 			isa = PBXGroup;
 			children = (
 				A3E1DB64169DC0B800D43A27 /* libcocos2dx.a */,
-				A3E1DCFD169DC28800D43A27 /* libcocos2dx copy.a */,
+				A3E1DCFD169DC28800D43A27 /* libcocos2dx-iOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -903,10 +903,10 @@
 			remoteRef = A3E1DB63169DC0B800D43A27 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A3E1DCFD169DC28800D43A27 /* libcocos2dx copy.a */ = {
+		A3E1DCFD169DC28800D43A27 /* libcocos2dx-iOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libcocos2dx copy.a";
+			path = "libcocos2dx-iOS.a";
 			remoteRef = A3E1DCFC169DC28800D43A27 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1000,17 +1000,6 @@
 				41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */,
 				41CD6C6615BF7574005E6F29 /* main.m in Sources */,
 				41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */,
-				A36F3B47166F7A270074E72E /* CCButton.cpp in Sources */,
-				A36F3B48166F7A270074E72E /* CCJoypad.cpp in Sources */,
-				A36F3B49166F7A270074E72E /* CCSpiritedJoystick.cpp in Sources */,
-				A36F3B4A166F7A270074E72E /* CCSpriteColor.cpp in Sources */,
-				A36F3B4F166F7A3E0074E72E /* ExitDialog.cpp in Sources */,
-				A36F3B50166F7A3E0074E72E /* HelpScene.cpp in Sources */,
-				A36F3B55166F7A4F0074E72E /* MenuItemLabelColor.cpp in Sources */,
-				A36F3B56166F7A4F0074E72E /* MenuScene.cpp in Sources */,
-				A36F3B5D166F7A590074E72E /* SplashScene.cpp in Sources */,
-				A36F3B5E166F7A590074E72E /* TestScene.cpp in Sources */,
-				A36F3B5F166F7A590074E72E /* Touch.cpp in Sources */,
 				A36F3D12166F7FE80074E72E /* CCBAnimationManager.cpp in Sources */,
 				A36F3D13166F7FE80074E72E /* CCBFileLoader.cpp in Sources */,
 				A36F3D14166F7FE80074E72E /* CCBKeyframe.cpp in Sources */,
@@ -1060,6 +1049,17 @@
 				A36F3DD3166F80ED0074E72E /* CocosDenshion.m in Sources */,
 				A36F3DD4166F80ED0074E72E /* SimpleAudioEngine.mm in Sources */,
 				A36F3DD5166F80ED0074E72E /* SimpleAudioEngine_objc.m in Sources */,
+				A3E1DD4F169DDB9200D43A27 /* CCButton.cpp in Sources */,
+				A3E1DD51169DDB9200D43A27 /* CCJoypad.cpp in Sources */,
+				A3E1DD53169DDB9200D43A27 /* CCSpiritedJoystick.cpp in Sources */,
+				A3E1DD55169DDB9200D43A27 /* CCSpriteColor.cpp in Sources */,
+				A3E1DD57169DDB9200D43A27 /* ExitDialog.cpp in Sources */,
+				A3E1DD59169DDB9200D43A27 /* HelpScene.cpp in Sources */,
+				A3E1DD5B169DDB9200D43A27 /* MenuItemLabelColor.cpp in Sources */,
+				A3E1DD5D169DDB9200D43A27 /* MenuScene.cpp in Sources */,
+				A3E1DD5F169DDB9200D43A27 /* SplashScene.cpp in Sources */,
+				A3E1DD61169DDB9200D43A27 /* TestScene.cpp in Sources */,
+				A3E1DD63169DDB9200D43A27 /* Touch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1070,17 +1070,6 @@
 				A3E1DB67169DC0C800D43A27 /* AppController.mm in Sources */,
 				A3E1DB68169DC0C800D43A27 /* main.m in Sources */,
 				A3E1DB69169DC0C800D43A27 /* AppDelegate.cpp in Sources */,
-				A3E1DB6A169DC0C800D43A27 /* CCButton.cpp in Sources */,
-				A3E1DB6B169DC0C800D43A27 /* CCJoypad.cpp in Sources */,
-				A3E1DB6C169DC0C800D43A27 /* CCSpiritedJoystick.cpp in Sources */,
-				A3E1DB6D169DC0C800D43A27 /* CCSpriteColor.cpp in Sources */,
-				A3E1DB6E169DC0C800D43A27 /* ExitDialog.cpp in Sources */,
-				A3E1DB6F169DC0C800D43A27 /* HelpScene.cpp in Sources */,
-				A3E1DB70169DC0C800D43A27 /* MenuItemLabelColor.cpp in Sources */,
-				A3E1DB71169DC0C800D43A27 /* MenuScene.cpp in Sources */,
-				A3E1DB72169DC0C800D43A27 /* SplashScene.cpp in Sources */,
-				A3E1DB73169DC0C800D43A27 /* TestScene.cpp in Sources */,
-				A3E1DB74169DC0C800D43A27 /* Touch.cpp in Sources */,
 				A3E1DB75169DC0C800D43A27 /* CCBAnimationManager.cpp in Sources */,
 				A3E1DB76169DC0C800D43A27 /* CCBFileLoader.cpp in Sources */,
 				A3E1DB77169DC0C800D43A27 /* CCBKeyframe.cpp in Sources */,
@@ -1130,6 +1119,17 @@
 				A3E1DBA3169DC0C800D43A27 /* CocosDenshion.m in Sources */,
 				A3E1DBA4169DC0C800D43A27 /* SimpleAudioEngine.mm in Sources */,
 				A3E1DBA5169DC0C800D43A27 /* SimpleAudioEngine_objc.m in Sources */,
+				A3E1DD50169DDB9200D43A27 /* CCButton.cpp in Sources */,
+				A3E1DD52169DDB9200D43A27 /* CCJoypad.cpp in Sources */,
+				A3E1DD54169DDB9200D43A27 /* CCSpiritedJoystick.cpp in Sources */,
+				A3E1DD56169DDB9200D43A27 /* CCSpriteColor.cpp in Sources */,
+				A3E1DD58169DDB9200D43A27 /* ExitDialog.cpp in Sources */,
+				A3E1DD5A169DDB9200D43A27 /* HelpScene.cpp in Sources */,
+				A3E1DD5C169DDB9200D43A27 /* MenuItemLabelColor.cpp in Sources */,
+				A3E1DD5E169DDB9200D43A27 /* MenuScene.cpp in Sources */,
+				A3E1DD60169DDB9200D43A27 /* SplashScene.cpp in Sources */,
+				A3E1DD62169DDB9200D43A27 /* TestScene.cpp in Sources */,
+				A3E1DD64169DDB9200D43A27 /* Touch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
