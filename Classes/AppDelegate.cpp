@@ -3,11 +3,11 @@
 
 #include "AppDelegate.h"
 
-//#include "SplashScene.h"
-//#include "MenuScene.h"
+#include "SplashScene.h"
+#include "MenuScene.h"
 
-//#include "Touch.h"
-//#include "CCDebug.h"
+#include "Touch.h"
+#include "CCDebug.h"
 
 USING_NS_CC;
 
@@ -73,17 +73,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     
     //debug
     // create a scene. it's an autorelease object
-//    pDirector->runWithScene (MenuLayer::scene ());
-
-    CCSize winSize = CCDirector::sharedDirector ()->getWinSize ();
-	CCScene *scene = new CCScene;
-	CCLayerColor *layer = CCLayerColor::create(ccc4(255, 0, 255, 255));
-	CCLabelTTF *label = CCLabelTTF::create("hello world", "Arial", 36);
-	label->setColor(ccc3(64, 128, 240));
-	label->setPosition(ccp(winSize.width / 2, winSize.height / 2));
-	layer->addChild(label);
-	scene->addChild(layer);
-	pDirector->runWithScene (scene);
+    pDirector->runWithScene (MenuLayer::scene ());
 
     return true;
 }
