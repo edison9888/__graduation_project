@@ -1,2 +1,22 @@
 
 proj.mac/.DS_Store
+
+.DS_Store
+
+*.a
+
+*.class
+
+*.o
+
+*.d
+
+*.so
+
+*.ap_
+
+*.dex
+
+*.cache
+
+*.apk

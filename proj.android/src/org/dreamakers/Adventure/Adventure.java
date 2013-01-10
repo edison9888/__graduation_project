@@ -1,3 +1,4 @@
+package org.dreamakers.Adventure;
 /****************************************************************************
 Copyright (c) 2010-2012 cocos2d-x.org
 
@@ -21,19 +22,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-package org.cocos2dx.hellocpp;
+
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 
 import android.os.Bundle;
 
-public class HelloCpp extends Cocos2dxActivity{
+public class Adventure extends Cocos2dxActivity{
 
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 	}
 	
     static {
-         System.loadLibrary("hellocpp");
+         System.loadLibrary("Adventure");
     }
 }
