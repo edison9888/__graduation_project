@@ -54,7 +54,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
-    { 
+    {
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
         pDirector->setContentScaleFactor(MIN(smallResource.size.height/designResolutionSize.height, smallResource.size.width/designResolutionSize.width));
     }

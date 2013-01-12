@@ -80,13 +80,13 @@ ExitDialog::hideDialog()
 }
 
 void
-ExitDialog::showConfirm ()
+ExitDialog::showConfirm (CCNode* pSender)
 {
     m_miConfirm->runAction (CCMoveTo::create (0.3, m_pConfirmLocation));
 }
 
 void
-ExitDialog::hideConfirm ()
+ExitDialog::hideConfirm (CCNode* pSender)
 {
     CCSize winSize = CCDirector::sharedDirector ()->getWinSize ();
     m_miConfirm->runAction (CCMoveTo::create (0.3,
@@ -95,13 +95,13 @@ ExitDialog::hideConfirm ()
 }
 
 void
-ExitDialog::showActionButton ()
+ExitDialog::showActionButton (CCNode* pSender)
 {
     m_mActionButtonsMenu->runAction (CCMoveTo::create (0.3, m_pActionButtonsLocation));
 }
 
 void
-ExitDialog::hideActionButton ()
+ExitDialog::hideActionButton (CCNode* pSender)
 {
     CCSize winSize = CCDirector::sharedDirector ()->getWinSize ();
     m_mActionButtonsMenu->runAction (CCMoveTo::create (0.3,

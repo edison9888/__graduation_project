@@ -13,10 +13,10 @@ public:
     void hideDialog();
 
 private:
-    void showConfirm();
-    void hideConfirm();
-    void showActionButton();
-    void hideActionButton();
+    void showConfirm(CCNode* pSender);
+    void hideConfirm(CCNode* pSender);
+    void showActionButton(CCNode* pSender);
+    void hideActionButton(CCNode* pSender);
 
     CREATE_FUNC(ExitDialog);
 

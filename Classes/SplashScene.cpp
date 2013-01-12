@@ -77,7 +77,12 @@ void Splash::onEnter ()
 
     backgroundLayer = getChildByTag (BackgroundLayer_Tag);
     backgroundLayer->runAction (CCSequence::create (CCDelayTime::create (1),
-                                                    CCCallFuncN::create (CCDirector::sharedDirector (),
-                                                                         callfuncN_selector(CCDirector::popScene)),
+                                                    CCCallFuncN::create (this,
+                                                                         callfuncN_selector(Splash::popScene)),
                                                     NULL));
+}
+
+void Splash::popScene(CCNode* object)
+{
+	CCDirector::sharedDirector ()->popScene();
 }

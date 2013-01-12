@@ -194,7 +194,7 @@ MenuLayer::menuItem_exitNoCallback(CCObject* pSender)
                                      NULL));
 }
 void
-MenuLayer::exitDialog_close(CCObject* pSender)
+MenuLayer::exitDialog_close(CCNode* pSender)
 {
     CC_UNUSED_PARAM (pSender);
 

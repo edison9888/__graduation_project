@@ -2,8 +2,10 @@
 #define TESTSCENE_H
 
 #include <cocos2d.h>
+#include <cocos-ext.h>
 
 USING_NS_CC;
+USING_NS_CC_EXT;
 
 class TestLayer : public CCLayerColor
 {
@@ -24,8 +26,10 @@ public:
       return scene;
   }
 
-  void buttonA_clicked(CCNode *node);
-  void buttonB_clicked(CCNode *node);
+private:
+  void buttonA_clicked(CCObject* object, CCControlEvent event);
+  void buttonB_clicked(CCObject* object, CCControlEvent event);
+  void popScene(CCObject* object);
 
   void update (float dt);
 };

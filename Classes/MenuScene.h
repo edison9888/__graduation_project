@@ -21,7 +21,7 @@ public:
 
     void menuItem_exitYesCallback(CCObject* pSender);
     void menuItem_exitNoCallback(CCObject* pSender);
-    void exitDialog_close(CCObject* pSender);
+    void exitDialog_close(CCNode* pSender);
 
     void menuItem_toggleMusic(CCObject *pSender);
     void menuItem_playMusic(CCObject *pSender);

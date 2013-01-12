@@ -13,6 +13,9 @@ public:
 
   void onEnter ();
 
+private:
+  void popScene(CCNode* object);
+
   // implement the "static node()" method manually
   CREATE_FUNC(Splash);
 };

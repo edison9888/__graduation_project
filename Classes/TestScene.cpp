@@ -111,8 +111,8 @@ TestLayer::init()
 
         label = CCLabelTTF::create ("Back", "Arial", 32);
         MenuItemLabelColor *menuItem = MenuItemLabelColor::create (label,
-                                                      CCDirector::sharedDirector (),
-                                                      menu_selector(CCDirector::popScene));
+                                                      this,
+													  menu_selector(TestLayer::popScene));
         menuItem->setPosition (ccp (ws.width - menuItem->getContentSize().width * 2 / 3,
                                     menuItem->getContentSize().height));
 
@@ -128,16 +128,21 @@ TestLayer::init()
     return false;
 }
 
-void TestLayer::buttonA_clicked(CCNode *node)
+void TestLayer::buttonA_clicked(CCObject* object, CCControlEvent event)
 {
     qlog("Button A was clicked");
     output->setString ("Button A was clicked");
 }
 
-void TestLayer::buttonB_clicked(CCNode *node)
+void TestLayer::buttonB_clicked(CCObject* object, CCControlEvent event)
 {
     qlog("Button B was clicked");
     output->setString ("Button B was clicked");
+}
+
+void TestLayer::popScene(CCObject* object)
+{
+	CCDirector::sharedDirector ()->popScene();
 }
 
 void TestLayer::update (float dt)
