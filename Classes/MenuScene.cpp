@@ -229,7 +229,8 @@ MenuLayer::menuItem_playMusic(CCObject *pSender)
 
     if (! engine->isBackgroundMusicPlaying ())
     {
-        engine->playBackgroundMusic("background", true);
+        engine->playBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("background.mp3"), 
+									true);
     }
 }
 
