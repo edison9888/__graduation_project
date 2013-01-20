@@ -27,17 +27,6 @@
 		41CD6C9915BF77CE005E6F29 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9715BF77CE005E6F29 /* libxml2.dylib */; };
 		41CD6C9A15BF77CE005E6F29 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9815BF77CE005E6F29 /* libz.dylib */; };
 		A33BC8AD169EA62800196286 /* libcocos2dx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BC8AA169EA61D00196286 /* libcocos2dx.a */; };
-		A33BC8C5169EA63A00196286 /* CCButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8AE169EA63A00196286 /* CCButton.cpp */; };
-		A33BC8C6169EA63A00196286 /* MCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8B1169EA63A00196286 /* MCJoypad.cpp */; };
-		A33BC8C7169EA63A00196286 /* MCSpiritedJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8B3169EA63A00196286 /* MCSpiritedJoystick.cpp */; };
-		A33BC8C8169EA63A00196286 /* CCSpriteColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8B5169EA63A00196286 /* CCSpriteColor.cpp */; };
-		A33BC8C9169EA63A00196286 /* ExitDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8B7169EA63A00196286 /* ExitDialog.cpp */; };
-		A33BC8CA169EA63A00196286 /* HelpScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8B9169EA63A00196286 /* HelpScene.cpp */; };
-		A33BC8CB169EA63A00196286 /* MenuItemLabelColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8BB169EA63A00196286 /* MenuItemLabelColor.cpp */; };
-		A33BC8CC169EA63A00196286 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8BD169EA63A00196286 /* MenuScene.cpp */; };
-		A33BC8CD169EA63A00196286 /* SplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8BF169EA63A00196286 /* SplashScene.cpp */; };
-		A33BC8CE169EA63A00196286 /* TestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8C1169EA63A00196286 /* TestScene.cpp */; };
-		A33BC8CF169EA63A00196286 /* Touch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8C3169EA63A00196286 /* Touch.cpp */; };
 		A33BC9D4169EA65600196286 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8FB169EA65600196286 /* CDAudioManager.m */; };
 		A33BC9D5169EA65600196286 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A33BC8FE169EA65600196286 /* CDOpenALSupport.m */; };
 		A33BC9D6169EA65600196286 /* CDXMacOSXSupport.mm in Sources */ = {isa = PBXBuildFile; fileRef = A33BC900169EA65600196286 /* CDXMacOSXSupport.mm */; };
@@ -88,11 +77,9 @@
 		A33BCA20169EA65600196286 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC9B7169EA65600196286 /* CCPhysicsDebugNode.cpp */; };
 		A33BCA21169EA65600196286 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC9B9169EA65600196286 /* CCPhysicsSprite.cpp */; };
 		A33BCA5F169EA6CE00196286 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCA5E169EA6CE00196286 /* libcurl.dylib */; };
-		A37C032716A1D7E000C44FB9 /* mac in Resources */ = {isa = PBXBuildFile; fileRef = A37C032616A1D7E000C44FB9 /* mac */; };
-		A39478EC16AAC16A00E47053 /* HelloWorldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39478EA16AAC16A00E47053 /* HelloWorldScene.cpp */; };
-		A3D0DDB916AC2787003E065D /* MCTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D0DDB716AC2787003E065D /* MCTestScene.cpp */; };
-		A3D0DDBC16AC279E003E065D /* MCJoypadDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D0DDBA16AC279E003E065D /* MCJoypadDelegate.cpp */; };
-		A3D0DDBF16AC27A9003E065D /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D0DDBD16AC27A9003E065D /* MCDice.cpp */; };
+		A3AC829216AC5D0100EDFE2B /* PC in Resources */ = {isa = PBXBuildFile; fileRef = A3AC829116AC5D0100EDFE2B /* PC */; };
+		A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */; };
+		A3D5AF9916AC3B8B00E74791 /* MCTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,29 +126,6 @@
 		41CD6C9715BF77CE005E6F29 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		41CD6C9815BF77CE005E6F29 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		A33BC8A2169EA61D00196286 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../library/cocos2dx/proj.mac/cocos2dx.xcodeproj; sourceTree = "<group>"; };
-		A33BC8AE169EA63A00196286 /* CCButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCButton.cpp; path = ../Classes/CCButton.cpp; sourceTree = "<group>"; };
-		A33BC8AF169EA63A00196286 /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCButton.h; path = ../Classes/CCButton.h; sourceTree = "<group>"; };
-		A33BC8B0169EA63A00196286 /* CCDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCDebug.h; path = ../Classes/CCDebug.h; sourceTree = "<group>"; };
-		A33BC8B1169EA63A00196286 /* MCJoypad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCJoypad.cpp; path = ../Classes/MCJoypad.cpp; sourceTree = "<group>"; };
-		A33BC8B2169EA63A00196286 /* MCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoypad.h; path = ../Classes/MCJoypad.h; sourceTree = "<group>"; };
-		A33BC8B3169EA63A00196286 /* MCSpiritedJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSpiritedJoystick.cpp; path = ../Classes/MCSpiritedJoystick.cpp; sourceTree = "<group>"; };
-		A33BC8B4169EA63A00196286 /* MCSpiritedJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSpiritedJoystick.h; path = ../Classes/MCSpiritedJoystick.h; sourceTree = "<group>"; };
-		A33BC8B5169EA63A00196286 /* CCSpriteColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CCSpriteColor.cpp; path = ../Classes/CCSpriteColor.cpp; sourceTree = "<group>"; };
-		A33BC8B6169EA63A00196286 /* CCSpriteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSpriteColor.h; path = ../Classes/CCSpriteColor.h; sourceTree = "<group>"; };
-		A33BC8B7169EA63A00196286 /* ExitDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ExitDialog.cpp; path = ../Classes/ExitDialog.cpp; sourceTree = "<group>"; };
-		A33BC8B8169EA63A00196286 /* ExitDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExitDialog.h; path = ../Classes/ExitDialog.h; sourceTree = "<group>"; };
-		A33BC8B9169EA63A00196286 /* HelpScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HelpScene.cpp; path = ../Classes/HelpScene.cpp; sourceTree = "<group>"; };
-		A33BC8BA169EA63A00196286 /* HelpScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HelpScene.h; path = ../Classes/HelpScene.h; sourceTree = "<group>"; };
-		A33BC8BB169EA63A00196286 /* MenuItemLabelColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuItemLabelColor.cpp; path = ../Classes/MenuItemLabelColor.cpp; sourceTree = "<group>"; };
-		A33BC8BC169EA63A00196286 /* MenuItemLabelColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuItemLabelColor.h; path = ../Classes/MenuItemLabelColor.h; sourceTree = "<group>"; };
-		A33BC8BD169EA63A00196286 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MenuScene.cpp; path = ../Classes/MenuScene.cpp; sourceTree = "<group>"; };
-		A33BC8BE169EA63A00196286 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuScene.h; path = ../Classes/MenuScene.h; sourceTree = "<group>"; };
-		A33BC8BF169EA63A00196286 /* SplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SplashScene.cpp; path = ../Classes/SplashScene.cpp; sourceTree = "<group>"; };
-		A33BC8C0169EA63A00196286 /* SplashScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScene.h; path = ../Classes/SplashScene.h; sourceTree = "<group>"; };
-		A33BC8C1169EA63A00196286 /* TestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestScene.cpp; path = ../Classes/TestScene.cpp; sourceTree = "<group>"; };
-		A33BC8C2169EA63A00196286 /* TestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestScene.h; path = ../Classes/TestScene.h; sourceTree = "<group>"; };
-		A33BC8C3169EA63A00196286 /* Touch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Touch.cpp; path = ../Classes/Touch.cpp; sourceTree = "<group>"; };
-		A33BC8C4169EA63A00196286 /* Touch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Touch.h; path = ../Classes/Touch.h; sourceTree = "<group>"; };
 		A33BC8E7169EA65500196286 /* Export.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Export.h; sourceTree = "<group>"; };
 		A33BC8E8169EA65500196286 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
 		A33BC8FA169EA65600196286 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -272,15 +236,11 @@
 		A33BC9B9169EA65600196286 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		A33BC9BA169EA65600196286 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		A33BCA5E169EA6CE00196286 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
-		A37C032616A1D7E000C44FB9 /* mac */ = {isa = PBXFileReference; lastKnownFileType = folder; name = mac; path = ../Resources/mac; sourceTree = "<group>"; };
-		A39478EA16AAC16A00E47053 /* HelloWorldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HelloWorldScene.cpp; sourceTree = "<group>"; };
-		A39478EB16AAC16A00E47053 /* HelloWorldScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldScene.h; sourceTree = "<group>"; };
-		A3D0DDB716AC2787003E065D /* MCTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestScene.cpp; path = ../Classes/MCTestScene.cpp; sourceTree = "<group>"; };
-		A3D0DDB816AC2787003E065D /* MCTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTestScene.h; path = ../Classes/MCTestScene.h; sourceTree = "<group>"; };
-		A3D0DDBA16AC279E003E065D /* MCJoypadDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCJoypadDelegate.cpp; path = ../Classes/MCJoypadDelegate.cpp; sourceTree = "<group>"; };
-		A3D0DDBB16AC279E003E065D /* MCJoypadDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoypadDelegate.h; path = ../Classes/MCJoypadDelegate.h; sourceTree = "<group>"; };
-		A3D0DDBD16AC27A9003E065D /* MCDice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDice.cpp; path = ../Classes/MCDice.cpp; sourceTree = "<group>"; };
-		A3D0DDBE16AC27A9003E065D /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
+		A3AC829116AC5D0100EDFE2B /* PC */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PC; path = ../Resources/PC; sourceTree = "<group>"; };
+		A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDice.cpp; path = ../Classes/MCDice.cpp; sourceTree = "<group>"; };
+		A3D5AF9516AC3B8B00E74791 /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
+		A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestScene.cpp; path = ../Classes/MCTestScene.cpp; sourceTree = "<group>"; };
+		A3D5AF9716AC3B8B00E74791 /* MCTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTestScene.h; path = ../Classes/MCTestScene.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,10 +283,9 @@
 		41CD6C5D15BF750B005E6F29 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A38C0E6D16AA78CF001533B6 /* Misc */,
-				A38C0E6E16AA78DD001533B6 /* Deprecated */,
-				A38C0E7316AA7938001533B6 /* Controller */,
-				A39478DE16AAA8DA00E47053 /* Test */,
+				A3D5AF9E16AC41FB00E74791 /* Misc */,
+				A3D5AF9B16AC3B9B00E74791 /* Test */,
+				A3D5AF9A16AC3B8F00E74791 /* Dice */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -366,7 +325,7 @@
 		41CD6C6115BF7556005E6F29 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A37C032616A1D7E000C44FB9 /* mac */,
+				A3AC829116AC5D0100EDFE2B /* PC */,
 				1514DA3C163004980095A81C /* ipad */,
 				1514DA3D163004980095A81C /* ipadhd */,
 				1514DA3E163004980095A81C /* iphone */,
@@ -588,7 +547,25 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
-		A38C0E6D16AA78CF001533B6 /* Misc */ = {
+		A3D5AF9A16AC3B8F00E74791 /* Dice */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */,
+				A3D5AF9516AC3B8B00E74791 /* MCDice.h */,
+			);
+			name = Dice;
+			sourceTree = "<group>";
+		};
+		A3D5AF9B16AC3B9B00E74791 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */,
+				A3D5AF9716AC3B8B00E74791 /* MCTestScene.h */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		A3D5AF9E16AC41FB00E74791 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
 				15A6969B1630E63B00D7A229 /* AppMacros.h */,
@@ -596,58 +573,6 @@
 				41CD6C7215BF76FB005E6F29 /* AppDelegate.h */,
 			);
 			name = Misc;
-			sourceTree = "<group>";
-		};
-		A38C0E6E16AA78DD001533B6 /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				A33BC8AE169EA63A00196286 /* CCButton.cpp */,
-				A33BC8AF169EA63A00196286 /* CCButton.h */,
-				A33BC8B0169EA63A00196286 /* CCDebug.h */,
-				A33BC8B5169EA63A00196286 /* CCSpriteColor.cpp */,
-				A33BC8B6169EA63A00196286 /* CCSpriteColor.h */,
-				A33BC8B7169EA63A00196286 /* ExitDialog.cpp */,
-				A33BC8B8169EA63A00196286 /* ExitDialog.h */,
-				A33BC8B9169EA63A00196286 /* HelpScene.cpp */,
-				A33BC8BA169EA63A00196286 /* HelpScene.h */,
-				A33BC8BB169EA63A00196286 /* MenuItemLabelColor.cpp */,
-				A33BC8BD169EA63A00196286 /* MenuScene.cpp */,
-				A33BC8BC169EA63A00196286 /* MenuItemLabelColor.h */,
-				A33BC8BE169EA63A00196286 /* MenuScene.h */,
-				A33BC8BF169EA63A00196286 /* SplashScene.cpp */,
-				A33BC8C0169EA63A00196286 /* SplashScene.h */,
-				A33BC8C1169EA63A00196286 /* TestScene.cpp */,
-				A33BC8C2169EA63A00196286 /* TestScene.h */,
-				A33BC8C3169EA63A00196286 /* Touch.cpp */,
-				A33BC8C4169EA63A00196286 /* Touch.h */,
-			);
-			name = Deprecated;
-			sourceTree = "<group>";
-		};
-		A38C0E7316AA7938001533B6 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A3D0DDBA16AC279E003E065D /* MCJoypadDelegate.cpp */,
-				A3D0DDBB16AC279E003E065D /* MCJoypadDelegate.h */,
-				A33BC8B1169EA63A00196286 /* MCJoypad.cpp */,
-				A33BC8B2169EA63A00196286 /* MCJoypad.h */,
-				A33BC8B3169EA63A00196286 /* MCSpiritedJoystick.cpp */,
-				A33BC8B4169EA63A00196286 /* MCSpiritedJoystick.h */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		A39478DE16AAA8DA00E47053 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				A39478EA16AAC16A00E47053 /* HelloWorldScene.cpp */,
-				A39478EB16AAC16A00E47053 /* HelloWorldScene.h */,
-				A3D0DDB716AC2787003E065D /* MCTestScene.cpp */,
-				A3D0DDB816AC2787003E065D /* MCTestScene.h */,
-				A3D0DDBD16AC27A9003E065D /* MCDice.cpp */,
-				A3D0DDBE16AC27A9003E065D /* MCDice.h */,
-			);
-			name = Test;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -724,7 +649,7 @@
 				1514DA3F163004980095A81C /* ipad in Resources */,
 				1514DA40163004980095A81C /* ipadhd in Resources */,
 				1514DA41163004980095A81C /* iphone in Resources */,
-				A37C032716A1D7E000C44FB9 /* mac in Resources */,
+				A3AC829216AC5D0100EDFE2B /* PC in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,17 +663,6 @@
 				41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */,
 				41CD6C6615BF7574005E6F29 /* main.m in Sources */,
 				41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */,
-				A33BC8C5169EA63A00196286 /* CCButton.cpp in Sources */,
-				A33BC8C6169EA63A00196286 /* MCJoypad.cpp in Sources */,
-				A33BC8C7169EA63A00196286 /* MCSpiritedJoystick.cpp in Sources */,
-				A33BC8C8169EA63A00196286 /* CCSpriteColor.cpp in Sources */,
-				A33BC8C9169EA63A00196286 /* ExitDialog.cpp in Sources */,
-				A33BC8CA169EA63A00196286 /* HelpScene.cpp in Sources */,
-				A33BC8CB169EA63A00196286 /* MenuItemLabelColor.cpp in Sources */,
-				A33BC8CC169EA63A00196286 /* MenuScene.cpp in Sources */,
-				A33BC8CD169EA63A00196286 /* SplashScene.cpp in Sources */,
-				A33BC8CE169EA63A00196286 /* TestScene.cpp in Sources */,
-				A33BC8CF169EA63A00196286 /* Touch.cpp in Sources */,
 				A33BC9D4169EA65600196286 /* CDAudioManager.m in Sources */,
 				A33BC9D5169EA65600196286 /* CDOpenALSupport.m in Sources */,
 				A33BC9D6169EA65600196286 /* CDXMacOSXSupport.mm in Sources */,
@@ -798,10 +712,8 @@
 				A33BCA1F169EA65600196286 /* HttpClient.cpp in Sources */,
 				A33BCA20169EA65600196286 /* CCPhysicsDebugNode.cpp in Sources */,
 				A33BCA21169EA65600196286 /* CCPhysicsSprite.cpp in Sources */,
-				A39478EC16AAC16A00E47053 /* HelloWorldScene.cpp in Sources */,
-				A3D0DDB916AC2787003E065D /* MCTestScene.cpp in Sources */,
-				A3D0DDBC16AC279E003E065D /* MCJoypadDelegate.cpp in Sources */,
-				A3D0DDBF16AC27A9003E065D /* MCDice.cpp in Sources */,
+				A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */,
+				A3D5AF9916AC3B8B00E74791 /* MCTestScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

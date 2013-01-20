@@ -30,7 +30,6 @@
 #define DESIGN_RESOLUTION_2048X1536  3
 
 /* If you want to switch design resolution, change next line */
-#define TARGET_DESIGN_RESOLUTION_SIZE  DESIGN_RESOLUTION_800X480
 
 typedef struct tagResource
 {
@@ -38,22 +37,24 @@ typedef struct tagResource
     char directory[100];
 }Resource;
 
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 static Resource smallResource  =  { cocos2d::CCSizeMake(480, 320),   "iphone" };
-static Resource macResource  =  { cocos2d::CCSizeMake(800, 480),   "mac" };
 static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "ipad"   };
 static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "ipadhd" };
+#endif // IOS
 
-#if (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_480X320)
-static cocos2d::CCSize designResolutionSize = cocos2d::CCSizeMake(480, 320);
-#elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_800X480)
-static cocos2d::CCSize designResolutionSize = cocos2d::CCSizeMake(800, 480);
-#elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_1024X768)
-static cocos2d::CCSize designResolutionSize = cocos2d::CCSizeMake(1024, 768);
-#elif (TARGET_DESIGN_RESOLUTION_SIZE == DESIGN_RESOLUTION_2048X1536)
-static cocos2d::CCSize designResolutionSize = cocos2d::CCSizeMake(2048, 1536);
-#else
-#error unknown target design resolution!
-#endif
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+static Resource resources[] = {
+    { cocos2d::CCSizeMake(480, 320),   "iphone" },
+    { cocos2d::CCSizeMake(800, 480),   "iphone" },
+    { cocos2d::CCSizeMake(854, 320),   "iphone" }
+};
+#endif // ANDROID
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "PC" };
+#endif // WIN32、MAC、LINUX
 
 // The font size 24 is designed for small resolution, so we should change it to fit for current design resolution
 #define TITLE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / smallResource.size.width * 24)

@@ -2,12 +2,13 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := Adventure_shared
+LOCAL_MODULE := MC_shared
 
 LOCAL_MODULE_FILENAME := libMC
 
 LOCAL_SRC_FILES := main.cpp \
 					../../Classes/AppDelegate.cpp \
+					../../Classes/MCDice.cpp \
 					../../Classes/MCTestScene.cpp \
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \

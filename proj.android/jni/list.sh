@@ -1,3 +1,5 @@
+#!/bin/bash
+
 append_str=' \'
 
 list_alldir()

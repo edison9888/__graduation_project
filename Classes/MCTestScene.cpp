@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
-
+#include "ccConfig.h"
 #include "MCTestScene.h"
 
 bool
@@ -16,40 +16,43 @@ MCTestLayer::init()
     {
         setTouchEnabled(true);
         
-        // CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("mc_crow_cocos2dx.plist");
-        // CCSpriteBatchNode* spriteSheet = CCSpriteBatchNode::create("mc_crow_cocos2dx.png");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("mc_crow_cocos2dx.plist");
+        CCSpriteBatchNode* spriteSheet = CCSpriteBatchNode::create("mc_crow_cocos2dx.png");
         
-        // this->addChild(spriteSheet);
+        this->addChild(spriteSheet);
         
-        // CCArray *flyToLeftAnimFrames = CCArray::create();
-        // char str[20];
-        // for(int i = 0; i < 4; i++)
-        // {
-        //     sprintf(str, "mc_crow_left_fly_%d.png", i);
-        //     CCSpriteFrame *spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
-        //     flyToLeftAnimFrames->addObject(spriteFrame);
-        // }
-        // CCAnimation * animation = CCAnimation::createWithSpriteFrames(flyToLeftAnimFrames, 0.1f);
+        CCArray *flyToLeftAnimFrames = CCArray::create();
+        char str[64];
+        for(int i = 0; i < 4; i++)
+        {
+            sprintf(str, "mc_crow_left_fly_%d.png", i);
+            CCSpriteFrame *spriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str);
+            flyToLeftAnimFrames->addObject(spriteFrame);
+        }
+        CCAnimation * animation = CCAnimation::createWithSpriteFrames(flyToLeftAnimFrames, 0.1f);
         
-        // CCSprite* crow = CCSprite::createWithSpriteFrame((CCSpriteFrame *) flyToLeftAnimFrames->objectAtIndex(0));
-        // CCSize size = CCDirector::sharedDirector()->getWinSize();
-        // crow->setPosition(ccp(size.width / 2, size.height / 2));
-        // CCActionInterval* walkAction = CCRepeatForever::create(CCAnimate::create(animation));
-        // spriteSheet->addChild(crow);
-        // crow->runAction(walkAction);
+        CCSpriteFrame *spriteFrame = (CCSpriteFrame *) flyToLeftAnimFrames->objectAtIndex(0);
+        CCSprite* crow = CCSprite::createWithSpriteFrame(spriteFrame);
+        CCSize size = CCDirector::sharedDirector()->getWinSize();
+        crow->setPosition(ccp(size.width / 2, size.height / 2));
+        CCActionInterval* walkAction = CCRepeatForever::create(CCAnimate::create(animation));
+        spriteSheet->addChild(crow);
+        crow->runAction(walkAction);
         
-        // _crow = crow;
+        _crow = crow;
         
-        // crow = CCSprite::createWithSpriteFrame((CCSpriteFrame *) flyToLeftAnimFrames->objectAtIndex(0));
-        // crow->setPosition(ccp(size.width / 2 + 32, size.height / 2 + 32));
-        // walkAction = CCRepeatForever::create(CCAnimate::create(animation));
-        // spriteSheet->addChild(crow);
-        // crow->runAction(walkAction);
+//        crow = CCSprite::createWithSpriteFrame((CCSpriteFrame *) flyToLeftAnimFrames->objectAtIndex(0));
+//        crow->setPosition(ccp(size.width / 2 + 32, size.height / 2 + 32));
+//        walkAction = CCRepeatForever::create(CCAnimate::create(animation));
+//        spriteSheet->addChild(crow);
+//        crow->runAction(walkAction);
         
         CCTMXTiledMap *map = CCTMXTiledMap::create("tileMap.tmx");
-        addChild(map, 0, 1);
+        this->addChild(map, 0, 1);
         map->setPosition(ccp(0, 0));
-        // spriteSheet->setZOrder(1);
+        spriteSheet->setZOrder(1);
+//        CCTexture2D* texture2D = CCTextureCache::sharedTextureCache()->textureForKey("tmw_desert_spacing.png");
+//        texture2D->setAliasTexParameters();
         
         return true;
     }
@@ -64,7 +67,7 @@ void MCTestLayer::registerWithTouchDispatcher()
 
 bool MCTestLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
-    _prevousLocation = pTouch->getLocation();
+    // _prevousLocation = pTouch->getLocation();
     
 	return true;
 }
@@ -85,10 +88,11 @@ void MCTestLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
     CCSize mapSize = map->getMapSize();
     CCSize tileSize = map->getTileSize();
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
     float w = mapSize.width * tileSize.width;
     float h = mapSize.height * tileSize.height;
-    float ww = winSize.width;
-    float wh = winSize.height;
+    float ww = winSize.width * contentScaleFactor;
+    float wh = winSize.height * contentScaleFactor;
     if (newPos.x > 0) {
         newPos.x = 0;
     } else if (newPos.x - ww < -w) {
@@ -100,7 +104,7 @@ void MCTestLayer::ccTouchMoved(CCTouch *pTouch, CCEvent *pEvent)
         newPos.y = wh - h;
     }
     map->setPosition(newPos);
-    _crow->setPosition(ccpAdd(_crow->getPosition(), diff));
+//   _crow->setPosition(ccpAdd(_crow->getPosition(), diff));
 }
 
 void MCTestLayer::ccTouchCancelled(CCTouch* touch, CCEvent* event)
@@ -109,29 +113,30 @@ void MCTestLayer::ccTouchCancelled(CCTouch* touch, CCEvent* event)
 
 void MCTestLayer::ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent)
 {
-    // CCPoint touchLocation = pTouch->getLocation();
+    CCPoint touchLocation = pTouch->getLocation();
     
     // if (! (_prevousLocation.x == touchLocation.x && _prevousLocation.y == touchLocation.y)) {
     //     return;
     // }
+//    return;
     
-    // CCPoint nowLocation = _crow->getPosition();
-    // float crowVelocity = 480.0/3.0;
-    // CCPoint moveDifference = ccpSub(touchLocation, nowLocation);
-    // float distanceToMove = ccpLength(moveDifference);
-    // float moveDuration = distanceToMove / crowVelocity;
+    CCPoint nowLocation = _crow->getPosition();
+    float crowVelocity = 480.0/3.0;
+    CCPoint moveDifference = ccpSub(touchLocation, nowLocation);
+    float distanceToMove = ccpLength(moveDifference);
+    float moveDuration = distanceToMove / crowVelocity;
     
-    // if (moveDifference.x < 0) {
-    //     _crow->setFlipX(false);
-    // } else {
-    //     _crow->setFlipX(true);
-    // }
+    if (moveDifference.x < 0) {
+        _crow->setFlipX(false);
+    } else {
+        _crow->setFlipX(true);
+    }
     
-    // _crow->stopAction(_moveAction);
+    _crow->stopAction(_moveAction);
     
-    // _moveAction = CCMoveTo::create(moveDuration, touchLocation);
+    _moveAction = CCMoveTo::create(moveDuration, touchLocation);
     
-    // _crow->runAction(_moveAction);
+    _crow->runAction(_moveAction);
 
 }
 

@@ -20,6 +20,15 @@ public:
     
     CREATE_FUNC(MCTestLayer);
     
+    static CCScene *scene()
+    {
+        CCScene *scene = CCScene::create();
+        
+        scene->addChild(MCTestLayer::create());
+        
+        return scene;
+    }
+    
 protected:
 	void registerWithTouchDispatcher();
 	bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);

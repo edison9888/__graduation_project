@@ -5,6 +5,7 @@ proj.win32/ipch/*
 proj.win32/Adventure.opensdf
 proj.win32/Adventure.sdf
 
+proj.android/assets/*
 
 .DS_Store
 
