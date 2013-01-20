@@ -36,7 +36,7 @@ static AppDelegate s_sharedApplication;
 		// create the window
 		// note that using NSResizableWindowMask causes the window to be a little
 		// smaller and therefore ipad graphics are not loaded
-		NSRect rect = NSMakeRect(0, 0, 2048, 1536);
+		NSRect rect = NSMakeRect(0, 0, 1600, 860);
 		window = [[NSWindow alloc] initWithContentRect:rect
 			styleMask:( NSClosableWindowMask | NSTitledWindowMask )
 			backing:NSBackingStoreBuffered
@@ -49,7 +49,7 @@ static AppDelegate s_sharedApplication;
 		// set window parameters
 		[window becomeFirstResponder];
 		[window setContentView:glView];
-		[window setTitle:@"Adventure"];
+		[window setTitle:@"Military Confrontation"];
 		[window makeKeyAndOrderFront:self];
 		[window setAcceptsMouseMovedEvents:NO];
         

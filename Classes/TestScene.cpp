@@ -2,7 +2,7 @@
 
 #include "MenuItemLabelColor.h"
 #include "CCButton.h"
-#include "CCJoypad.h"
+#include "MCJoypad.h"
 using namespace joypad;
 
 #include "CCDebug.h"
@@ -12,46 +12,46 @@ static CCLabelTTF *output = NULL;
 static unsigned int c = 0;
 static CCButton *buttonB;
 
-class MySneakyJoystickCallback : public CCSpiritedJoystickHandler
+class MySneakyJoystickCallback : public MCSpiritedJoystickHandler
 {
 
-    void onMoveUp(CCSpiritedJoystick *joystick)
+    void onMoveUp(MCSpiritedJoystick *joystick)
     {
         output->setString ("up");
 //        qlog("up");
     }
 
-    virtual void onMoveDown(CCSpiritedJoystick *joystick)
+    virtual void onMoveDown(MCSpiritedJoystick *joystick)
     {
         output->setString ("down");
 //        qlog("down");
     }
-    virtual void onMoveLeft(CCSpiritedJoystick *joystick)
+    virtual void onMoveLeft(MCSpiritedJoystick *joystick)
     {
         output->setString ("left");
 //        qlog("left");
     }
-    virtual void onMoveRight(CCSpiritedJoystick *joystick)
+    virtual void onMoveRight(MCSpiritedJoystick *joystick)
     {
         output->setString ("right");
 //        qlog("right");
     }
-    virtual void onMoveUpLeft(CCSpiritedJoystick *joystick)
+    virtual void onMoveUpLeft(MCSpiritedJoystick *joystick)
     {
         output->setString ("up left");
 //        qlog("up left");
     }
-    virtual void onMoveUpRight(CCSpiritedJoystick *joystick)
+    virtual void onMoveUpRight(MCSpiritedJoystick *joystick)
     {
         output->setString ("up right");
 //        qlog("up right");
     }
-    virtual void onMoveDownLeft(CCSpiritedJoystick *joystick)
+    virtual void onMoveDownLeft(MCSpiritedJoystick *joystick)
     {
         output->setString ("down left");
 //        qlog("down left");
     }
-    virtual void onMoveDownRight(CCSpiritedJoystick *joystick)
+    virtual void onMoveDownRight(MCSpiritedJoystick *joystick)
     {
         output->setString ("down right");
 //        qlog("down right");
@@ -74,15 +74,15 @@ TestLayer::init()
         this->addChild (output);
         output->setPosition (ccp (ws.width / 2, ws.height - output->getContentSize ().height));
 
-        CCSpiritedJoystick *joystick;
+        MCSpiritedJoystick *joystick;
         CCSprite *bg = CCSprite::create ("joystick-background.png");
         CCSprite *control = CCSprite::create ("joystick-control.png");
-        CCJoypad *controller;
+        MCJoypad *controller;
         MySneakyJoystickCallback *sneakyjoystickCallback = new MySneakyJoystickCallback;
 
-        joystick = CCSpiritedJoystick::joystickWithResources (bg, control);
+        joystick = MCSpiritedJoystick::joystickWithResources (bg, control);
 
-        controller = CCJoypad::create ();
+        controller = MCJoypad::create ();
         controller->setJoystick (joystick);
         controller->setSneakyJoystickHandler (sneakyjoystickCallback);
 

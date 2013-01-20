@@ -1,13 +1,8 @@
-#include "AppDelegate.h"
 #include "AppMacros.h"
-
 #include "AppDelegate.h"
 
-#include "SplashScene.h"
-#include "MenuScene.h"
-
-#include "Touch.h"
-#include "CCDebug.h"
+//#include "MCTestScene.h"
+#include "TestScene.h"
 
 USING_NS_CC;
 
@@ -68,12 +63,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     
     // run
-//    pDirector->pushScene (MenuLayer::scene());
-//    pDirector->runWithScene(Splash::scene());
+//    CCScene *testScene = new CCScene;
+//    MCTestLayer *layer = MCTestLayer::create();
+//    testScene->addChild(layer);
+//    pDirector->runWithScene(testScene);
     
-    //debug
-    // create a scene. it's an autorelease object
-    pDirector->runWithScene (MenuLayer::scene ());
+    pDirector->runWithScene(TestLayer::scene());
 
     return true;
 }

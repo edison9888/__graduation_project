@@ -164,10 +164,6 @@ MenuLayer::menuItem_quitCallback(CCObject* pSender)
     menu->setTouchEnabled (false);
 
     exitDialog->showDialog ();
-
-  #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-  #endif
 }
 
 void
@@ -176,6 +172,10 @@ MenuLayer::menuItem_exitYesCallback(CCObject* pSender)
     CC_UNUSED_PARAM (pSender);
 
     CCDirector::sharedDirector()->end();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+    exit(0);
+#endif
 }
 
 void
@@ -229,7 +229,7 @@ MenuLayer::menuItem_playMusic(CCObject *pSender)
 
     if (! engine->isBackgroundMusicPlaying ())
     {
-        engine->playBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("background.mp3"), 
+        engine->playBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("Sounds/background.mp3"), 
 									true);
     }
 }
