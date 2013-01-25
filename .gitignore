@@ -2,8 +2,10 @@
 proj.mac/.DS_Store
 proj.win32/Debug.win32/*
 proj.win32/ipch/*
-proj.win32/Adventure.opensdf
-proj.win32/Adventure.sdf
+
+*.opensdf
+
+*.sdf
 
 proj.android/assets/*
 

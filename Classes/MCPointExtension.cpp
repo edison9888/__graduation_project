@@ -9,13 +9,14 @@
 #include "MCPointExtension.h"
 #include "ccMacros.h" // FLT_EPSILON
 #include <stdio.h>
+#include <cmath>
 
 #define kMCPointEpsilon FLT_EPSILON
 
 int
 mcpLength(const MCPoint& v)
 {
-    return sqrt(mcpLengthSQ(v));
+    return sqrt((float)mcpLengthSQ(v));
 }
 
 int
@@ -33,13 +34,13 @@ mcpNormalize(const MCPoint& v)
 MCPoint
 mcpForAngle(const int a)
 {
-    return mcp(cos(a), sin(a));
+    return mcp(cos((float)a), sin((float)a));
 }
 
 int
 mcpToAngle(const MCPoint& v)
 {
-    return atan2(v.y, v.x);
+    return atan2((float)v.y, (float)v.x);
 }
 
 MCPoint mcpLerp(const MCPoint& a, const MCPoint& b, int alpha)
@@ -87,7 +88,7 @@ int mcpAngleSigned(const MCPoint& a, const MCPoint& b)
 {
     MCPoint a2 = mcpNormalize(a);
     MCPoint b2 = mcpNormalize(b);
-    int angle = atan2(a2.x * b2.y - a2.y * b2.x, mcpDot(a2, b2));
+    int angle = atan2((float)(a2.x * b2.y - a2.y * b2.x), (float)mcpDot(a2, b2));
     if( abs(angle) < kMCPointEpsilon ) return 0;
     return angle;
 }
@@ -95,7 +96,7 @@ int mcpAngleSigned(const MCPoint& a, const MCPoint& b)
 MCPoint mcpRotateByAngle(const MCPoint& v, const MCPoint& pivot, int angle)
 {
     MCPoint r = mcpSub(v, pivot);
-    int cosa = cos(angle), sina = sin(angle);
+    int cosa = cos((float)angle), sina = sin((float)angle);
     int t = r.x;
     r.x = t*cosa - r.y*sina + pivot.x;
     r.y = t*sina + r.y*cosa + pivot.y;
@@ -175,7 +176,7 @@ bool mcpLineIntersect(const MCPoint& A, const MCPoint& B,
 
 int mcpAngle(const MCPoint& a, const MCPoint& b)
 {
-    int angle = acos(mcpDot(mcpNormalize(a), mcpNormalize(b)));
+    int angle = acos((float)mcpDot(mcpNormalize(a), mcpNormalize(b)));
     if( abs(angle) < kMCPointEpsilon ) return 0;
     return angle;
 }

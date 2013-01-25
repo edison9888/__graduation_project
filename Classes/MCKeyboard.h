@@ -13,10 +13,18 @@
 #include "MCKeyboardDispatcher.h"
 
 enum {
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     MCKeyUp     = 126,
     MCKeyDown   = 125,
     MCKeyLeft   = 123,
     MCKeyRight  = 124
+#endif //CC_PLATFORM_MAC Mac OS X的KeyCode
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+    MCKeyUp     = 38,
+    MCKeyDown   = 40,
+    MCKeyLeft   = 37,
+    MCKeyRight  = 39
+#endif //CC_PLATFORM_WIN32 Windows的KeyCode
 };
 typedef mc_enum_t MCKeyCode;
 

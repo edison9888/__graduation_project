@@ -26,7 +26,7 @@ MCControllerLayer::init()
         joypad_->setJoystick(MCJoystick::create(bg, control));
 #endif /* Android和iOS控制响应 */
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
         keybord_ = MCKeyboard::create();
         addChild (keybord_);
         
@@ -37,7 +37,7 @@ MCControllerLayer::init()
         addChild (joypad_);
         
         joypad_->setJoystick(MCJoystick::create(bg, control));
-#endif /* MacOSX控制响应 */
+#endif /* MacOSX、Windows和Linux控制响应 */
         
         return true;
     }
@@ -52,10 +52,10 @@ MCControllerLayer::getDelegate()
     return joypad_->getDelegate();
 #endif /* Android和iOS控制响应 */
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 //    return keybord_->getDelegate();
     return joypad_->getDelegate();
-#endif /* MacOSX控制响应 */
+#endif /* MacOSX、Windows和Linux控制响应 */
 }
 
 void
@@ -65,8 +65,8 @@ MCControllerLayer::setDelegate(MCControllerDelegate* aDelegate)
     joypad_->setDelegate(aDelegate);
 #endif /* Android和iOS控制响应 */
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     keybord_->setDelegate(aDelegate);
     joypad_->setDelegate(aDelegate);
-#endif /* MacOSX控制响应 */
+#endif /* MacOSX、Windows和Linux控制响应 */
 }

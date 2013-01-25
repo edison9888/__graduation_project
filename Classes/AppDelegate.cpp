@@ -11,30 +11,20 @@
 
 USING_NS_CC;
 
-class TL: public CCLayer {
-public:
-    bool init()
-    {
-        setTouchEnabled(true);;
-        CCSprite *s=CCSprite::create("tank.png");
-        addChild(s);
-        s->setPosition(ccp(10,10));
-        
-        return true;
-    }
-    CREATE_FUNC(TL);
-    static CCScene *scene()
-    {
-        CCScene *scene = CCScene::create();
-        scene->addChild(TL::create());
-        return scene;
-    }
-    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-    {
-//        stopAllActions();
-        runAction(CCMoveTo::create(4, ((CCTouch *)pTouches->anyObject())->getLocationInView()));
-    }
-};
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+
+void Win32KeyHook( UINT message,WPARAM wParam, LPARAM lParam )
+{
+	switch (message) {
+    case WM_KEYDOWN:
+		MCKeyboardDispatcher::sharedKeyboardDispatcher()->dispatchKeyDownMSG(wParam);
+        break;
+    case WM_KEYUP:
+		MCKeyboardDispatcher::sharedKeyboardDispatcher()->dispatchKeyUpMSG(wParam);
+		break;
+	}
+}
+#endif //CC_PLATFORM_WIN32 Windows的键盘响应
 
 AppDelegate::AppDelegate() {
 
@@ -53,6 +43,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setOpenGLView(pEGLView);
     
     CCLog("%s(%d): %.0f %.0f", __FILE__, __LINE__, frameSize.width, frameSize.height);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+	pEGLView->setAccelerometerKeyHook(Win32KeyHook);
+#endif  // CC_PLATFORM_WIN32 设置Windows的键盘响应
 
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

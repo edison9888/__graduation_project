@@ -13,10 +13,10 @@
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "MCJoypad.h"
 #endif /* Android和iOS控制响应 */
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "MCKeyboard.h"
 #include "MCJoypad.h"
-#endif /* MacOSX控制响应 */
+#endif /* Android和iOS控制响应 */
 
 class MCControllerLayer : public CCLayer {
     
@@ -30,10 +30,10 @@ private:
     MCJoypad *joypad_;
 #endif /* Android和iOS控制响应 */
     
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     MCKeyboard *keybord_;
     MCJoypad *joypad_;
-#endif /* MacOSX控制响应 */
+#endif /* Android和iOS控制响应 */
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
 };
