@@ -24,10 +24,13 @@
    [Note] Normally, developer just need to define one design resolution(e.g. 960x640) with one or more resources.
  */
 
+#define CCDirectorGetWindowsSize() CCDirector::sharedDirector()->getWinSize()
+
 #define DESIGN_RESOLUTION_480X320    0
 #define DESIGN_RESOLUTION_800X480    1
-#define DESIGN_RESOLUTION_1024X768   2
-#define DESIGN_RESOLUTION_2048X1536  3
+#define DESIGN_RESOLUTION_960X640    2
+#define DESIGN_RESOLUTION_1024X768   3
+#define DESIGN_RESOLUTION_2048X1536  4
 
 /* If you want to switch design resolution, change next line */
 
@@ -39,7 +42,7 @@ typedef struct tagResource
 
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-static Resource smallResource  =  { cocos2d::CCSizeMake(480, 320),   "iphone" };
+static Resource smallResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
 static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "ipad"   };
 static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "ipadhd" };
 #endif // IOS
@@ -53,6 +56,7 @@ static Resource resources[] = {
 #endif // ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
+//static Resource PCResource  =  { cocos2d::CCSizeMake(640, 384),   "PC" };
 static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "PC" };
 #endif // WIN32、MAC、LINUX
 

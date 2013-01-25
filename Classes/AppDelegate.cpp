@@ -3,8 +3,38 @@
 #include "AppDelegate.h"
 
 #include "MCTestScene.h"
+#include "MCSplashScene.h"
+#include "MCMainMenuScene.h"
+
+#include "MCSceneList.h"
+#include "MCTestControllerScene.h"
 
 USING_NS_CC;
+
+class TL: public CCLayer {
+public:
+    bool init()
+    {
+        setTouchEnabled(true);;
+        CCSprite *s=CCSprite::create("tank.png");
+        addChild(s);
+        s->setPosition(ccp(10,10));
+        
+        return true;
+    }
+    CREATE_FUNC(TL);
+    static CCScene *scene()
+    {
+        CCScene *scene = CCScene::create();
+        scene->addChild(TL::create());
+        return scene;
+    }
+    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+    {
+//        stopAllActions();
+        runAction(CCMoveTo::create(4, ((CCTouch *)pTouches->anyObject())->getLocationInView()));
+    }
+};
 
 AppDelegate::AppDelegate() {
 
@@ -22,13 +52,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(pEGLView);
     
-    CCLog("%.0f %.0f", frameSize.width, frameSize.height);
+    CCLog("%s(%d): %.0f %.0f", __FILE__, __LINE__, frameSize.width, frameSize.height);
 
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    pEGLView->setDesignResolutionSize(PCResource.size.width, PCResource.size.height, kResolutionNoBorder);
+    pEGLView->setDesignResolutionSize(PCResource.size.width, PCResource.size.height, kResolutionExactFit);
     CCFileUtils::sharedFileUtils()->setResourceDirectory(PCResource.directory);
-    pDirector->setContentScaleFactor(1.0f);
+    pDirector->setContentScaleFactor(MIN(32 * 25 / PCResource.size.width, 32 * 15 / PCResource.size.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height == smallResource.size.height)
@@ -48,7 +78,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, kResolutionNoBorder);
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
     }
-    pDirector->setContentScaleFactor(1.0f);
+    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     int i = 0;
     int size = sizeof(resources);
@@ -91,19 +121,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
-
-    CCString *str = CCString::createWithFormat("getContentScaleFactor: %f", pDirector->getContentScaleFactor());
-    CCScene *s = MCTestLayer::scene ();
     
-    CCLabelTTF *l = CCLabelTTF::create();
-    l->setString(str->getCString());
-    l->setColor(ccc3(64, 128, 240));
-    l->setFontSize(64);
-    s->addChild(l);
-    l->setPosition(ccp(200, 200));
+//    MCSceneList *slist = MCSceneList::sharedSceneList();
+//    slist->loadSceneListFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("test.slist"));
     
     // run
-    pDirector->runWithScene (s);
+//    pDirector->pushScene(MCMainMenuLayer::scene());
+//    pDirector->runWithScene(MCSplashLayer::scene());
+    pDirector->runWithScene(MCTestControllerLayer::scene());
+//    pDirector->runWithScene(TL::scene());
 
     return true;
 }

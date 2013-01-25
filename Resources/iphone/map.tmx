@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="30" tilewidth="34" tileheight="35">
+ <tileset firstgid="1" name="ortho-test2" tilewidth="34" tileheight="35" spacing="1" margin="1">
+  <image source="ortho-test2.png" width="640" height="400"/>
+ </tileset>
+ <layer name="块层 1" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJzlVUEOwCAIc2/YG3TxB+7/H9vJhBhQEBxmOzQxmtkVSo0hhPgyTrA+FNDweultcQ328o/rLOW37K9E/wpfWfOmCd2YN1f7qnduUedRXTFuK94d/Mzxg7WfuXmC8dZvag62eQh19LKydw+l18rb1BnFe0+iMPux4zvoyUvl3Jd4Je96ItYQ2Kxx+quZKekcefvKi7f2pvWX1m+WOUn5DWrIA14ppP+4a39X4gEkt22e
+  </data>
+ </layer>
+ <objectgroup name="object" width="30" height="30">
+  <object name="player" x="92" y="286"/>
+ </objectgroup>
+</map>

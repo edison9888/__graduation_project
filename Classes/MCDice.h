@@ -10,6 +10,7 @@
 #define __Military_Confrontation__MCDice__
 
 #include <cocos2d.h>
+#include "MCType.h"
 
 USING_NS_CC;
 
@@ -27,10 +28,13 @@ enum {
     MC2D4Dice   = MCMakeDiceType(2, 4),  /* 2个4面骰子 */
     MC2D6Dice   = MCMakeDiceType(2, 6),  /* 2个6面骰子 */
     MC2D8Dice   = MCMakeDiceType(2, 8),  /* 2个8面骰子 */
-    MC2D20Dice  = MCMakeDiceType(2, 20)  /* 2个20面骰子 */
+    MC2D20Dice  = MCMakeDiceType(2, 20), /* 2个20面骰子 */
+    
+    /* 特殊骰子 */
+    MC3D4Dice   = MCMakeDiceType(2, 4)   /* 3个4面骰子 */
 };
-typedef unsigned short int MCDiceType;
-typedef unsigned short int mc_dice_unit_t;
+typedef mc_ushort_t MCDiceType;
+typedef mc_ushort_t mc_dice_unit_t;
 
 class MCDice : public CCObject {
 public:
