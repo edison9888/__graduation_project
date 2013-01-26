@@ -24,7 +24,7 @@ void Win32KeyHook( UINT message,WPARAM wParam, LPARAM lParam )
 		break;
 	}
 }
-#endif //CC_PLATFORM_WIN32 WindowsµÄ¼üÅÌÏìÓ¦
+#endif //CC_PLATFORM_WIN32 Windowsçš„é”®ç›˜å“åº”
 
 AppDelegate::AppDelegate() {
 
@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 	pEGLView->setAccelerometerKeyHook(Win32KeyHook);
-#endif  // CC_PLATFORM_WIN32 ÉèÖÃWindowsµÄ¼üÅÌÏìÓ¦
+#endif  // CC_PLATFORM_WIN32 è®¾ç½®Windowsçš„é”®ç›˜å“åº”
 
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

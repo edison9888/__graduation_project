@@ -22,6 +22,8 @@ MCKeyboard::keyPressed(unsigned short keycode)
     if (! delegate_) {
         return;
     }
+
+    CCLog("%d", keycode);
     
     switch (keycode) {
         case MCKeyUp:

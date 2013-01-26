@@ -23,13 +23,14 @@ int main(int argc, char **argv)
 
     std::string resourcePath = fullpath;
     resourcePath = resourcePath.substr(0, resourcePath.find_last_of("/"));
-    resourcePath += "/../../../Resources/";
+    resourcePath += "/../../Resources/";
     
     // create the application instance
     AppDelegate app;
     CCApplication::sharedApplication()->setResourceRootPath(resourcePath.c_str());
     CCEGLView* eglView = CCEGLView::sharedOpenGLView();
-    eglView->setFrameSize(480, 320);
+    eglView->setFrameSize(800, 480);
+    eglView->setFrameZoomFactor (1.0f);
 
     return CCApplication::sharedApplication()->run();
 }

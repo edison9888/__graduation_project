@@ -12,6 +12,10 @@
 #include "MCControllerDelegate.h"
 #include "MCKeyboardDispatcher.h"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+#include <GL/glfw.h>
+#endif //CC_PLATFORM_LINUX Linux的KeyCode
+
 enum {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     MCKeyUp     = 126,
@@ -25,6 +29,12 @@ enum {
     MCKeyLeft   = 37,
     MCKeyRight  = 39
 #endif //CC_PLATFORM_WIN32 Windows的KeyCode
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_LINUX)
+    MCKeyUp     = GLFW_KEY_UP,
+    MCKeyDown   = GLFW_KEY_DOWN,
+    MCKeyLeft   = GLFW_KEY_LEFT,
+    MCKeyRight  = GLFW_KEY_RIGHT
+#endif //CC_PLATFORM_LINUX Linux的KeyCode
 };
 typedef mc_enum_t MCKeyCode;
 
