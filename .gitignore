@@ -11,6 +11,7 @@ proj.win32/ipch/*
 proj.android/assets/*
 
 proj.linux/Military_Confrontation-build-desktop-Qt_4_8_1_in_PATH__System____/*
+proj.linux/Military_Confrontation/main.cpp
 
 *.DS_Store
 
@@ -31,3 +32,6 @@ proj.linux/Military_Confrontation-build-desktop-Qt_4_8_1_in_PATH__System____/*
 *.cache
 
 *.apk
+
+*~
+
