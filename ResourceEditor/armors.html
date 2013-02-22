@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="static/main.css" rel="stylesheet" type="text/css">
+        <title>资源编辑器 - 防具编辑器</title>
+        <link href="static/kendo.common.min.css" rel="stylesheet">
+        <link href="static/kendo.metroblack.min.css" rel="stylesheet">
+        <style>
+        .items-view {
+            float: left;
+            width: 640px;
+            height: 360px;
+            margin: 4px;
+            padding: 3px;
+            -moz-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            -webkit-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+        .items-view-viewer {
+            width: 480px;
+            height: 440px;
+            border: 1px solid transparent;
+        }
+        .items-view-viewer:hover {
+            border: 1px solid #00ABA9;
+        }
+        .items-view-viewer .k-textbox {
+            width: 120px;
+            border: 0;
+        }
+        .items-view-viewer .k-textbox:hover {
+            color: #00ABA9;
+        }
+        .items-view-viewer .right {
+            text-align: right !important;
+        }
+
+
+        .items-view tr td {
+            clear: left;
+            padding: 0 3px 0 13px;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .k-listview {
+            border: 0;
+            padding: 0;
+            min-width: 0;
+        }
+        .k-listview:after, .product-view dl:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .edit-buttons {
+            text-align: right;
+            padding: 5px;
+            min-width: 100px;
+            margin-right: 21px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .k-toolbar, #list-view, .k-pager-wrap {
+            width: 1024px;
+            margin: 0 auto;
+            -webkit-border-radius: 11px;
+            -moz-border-radius: 11px;
+            border-radius: 11px;
+        }
+        #status-bar {
+            width: 100%;
+            height: 24px;
+            line-height: 24px;
+            padding: 0 24px;
+            margin: 13px auto;
+        }
+
+        span.k-invalid-msg  {
+            position: absolute;
+            margin-left: 6px;
+        }
+        
+        .select-armor {
+            width: 96px; 
+            position: relative; 
+            left: 199px;
+            top: -300px;
+        }
+        .k-state-disabled .k-input {
+            color: #666;
+        }
+
+        .re-description {
+            overflow: auto;
+            word-break: break-all;
+            width: 320px !important;
+            height: 180px;
+            line-height: 18px;
+        }
+        </style>
+
+        <script src="static/jquery.min.js"></script>
+        <script src="static/kendo.web.min.js"></script>
+        <script src="static/REObjectIdEditor.js"></script>
+        <script src="static/REApp.js"></script>
+        <script src="static/REUtils.js"></script>
+        <script src="static/RENavigatorBar.js"></script>
+        <script src="static/REWeapon.js"></script>
+        <script src="static/REOre.js"></script>
+        <script type="text/javascript">
+            function RELoadDataCallback(data) {
+                if (data) {
+                    __targetFileObject = JSON.parse(data);
+                } else {
+                    __targetFileObject = {
+                        name: 'armor',
+                        armors: []
+                    };
+                }
+                __dataSource = new kendo.data.DataSource({
+                    data: __targetFileObject.armors,
+                    batch: true,
+                    pageSize: 2,
+                    change: function(e) {
+                    }
+                });
+                __dataSource.read();
+                $("#pager").kendoPager({
+                    dataSource: __dataSource
+                });
+                __listView.setDataSource(__dataSource);
+            }
+
+            function RESaveDataCallback(data) {
+                if (data === 'ok') {
+                    REStatusBarShow('保存成功');
+                } else {
+                    REStatusBarShow('保存失败(' + (data ? data : 'unknown error') + ')！');
+                }
+            }
+
+            function REEditItemById(anId) {
+                var editorWindow = $('#kREEditorWindow'),
+                    data = __dataSource.get(anId);
+
+                if (editorWindow.length == 0) {
+                    editorWindow = $('<div>').appendTo(document.body)
+                                    .attr('id', 'kREEditorWindow')
+                                    .kendoWindow({
+                                        title: '编辑',
+                                        modal: true,
+                                        width: 670,
+                                        height: 400,
+                                        resizable: false,
+                                        visible: false
+                                    })
+                    __editorWindow = editorWindow.data('kendoWindow');
+                    __editorWindow.setOptions({visible: true});
+                }
+                if (!data) {
+                    data = {
+                        id: '',
+                        name: '',
+                        icon: '#',
+                        price: 0,
+                        usage: 0,
+                        armorBonus: 1,
+                        dexterity: 0,
+                        armorCheckPenalty:-1,
+                        ore:1,
+                        weight:0,
+                        description: ''
+                    };
+                }
+                __editorWindow.content(kendo.template($('#edit-item-window-tmpl').html())(data))
+                              .center()
+                              .open();
+                /* init widgets */
+                kendo.init('#save-id');
+                $('#select-armor').kendoDropDownList({
+                    dataTextField: 'text',
+                    dataValueField: 'value',
+                    dataSource: __armorCategoryDataSource,
+                    change: function (e) {
+                        if (e.sender.selectedIndex !=  0) { /* 0是盾牌 */
+                            $('#save-usage').data('kendoDropDownList').enable(false);
+                        } else {
+                            $('#save-usage').data('kendoDropDownList').enable(true);
+                        }
+                    }
+                })
+                .parent()
+                .addClass('select-armor');
+
+                $('#save-price').kendoNumericTextBox({
+                    min: 0,
+                    max: 1000,
+                    step: 1,
+                    format: '# 马克'
+                });
+                $('#save-usage').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "value",
+                    dataSource: REWeaponUsages
+                });
+                $('#save-armor-bonus').kendoNumericTextBox({
+                    min: 0,
+                    max: 10,
+                    step: 1,
+                    format: '+#'
+                });
+                $('#save-dexterity').kendoNumericTextBox({
+                    min: -10,
+                    max: 10,
+                    step: 1,
+                    format: '#'
+                });
+                $('#save-armor-check-penalty').kendoNumericTextBox({
+                    min: -10,
+                    max: 0,
+                    step: 1,
+                    format: '#'
+                });
+                $('#save-ore').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "value",
+                    dataSource: REOres
+                });
+                $('#save-weight').kendoNumericTextBox({
+                    min: 0,
+                    max: 100,
+                    step: 1,
+                    format: "# 磅"
+                });
+            }
+
+            function REDeleteItemById(anId) {
+                var data = __dataSource.get(anId);
+                __dataSource.remove(data);
+            }
+
+            function RESaveItemById(anId) {
+                var data = __dataSource.get(anId),
+                    idValue = $('#save-id').data('kendoObjectIdEditor').getData(),
+                    nameValue = $('#save-name').val(),
+                    iconValue = $('#save-icon').attr('src'),
+                    priceValue = $('#save-price').val(),
+                    usageValue = $('#save-usage').val(),
+                    armorBonusValue = $('#save-armor-bonus').val(),
+                    dexterityValue = $('#save-dexterity').val(),
+                    armorCheckPenaltyValue = $('#save-armor-check-penalty').val(),
+                    oreValue = $('#save-ore').val(),
+                    weightValue = $('#save-weight').val(),
+                    descriptionValue = $('#save-description').val(),
+                    needInsert = false;
+
+                if (!idValue || !nameValue) {
+                    alert('ID和名字不能为空！');
+                    return;
+                }
+                if (!priceValue) {
+                    alert('价格不能为空！');
+                    return;
+                }
+                if (!armorBonusValue) {
+                    alert('防具加值不能为空！');
+                    return;
+                }
+                if (!dexterityValue) {
+                    alert('敏捷调整值不能为空！');
+                    return;
+                }
+                if (!armorCheckPenaltyValue) {
+                    alert('防具检定减值不能为空！');
+                    return;
+                }
+                oreValue = '1';
+                weightValue = '3';
+                if (!weightValue) {
+                    alert('重量不能为空！');
+                    return;
+                }
+                if (!data) {
+                    data = {};
+                    needInsert = true;
+                }
+                data.id = idValue;
+                data.name = nameValue;
+                data.icon = iconValue;
+                data.price = priceValue;
+                data.usage = usageValue;
+                data.armorBonus = armorBonusValue;
+                data.dexterity = dexterityValue;
+                data.armorCheckPenalty = armorCheckPenaltyValue;
+                data.ore = oreValue;
+                data.weight = weightValue;
+                data.description = descriptionValue;
+                if (needInsert) {
+                    __dataSource.add(data);
+                }
+                __listView.refresh();
+                __editorWindow.close();
+            }
+
+            function RESaveItems() {
+                var dataPath = REResourceGetMCResourcesPath('equipments.json');
+
+                __targetFileObject.armors = __dataSource.data().toJSON();
+                $.post('/services/writeFile', {
+                    path: dataPath,
+                    data: JSON.stringify(__targetFileObject)
+                }, RESaveDataCallback);
+            }
+
+            function RECancel() {
+                __editorWindow.close();
+            }
+            
+            function REShowEditButtons(id) {
+                $('#' + id).show();
+            }
+
+            function REHideEditButtons(id) {
+                $('#' + id).hide();
+            }
+
+            function REStatusBarShow(data) {
+                $('#status-bar').html(data);
+            }
+
+            $(document).ready(function () {
+                 __listView = $("#list-view").kendoListView({
+                                    dataSource: __dataSource,
+                                    template: kendo.template($("#item-tmpl").html())
+                                }).data("kendoListView");
+
+                $(".k-save-button").click(function(e) {
+                    RESaveItems();
+                });
+
+                $(".k-add-button").click(function(e) {
+                    REEditItemById(null);
+                });
+
+                REAppInit();
+
+                var dataPath = REResourceGetMCResourcesPath('equipments.json');
+                $.post('/services/requestFile', {
+                    path: dataPath
+                }, RELoadDataCallback);
+            });
+
+            var __armorCategoryDataSource = [
+                    { text: '盾牌', value: 1 },
+                    { text: '头盔', value: 2 },
+                    { text: '盔甲', value: 3 },
+                    { text: '靴子', value: 4 }
+                ],
+                __targetFileObject,
+                __dataSource,
+                __listView,
+                __searchBar,
+                __editorWindow;
+        </script>
+        </head>
+        <body class="k-content">
+            <div id="navigator-bar" style="height: 48px;"></div>
+            <div class="k-block">
+                <div class="k-toolbar k-grid-toolbar">
+                    <a class="k-button k-button-icontext k-save-button" href="#">
+                        <span class="k-icon k-i-pencil"></span>保存
+                    </a>
+                    <a class="k-button k-button-icontext k-add-button" href="#">
+                        <span class="k-icon k-add"></span>添加
+                    </a>
+                </div>
+                <div id="list-view"></div>
+                <div id="pager" class="k-pager-wrap"></div>
+                <div id="status-bar" class="k-button k-state-disabled unselectable" style="text-align: left"></div>
+            </div>
+            <script type="text/x-kendo-tmpl" id="item-tmpl">
+                <div class="items-view items-view-viewer" onmouseover="REShowEditButtons('edit-buttons-${id}')" onmouseout="REHideEditButtons('edit-buttons-${id}')">
+                    <table>
+                        <tr>
+                            <td class="right">图标</td>
+                            <td>
+                                <img src="${icon}" alt="" width="32" height="32" />
+                            </td>
+                            <td class="right">防具加值</td>
+                            <td>
+                                <span class="k-textbox">${armorBonus}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">ID</td>
+                            <td>
+                                <span class="k-textbox">${id}</span>
+                            </td>
+                            <td class="right">敏捷调整值</td>
+                            <td>
+                                <span class="k-textbox">${dexterity >= 0 ? '+' + dexterity : dexterity}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">名字</td>
+                            <td>
+                                <span class="k-textbox">${name}</span>
+                            </td>
+                            <td class="right">防具检定减值</td>
+                            <td>
+                                <span class="k-textbox">${armorCheckPenalty}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">价格</td>
+                            <td>
+                                <span class="k-textbox">${price} 马克</span>
+                            </td>
+                            <td class="right">矿石</td>
+                            <td>
+                                <span class="k-textbox">${REOreGetName(parseInt(ore))}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">使用方法</td>
+                            <td>
+                                <span class="k-textbox">${REWeaponUsageGetName(parseInt(usage))}</span>
+                            </td>
+                            <td class="right">重量</td>
+                            <td>
+                                <span class="k-textbox">${weight} 磅</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">描述</td>
+                            <td colspan="3">
+                                <span class="k-textbox re-description">${description}</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="edit-buttons-${id}" class="edit-buttons" style="display: none;">
+                        <a class="k-button k-button-icontext" href="javascript: REEditItemById('${id}');">
+                             <span class="k-icon k-edit"></span>编辑
+                         </a>
+                         <a class="k-button k-button-icontext" href="javascript: REDeleteItemById('${id}')">
+                             <span class="k-icon k-delete"></span>删除
+                         </a>
+                    </div>
+                </div>
+            </script>
+            <script type="text/x-kendo-tmpl" id="edit-item-window-tmpl">
+                <div class="items-view items-view-editor">
+                    <table>
+                        <tr>
+                            <td class="right">图标</td>
+                            <td>
+                                <img id="save-icon" src="${icon}" alt="" width="32" height="32" />
+                            </td>
+                            <td class="right">防具加值</td>
+                            <td>
+                                <input id="save-armor-bonus" value="${armorBonus}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">ID</td>
+                            <td>
+                                <div id="save-id" data-role="objectideditor" init-data="${id}"></div>
+                            </td>
+                            <td class="right">敏捷调整值</td>
+                            <td>
+                                <input id="save-dexterity" value="${dexterity}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">名字</td>
+                            <td>
+                                <input id="save-name" value="${name}" class="k-textbox">
+                            </td>
+                            <td class="right">防具检定减值</td>
+                            <td>
+                                <input id="save-armor-check-penalty" value="${armorCheckPenalty}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">价格</td>
+                            <td>
+                                <input id="save-price" value="${price}">
+                            </td>
+                            <td class="right">矿石</td>
+                            <td>
+                                <input id="save-ore" value="${ore}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">使用方法</td>
+                            <td>
+                                <input id="save-usage" value="${usage}" />
+                            </td>
+                            <td class="right">重量</td>
+                            <td>
+                                <input id="save-weight" value="${weight}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">描述</td>
+                            <td colspan="3">
+                                <textarea id="save-description" rows="4" cols="30" style="width: 100%; height: 100px" class="k-textbox">${description}</textarea>
+                            </td>
+                        </tr>
+                    </table>
+                    <input id="select-armor" value="1">
+                    <div class="edit-buttons">
+                        <a class="k-button k-button-icontext" href="javascript: RESaveItemById('${id}');">
+                             <span class="k-icon k-edit"></span>储存
+                         </a>
+                         <a class="k-button k-button-icontext" href="javascript: RECancel();">
+                             <span class="k-icon k-delete"></span>取消
+                         </a>
+                    </div>
+                </div>
+            </script>
+    </body>
+</html>

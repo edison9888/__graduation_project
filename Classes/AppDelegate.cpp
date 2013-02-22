@@ -6,10 +6,23 @@
 #include "MCSplashScene.h"
 #include "MCMainMenuScene.h"
 
-#include "MCSceneList.h"
+#include "MCSceneManager.h"
 #include "MCTestControllerScene.h"
 
+#include "MCJSONModifier.h"
+
+#include "MCDialog.h"
+#include "MCTask.h"
+#include "MCTaskManager.h"
+
+#include "MCBase64.h"
+#include "MCDetailScene.h"
+
+#include "MCFaceBox.h"
+
+#include "cocos-ext.h"
 USING_NS_CC;
+USING_NS_CC_EXT;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -116,14 +129,26 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-//    MCSceneList *slist = MCSceneList::sharedSceneList();
-//    slist->loadSceneListFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("test.slist"));
+//    MCSceneManager *slist = MCSceneManager::sharedSceneList();
+//    slist->loadSceneListFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("maps/test.slist"));
     
     // run
 //    pDirector->pushScene(MCMainMenuLayer::scene());
 //    pDirector->runWithScene(MCSplashLayer::scene());
-    pDirector->runWithScene(MCTestControllerLayer::scene());
-//    pDirector->runWithScene(TL::scene());
+//    pDirector->runWithScene(MCTestControllerLayer::scene());
+    
+//    MCTaskManager::sharedTaskManager()->loadTasks();
+    
+//    CCScene *s = CCScene::create();
+//    CCLayerColor *l = CCLayerColor::create(ccc4(64, 128, 196, 255));
+//    MCDialog *m = MCDialog::sharedDialog(MCOtherDialog);
+//    m->someoneWannaSaySomething(NULL);
+//    l->addChild(m);
+//
+//    s->addChild(l);
+//    pDirector->runWithScene(s);
+    
+    pDirector->runWithScene(MCDetailScene::create());
 
     return true;
 }

@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="static/main.css" rel="stylesheet" type="text/css">
+        <title>资源编辑器 -场景</title>
+        <link href="static/kendo.common.min.css" rel="stylesheet">
+        <link href="static/kendo.metroblack.min.css" rel="stylesheet">
+        <style type="text/css">
+            #editor {
+                display: inline-block;
+                float: left;
+                padding: 7px;
+            }
+            #editor table {
+                width: 100%;
+            }
+            #editor tr {
+                height: 30px;
+                line-height: 30px;
+            }
+            #editor tr td:nth-child(1) {
+                text-align: right;
+                width: 80px;
+                margin-right: 2px;
+            }
+            #editor tr td:nth-child(2) {
+                width: 200px;
+            }
+            #editor tr td[colspan="4"] {
+                text-align: center;
+            }
+            #editor tr td:nth-child(1) span[role="listbox"] {
+                width: 80px;
+            }
+            #editor .k-button {
+                width: 80px;
+            }
+            #editor tr td[colspan] .k-button {
+                width: 100%;
+            }
+            #editor tr:first-child .k-textbox {
+                border: 0;
+            }
+            #editor tr:first-child .k-textbox:hover {
+                color: #00ABA9;
+            }
+            
+            #npc-menu {
+                display: inline-block;
+                position: absolute;
+                left: 13px;
+                top: 130px;
+                width: 130px;
+            }
+            #npc-menu .k-button {
+                width: 100%;
+                float: left;
+            }
+            
+            #area-selection-confirm {
+                display: inline-block;
+                position: absolute;
+            }
+            
+            #area-selection-confirm .k-button {
+                width: 100%;
+                float: left;
+            }
+        </style>
+
+        <script src="static/jquery.min.js"></script>
+        <script src="static/kendo.web.min.js"></script>
+        <script src="static/REApp.js"></script>
+        <script src="static/RENavigatorBar.js"></script>
+        <script src="static/REUtils.js"></script>
+        <script src="static/RETMXMapUtils.js"></script>
+        <script src="cocos2d.js"></script>
+        <script type="text/javascript">
+            function RELoadScenesDataCallback(data) {
+                var newData,
+                    dataPath,
+                    scenes = [],
+                    scenePackageFiles = [];
+
+                if (data) {
+                    __sceneListFile = JSON.parse(data);
+                } else {
+                    __sceneListFile = {
+                        id: 'SL00',
+                        scenes: {},
+                        timestamp: 0
+                    };
+                }
+
+                __dataSource = new kendo.data.DataSource({
+                    data: scenes
+                });
+                __scenePackageFiles = new kendo.data.DataSource({
+                    data: scenePackageFiles
+                });
+                __scenePackageFiles.add({
+                        id: null,
+                        name: '---------------------------------',
+                        path: null
+                });
+                for (var key in __sceneListFile.scenes) {
+                    newData = {
+                        id: key,
+                        name: __sceneListFile.scenes[key].substring(__prefix.length),
+                        path: __sceneListFile.scenes[key]
+                    };
+                    __dataSource.add(newData);
+                    __scenePackageFiles.add(newData);
+                }
+
+                for (var id in __sceneListFile.scenes) {
+                    dataPath = REResourceGetMCResourcesPath(__sceneListFile.scenes[id]);
+                    $.ajax({
+                        type: "post",
+                        async: false,
+                        url: "/services/requestFile",
+                        data:{
+                            path: dataPath
+                        },
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        cache: false,
+                        success: function (data) {
+                            __sceneListFile.scenes[id] = data;
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+
+                $('#scene-packages').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "id",
+                    dataSource:__dataSource,
+                    change: function (e) {
+                        var id = e.sender.value();
+
+                        if (!id) {
+                            return;
+                        }
+                        console.log('did change to: '+id)
+                        /* 不用显式储存了，直接在对象中做了编辑 */
+                        __currentEditingSceneId = id; 
+                        REEditSceneById(id);
+                    }
+                });
+                $('#tmxes-list').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "id",
+                    dataSource:__scenePackageFiles
+                });
+                __currentEditingSceneId = $('#scene-packages').data('kendoDropDownList').value();
+
+                if (__currentEditingSceneId) {
+                    REEditSceneById(__currentEditingSceneId);
+                    setTimeout(REReloadUIData, 100);
+                }
+            }
+
+            function RELoadNPCsDataCallback(data) {
+                if (data) {
+                    __NPCs = JSON.parse(data);
+                } else {
+                    __NPCs = {
+                        name: 'NPC',
+                        NPCs: []
+                    };
+                }
+
+                for (var i = 0, len = __NPCs.NPCs.length; i < len; ++i) {
+                    __NPCsDataSource.push({
+                        name: __NPCs.NPCs[i].name,
+                        data: i
+                    });
+                }
+
+                $('#npcs-list').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "data",
+                    dataSource: __NPCsDataSource
+                });
+            }
+            
+            function RENPCDidChange(anId, aNPCData) {
+                __scenePackageData.objects.NPCs[anId] = aNPCData;
+            }
+            
+            function REMonsterDidChange(anId, aMonsterData) {
+                __scenePackageData.objects.monsters[anId] = aMonsterData;
+            }
+
+            function REObjectIdNextId(anId) {
+                var oIdClass = anId[0],
+                    numId = parseInt(anId.substring(1)),
+                    nextNumId = numId + 1,
+                    nextStrId = String(nextNumId),
+                    zero = '',
+                    zeroCount = 3 - nextStrId.length,
+                    newOId;
+
+                for (var i = 0; i < zeroCount; ++i) {
+                    zero += '0';
+                }
+                newOId = oIdClass + zero + nextStrId;
+
+                return newOId;
+            }
+
+            function REObjectIdCreateNewIdWithCount(aCount) {
+                var nextNumId = aCount + 1,
+                    nextStrId = String(nextNumId),
+                    zero = '',
+                    zeroCount = 3 - nextStrId.length,
+                    newOId;
+
+                for (var i = 0; i < zeroCount; ++i) {
+                    zero += '0';
+                }
+                newOId = 'M' + zero + nextStrId;
+
+                return newOId;
+            }
+
+            function RELoadTMXMapFilesCallback(data) {
+                var files;
+
+                if (data) {
+                    files = JSON.parse(data);
+                } else {
+                    files = [];
+                }
+
+                __tmxMapFiles = [{
+                    name: '---------------------------------',
+                    path: null
+                }];
+                for (var key in files) {
+                    __tmxMapFiles.push({
+                        name: files[key],
+                        path: REResourceGetMCResourcesPath(__prefix + files[key])
+                    });
+                }
+
+                $('#tmx-files').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "path",
+                    dataSource:__tmxMapFiles
+                });
+
+                $('#scenes').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "name",
+                    dataSource:__entrancesDataSource,
+                    change: function (e) {
+                        var scenes = $('#tmxes-list').data('kendoDropDownList'),
+                            scene = this.value(),
+                            sceneId = __scenePackageData.scenes[scene];
+
+                        if (sceneId) {
+                            scenes.select(scenes.ul.children().filter(function (i, e) {
+                                return e.innerHTML === __scenePackageFiles.get(sceneId).name;
+                            }));
+                        } else {
+                            scenes.select(0);
+                        }
+                    }
+                }).css({
+                    width: 80
+                });
+            }
+
+            function RELoadBackgroundFilesCallback(data) {
+                var files;
+
+                if (data) {
+                    files = JSON.parse(data);
+                } else {
+                    files = [];
+                }
+
+                __backgroundsDataSource = [{
+                    name: '---------------------------------',
+                    path: null
+                }];
+                for (var key in files) {
+                    __backgroundsDataSource.push({
+                        name: files[key],
+                        path: REResourceGetMCResourcesPath(__backgroundsFolder + files[key])
+                    });
+                }
+
+                $('#sounds-list').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "path",
+                    dataSource: __backgroundsDataSource
+                });
+            }
+
+            function REChangeTMXTiledMap(aTMXFilepath) {
+                var runningScene = cc.Director.getInstance().getRunningScene(),
+                    tmxTiledMap,
+                    objects,
+                    entrances,
+                    entrance,
+                    item,
+                    scenes,
+                    scene,
+                    sceneId;
+
+                if (!runningScene) {
+                    return;
+                }
+                
+                tmxTiledMap = runningScene.getTMXTiledMapLayer();
+                __tmxMap = tmxTiledMap;
+                tmxTiledMap.NPCDidChange = RENPCDidChange;
+                tmxTiledMap.monsterDidChange = REMonsterDidChange;
+                tmxTiledMap.updateTMXFile(aTMXFilepath);
+                //清空上次的结果
+                while (__entrancesDataSource._data.length > 0) {
+                    __entrancesDataSource.remove(__entrancesDataSource.get());
+                }
+                //更新tmx对象列表
+                objects = tmxTiledMap.objects;
+                if (objects !== null) {
+                    entrances = objects.getObjects();
+                    for (var i = 0; i < entrances.length; ++i) {
+                        entrance = entrances[i];
+                        if (entrance.type === 'entrance') {
+                            item = {
+                                name: entrance.name
+                            };
+                            __entrancesDataSource.add(item);
+                        }
+                    }
+//                    __entrancesDataSource.sort({ field: "name", dir: "desc" }); //无效
+                }
+                $('#scenes').data('kendoDropDownList').text('');
+                $('#scenes').data('kendoDropDownList').refresh();
+                
+                //更新场景
+                scenes = $('#tmxes-list').data('kendoDropDownList');
+                scene = $('#scenes').val();
+                sceneId = __scenePackageData.scenes[scene];
+                if (sceneId) {
+                    scenes.select(scenes.ul.children().filter(function (i, e) {
+                        return e.innerHTML === __scenePackageFiles.get(sceneId).name;
+                    }));
+                } else {
+                    scenes.select(0);
+                }
+                
+                //插入NPC
+                for (var id in __scenePackageData.objects.NPCs) {
+                    tmxTiledMap.insertNPCDirectly(__NPCs.NPCs.filter(function (d, i) {
+                                                    return d.id === id;
+                                                  })[0], 
+                                                  __scenePackageData.objects.NPCs[id]);
+                }
+                
+                REStatusBarShow('更新场景完毕！');
+            }
+
+            function RESaveItems() {
+                //Todo 储存所有数据
+                var dataPath = REResourceGetMCResourcesPath(__prefix + 'scenes.slst'),
+                    scenesData = __dataSource.data().toJSON(),
+                    sceneListFile = $.extend(true, {}, __sceneListFile),
+                    scenes = $.extend(true, {}, sceneListFile.scenes), /* scenes储存时储存一个列表而已，内容分开不同的文件来储存 */
+                    scene;
+
+                /* 保存的时候删掉name */
+                for (var key in scenesData) {
+                    delete scenesData[key].name;
+                    sceneListFile.scenes[scenesData[key].id] = scenesData[key].path;
+                }
+
+                __sceneListFile.timestamp = Date.now();
+                /* 保存包列表数据 */
+                $.post('/services/writeFile', {
+                    path: dataPath,
+                    data: JSON.stringify(sceneListFile)
+                }, RESaveDataCallback);
+                
+                /* 保存场景数据 */
+                for (var id in scenes) {
+                    scene = scenes[id];
+                    $.post('/services/writeFile', {
+                        path: REResourceGetMCResourcesPath(sceneListFile.scenes[id]),
+                        data: JSON.stringify(scene)
+                    }, RESaveDataCallback);
+                }
+
+                /* 删除不需要的数据文件 */
+                for (var i = 0, len = __willBeDeletedFiles.length; i < len; ++i) {
+                    $.post('/services/deleteFile', {
+                        path: REResourceGetMCResourcesPath(__willBeDeletedFiles[i])
+                    });
+                }
+            }
+
+            function RESaveDataCallback(data) {
+                if (data === 'ok') {
+                    REStatusBarShow('保存成功');
+                } else {
+                    REStatusBarShow('保存失败(' + (data ? data : 'unknown error') + ')！');
+                }
+            }
+
+            function REEditSceneById(anId) {
+                var scene = __sceneListFile.scenes[anId],
+                    dataSize = __dataSource.data().length,
+                    newData,
+                    scenePackages,
+                    newId;
+
+                if (!scene) {
+                    /* 产生新ID */
+                    newId = REObjectIdCreateNewIdWithCount(dataSize ? dataSize : 0);
+                    for (;;) {
+                        if (__sceneListFile.scenes[newId]) {
+                            newId = REObjectIdNextId(newId);
+                        } else {
+                            break;
+                        }
+                    }
+                    scene = __prefix + newId + '.spkg';
+                    newData = {
+                        id: newId,
+                        name: scene.substring(__prefix.length),
+                        path: scene
+                    };
+                    __dataSource.add(newData);
+                    __scenePackageFiles.add(newData);
+                    scenePackages = $('#scene-packages').data('kendoDropDownList');
+                    scenePackages.refresh();
+//                    $('#tmxes-list').data('kendoDropDownList').refresh();
+                    __scenePackageData = RECreateNewPackageData();
+                    __scenePackageData.id = newId;
+                    __currentEditingSceneId = newId;
+                    /* 暂时放到scenes里，储存的时候分离出来储存 */
+                    __sceneListFile.scenes[newId] = __scenePackageData;
+
+                    /* 改为选择最新添加的，暂时是最后一项 */
+                    scenePackages.select(scenePackages.dataSource._data.length - 1);
+                } else { //有此场景
+                    __scenePackageData = scene;
+                }
+                $('#scene-id').html(anId ? anId : newId);
+                $('#editor').removeClass('hidden');
+
+                setTimeout(REReloadUIData, 100);
+            }
+        
+            function REDeleteSceneById(anId) {
+                if (!anId) {
+                    return;
+                }
+                var scenesData = __dataSource.data();
+                
+                if (scenesData.length < 1) {
+                    return;
+                }
+                if (confirm('确定删除场景('+anId+')？')) {
+                    __willBeDeletedFiles.push(__dataSource.get(anId).toJSON().path);
+                    __dataSource.remove(__dataSource.get(anId));
+                    __scenePackageFiles.remove(__scenePackageFiles.get(anId));
+                    delete __sceneListFile.scenes[anId];
+                    if (scenesData.length > 0) {
+                        __currentEditingSceneId = scenesData[0].id; 
+                        REEditSceneById(__currentEditingSceneId);
+                        setTimeout(REReloadUIData, 100);
+                    } else {
+                        $('#scene-packages').data('kendoDropDownList').text('');
+                        $('#scene-packages').data('kendoDropDownList').refresh();
+                        $('#editor').addClass('hidden');
+                    }
+                }
+            }
+            
+            function REReloadUIData() {
+                var dropDownList,
+                    path;
+                    
+                //todo reload
+                /* name */
+                $('#scene-name').val(__scenePackageData.name ? __scenePackageData.name : '');
+                
+                /* background.tmx */
+                dropDownList = $('#tmx-files').data('kendoDropDownList');
+                if (__scenePackageData.background.tmx) {
+                    dropDownList.select(dropDownList.ul
+                                                    .children()
+                                                    .filter(function (i, e) {
+                                                        return e.innerHTML === __scenePackageData.background
+                                                                                                 .tmx
+                                                                                                 .substring(__prefix.length);
+                                                    }));
+                } else {
+                    dropDownList.select(0);
+                }
+                /* background.sound */
+                dropDownList = $('#sounds-list').data('kendoDropDownList');
+                if (__scenePackageData.background.sound) {
+                    dropDownList.select(dropDownList.ul
+                                                    .children()
+                                                    .filter(function (i, e) {
+                                                        return e.innerHTML === __scenePackageData.background
+                                                                                                 .sound
+                                                                                                 .substring(7);
+                                                    }));
+                } else {
+                    dropDownList.select(0);
+                }
+
+                /* scenes 加载第一个场景的值 */
+                /* 交给REChangeTMXTiledMap解决了 */
+
+                /* 读取TMX地图 */
+                if (__scenePackageData.background.tmx) {
+                    path = REResourceGetMCResourcesPath(__scenePackageData.background.tmx);
+                } else {
+                    path = null;
+                }
+                setTimeout(function () {
+                    REChangeTMXTiledMap(path);
+                }, 500);
+
+                /* 加载对象到地图 */
+                /* 交给REChangeTMXTiledMap解决了 */
+
+                /* 加载对白到地图 */
+                //todo
+                
+                /* description */
+                $('#scene-description').val(__scenePackageData.description ? __scenePackageData.description : '');
+            }
+
+            function RECreateNewPackageData() {
+                return {
+                    id: null,
+                    name:null,
+                    objects:{
+                        NPCs:{},
+                        monsters:{}
+                    },
+                    dialogues:{},
+                    background:{
+                        tmx:null,
+                        sound:null
+                    },
+                    scenes:{},
+                    description:null
+                };
+            }
+
+            function REStatusBarShow(data, type) {
+                var statusbar = $('#status-bar').html(data);
+                
+                if (type === 'warning') {
+                    statusbar.css({color: '#F90'});
+                } else if (type === 'error') {
+                    statusbar.css({color: '#F00'});
+                } else {
+                    statusbar.css({color: '#EFEFEF'});
+                }
+            }
+            
+            //start npc menu
+            function REMoveSprite() {
+                if (!__tmxMap) {
+                    return;
+                }
+                
+                __tmxMap.moveNPC();
+                
+                RECloseNPCMenu();
+            }
+            
+            function REModifyArea() {
+                if (!__tmxMap) {
+                    return;
+                }
+                
+                __tmxMap.areaSelect();
+                REStatusBarShow('NPC默认位置将位于选择区域的左下角！', 'warning');
+                
+                RECloseNPCMenu();
+            }
+            
+            function REModifyDialogues() {
+                RECloseNPCMenu();
+            }
+            
+            function RESetupCondition() {
+                RECloseNPCMenu();
+            }
+            
+            function RECloseNPCMenu() {
+                $('#npc-menu').addClass('hidden');
+            }
+            //end npc menu
+            
+            //begin area selection
+            function REAreaSelectionOK() {
+                if (!__tmxMap) {
+                    return;
+                }
+                
+                __tmxMap.selectedSpritePosition = cc.PointZero();
+                __tmxMap.areaSelection.enable = false;
+                __tmxMap.areaSelection.beginRect = cc.rect(-100, -100, 0, 0);
+                __tmxMap.areaSelection.endRect = cc.rect(-100, -100, 0, 0);
+                __tmxMap.selectedSprite.properties.x = __tmxMap.areaSelection.getArea().origin.x;
+                __tmxMap.selectedSprite.properties.y = __tmxMap.areaSelection.getArea().origin.y;
+                __tmxMap.selectedSprite.properties.w = __tmxMap.areaSelection.getArea().size.width / 32;
+                __tmxMap.selectedSprite.properties.h = __tmxMap.areaSelection.getArea().size.height / 32;
+                $('#area-selection-confirm').addClass('hidden');
+            }
+            
+            function REAreaSelectionCancel() {
+                __tmxMap.selectedSprite.setPosition(__tmxMap.selectedSpritePosition);
+                __tmxMap.selectedSpritePosition = cc.PointZero();
+                __tmxMap.areaSelection.enable = false;
+                __tmxMap.areaSelection.beginRect = cc.rect(-100, -100, 0, 0);
+                __tmxMap.areaSelection.endRect = cc.rect(-100, -100, 0, 0);
+                __tmxMap.areaSelection.origin = cc.p(-100, -100);
+                $('#area-selection-confirm').addClass('hidden');
+            }
+            //end area selection
+
+            $(document).ready(function () {
+                var dataPath = REResourceGetMCResourcesPath(__prefix + 'scenes.slst');
+                $.post('/services/requestFile', {
+                    path: dataPath
+                }, RELoadScenesDataCallback);
+
+                dataPath = REResourceGetMCResourcesPath('NPCs.rlst');
+                $.post('/services/requestFile', {
+                    path: dataPath
+                }, RELoadNPCsDataCallback);
+
+                $.post('/services/listDirectory', {
+                    path: REResourceGetMCResourcesPath(__prefix),
+                    extension: '.tmx'
+                }, RELoadTMXMapFilesCallback);
+
+                $.post('/services/listDirectory', {
+                    path: REResourceGetMCResourcesPath(__backgroundsFolder),
+                    extension: '.mp3|.wav'
+                }, RELoadBackgroundFilesCallback);
+            
+                $(".k-save-button").click(function(e) {
+                    RESaveItems();
+                });
+            
+                $(".k-add-button").click(function(e) {
+                    REEditSceneById(null);
+                });
+                
+                $('#scene-name').change(function () {
+                    if (__scenePackageData) {
+                        __scenePackageData.name = $(this).val();
+                    }
+                })
+
+                $('#set-tmx').click(function (e) {
+                    var selectedMap = $('#tmx-files').data('kendoDropDownList').value();
+
+                    if (selectedMap) {
+                        if (__scenePackageData.background.tmx
+                            && confirm('将清除旧地图的NPC和怪物数据，确定继续？')) {
+                            
+                        }
+                        REChangeTMXTiledMap(selectedMap);
+                        __scenePackageData.background.tmx = selectedMap ? selectedMap.substring(9) : null; //以fakepath/开头
+                    }
+                });
+                $('#clean-tmx').click(function (e) {
+                    if (confirm('将清除旧地图的NPC和怪物数据，确定继续？')) {
+                        $('#tmx-files').data('kendoDropDownList').select(0);
+                        REChangeTMXTiledMap(null);
+                        __scenePackageData.background.tmx = null;
+                    }
+                });
+
+                $('#set-scene').click(function (e) {
+                    var scenes = $('#scenes').data('kendoDropDownList'),
+                        tmxesList = $('#tmxes-list').data('kendoDropDownList'),
+                        anId = tmxesList.value();
+
+                    if (anId) {
+                        __scenePackageData.scenes[scenes.value()] = anId;
+                    } else {
+                        delete __scenePackageData.scenes[scenes.value()]; //直接删除掉，不置null了
+                    }
+                });
+                $('#clean-scene').click(function (e) {
+                    var scenes = $('#scenes').data('kendoDropDownList');
+
+                    $('#tmxes-list').data('kendoDropDownList').select(0);
+                    delete __scenePackageData.scenes[scenes.value()]; //直接删除掉，不置null了
+                });
+
+
+                $('#set-background').click(function (e) {
+                    var dropDownList = $('#sounds-list').data('kendoDropDownList'),
+                        fakepath = dropDownList.value();
+
+                    __scenePackageData.background.sound = fakepath ? fakepath.substring(9) : null; //以fakepath/开头
+
+                });
+                $('#clean-background').click(function (e) {
+                    $('#sounds-list').data('kendoDropDownList').select(0);
+                    __scenePackageData.background.sound = null;
+                });
+
+                $('#insert-npc').click(function (e) {
+                    //tags: handle insert npc
+                    if (!__tmxMap) {
+                        return;
+                    }
+
+                    if (! __tmxMap.insertNPC(__NPCs.NPCs[$('#npcs-list').data('kendoDropDownList').value()])) {
+                        REStatusBarShow('已存在此NPC！ ', 'error');
+                    }
+                });
+                
+                $('#scene-description').change(function () {
+                puts('changed!')
+                    if (__scenePackageData) {
+                        __scenePackageData.description = $(this).val();
+                    }
+                })
+
+                REAppInit();
+                RECocosAppInit();
+
+                $('#tmx').mousemove(function (e) {
+                    if (__tmxMap) {
+                        __tmxMap.onMouseMoved(e);
+                    }
+                }).mouseout(function (e) {
+                    if (__tmxMap) {
+                        __tmxMap.onMouseEnded(e);
+                    }
+                }).mousedown(function (e) {
+                    var npcMenu = $('#npc-menu'),
+                        canvas = $('#tmx'),
+                        eventX = e.offsetX,
+                        eventY = e.offsetY,
+                        popupX,
+                        popupY;
+
+                    if (canvas.width() - eventX < 130) {
+                        popupX = eventX - 130;
+                    } else {
+                        popupX = eventX + 32;
+                    }
+
+                    popupY = eventY + 32;
+                    if (__tmxMap) {
+                        __tmxMap.popupmenuPosition = cc.p(popupX, popupY);
+                    }
+                });
+            }); 
+
+            var __sceneListFile,
+                __scenePackageData,
+                __NPCs,
+                __NPCsDataSource = [],
+                __monste,
+                __monstersDataSource = [],
+                __backgrounds,
+                __backgroundsDataSource = [],
+                __entrances = [],
+                __entrancesDataSource = new kendo.data.DataSource({
+                    data: __entrances
+                }),
+                __currentEditingSceneId,
+                __prefix = 'maps/',
+                __backgroundsFolder = 'sounds/',
+                __tmxMapFiles = [],
+                __scenePackageFiles,
+                __willBeDeletedFiles = [],
+                __dataSource = [],
+                __tmxMap;
+        </script>
+    </head>
+        <body class="k-content">
+            <div id="navigator-bar" style="height: 48px;"></div>
+            <div class="k-block">
+                <div class="k-toolbar k-grid-toolbar">
+                    <a class="k-button k-button-icontext k-save-button" href="#">
+                        <span class="k-icon k-i-pencil"></span>保存
+                    </a>
+                    <a class="k-button k-button-icontext k-add-button" href="#">
+                        <span class="k-icon k-add"></span>添加
+                    </a>
+                    <input id="scene-packages" />
+                </div>
+                <div class="k-block" style="float: left; text-align: center; font-size: 0; margin-top: 2px; display: inline-block;">
+                    <canvas id="tmx" width="800" height="480"></canvas>
+                </div>
+                <div id="editor" class="k-block hidden">
+                    <table>
+                        <tr>
+                            <td>
+                                <span>ID</span>
+                            </td>
+                            <td colspan="3">
+                                <span id="scene-id" class="k-textbox"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>名字</span>
+                            </td>
+                            <td colspan="3">
+                                <input id="scene-name" class="k-textbox" style="width: 100%;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>背景地图</span>
+                            </td>
+                            <td>
+                                <input id="tmx-files" />
+                            </td>
+                            <td>
+                                <button id="set-tmx" class="k-button">设置</button>
+                            </td>
+                            <td>
+                                <button id="clean-tmx" class="k-button">清除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <span>场景</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input id="scenes" />
+                            </td>
+                            <td>
+                                <input id="tmxes-list" />
+                            </td>
+                            <td>
+                                <button id="set-scene" class="k-button">设置</button>
+                            </td>
+                            <td>
+                                <button id="clean-scene" class="k-button">清除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>背景音乐</span>
+                            </td>
+                            <td>
+                                <input id="sounds-list" />
+                            </td>
+                            <td>
+                                <button id="set-background" class="k-button">设置</button>
+                            </td>
+                            <td>
+                                <button id="clean-background" class="k-button">清除</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>NPC</span>
+                            </td>
+                            <td>
+                                <input id="npcs-list" />
+                            </td>
+                            <td colspan="2">
+                                <button id="insert-npc" class="k-button">添加</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>怪物</span>
+                            </td>
+                            <td>
+                                <input id="monsters-list" />
+                            </td>
+                            <td colspan="2">
+                                <button id="insert-monster" class="k-button">添加</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">描述</td>
+                            <td colspan="3">
+                                <textarea id="scene-description" rows="4" cols="30" style="width: 100%; height: 100px" class="k-textbox"></textarea>
+                            </td>
+                        </tr>
+                        <tr></tr>
+                        <tr>
+                            <td colspan="4">
+                                <a class="k-button k-button-icontext" href="javascript: REDeleteSceneById(__currentEditingSceneId);">
+                                    <span class="k-icon k-delete"></span>删除
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div id="status-bar" class="k-button k-state-disabled unselectable" style="text-align: left; width: 100%;"></div>
+            <div id="npc-menu" class="hidden">
+                <button class="k-button" onclick="REMoveSprite();">修改位置</button>
+                <button class="k-button" onclick="REModifyArea();">修改活动区域</button>
+                <button class="k-button" onclick="REModifyDialogues();">修改对白</button>
+                <button class="k-button" onclick="RESetupCondition();">设置出现条件</button>
+            </div>
+            <div id="action-editor">
+            </div>
+            <div id="area-selection-confirm" class="hidden">
+                <button class="k-button" onclick="REAreaSelectionOK();">确定</button>
+                <button class="k-button" onclick="REAreaSelectionCancel();">取消</button>
+            </div>
+    </body>
+</html>
+

@@ -77,7 +77,7 @@ public:
     MCDice *diceWithType(MCDiceType type);
     
 private:
-    CCDictionary *dices;
+    CCDictionary *dices_;
 };
 
 #endif /* defined(__Military_Confrontation__MCDice__) */

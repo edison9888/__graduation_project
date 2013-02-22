@@ -22,7 +22,6 @@ MCDungeonMaster::sharedDungeonMaster()
     if (__shared_dungeon_master == NULL) {
         __shared_dungeon_master = new MCDungeonMaster;
         if (__shared_dungeon_master && __shared_dungeon_master->_init()) {
-            __shared_dungeon_master->autorelease();
         } else {
             delete __shared_dungeon_master;
             __shared_dungeon_master = NULL;

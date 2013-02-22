@@ -10,12 +10,18 @@
 #define __Military_Confrontation__MCControllerLayer__
 
 #include "MCControllerDelegate.h"
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+
 #include "MCJoypad.h"
-#endif /* Android和iOS控制响应 */
+
+/* 控制器模式 */
+enum {
+    MCNormalControlMode = MCMakeEnum(0), /* 通常模式 */
+    MCBattleControlMode = MCMakeEnum(1), /* 战斗模式 */
+};
+typedef mc_enum_t MCControlMode;
+
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 #include "MCKeyboard.h"
-#include "MCJoypad.h"
 #endif /* MacOSX、Windows和Linux控制响应 */
 
 class MCControllerLayer : public CCLayer {
@@ -26,16 +32,13 @@ public:
     CREATE_FUNC(MCControllerLayer);
     
 private:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    MCJoypad *joypad_;
-#endif /* Android和iOS控制响应 */
-    
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     MCKeyboard *keybord_;
-    MCJoypad *joypad_;
 #endif /* MacOSX、Windows和Linux控制响应 */
+    MCJoypad *joypad_;
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
+    CC_PROPERTY(MCControlMode, controlMode_, ControlMode);
 };
 
 #endif /* defined(__Military_Confrontation__MCControllerLayer__) */

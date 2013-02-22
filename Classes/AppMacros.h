@@ -43,8 +43,10 @@ typedef struct tagResource
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 static Resource smallResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
-static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "ipad"   };
-static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "ipadhd" };
+//static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "ipad"   };
+//static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "ipadhd" };
+static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "iphone"   };
+static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "iphone" };
 #endif // IOS
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -56,8 +58,8 @@ static Resource resources[] = {
 #endif // ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//static Resource PCResource  =  { cocos2d::CCSizeMake(640, 384),   "PC" };
-static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "PC" };
+//static Resource PCResource  =  { cocos2d::CCSizeMake(640, 384),   "iphone" };
+static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "iphone" };
 #endif // WIN32、MAC、LINUX
 
 // The font size 24 is designed for small resolution, so we should change it to fit for current design resolution

@@ -36,7 +36,8 @@ MCDice::roll()
 bool
 MCDiceMaker::init()
 {
-    dices = CCDictionary::create();
+    dices_ = CCDictionary::create();
+    dices_->retain();
     
     return true;
 }
@@ -66,7 +67,7 @@ MCDiceMaker::sharedDiceMaker()
 MCDice *
 MCDiceMaker::diceWithType(MCDiceType type)
 {
-    MCDice *dice = (MCDice *) dices->objectForKey(type);
+    MCDice *dice = (MCDice *) dices_->objectForKey(type);
     if (dice == NULL) {
         dice = MCDice::create();
         dice->_type = type;

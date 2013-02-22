@@ -35,3 +35,8 @@ proj.linux/Military_Confrontation/main.cpp
 
 *~
 
+Resources/PC_/*
+
+docs/*.pdf
+
+proj.ios/.DS_Store

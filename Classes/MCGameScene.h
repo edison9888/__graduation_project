@@ -21,10 +21,11 @@ public:
         viewport_(NULL),
         background_(NULL) { }
     
-    bool init();
+    /* 从场景包加载场景初始化 */
+    bool initWithScenePackage(MCScenePackage *aPackage);
     
     /* 从场景包加载场景 */
-    static MCGameScene *createWithScenePackage(MCScenePackage *package);
+    static MCGameScene *createWithScenePackage(MCScenePackage *aPackage);
     
     void onEnter();
     void onExit();
@@ -37,7 +38,6 @@ public:
 protected:
     
 private:
-    
     
     MCControllerLayer *controller_; /* 控制层 */
     CCLayer *objects_; /* 对象层 */

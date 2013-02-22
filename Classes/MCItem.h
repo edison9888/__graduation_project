@@ -12,12 +12,12 @@
 #include "MCObject.h"
 
 /* 物品类型 */
-typedef mc_enum_t MCItemType;
 enum {
     MCNormalItem    = MCMakeEnum(0), /* 普通物品 */
     MCEquipmentItem = MCMakeEnum(1), /* 装备物品 */
     MCTaskItem      = MCMakeEnum(2), /* 任务物品 */
 };
+typedef mc_enum_t MCItemType;
 
 class MCItem : public MCObject {
 public:

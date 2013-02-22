@@ -70,6 +70,10 @@
 		A33BB964169E96B200196286 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BB926169E96B200196286 /* CCPhysicsDebugNode.cpp */; };
 		A33BB965169E96B200196286 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BB928169E96B200196286 /* CCPhysicsSprite.cpp */; };
 		A33BB970169E978D00196286 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BB96F169E978D00196286 /* libcurl.a */; };
+		A38D11CF16B81C8C009E1CB8 /* MCBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11CD16B81C8C009E1CB8 /* MCBase64.cpp */; };
+		A38D11D316B81CB9009E1CB8 /* MCDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D116B81CB9009E1CB8 /* MCDialog.cpp */; };
+		A38D11D616B81CD6009E1CB8 /* MCSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */; };
+		A38D11DA16B81CF8009E1CB8 /* MCDetailScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */; };
 		A39C948316AEE11800B92E33 /* MCBattle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947716AEE11800B92E33 /* MCBattle.cpp */; };
 		A39C948416AEE11800B92E33 /* MCDungeonMaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947916AEE11800B92E33 /* MCDungeonMaster.cpp */; };
 		A39C948516AEE11800B92E33 /* MCMutiplayerBattleImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947B16AEE11800B92E33 /* MCMutiplayerBattleImpl.cpp */; };
@@ -83,14 +87,11 @@
 		A39FB02116B27512007FECB7 /* MCItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB01F16B27512007FECB7 /* MCItem.cpp */; };
 		A39FB02616B2752E007FECB7 /* MCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB02216B2752E007FECB7 /* MCJoypad.cpp */; };
 		A39FB02716B2752E007FECB7 /* MCJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB02416B2752E007FECB7 /* MCJoystick.cpp */; };
-		A39FB02A16B2754B007FECB7 /* MCKeyboard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB02816B2754B007FECB7 /* MCKeyboard.cpp */; };
-		A39FB02D16B27557007FECB7 /* MCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB02B16B27557007FECB7 /* MCKeyboardDispatcher.cpp */; };
 		A39FB03216B27566007FECB7 /* MCControllerDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB02E16B27566007FECB7 /* MCControllerDelegate.cpp */; };
 		A39FB03316B27566007FECB7 /* MCControllerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03016B27566007FECB7 /* MCControllerLayer.cpp */; };
 		A39FB03616B2757A007FECB7 /* MCScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03416B2757A007FECB7 /* MCScript.cpp */; };
 		A39FB04116B27593007FECB7 /* MCGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03716B27593007FECB7 /* MCGameScene.cpp */; };
 		A39FB04216B27593007FECB7 /* MCMainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03916B27593007FECB7 /* MCMainMenuScene.cpp */; };
-		A39FB04316B27593007FECB7 /* MCSceneList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03B16B27593007FECB7 /* MCSceneList.cpp */; };
 		A39FB04416B27593007FECB7 /* MCScenePackage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03D16B27593007FECB7 /* MCScenePackage.cpp */; };
 		A39FB04516B27593007FECB7 /* MCSplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB03F16B27593007FECB7 /* MCSplashScene.cpp */; };
 		A39FB06616B275E8007FECB7 /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB05E16B275E8007FECB7 /* Array.cpp */; };
@@ -267,6 +268,14 @@
 		A33BB928169E96B200196286 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		A33BB929169E96B200196286 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		A33BB96F169E978D00196286 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../library/cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
+		A38D11CD16B81C8C009E1CB8 /* MCBase64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCBase64.cpp; sourceTree = "<group>"; };
+		A38D11CE16B81C8C009E1CB8 /* MCBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBase64.h; sourceTree = "<group>"; };
+		A38D11D116B81CB9009E1CB8 /* MCDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDialog.cpp; sourceTree = "<group>"; };
+		A38D11D216B81CB9009E1CB8 /* MCDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCDialog.h; sourceTree = "<group>"; };
+		A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSceneManager.cpp; sourceTree = "<group>"; };
+		A38D11D516B81CD6009E1CB8 /* MCSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSceneManager.h; sourceTree = "<group>"; };
+		A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDetailScene.cpp; sourceTree = "<group>"; };
+		A38D11D916B81CF8009E1CB8 /* MCDetailScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCDetailScene.h; sourceTree = "<group>"; };
 		A39C947716AEE11800B92E33 /* MCBattle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCBattle.cpp; sourceTree = "<group>"; };
 		A39C947816AEE11800B92E33 /* MCBattle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBattle.h; sourceTree = "<group>"; };
 		A39C947916AEE11800B92E33 /* MCDungeonMaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDungeonMaster.cpp; sourceTree = "<group>"; };
@@ -295,10 +304,6 @@
 		A39FB02316B2752E007FECB7 /* MCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJoypad.h; sourceTree = "<group>"; };
 		A39FB02416B2752E007FECB7 /* MCJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCJoystick.cpp; sourceTree = "<group>"; };
 		A39FB02516B2752E007FECB7 /* MCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCJoystick.h; sourceTree = "<group>"; };
-		A39FB02816B2754B007FECB7 /* MCKeyboard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCKeyboard.cpp; sourceTree = "<group>"; };
-		A39FB02916B2754B007FECB7 /* MCKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCKeyboard.h; sourceTree = "<group>"; };
-		A39FB02B16B27557007FECB7 /* MCKeyboardDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCKeyboardDispatcher.cpp; path = ../../library/cocos2dx/platform/mac/MCKeyboardDispatcher.cpp; sourceTree = "<group>"; };
-		A39FB02C16B27557007FECB7 /* MCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCKeyboardDispatcher.h; path = ../../library/cocos2dx/platform/mac/MCKeyboardDispatcher.h; sourceTree = "<group>"; };
 		A39FB02E16B27566007FECB7 /* MCControllerDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCControllerDelegate.cpp; sourceTree = "<group>"; };
 		A39FB02F16B27566007FECB7 /* MCControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCControllerDelegate.h; sourceTree = "<group>"; };
 		A39FB03016B27566007FECB7 /* MCControllerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCControllerLayer.cpp; sourceTree = "<group>"; };
@@ -309,8 +314,6 @@
 		A39FB03816B27593007FECB7 /* MCGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCGameScene.h; sourceTree = "<group>"; };
 		A39FB03916B27593007FECB7 /* MCMainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCMainMenuScene.cpp; sourceTree = "<group>"; };
 		A39FB03A16B27593007FECB7 /* MCMainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMainMenuScene.h; sourceTree = "<group>"; };
-		A39FB03B16B27593007FECB7 /* MCSceneList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSceneList.cpp; sourceTree = "<group>"; };
-		A39FB03C16B27593007FECB7 /* MCSceneList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSceneList.h; sourceTree = "<group>"; };
 		A39FB03D16B27593007FECB7 /* MCScenePackage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCScenePackage.cpp; sourceTree = "<group>"; };
 		A39FB03E16B27593007FECB7 /* MCScenePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCScenePackage.h; sourceTree = "<group>"; };
 		A39FB03F16B27593007FECB7 /* MCSplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSplashScene.cpp; sourceTree = "<group>"; };
@@ -643,6 +646,40 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
+		A38D11CB16B81C6C009E1CB8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A38D11CC16B81C74009E1CB8 /* Base64 */,
+				A39FB00616B27417007FECB7 /* Geometry */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		A38D11CC16B81C74009E1CB8 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				A38D11CD16B81C8C009E1CB8 /* MCBase64.cpp */,
+				A38D11CE16B81C8C009E1CB8 /* MCBase64.h */,
+			);
+			name = Base64;
+			sourceTree = "<group>";
+		};
+		A38D11D016B81CA5009E1CB8 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		A38D11D716B81CE3009E1CB8 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */,
+				A38D11D916B81CF8009E1CB8 /* MCDetailScene.h */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
 		A39C947116AEE09A00B92E33 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,12 +765,13 @@
 				A39FB03816B27593007FECB7 /* MCGameScene.h */,
 				A39FB03916B27593007FECB7 /* MCMainMenuScene.cpp */,
 				A39FB03A16B27593007FECB7 /* MCMainMenuScene.h */,
-				A39FB03B16B27593007FECB7 /* MCSceneList.cpp */,
-				A39FB03C16B27593007FECB7 /* MCSceneList.h */,
+				A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */,
+				A38D11D516B81CD6009E1CB8 /* MCSceneManager.h */,
 				A39FB03D16B27593007FECB7 /* MCScenePackage.cpp */,
 				A39FB03E16B27593007FECB7 /* MCScenePackage.h */,
 				A39FB03F16B27593007FECB7 /* MCSplashScene.cpp */,
 				A39FB04016B27593007FECB7 /* MCSplashScene.h */,
+				A38D11D716B81CE3009E1CB8 /* Detail */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -782,10 +820,6 @@
 		A39FB01B16B274B7007FECB7 /* Mac OS X */ = {
 			isa = PBXGroup;
 			children = (
-				A39FB02B16B27557007FECB7 /* MCKeyboardDispatcher.cpp */,
-				A39FB02C16B27557007FECB7 /* MCKeyboardDispatcher.h */,
-				A39FB02816B2754B007FECB7 /* MCKeyboard.cpp */,
-				A39FB02916B2754B007FECB7 /* MCKeyboard.h */,
 			);
 			name = "Mac OS X";
 			sourceTree = "<group>";
@@ -865,8 +899,11 @@
 			isa = PBXGroup;
 			children = (
 				A39C947116AEE09A00B92E33 /* Misc */,
-				A39FB00616B27417007FECB7 /* Geometry */,
+				A38D11CB16B81C6C009E1CB8 /* Utils */,
 				A39C947216AEE0A000B92E33 /* Test */,
+				A38D11D016B81CA5009E1CB8 /* UI */,
+				A38D11D116B81CB9009E1CB8 /* MCDialog.cpp */,
+				A38D11D216B81CB9009E1CB8 /* MCDialog.h */,
 				A39FB01616B27477007FECB7 /* Scene */,
 				A39FB01716B2748B007FECB7 /* Script */,
 				A39FB01816B2749C007FECB7 /* Controller */,
@@ -1048,14 +1085,11 @@
 				A39FB02116B27512007FECB7 /* MCItem.cpp in Sources */,
 				A39FB02616B2752E007FECB7 /* MCJoypad.cpp in Sources */,
 				A39FB02716B2752E007FECB7 /* MCJoystick.cpp in Sources */,
-				A39FB02A16B2754B007FECB7 /* MCKeyboard.cpp in Sources */,
-				A39FB02D16B27557007FECB7 /* MCKeyboardDispatcher.cpp in Sources */,
 				A39FB03216B27566007FECB7 /* MCControllerDelegate.cpp in Sources */,
 				A39FB03316B27566007FECB7 /* MCControllerLayer.cpp in Sources */,
 				A39FB03616B2757A007FECB7 /* MCScript.cpp in Sources */,
 				A39FB04116B27593007FECB7 /* MCGameScene.cpp in Sources */,
 				A39FB04216B27593007FECB7 /* MCMainMenuScene.cpp in Sources */,
-				A39FB04316B27593007FECB7 /* MCSceneList.cpp in Sources */,
 				A39FB04416B27593007FECB7 /* MCScenePackage.cpp in Sources */,
 				A39FB04516B27593007FECB7 /* MCSplashScene.cpp in Sources */,
 				A39FB06616B275E8007FECB7 /* Array.cpp in Sources */,
@@ -1067,6 +1101,10 @@
 				A39FB06C16B275E8007FECB7 /* SolidusEscaper.cpp in Sources */,
 				A39FB06D16B275E8007FECB7 /* Value.cpp in Sources */,
 				A39FB07016B27600007FECB7 /* MCJSONModifier.cpp in Sources */,
+				A38D11CF16B81C8C009E1CB8 /* MCBase64.cpp in Sources */,
+				A38D11D316B81CB9009E1CB8 /* MCDialog.cpp in Sources */,
+				A38D11D616B81CD6009E1CB8 /* MCSceneManager.cpp in Sources */,
+				A38D11DA16B81CF8009E1CB8 /* MCDetailScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,0 +1,25 @@
+{
+	"name": "NPC",
+	"NPCs": [
+		{
+			"id": "N001",
+			"name": "村长",
+			"description": "XX村的村长，xxx的"
+		},
+		{
+			"id": "N002",
+			"name": "小屁孩",
+			"description": "XX村村长的孙子"
+		},
+		{
+			"id": "N003",
+			"name": "路人甲",
+			"description": "XX村的路人甲，xxx的"
+		},
+		{
+			"id": "N004",
+			"name": "路人乙",
+			"description": "XX村的路人乙，xxx的"
+		}
+	]
+}

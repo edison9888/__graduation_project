@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="static/main.css" rel="stylesheet" type="text/css">
+        <title>资源编辑器 - NPC编辑器</title>
+        <link href="static/kendo.common.min.css" rel="stylesheet">
+        <link href="static/kendo.metroblack.min.css" rel="stylesheet">
+        <style>
+        .items-view {
+            float: left;
+            width: 248px;
+            height: 380px;
+            margin: 1px;
+            padding: 2px;
+            -moz-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            -webkit-box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(0,0,0,0.1);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+        .items-view-viewer {
+            border: 1px solid transparent;
+            height: 456px;
+        }
+        .items-view-viewer:hover {
+            border-color: #00ABA9;
+        }
+        .items-view-viewer .k-textbox {
+            border: 0;
+        }
+        .items-view-viewer .k-textbox:hover {
+            color: #00ABA9;
+        }
+        .items-view-editor {
+            width: 360px;
+        }
+        .items-view-editor img {
+//            cursor: pointer;
+        }
+
+        .items-view dl {
+            display: block;
+            margin: 4px 0;
+            padding: 0;
+            min-width: 0;
+            min-height: 360px;
+        }
+        .items-view dt, dd {
+            float: left;
+            margin: 0;
+            padding: 0;
+        }
+        .items-view-editor dt, dd {
+            margin: 4px;
+        }
+        .items-view dt:nth-child(1), dd:nth-child(1) {
+            height: 108px;
+        }
+        .items-view dt {
+            clear: left;
+            padding: 0 3px 0 13px;
+            text-align: right;
+            opacity: 0.6;
+            width: 48px;
+            margin-right: 16px;
+            height: 40px;
+            line-height: 40px;
+        }
+        .items-view dd {
+            width: 160px;
+            height: 32px;
+            line-height: 32px;
+        }
+
+        .k-listview {
+            border: 0;
+            padding: 0;
+            min-width: 0;
+        }
+        .k-listview:after, .product-view dl:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden;
+        }
+        .edit-buttons {
+            text-align: right;
+            padding: 5px;
+            min-width: 100px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+        }
+
+        .k-toolbar, #list-view, .k-pager-wrap {
+            width: 1024px;
+            margin: 0 auto;
+            -webkit-border-radius: 11px;
+            -moz-border-radius: 11px;
+            border-radius: 11px;
+        }
+        #status-bar {
+            width: 100%;
+            height: 24px;
+            line-height: 24px;
+            padding: 0 24px;
+            margin: 13px auto;
+        }
+
+        span.k-invalid-msg  {
+            position: absolute;
+            margin-left: 6px;
+        }
+
+        .re-description {
+            overflow: auto;
+            word-break: break-all;
+            width: 160px !important;
+            height: 180px !important;
+            line-height: 18px !important;
+        }
+        </style>
+
+        <script src="static/jquery.min.js"></script>
+        <script src="static/kendo.web.min.js"></script>
+        <script src="static/REObjectIdEditor.js"></script>
+        <script src="static/REApp.js"></script>
+        <script src="static/REUtils.js"></script>
+        <script src="static/RENavigatorBar.js"></script>
+        <script type="text/javascript">
+            function RELoadDataCallback(data) {
+                if (data) {
+                    __targetFileObject = JSON.parse(data);
+                } else {
+                    __targetFileObject = {
+                        name: 'NPC',
+                        NPCs: []
+                    };
+                }
+                __dataSource = new kendo.data.DataSource({
+                    data: __targetFileObject.NPCs,
+                    batch: true,
+                    pageSize: 4
+                });
+                __dataSource.read();
+                $("#pager").kendoPager({
+                    dataSource: __dataSource
+                });
+                __listView.setDataSource(__dataSource);
+            }
+
+            function RELoadFacesCallback(data) {
+                var faces;
+
+                if (data) {
+                    faces = JSON.parse(data);
+                } else {
+                    faces = [];
+                }
+
+                __faces.push({
+                    name: '---------------------------------',
+                    face: '',
+                    preview: '#'
+                });
+                for (var i = 0; i < faces.length; ++i) {
+                    __faces.push({
+                        name: faces[i].stringByDeletingPathExtension(),
+                        face: __facesPath + faces[i],
+                        preview: REResourceGetMCResourcesPath(__facesPath + faces[i])
+                    });
+                }
+            }
+
+            function RELoadSpriteSheetsCallback(data) {
+                var spriteSheets;
+
+                if (data) {
+                    spriteSheets = JSON.parse(data);
+                } else {
+                    spriteSheets = [];
+                }
+
+                __spriteSheets.push({
+                    name: '---------------------------------',
+                    spriteSheet: '',
+                    preview: '#'
+                });
+                for (var i = 0; i < spriteSheets.length; ++i) {
+                    __spriteSheets.push({
+                        name: spriteSheets[i],
+                        spriteSheet: __spriteSheetsPath + spriteSheets[i],
+                        preview: REResourceGetMCResourcesPath(__spriteSheetsPath + spriteSheets[i] + '.png')
+                    });
+                }
+            }
+
+            function RESaveDataCallback(data) {
+                if (data === 'ok') {
+                    REStatusBarShow('保存成功');
+                } else {
+                    REStatusBarShow('保存失败(' + (data ? data : 'unknown error') + ')！');
+                }
+            }
+
+            function REEditItemById(anId) {
+                var editorWindow = $('#kREEditorWindow'),
+                    data = __dataSource.get(anId);
+
+                if (editorWindow.length == 0) {
+                    editorWindow = $('<div>').appendTo(document.body)
+                                    .attr('id', 'kREEditorWindow')
+                                    .kendoWindow({
+                                        title: '编辑',
+                                        modal: true,
+                                        width: 420,
+                                        height: 430,
+                                        resizable: false,
+                                        visible: false
+                                    })
+                    __editorWindow = editorWindow.data('kendoWindow');
+                    __editorWindow.setOptions({visible: true});
+                }
+                if (!data) {
+                    data = {
+                        id: '',
+                        name: '',
+                        face: '#',
+                        spriteSheet: '',
+                        description: ''
+                    };
+                }
+                __editorWindow.content(kendo.template($('#edit-item-window-tmpl').html())(data))
+                              .center()
+                              .open();
+                /* init widgets */
+                kendo.init('#save-id');
+                $('#save-face').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "face",
+                    template: '<div>'
+                              + '<img src="${data.preview}" alt="${data.preview.stringByDeletingPathExtension()}" width="64" height="64">'
+                              + '</div>',
+                    dataSource: __faces,
+                    change: function (e) {
+                        var value = e.sender.value();
+                        $('#face-preview').attr('src', REResourceGetMCResourcesPath(value));
+                    }
+                });
+                $('#save-sprite-sheet').kendoDropDownList({
+                    dataTextField: "name",
+                    dataValueField: "spriteSheet",
+                    template: '<div>'
+                              + '<img src="${data.preview}" alt="${data.spriteSheet}" width="64" height="64" style="float: left; ${data.spriteSheet ? "" : "display: none;" }" />'
+                              + '<span style="height: 64px; line-height: 64px; margin-left: 13px;">${data.name}</span>'
+                              + '</div>',
+                    dataSource: __spriteSheets
+                }).data("kendoDropDownList").list.width(400);
+            }
+
+            function REDeleteItemById(anId) {
+                var data = __dataSource.get(anId);
+                __dataSource.remove(data);
+            }
+
+            function RESaveItemById(anId) {
+                var data,
+                    idValue = $('#save-id').data('kendoObjectIdEditor').getData(),
+                    nameValue = $('#save-name').val(),
+                    faceValue = $('#save-face').val(),
+                    spriteSheetValue = $('#save-sprite-sheet').val(),
+                    descriptionValue = $('#save-description').val(),
+                    needInsert = false;
+
+                if (!idValue || !nameValue) {
+                    alert('ID和名字不能为空！');
+                    return;
+                }
+                data = __dataSource.get(idValue);
+                if (data && idValue !== anId) {
+                    if (confirm('已存在此ID('+ idValue + ')，是否覆盖？')) {
+                    } else {
+                        return;
+                    }
+                }
+                if (!data) {
+                    data = {};
+                    needInsert = true;
+                }
+                data.id = idValue;
+                data.name = nameValue;
+                data.face = faceValue;
+                console.log(data.face)
+                data.spriteSheet = spriteSheetValue;
+                data.description = descriptionValue;
+                if (needInsert) {
+                    __dataSource.add(data);
+                }
+                __listView.refresh();
+                __editorWindow.close();
+            }
+
+            function RESaveItems() {
+                var dataPath = REResourceGetMCResourcesPath('NPCs.rlst');
+
+                __targetFileObject.NPCs = __dataSource.data().toJSON();
+                $.post('/services/writeFile', {
+                    path: dataPath,
+                    data: JSON.stringify(__targetFileObject)
+                }, RESaveDataCallback);
+            }
+
+            function RECancel() {
+                __editorWindow.close();
+            }
+            
+            function REShowEditButtons(id) {
+                $('#' + id).show();
+            }
+
+            function REHideEditButtons(id) {
+                $('#' + id).hide();
+            }
+
+            function REStatusBarShow(data) {
+                $('#status-bar').html(data);
+            }
+
+            $(document).ready(function () {
+                 __listView = $("#list-view").kendoListView({
+                                    dataSource: __dataSource,
+                                    template: kendo.template($("#item-tmpl").html())
+                                }).data("kendoListView");
+
+                $(".k-save-button").click(function(e) {
+                    RESaveItems();
+                });
+
+                $(".k-add-button").click(function(e) {
+                    REEditItemById(null);
+                });
+
+                REAppInit();
+
+                var dataPath = REResourceGetMCResourcesPath('NPCs.rlst');
+                $.post('/services/requestFile', {
+                    path: dataPath
+                }, RELoadDataCallback);
+
+                $.post('/services/spriteSheet', {}, RELoadSpriteSheetsCallback);
+                $.post('/services/faces', {}, RELoadFacesCallback);
+            });
+
+            var __targetFileObject,
+                __dataSource,
+                __listView,
+                __searchBar,
+                __facesPath = 'faces/',
+                __spriteSheetsPath = 'spritesheets/',
+                __faces = [],
+                __spriteSheets = [],
+                __editorWindow;
+        </script>
+        </head>
+        <body class="k-content">
+            <div id="navigator-bar" style="height: 48px;"></div>
+            <div class="k-block">
+                <div class="k-toolbar k-grid-toolbar">
+                    <a class="k-button k-button-icontext k-save-button" href="#">
+                        <span class="k-icon k-i-pencil"></span>保存
+                    </a>
+                    <a class="k-button k-button-icontext k-add-button" href="#">
+                        <span class="k-icon k-add"></span>添加
+                    </a>
+                </div>
+                <div id="list-view"></div>
+                <div id="pager" class="k-pager-wrap"></div>
+                <div id="status-bar" class="k-button k-state-disabled unselectable" style="text-align: left"></div>
+            </div>
+            <script type="text/x-kendo-tmpl" id="item-tmpl">
+                <div class="items-view items-view-viewer" onmouseover="REShowEditButtons('edit-buttons-${id}')" onmouseout="REHideEditButtons('edit-buttons-${id}')">
+                    <dl>
+                        <dt>头像</dt>
+                        <dd>
+                            <img src="${REResourceGetMCResourcesPath(face)}" width="96" height="96" />
+                        </dd>
+                        <dt>ID</dt>
+                        <dd class="k-textbox">${id}</dd>
+                        <dt>名字</dt>
+                        <dd class="k-textbox">${name}</dd>
+                        <dt>精灵表</dt>
+                        <dd class="k-textbox" style="overflow-x: auto;">${spriteSheet.substring(__spriteSheetsPath.length)}</dd>
+                        <dt>描述</dt>   
+                        <dd class="k-textbox re-description">${description}</dd>
+                    </dl>
+                    <div id="edit-buttons-${id}" class="edit-buttons" style="display: none;">
+                        <a class="k-button k-button-icontext" href="javascript: REEditItemById('${id}');">
+                             <span class="k-icon k-edit"></span>编辑
+                         </a>
+                         <a class="k-button k-button-icontext" href="javascript: REDeleteItemById('${id}')">
+                             <span class="k-icon k-delete"></span>删除
+                         </a>
+                    </div>
+                </div>
+            </script>
+            <script type="text/x-kendo-tmpl" id="select-face-window-tmpl">
+                <input type="file" id="select-face" />
+            </script>
+            <script type="text/x-kendo-tmpl" id="edit-item-window-tmpl">
+                <div class="items-view items-view-editor">
+                    <dl>                        
+                        <dt>头像</dt>
+                        <dd>
+                            <img id="face-preview" src="${REResourceGetMCResourcesPath(face)}" width="64" height="64" />
+                            <input id="save-face" value="${face}">
+                        </dd>
+                        <dt>ID</dt>
+                        <dd>
+                            <div id="save-id" data-role="objectideditor" init-data="${id}"></div>
+                        </dd>
+                        <dt>名字</dt>
+                        <dd>
+                            <input id="save-name" value="${name}" class="k-textbox">
+                        </dd>
+                        <dt>精灵表</dt>
+                        <dd>
+                            <input id="save-sprite-sheet" value="${spriteSheet}">
+                        </dd>
+                        <dt>描述</dt>
+                        <dd>
+                            <textarea id="save-description" rows="4" cols="30" style="width: 240px; height: 100px" class="k-textbox">${description}</textarea>
+                        </dd>
+                    </dl>
+                    <div class="edit-buttons">
+                        <a class="k-button k-button-icontext" href="javascript: RESaveItemById('${id}');">
+                             <span class="k-icon k-edit"></span>储存
+                         </a>
+                         <a class="k-button k-button-icontext" href="javascript: RECancel();">
+                             <span class="k-icon k-delete"></span>取消
+                         </a>
+                    </div>
+                </div>
+            </script>
+    </body>
+</html>

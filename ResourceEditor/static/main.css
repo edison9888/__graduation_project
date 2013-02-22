@@ -1,0 +1,226 @@
+body {
+/*    background-image: url(bg_tile.jpg);*/
+    margin: 0;
+    
+    color: #F1F1F1;
+}
+
+table {
+    border-collapse: collapse;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+}
+
+table tr:first-child {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+textarea { 
+    resize: none; 
+}
+
+.k-block-borderless {
+    padding: 0 !important;
+}
+
+.navigator-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 48px;
+    border-bottom: 1px solid #333;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.navigator-bar-views {
+    display: inline-block !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0 !important;
+}
+
+.navigator-bar-button {
+    padding: 3px 12px !important;
+    height: 48px !important;
+    line-height: 42px !important;
+    
+    border: 0 !important;
+}
+
+.sliding-view {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    
+    width: 100%;
+    height: 240px;
+    
+    background-color: #202020 !important;
+}
+
+.sliding-view-item {
+    display: inline-block;
+    text-align: center;
+    
+    width: 180px;
+    height: 180px;
+    line-height: 180px;
+    margin: 30px;
+    
+    cursor: pointer;
+    
+    color: #F1F1F1;
+    background-color: #36A0E4;
+}
+
+.sliding-view-item:hover {
+    margin: 25px;
+    
+    border: 5px solid #BABABA;
+}
+
+.sliding-view-item:active {
+    margin: 25px;
+    
+    border: 5px solid #EFEFEF;
+}
+
+.accounting-search-view {
+    width: 100%;
+}
+
+.search-bar {
+    min-width: 200px;
+    max-width: 1212px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px 0;
+}
+
+.search-button {
+    display: inline-block;
+    text-align: center;
+    
+    padding: 0 17px;
+    margin: 3px 0;
+    line-height: 24px;
+    
+    cursor: pointer;
+    
+    color: #F1F1F1;
+    background-color: #36A0E4;
+}
+
+.search-button:hover {
+    background-color: #2590E4;
+}
+
+.search-button:active {
+    background-color: #1480D4;
+}
+
+.limit-text-field {
+    width: 64px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px 7px;
+}
+
+.re-objid-editor-class, .re-objid-editor-sub-class, .re-objid-editor-index, .re-objid-editor-sub-index {
+    color: white;
+    text-align: center;
+    width: 32px !important;
+}
+
+.re-dice-editor-count, .re-dice-editor-value {
+    width: 90px !important;
+}
+
+.re-dice-editor-dice {
+    margin: 3px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.re-critical-hit-range-editor-front, .re-critical-hit-range-editor-side, .re-critical-hit-range-editor-back {
+    width: 58px !important;
+}
+
+.re-critical-hit-range-editor-separator1, .re-critical-hit-range-editor-separator2 {
+    margin: 4px;
+    height: 35px;
+    line-height: 35px;
+}
+
+.segment-view {
+    border-color: #36A0E4;
+    border-style: solid;
+    border-width: 0;
+}
+.segment-view-top {
+    border-top-width: 1px;
+}
+.segment-view-right {
+    border-right-width: 1px;
+}
+.segment-view-bottom {
+    border-bottom-width: 1px;
+}
+.segment-view-left {
+    border-left-width: 1px;
+}
+.segment-view-top-left {
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 4px;
+    -webkit-border-top-left-radius: 4px;
+    -moz-border-top-left-radius: 4px;
+}
+.segment-view-top-right {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-top-right-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -moz-border-top-right-radius: 4px;
+}
+.segment-view-bottom-left {
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-bottom-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-bottom-left-radius: 4px;
+}
+.segment-view-bottom-right {
+    border-bottom-width: 1px;
+    border-right-width: 1px;
+    border-bottom-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-bottom-right-radius: 4px;
+}
+
+.left {
+    float: left !important;
+}
+
+.right {
+    float: right !important;
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.selectable {
+    -moz-user-select: text;
+    -webkit-user-select: text;
+}
+
+.hidden {
+    display: none !important;
+}
