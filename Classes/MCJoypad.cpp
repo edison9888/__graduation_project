@@ -116,6 +116,10 @@ MCJoypad::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
         joystick_->setPosition (location);
         joystickDelta_ = __mc_joystick_delta;
+        
+        if (delegate_) {
+            delegate_->controllerDidPress(delegate_);
+        }
     }
 }
 
@@ -200,6 +204,10 @@ MCJoypad::ccTouchesEnded (CCSet *pTouches, CCEvent *pEvent)
         joystickDelta_ = __cc_point_zero;
         __mc_joystick_delta->x = 0;
         __mc_joystick_delta->y = 0;
+        
+        if (delegate_) {
+            delegate_->controllerDidRelease(delegate_);
+        }
     }
     isValidControl_ = false;
 }
@@ -214,21 +222,37 @@ MCJoypad::update(float dt)
     }
     CCPoint point = *joystickDelta_;
     
+    delegate_->controllerMove(delegate_, point);
+    return;
+    
     //每个方向分配60度角的空间
     getAngle (point.y, point.x, angle);
-    if (angle < 30.f) {
+    if (angle < 22.5f) {
         if (point.x > 0) {
             delegate_->controllerMoveRight(delegate_);
         } else {
             delegate_->controllerMoveLeft(delegate_);
         }
-    } else if (angle > 60.f) {
+    } else if (angle < 67.5f) {
+        if (point.x > 0) {
+            if (point.y > 0) {
+                delegate_->controllerMoveUpRight(delegate_);
+            } else {
+                delegate_->controllerMoveDownRight(delegate_);
+            }
+        } else {
+            if (point.y > 0) {
+                delegate_->controllerMoveUpLeft(delegate_);
+            } else {
+                delegate_->controllerMoveDownLeft(delegate_);
+            }
+        }
+    } else {
         if (point.y > 0) {
             delegate_->controllerMoveUp(delegate_);
         } else {
             delegate_->controllerMoveDown(delegate_);
         }
     }
-
 }
 

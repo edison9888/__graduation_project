@@ -35,6 +35,8 @@ public:
     void controllerMoveLeft(MCControllerDelegate *sender);
     void controllerMoveRight(MCControllerDelegate *sender);
     
+    void controllerMove(MCControllerDelegate *sender, const CCPoint &delta){};
+    
 protected:
     
 private:

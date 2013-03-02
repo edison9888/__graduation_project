@@ -13,18 +13,18 @@
 
 USING_NS_CC;
 
-class MCMainMenuLayer : public CCLayerColor {
+class MCMainMenu : public CCLayerColor {
     
 public:
     bool init();
     
-    CREATE_FUNC(MCMainMenuLayer);
+    CREATE_FUNC(MCMainMenu);
     
     static CCScene *scene()
     {
         CCScene *scene = CCScene::create();
         
-        scene->addChild(MCMainMenuLayer::create());
+        scene->addChild(MCMainMenu::create());
         
         return scene;
     }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="200" height="100" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="006-Desert01" tilewidth="16" tileheight="16">
+  <image source="006-Desert01.png" trans="ffffff" width="256" height="608"/>
+ </tileset>
+ <layer name="块层 1" width="200" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TsQ3DQADEsAecDez9Z437pNcVLAROoOuc83m7SP54vz0k/1r/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0kuW/9JLlv/SS5b/0ku+wUuqLxlgDgBAA==
+  </data>
+ </layer>
+ <layer name="块层 2" width="200" height="100">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3ZSduQAwCF4a9PYSuiv5uktsiwlamtIdrKuM3YNmXYIrR0/sU51/Xei2d1/4Tn0pmTkxfT5fRSupJeTlfTtXSJ8wP7K+nV9Fq6nl5Pb6Q301ucH9zfTjfSO+nd9F56P32QbnJ+cP8wfZQ+Tp+kW+nT9Fm6zfnB/fN0J32Rvkxfpa/TN+lbzg/ud9N36fv0Q/ox/ZR+Tvc4P7jfT7+kB+lh+jX9ln5Pf3B+cP8z/ZX+To/SP+nf9F96zPnB/czpyclpeiKdTefSk+mp9PQp58f2Z9L59Gx6Ll1Iz6cX0kXOD+7tP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL3v6TnC97+09yvuztP8n5srf/JOfL/j+D0U5+gDgBAA==
+  </data>
+ </layer>
+</map>

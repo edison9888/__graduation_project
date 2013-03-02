@@ -31,13 +31,3 @@ MCNPC::create(mc_object_id_t anObjectId)
     
     return npc;
 }
-
-CCSprite *
-MCNPC::entity()
-{
-    if (entiry_ == NULL) {
-#warning TODO: 生成实体
-    }
-    
-    return entiry_;
-}

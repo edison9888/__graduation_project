@@ -2,27 +2,7 @@
 
 #include "AppDelegate.h"
 
-#include "MCTestScene.h"
-#include "MCSplashScene.h"
-#include "MCMainMenuScene.h"
-
-#include "MCSceneManager.h"
-#include "MCTestControllerScene.h"
-
-#include "MCJSONModifier.h"
-
-#include "MCDialog.h"
-#include "MCTask.h"
-#include "MCTaskManager.h"
-
-#include "MCBase64.h"
-#include "MCDetailScene.h"
-
-#include "MCFaceBox.h"
-
-#include "cocos-ext.h"
-USING_NS_CC;
-USING_NS_CC_EXT;
+#include "MCTestbed.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 
@@ -65,7 +45,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     pEGLView->setDesignResolutionSize(PCResource.size.width, PCResource.size.height, kResolutionExactFit);
     CCFileUtils::sharedFileUtils()->setResourceDirectory(PCResource.directory);
-    pDirector->setContentScaleFactor(MIN(32 * 25 / PCResource.size.width, 32 * 15 / PCResource.size.height));
+//    pDirector->setContentScaleFactor(MIN(32 * 25 / PCResource.size.width, 32 * 15 / PCResource.size.height));
+//    pDirector->setContentScaleFactor(0.75f);
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height == smallResource.size.height)
@@ -85,7 +66,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, kResolutionNoBorder);
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
     }
-    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
+//    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     int i = 0;
     int size = sizeof(resources);
@@ -96,6 +77,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
             CCFileUtils::sharedFileUtils()->setResourceDirectory(resources[i].directory);
             pEGLView->setDesignResolutionSize(resources[i].size.width, resources[i].size.height, kResolutionNoBorder);
             found = 1;
+            break;
         }
     }
     if (found == 0) {
@@ -129,26 +111,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
-//    MCSceneManager *slist = MCSceneManager::sharedSceneList();
-//    slist->loadSceneListFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("maps/test.slist"));
-    
     // run
 //    pDirector->pushScene(MCMainMenuLayer::scene());
 //    pDirector->runWithScene(MCSplashLayer::scene());
 //    pDirector->runWithScene(MCTestControllerLayer::scene());
     
-//    MCTaskManager::sharedTaskManager()->loadTasks();
-    
-//    CCScene *s = CCScene::create();
-//    CCLayerColor *l = CCLayerColor::create(ccc4(64, 128, 196, 255));
-//    MCDialog *m = MCDialog::sharedDialog(MCOtherDialog);
-//    m->someoneWannaSaySomething(NULL);
-//    l->addChild(m);
-//
-//    s->addChild(l);
-//    pDirector->runWithScene(s);
-    
-    pDirector->runWithScene(MCDetailScene::create());
+    pDirector->runWithScene(MCTestbed::scene());
 
     return true;
 }

@@ -8,26 +8,41 @@ LOCAL_MODULE_FILENAME := libMC
 
 LOCAL_SRC_FILES := main.cpp \
 					../../Classes/AppDelegate.cpp \
+					../../Classes/MCBarrier.cpp \
+					../../Classes/MCBase64.cpp \
 					../../Classes/MCBattle.cpp \
 					../../Classes/MCControllerDelegate.cpp \
 					../../Classes/MCControllerLayer.cpp \
+					../../Classes/MCDetailLayer.cpp \
+					../../Classes/MCDetailScene.cpp \
+					../../Classes/MCDialog.cpp \
+					../../Classes/MCDialogue.cpp \
 					../../Classes/MCDice.cpp \
 					../../Classes/MCDungeonMaster.cpp \
+					../../Classes/MCFaceBox.cpp \
 					../../Classes/MCGameScene.cpp \
 					../../Classes/MCGeometry.cpp \
+					../../Classes/MCHero.cpp \
 					../../Classes/MCItem.cpp \
 					../../Classes/MCJoypad.cpp \
 					../../Classes/MCJoystick.cpp \
 					../../Classes/MCJSONModifier.cpp \
 					../../Classes/MCMainMenuScene.cpp \
+					../../Classes/MCMicsUtil.cpp \
+					../../Classes/MCMonster.cpp \
 					../../Classes/MCMutiplayerBattleImpl.cpp \
 					../../Classes/MCNormalBattleImpl.cpp \
+					../../Classes/MCNPC.cpp \
 					../../Classes/MCPointExtension.cpp \
 					../../Classes/MCRole.cpp \
-					../../Classes/MCSceneList.cpp \
+					../../Classes/MCRoleEntity.cpp \
+					../../Classes/MCSceneManager.cpp \
 					../../Classes/MCScenePackage.cpp \
 					../../Classes/MCScript.cpp \
 					../../Classes/MCSplashScene.cpp \
+					../../Classes/MCStateLayer.cpp \
+					../../Classes/MCTask.cpp \
+					../../Classes/MCTaskManager.cpp \
 					../../Classes/MCTestControllerScene.cpp \
 					../../Classes/MCTestScene.cpp \
 					../../Classes/JSON/src/Array.cpp \

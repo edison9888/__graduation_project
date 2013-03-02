@@ -10,13 +10,16 @@
 #define __Military_Confrontation__MCRole__
 
 #include "MCObject.h"
+#include "MCRoleEntity.h"
 
 /*
  * 角色种族
  */
 enum {
-    MCTerrans   = MCMakeEnum(0), /* 人类 */
-    MCDemons    = MCMakeEnum(1)  /* 魔族 */
+    MCTerrans       = MCMakeEnum(0), /* 人类 */
+    MCTerrestrial   = MCMakeEnum(0), /* 陆行种 */
+    MCFlying        = MCMakeEnum(1), /* 飞行种 */
+    MCProtoss       = MCMakeEnum(2), /* 神 */
 };
 typedef mc_enum_t MCRoleRace;
 
@@ -46,15 +49,16 @@ typedef mc_enum_t MCRoleState;
 /* 基础角色 */
 class MCRole : public MCObject {
 public:
+    MCRole();
+    virtual ~MCRole();
     virtual bool init() = 0;
-    virtual CCSprite *entity() = 0;
     
     /* 下一句话。如果没有则返回NULL；如果本来就没话说则返回默认对白 */
     const char *nextSentence();
     
-protected:
-    CCSprite *entiry_;
+    void loadSpriteSheet(const char *aSpritesheetPath);
     
+    /* 角色属性 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
     CC_SYNTHESIZE(MCRoleType, roleType_, RoleType); /* 角色类型 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
@@ -66,6 +70,11 @@ protected:
     CC_SYNTHESIZE(CCString *, defaultDialogue_, DefaultDialogue); /* 默认对白 */
     CC_SYNTHESIZE(CCArray *, dialogues_, Dialogues); /* 当前场景可能的对白 */
     CC_SYNTHESIZE(mc_index_t, nextSentenceIndex_, NextSentenceIndex); /* 下一句话的索引号 */
+    
+    /* 显示相关 */
+    CC_PROPERTY_READONLY(MCRoleEntity *, entity_, Entity); /* entity_将共用metadata_ */
+    
+    CC_SYNTHESIZE_READONLY(MCRoleEntityMetadata *, entityMetadata_, EntityMetadata); /* entity_将共用这个metadata */
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

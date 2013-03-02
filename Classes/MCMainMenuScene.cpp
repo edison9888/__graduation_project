@@ -8,10 +8,8 @@
 #include "AppMacros.h"
 #include "MCMainMenuScene.h"
 
-#include "MCTestControllerScene.h"
-
 bool
-MCMainMenuLayer::init()
+MCMainMenu::init()
 {
     if (CCLayerColor::initWithColor(ccc4(24, 24, 24, 255)))
     {
@@ -26,14 +24,14 @@ MCMainMenuLayer::init()
         label->setColor(ccc3(64, 128, 216));
         item = CCMenuItemLabel::create(label,
                                        this,
-                                       menu_selector(MCMainMenuLayer::playGame_clicked));
+                                       menu_selector(MCMainMenu::playGame_clicked));
         menu->addChild(item);
         
         label = CCLabelTTF::create("multiplayer", "Marker Felt", 24);
         label->setColor(ccc3(64, 128, 216));
         item = CCMenuItemLabel::create(label,
                                        this,
-                                       menu_selector(MCMainMenuLayer::multiplayer_clicked));
+                                       menu_selector(MCMainMenu::multiplayer_clicked));
         menu->addChild(item);
         menu->alignItemsVerticallyWithPadding(12);
         
@@ -44,7 +42,7 @@ MCMainMenuLayer::init()
         label = CCLabelTTF::create("About", "Marker Felt", 18);
         item = CCMenuItemLabel::create(label,
                                        this,
-                                       menu_selector(MCMainMenuLayer::about_clicked));
+                                       menu_selector(MCMainMenu::about_clicked));
         menu->addChild(item);
         addChild(menu);
         menu->setPosition(ccp(item->getContentSize().width,
@@ -56,7 +54,7 @@ MCMainMenuLayer::init()
         label->setColor(ccc3(240, 13, 13));
         item = CCMenuItemLabel::create(label,
                                        this,
-                                       menu_selector(MCMainMenuLayer::quit_clicked));
+                                       menu_selector(MCMainMenu::quit_clicked));
         menu->addChild(item);
         addChild(menu);
         menu->setPosition(ccp(winSize.width - item->getContentSize().width,
@@ -69,25 +67,24 @@ MCMainMenuLayer::init()
 }
 
 void
-MCMainMenuLayer::playGame_clicked(CCObject* sender)    /* 单人游戏 */
+MCMainMenu::playGame_clicked(CCObject* sender)    /* 单人游戏 */
 {
-    CCDirector::sharedDirector()->replaceScene(MCTestControllerLayer::scene());
 }
 
 void
-MCMainMenuLayer::multiplayer_clicked(CCObject* sender) /* 多人对战 */
-{
-    
-}
-
-void
-MCMainMenuLayer::about_clicked(CCObject* sender)       /* 关于 */
+MCMainMenu::multiplayer_clicked(CCObject* sender) /* 多人对战 */
 {
     
 }
 
 void
-MCMainMenuLayer::quit_clicked(CCObject* sender)        /* 退出 */
+MCMainMenu::about_clicked(CCObject* sender)       /* 关于 */
+{
+    
+}
+
+void
+MCMainMenu::quit_clicked(CCObject* sender)        /* 退出 */
 {
     CCDirector::sharedDirector()->end();
     

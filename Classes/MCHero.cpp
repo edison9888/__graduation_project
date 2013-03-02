@@ -9,21 +9,16 @@
 #include "MCHero.h"
 
 static MCHero *__shared_hero = NULL;
+const char *kMCHeroSpriteSheetPath = "spritesheets/m-19"; //29、22、20、8、13、19
 
 bool
 MCHero::init()
 {
     setRoleType(MCHeroType);
+    setRoleRace(MCTerrans);
+    loadSpriteSheet(kMCHeroSpriteSheetPath);
     
     return true;
-}
-
-CCSprite *
-MCHero::entity()
-{
-    CCSprite *entity = CCSprite::create();
-    
-    return entity;
 }
 
 MCHero *
@@ -32,7 +27,6 @@ MCHero::sharedHero()
     if (__shared_hero == NULL) {
         __shared_hero = new MCHero;
         if (__shared_hero && __shared_hero->init()) {
-            
         } else {
             CC_SAFE_DELETE(__shared_hero);
             __shared_hero = NULL;

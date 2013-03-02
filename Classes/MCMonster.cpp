@@ -11,7 +11,7 @@
 bool
 MCMonster::init()
 {
-    setRoleType(MCDemons);
+    setRoleType(MCEnemy);
     
     return true;
 }
@@ -39,14 +39,4 @@ MCMonster::create(mc_object_id_t anObjectId)
     }
     
     return monster;
-}
-
-CCSprite *
-MCMonster::entity()
-{
-    if (entiry_ == NULL) {
-#warning TODO: 生成实体
-    }
-    
-    return entiry_;
 }

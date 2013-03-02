@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="barrier" color="#ff0000"/>
+ <objecttype name="entrance" color="#33a43b"/>
+ <objecttype name="semitransparent" color="#2900a4"/>
+</objecttypes>

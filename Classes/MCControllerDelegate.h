@@ -15,15 +15,20 @@
 USING_NS_CC;
 
 enum {
-    MCControlButtonUp     = MCMakeEnum(0),
-    MCControlButtonDown   = MCMakeEnum(1),
-    MCControlButtonLeft   = MCMakeEnum(2),
-    MCControlButtonRight  = MCMakeEnum(3),
+    MCControlButtonUp           = MCMakeEnum(0),
+    MCControlButtonDown         = MCMakeEnum(1),
+    MCControlButtonLeft         = MCMakeEnum(2),
+    MCControlButtonRight        = MCMakeEnum(3),
     
-    MCControlButtonEsc    = MCMakeEnum(4),
-    MCControlButtonEnter  = MCMakeEnum(5),
-    MCControlButtonMenu   = MCMakeEnum(6),
-    MCControlButtonBack   = MCMakeEnum(7)
+    MCControlButtonUpLeft       = MCMakeEnum(4),
+    MCControlButtonUpRight      = MCMakeEnum(5),
+    MCControlButtonDownLeft     = MCMakeEnum(6),
+    MCControlButtonDownRight    = MCMakeEnum(7),
+    
+    MCControlButtonEsc          = MCMakeEnum(8),
+    MCControlButtonEnter        = MCMakeEnum(9),
+    MCControlButtonMenu         = MCMakeEnum(10),
+    MCControlButtonBack         = MCMakeEnum(11)
 };
 typedef mc_enum_t MCControlButtonCode;
 
@@ -34,6 +39,16 @@ public:
     virtual void controllerMoveDown(MCControllerDelegate *sender) = 0;
     virtual void controllerMoveLeft(MCControllerDelegate *sender) = 0;
     virtual void controllerMoveRight(MCControllerDelegate *sender) = 0;
+    
+    virtual void controllerMoveUpLeft(MCControllerDelegate *sender);
+    virtual void controllerMoveUpRight(MCControllerDelegate *sender);
+    virtual void controllerMoveDownLeft(MCControllerDelegate *sender);
+    virtual void controllerMoveDownRight(MCControllerDelegate *sender);
+    
+    virtual void controllerMove(MCControllerDelegate *sender, const CCPoint &delta) = 0;
+    
+    virtual void controllerDidPress(MCControllerDelegate *sender);
+    virtual void controllerDidRelease(MCControllerDelegate *sender);
     
     virtual void controllerDidClickEsc();
     virtual void controllerDidClickEnter();

@@ -17,8 +17,6 @@ public:
     bool init();
     bool init(MCRoleRace aRoleRace);
     
-    CCSprite *entity();
-    
     static MCMonster *create(mc_object_id_t anObjectId);
 };
 

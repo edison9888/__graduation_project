@@ -16,8 +16,6 @@ class MCHero : public MCRole {
 public:
     bool init();
     
-    CCSprite *entity();
-    
     static MCHero *sharedHero();
 };
 

@@ -16,8 +16,6 @@ class MCNPC : public MCRole {
 public:
     bool init();
     
-    CCSprite *entity();
-    
     static MCNPC *create(mc_object_id_t anObjectId);
 };
 

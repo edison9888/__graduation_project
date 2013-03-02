@@ -13,18 +13,18 @@
 
 USING_NS_CC;
 
-class MCSplashLayer : public CCLayerColor {
+class MCSplash : public CCLayerColor {
     
 public:
     bool init();
     
-    CREATE_FUNC(MCSplashLayer);
+    CREATE_FUNC(MCSplash);
     
     static CCScene *scene()
     {
         CCScene *scene = CCScene::create();
         
-        scene->addChild(MCSplashLayer::create());
+        scene->addChild(MCSplash::create());
         
         return scene;
     }

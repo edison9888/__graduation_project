@@ -53,7 +53,8 @@ static Resource largeResource  =  { cocos2d::CCSizeMake(2048, 1536), "iphone" };
 static Resource resources[] = {
     { cocos2d::CCSizeMake(480, 320),   "iphone" },
     { cocos2d::CCSizeMake(800, 480),   "iphone" },
-    { cocos2d::CCSizeMake(854, 320),   "iphone" }
+    { cocos2d::CCSizeMake(854, 320),   "iphone" },
+    { cocos2d::CCSizeMake(960, 580),   "iphone" }
 };
 #endif // ANDROID
 

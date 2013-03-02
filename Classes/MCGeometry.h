@@ -103,8 +103,8 @@ public:
 #define MCPointLog(p) CCLog("%d::%s: (%d, %d)", __LINE__, #p, (p).x, (p).y)
 #define MCSizeLog(s) CCLog("%d::%s: (%d, %d)", __LINE__, #s, (s).width, (s).height)
 
-#define CCPointLog(p) CCLog("%d::%s: (%.0f, %.0f)", __LINE__, #p, (p).x, (p).y)
-#define CCSizeLog(s) CCLog("%d::%s: (%.0f, %.0f)", __LINE__, #s, (s).width, (s).height)
+#define CCPointLog(p) CCLog("%d::%s: (%.1f, %.1f)", __LINE__, #p, (p).x, (p).y)
+#define CCSizeLog(s) CCLog("%d::%s: (%.1f, %.1f)", __LINE__, #s, (s).width, (s).height)
 
 const MCPoint MCPointZero = MCPointMake(0,0);
 

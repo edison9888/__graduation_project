@@ -11,7 +11,7 @@
 int Tag_logo = 1;
 
 bool
-MCSplashLayer::init()
+MCSplash::init()
 {
     if (CCLayerColor::initWithColor(ccc4(24, 24, 24, 255)))
     {
@@ -31,7 +31,7 @@ MCSplashLayer::init()
 }
 
 void
-MCSplashLayer::onEnter()
+MCSplash::onEnter()
 {
     CCLayer::onEnter();
     CCNode *logo = getChildByTag(Tag_logo);
@@ -39,14 +39,14 @@ MCSplashLayer::onEnter()
                                        CCFadeIn::create(1.0f),
                                        CCFadeOut::create(1.5f),
                                        CCCallFuncN::create(this,
-                                                           callfuncN_selector(MCSplashLayer::finish)),
+                                                           callfuncN_selector(MCSplash::finish)),
                                        NULL
                                        )
                     );
 }
 
 void
-MCSplashLayer::finish(CCNode* node)
+MCSplash::finish(CCNode* node)
 {
     CCDirector::sharedDirector()->popScene();
 }

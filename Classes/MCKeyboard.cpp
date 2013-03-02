@@ -23,8 +23,9 @@ MCKeyboard::keyPressed(unsigned short keycode)
         return;
     }
 
-    CCLog("%d", keycode);
+//    CCLog("%d", keycode);
     
+    delegate_->controllerDidPress(delegate_);
     switch (keycode) {
         case MCKeyUp:
             delegate_->controllerMoveUp(delegate_);
@@ -47,4 +48,5 @@ MCKeyboard::keyPressed(unsigned short keycode)
 void
 MCKeyboard::keyReleased(unsigned short keycode)
 {
+    delegate_->controllerDidRelease(delegate_);
 }

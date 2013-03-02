@@ -35,7 +35,7 @@
 		A314559D16B11A2200EE6194 /* MCControllerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A314559B16B11A2200EE6194 /* MCControllerLayer.cpp */; };
 		A31455A216B11A3500EE6194 /* MCGameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A314559E16B11A3400EE6194 /* MCGameScene.cpp */; };
 		A31455A316B11A3500EE6194 /* MCScenePackage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455A016B11A3500EE6194 /* MCScenePackage.cpp */; };
-		A31455A616B11A4200EE6194 /* MCTestControllerScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455A416B11A4200EE6194 /* MCTestControllerScene.cpp */; };
+		A31455A616B11A4200EE6194 /* MCTestController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455A416B11A4200EE6194 /* MCTestController.cpp */; };
 		A31455BD16B11A4F00EE6194 /* Array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455B516B11A4F00EE6194 /* Array.cpp */; };
 		A31455BE16B11A4F00EE6194 /* Convert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455B616B11A4F00EE6194 /* Convert.cpp */; };
 		A31455BF16B11A4F00EE6194 /* Escaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455B716B11A4F00EE6194 /* Escaper.cpp */; };
@@ -100,6 +100,9 @@
 		A33BCA5F169EA6CE00196286 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCA5E169EA6CE00196286 /* libcurl.dylib */; };
 		A3592B3416B9440900E0AD58 /* MCDetailLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */; };
 		A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */; };
+		A36D12AF16DF9E8500A940ED /* MCTestbed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */; };
+		A37FEDDD16DBAA3D0014885A /* MCRoleEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37FEDDB16DBAA3D0014885A /* MCRoleEntity.cpp */; };
+		A37FEDE116DBBCA90014885A /* MCMicsUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */; };
 		A388EE5E16BD09F800D6124D /* MCFaceBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A388EE5C16BD09F800D6124D /* MCFaceBox.cpp */; };
 		A38D11BE16B81C42009E1CB8 /* MCDetailScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11BC16B81C42009E1CB8 /* MCDetailScene.cpp */; };
 		A38D11C116B81C4D009E1CB8 /* MCBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11BF16B81C4D009E1CB8 /* MCBase64.cpp */; };
@@ -111,7 +114,6 @@
 		A39FAFF316B26325007FECB7 /* MCControllerDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FAFF216B26325007FECB7 /* MCControllerDelegate.cpp */; };
 		A39FB00B16B27441007FECB7 /* MCGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB00716B27441007FECB7 /* MCGeometry.cpp */; };
 		A39FB00C16B27441007FECB7 /* MCPointExtension.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB00916B27441007FECB7 /* MCPointExtension.cpp */; };
-		A3AC829216AC5D0100EDFE2B /* PC in Resources */ = {isa = PBXBuildFile; fileRef = A3AC829116AC5D0100EDFE2B /* PC */; };
 		A3B1636D16B00E84009F95EE /* MCMainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636916B00E84009F95EE /* MCMainMenuScene.cpp */; };
 		A3B1636E16B00E84009F95EE /* MCSplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */; };
 		A3B1637116B00E99009F95EE /* MCItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636F16B00E99009F95EE /* MCItem.cpp */; };
@@ -120,7 +122,8 @@
 		A3B1639416B01D86009F95EE /* MCJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1639116B01D86009F95EE /* MCJoystick.cpp */; };
 		A3B163A316B02F69009F95EE /* MCKeyboardDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B163A116B02F69009F95EE /* MCKeyboardDispatcher.cpp */; };
 		A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */; };
-		A3D5AF9916AC3B8B00E74791 /* MCTestScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */; };
+		A3D5AF9916AC3B8B00E74791 /* MCTestSpriteSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9616AC3B8B00E74791 /* MCTestSpriteSheet.cpp */; };
+		A3E8C49F16DCF92700060C94 /* MCBarrier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */; };
 		A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3FE729B16BCC29300AE9739 /* MCHero.cpp */; };
 /* End PBXBuildFile section */
 
@@ -185,8 +188,8 @@
 		A314559F16B11A3400EE6194 /* MCGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGameScene.h; path = ../Classes/MCGameScene.h; sourceTree = "<group>"; };
 		A31455A016B11A3500EE6194 /* MCScenePackage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCScenePackage.cpp; path = ../Classes/MCScenePackage.cpp; sourceTree = "<group>"; };
 		A31455A116B11A3500EE6194 /* MCScenePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCScenePackage.h; path = ../Classes/MCScenePackage.h; sourceTree = "<group>"; };
-		A31455A416B11A4200EE6194 /* MCTestControllerScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestControllerScene.cpp; path = ../Classes/MCTestControllerScene.cpp; sourceTree = "<group>"; };
-		A31455A516B11A4200EE6194 /* MCTestControllerScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTestControllerScene.h; path = ../Classes/MCTestControllerScene.h; sourceTree = "<group>"; };
+		A31455A416B11A4200EE6194 /* MCTestController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestController.cpp; path = ../Classes/MCTestController.cpp; sourceTree = "<group>"; };
+		A31455A516B11A4200EE6194 /* MCTestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestController.h; path = ../Classes/MCTestController.h; sourceTree = "<group>"; };
 		A31455A916B11A4F00EE6194 /* Array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Array.h; sourceTree = "<group>"; };
 		A31455AA16B11A4F00EE6194 /* Convert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Convert.h; sourceTree = "<group>"; };
 		A31455AB16B11A4F00EE6194 /* Escaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Escaper.h; sourceTree = "<group>"; };
@@ -327,6 +330,14 @@
 		A3592B3316B9440800E0AD58 /* MCDetailLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailLayer.h; path = ../Classes/MCDetailLayer.h; sourceTree = "<group>"; };
 		A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCStateLayer.cpp; path = ../Classes/MCStateLayer.cpp; sourceTree = "<group>"; };
 		A3592B3616B9442E00E0AD58 /* MCStateLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCStateLayer.h; path = ../Classes/MCStateLayer.h; sourceTree = "<group>"; };
+		A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestbed.cpp; path = ../Classes/MCTestbed.cpp; sourceTree = "<group>"; };
+		A36D12AE16DF9E8500A940ED /* MCTestbed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestbed.h; path = ../Classes/MCTestbed.h; sourceTree = "<group>"; };
+		A36D12B216DFAB4A00A940ED /* MCTestGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCTestGame.h; sourceTree = "<group>"; };
+		A36D12B516DFB0E200A940ED /* MCTestLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; path = MCTestLayer.h; sourceTree = "<group>"; };
+		A37FEDDB16DBAA3D0014885A /* MCRoleEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRoleEntity.cpp; path = ../Classes/MCRoleEntity.cpp; sourceTree = "<group>"; };
+		A37FEDDC16DBAA3D0014885A /* MCRoleEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRoleEntity.h; path = ../Classes/MCRoleEntity.h; sourceTree = "<group>"; };
+		A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMicsUtil.cpp; path = ../Classes/MCMicsUtil.cpp; sourceTree = "<group>"; };
+		A37FEDE016DBBCA90014885A /* MCMicsUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCMicsUtil.h; path = ../Classes/MCMicsUtil.h; sourceTree = "<group>"; };
 		A388EE5C16BD09F800D6124D /* MCFaceBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCFaceBox.cpp; path = ../Classes/MCFaceBox.cpp; sourceTree = "<group>"; };
 		A388EE5D16BD09F800D6124D /* MCFaceBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCFaceBox.h; path = ../Classes/MCFaceBox.h; sourceTree = "<group>"; };
 		A38D11BC16B81C42009E1CB8 /* MCDetailScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDetailScene.cpp; path = ../Classes/MCDetailScene.cpp; sourceTree = "<group>"; };
@@ -350,7 +361,6 @@
 		A39FB00816B27441007FECB7 /* MCGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeometry.h; path = ../Classes/MCGeometry.h; sourceTree = "<group>"; };
 		A39FB00916B27441007FECB7 /* MCPointExtension.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCPointExtension.cpp; path = ../Classes/MCPointExtension.cpp; sourceTree = "<group>"; };
 		A39FB00A16B27441007FECB7 /* MCPointExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCPointExtension.h; path = ../Classes/MCPointExtension.h; sourceTree = "<group>"; };
-		A3AC829116AC5D0100EDFE2B /* PC */ = {isa = PBXFileReference; lastKnownFileType = folder; name = PC; path = ../Resources/PC; sourceTree = "<group>"; };
 		A3B1636916B00E84009F95EE /* MCMainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMainMenuScene.cpp; path = ../Classes/MCMainMenuScene.cpp; sourceTree = "<group>"; };
 		A3B1636A16B00E84009F95EE /* MCMainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCMainMenuScene.h; path = ../Classes/MCMainMenuScene.h; sourceTree = "<group>"; };
 		A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSplashScene.cpp; path = ../Classes/MCSplashScene.cpp; sourceTree = "<group>"; };
@@ -368,8 +378,10 @@
 		A3B163A216B02F69009F95EE /* MCKeyboardDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCKeyboardDispatcher.h; path = ../../library/cocos2dx/platform/mac/MCKeyboardDispatcher.h; sourceTree = "<group>"; };
 		A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDice.cpp; path = ../Classes/MCDice.cpp; sourceTree = "<group>"; };
 		A3D5AF9516AC3B8B00E74791 /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
-		A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestScene.cpp; path = ../Classes/MCTestScene.cpp; sourceTree = "<group>"; };
-		A3D5AF9716AC3B8B00E74791 /* MCTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTestScene.h; path = ../Classes/MCTestScene.h; sourceTree = "<group>"; };
+		A3D5AF9616AC3B8B00E74791 /* MCTestSpriteSheet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestSpriteSheet.cpp; path = ../Classes/MCTestSpriteSheet.cpp; sourceTree = "<group>"; };
+		A3D5AF9716AC3B8B00E74791 /* MCTestSpriteSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestSpriteSheet.h; path = ../Classes/MCTestSpriteSheet.h; sourceTree = "<group>"; };
+		A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBarrier.cpp; path = ../Classes/MCBarrier.cpp; sourceTree = "<group>"; };
+		A3E8C49E16DCF92700060C94 /* MCBarrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBarrier.h; path = ../Classes/MCBarrier.h; sourceTree = "<group>"; };
 		A3FE729B16BCC29300AE9739 /* MCHero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCHero.cpp; path = ../Classes/MCHero.cpp; sourceTree = "<group>"; };
 		A3FE729C16BCC29300AE9739 /* MCHero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHero.h; path = ../Classes/MCHero.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -462,7 +474,6 @@
 		41CD6C6115BF7556005E6F29 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A3AC829116AC5D0100EDFE2B /* PC */,
 				1514DA3C163004980095A81C /* ipad */,
 				1514DA3D163004980095A81C /* ipadhd */,
 				1514DA3E163004980095A81C /* iphone */,
@@ -741,6 +752,8 @@
 		A37C286B16AEBA1000A3D143 /* Role */ = {
 			isa = PBXGroup;
 			children = (
+				A37FEDDB16DBAA3D0014885A /* MCRoleEntity.cpp */,
+				A37FEDDC16DBAA3D0014885A /* MCRoleEntity.h */,
 				A39C946016AEE05000B92E33 /* MCRole.cpp */,
 				A39C946116AEE05000B92E33 /* MCRole.h */,
 				A30DDB0916B664D20001C53F /* MCNPC.cpp */,
@@ -787,6 +800,8 @@
 				A39FB00816B27441007FECB7 /* MCGeometry.h */,
 				A39FB00916B27441007FECB7 /* MCPointExtension.cpp */,
 				A39FB00A16B27441007FECB7 /* MCPointExtension.h */,
+				A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */,
+				A37FEDE016DBBCA90014885A /* MCMicsUtil.h */,
 			);
 			name = Geometry;
 			sourceTree = "<group>";
@@ -821,6 +836,8 @@
 			children = (
 				A3B1636F16B00E99009F95EE /* MCItem.cpp */,
 				A3B1637016B00E99009F95EE /* MCItem.h */,
+				A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */,
+				A3E8C49E16DCF92700060C94 /* MCBarrier.h */,
 				A39FB01D16B274F3007FECB7 /* Equipment */,
 			);
 			name = Items;
@@ -935,10 +952,14 @@
 		A3D5AF9B16AC3B9B00E74791 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				A3D5AF9616AC3B8B00E74791 /* MCTestScene.cpp */,
-				A3D5AF9716AC3B8B00E74791 /* MCTestScene.h */,
-				A31455A416B11A4200EE6194 /* MCTestControllerScene.cpp */,
-				A31455A516B11A4200EE6194 /* MCTestControllerScene.h */,
+				A3D5AF9616AC3B8B00E74791 /* MCTestSpriteSheet.cpp */,
+				A3D5AF9716AC3B8B00E74791 /* MCTestSpriteSheet.h */,
+				A31455A416B11A4200EE6194 /* MCTestController.cpp */,
+				A31455A516B11A4200EE6194 /* MCTestController.h */,
+				A36D12B516DFB0E200A940ED /* MCTestLayer.h */,
+				A36D12B216DFAB4A00A940ED /* MCTestGame.h */,
+				A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */,
+				A36D12AE16DF9E8500A940ED /* MCTestbed.h */,
 			);
 			name = Test;
 			sourceTree = "<group>";
@@ -1047,7 +1068,6 @@
 				1514DA3F163004980095A81C /* ipad in Resources */,
 				1514DA40163004980095A81C /* ipadhd in Resources */,
 				1514DA41163004980095A81C /* iphone in Resources */,
-				A3AC829216AC5D0100EDFE2B /* PC in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1111,7 +1131,7 @@
 				A33BCA20169EA65600196286 /* CCPhysicsDebugNode.cpp in Sources */,
 				A33BCA21169EA65600196286 /* CCPhysicsSprite.cpp in Sources */,
 				A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */,
-				A3D5AF9916AC3B8B00E74791 /* MCTestScene.cpp in Sources */,
+				A3D5AF9916AC3B8B00E74791 /* MCTestSpriteSheet.cpp in Sources */,
 				A39C946316AEE05000B92E33 /* MCBattle.cpp in Sources */,
 				A39C946416AEE05000B92E33 /* MCDungeonMaster.cpp in Sources */,
 				A39C946516AEE05000B92E33 /* MCMutiplayerBattleImpl.cpp in Sources */,
@@ -1127,7 +1147,7 @@
 				A314559D16B11A2200EE6194 /* MCControllerLayer.cpp in Sources */,
 				A31455A216B11A3500EE6194 /* MCGameScene.cpp in Sources */,
 				A31455A316B11A3500EE6194 /* MCScenePackage.cpp in Sources */,
-				A31455A616B11A4200EE6194 /* MCTestControllerScene.cpp in Sources */,
+				A31455A616B11A4200EE6194 /* MCTestController.cpp in Sources */,
 				A31455BD16B11A4F00EE6194 /* Array.cpp in Sources */,
 				A31455BE16B11A4F00EE6194 /* Convert.cpp in Sources */,
 				A31455BF16B11A4F00EE6194 /* Escaper.cpp in Sources */,
@@ -1154,6 +1174,10 @@
 				A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */,
 				A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */,
 				A388EE5E16BD09F800D6124D /* MCFaceBox.cpp in Sources */,
+				A37FEDDD16DBAA3D0014885A /* MCRoleEntity.cpp in Sources */,
+				A37FEDE116DBBCA90014885A /* MCMicsUtil.cpp in Sources */,
+				A3E8C49F16DCF92700060C94 /* MCBarrier.cpp in Sources */,
+				A36D12AF16DF9E8500A940ED /* MCTestbed.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1267,6 +1291,7 @@
 					"\"$(SRCROOT)/../../library/cocos2dx\"",
 					"\"$(SRCROOT)/../../library/cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/../../library/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../library/external\"",
 					"\"$(SRCROOT)/../../library/extensions\"",
 				);
 				INFOPLIST_FILE = "Military Confrontation_Info.plist";
@@ -1307,6 +1332,7 @@
 					"\"$(SRCROOT)/../../library/cocos2dx\"",
 					"\"$(SRCROOT)/../../library/cocos2dx/platform/mac\"",
 					"\"$(SRCROOT)/../../library/cocos2dx/kazmath/include\"",
+					"\"$(SRCROOT)/../../library/external\"",
 					"\"$(SRCROOT)/../../library/extensions\"",
 				);
 				INFOPLIST_FILE = "Military Confrontation_Info.plist";

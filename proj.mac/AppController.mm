@@ -54,8 +54,8 @@ static AppDelegate s_sharedApplication;
 		[window setAcceptsMouseMovedEvents:NO];
         
         [glView setFrameZoomFactor:1];
-
-		cocos2d::CCApplication::sharedApplication()->run();
+		
+        cocos2d::CCApplication::sharedApplication()->run();
 	}
 
 	-(BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication
