@@ -19,7 +19,7 @@ private:
 public:
     ~MCSceneManager();
     
-    static MCSceneManager *sharedSceneList();
+    static MCSceneManager *sharedSceneManager();
     
     void loadSceneListFile(const char *aFilepath);
     
@@ -27,7 +27,7 @@ public:
     
     /*
      * 根据ID生成场景并返回
-     * IMPORTANT：场景由MCSceneManager管理，主意内存泄漏！
+     * IMPORTANT：场景由MCSceneManager管理，注意内存泄漏！
      */
     MCGameScene *sceneWithObjectId(mc_object_id_t anObjectId);
     

@@ -43,6 +43,27 @@ MCRoleEntity::~MCRoleEntity()
     CC_SAFE_RELEASE(moveToActions_);
 }
 
+void
+MCRoleEntity::onEnter()
+{
+    CCSprite::onEnter();
+    schedule(schedule_selector(MCRoleEntity::update));
+}
+
+void
+MCRoleEntity::onExit()
+{
+    CCSprite::onExit();
+    unschedule(schedule_selector(MCRoleEntity::update));
+}
+
+void
+MCRoleEntity::update(float dt)
+{
+    MCRole *role = role_;
+    
+}
+
 CCRect
 MCRoleEntity::getBounds()
 {

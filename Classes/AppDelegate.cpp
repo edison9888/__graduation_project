@@ -1,6 +1,7 @@
 #include "AppMacros.h"
-
 #include "AppDelegate.h"
+#include "script_support/CCScriptSupport.h"
+#include "CCLuaEngine.h"
 
 #include "MCTestbed.h"
 
@@ -111,10 +112,13 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
     
+    // register lua engine
+    CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
+    CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    
     // run
 //    pDirector->pushScene(MCMainMenuLayer::scene());
 //    pDirector->runWithScene(MCSplashLayer::scene());
-//    pDirector->runWithScene(MCTestControllerLayer::scene());
     
     pDirector->runWithScene(MCTestbed::scene());
 

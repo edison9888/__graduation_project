@@ -24,25 +24,26 @@ MCKeyboard::keyPressed(unsigned short keycode)
     }
 
 //    CCLog("%d", keycode);
-    
+    CCPoint offset = CCPointZero;
     delegate_->controllerDidPress(delegate_);
     switch (keycode) {
         case MCKeyUp:
-            delegate_->controllerMoveUp(delegate_);
+            offset.y = 4;
             break;
         case MCKeyDown:
-            delegate_->controllerMoveDown(delegate_);
+            offset.y = -4;
             break;
         case MCKeyLeft:
-            delegate_->controllerMoveLeft(delegate_);
+            offset.x = -4;
             break;
         case MCKeyRight:
-            delegate_->controllerMoveRight(delegate_);
+            offset.x = 4;
             break;
             
         default:
             break;
     }
+    delegate_->controllerMove(delegate_, offset);
 }
 
 void

@@ -43,19 +43,6 @@ public:
         return scene;
     }
     
-    void controllerMoveUp(MCControllerDelegate *sender);
-    void controllerMoveDown(MCControllerDelegate *sender);
-    void controllerMoveLeft(MCControllerDelegate *sender);
-    void controllerMoveRight(MCControllerDelegate *sender);
-    
-    void controllerMoveUpLeft(MCControllerDelegate *sender);
-    void controllerMoveUpRight(MCControllerDelegate *sender);
-    void controllerMoveDownLeft(MCControllerDelegate *sender);
-    void controllerMoveDownRight(MCControllerDelegate *sender);
-    
-    void controllerDidPress(MCControllerDelegate *sender);
-    void controllerDidRelease(MCControllerDelegate *sender);
-    
     void controllerMove(MCControllerDelegate *sender, const CCPoint &delta);
     
     void onEnter();

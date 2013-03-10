@@ -9,26 +9,28 @@
 #ifndef __Military_Confrontation__MCScript__
 #define __Military_Confrontation__MCScript__
 
-typedef void *CCPoint;
+#include "MCObject.h"
 
-#include <iostream>
+#define MCScriptRun(aTriggerScriptPath) MCScriptMaker::createScript(aTriggerScriptPath)->run()
 
-enum {
-    MCUnknownEventTrigger  = 0x00,   /* 未知触发器 */
-    MCLocationEventTrigger = 0x01,   /* 位置触发器 */
-    MCFlagEventTrigger     = 0x02,   /* 标志触发器 */
-    MCCommonEventTrigger   = MCLocationEventTrigger & MCFlagEventTrigger
-};
-typedef unsigned int MCEventTriggerType;
+class MCScriptMaker;
 
-class MCEventTriggerDelegate {
+class MCScript : public MCObject {
+    friend class MCScriptMaker;
+private:
+    MCScript();
 public:
-    virtual const char *identifier()=0;           /* 触发器标识符 */
-    virtual MCEventTriggerType eventTrigger()=0;    /* 触发器类型 */
+    ~MCScript();
     
-    virtual CCPoint location();     /* 触发位置 */
-    virtual unsigned int flags();   /* 触发标志 */
+    void run();
+    
+private:
+    CCString *scriptPath_;
 };
 
+class MCScriptMaker {
+public:
+    static MCScript *createScript(const char *aScriptPath);
+};
 
 #endif /* defined(__Military_Confrontation__MCScript__) */

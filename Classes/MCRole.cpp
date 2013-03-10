@@ -91,17 +91,18 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
         CC_SAFE_DELETE(entityMetadata_);
     }
     entityMetadata_ = new MCRoleEntityMetadata;
-    entityMetadata_->frameV_ = CCRectMake(metadataDict->valueForKey("vx")->intValue(),
-                                    metadataDict->valueForKey("vy")->intValue(),
-                                    metadataDict->valueForKey("vwidth")->intValue(),
-                                    metadataDict->valueForKey("vheight")->intValue());
-    entityMetadata_->frameH_ = CCRectMake(metadataDict->valueForKey("hx")->intValue(),
-                                    metadataDict->valueForKey("hy")->intValue(),
-                                    metadataDict->valueForKey("hwidth")->intValue(),
-                                    metadataDict->valueForKey("hheight")->intValue());
+    /* 不再需要碰撞矩形 */
+//    entityMetadata_->frameV_ = CCRectMake(metadataDict->valueForKey("vx")->intValue(),
+//                                    metadataDict->valueForKey("vy")->intValue(),
+//                                    metadataDict->valueForKey("vwidth")->intValue(),
+//                                    metadataDict->valueForKey("vheight")->intValue());
+//    entityMetadata_->frameH_ = CCRectMake(metadataDict->valueForKey("hx")->intValue(),
+//                                    metadataDict->valueForKey("hy")->intValue(),
+//                                    metadataDict->valueForKey("hwidth")->intValue(),
+//                                    metadataDict->valueForKey("hheight")->intValue());
     
     /* 纹理文件 */
-    sprintf(str, "%s", aSpritesheetPath);
+    sprintf(str, "%s.ss", aSpritesheetPath);
     spriteSheet = new CCSpriteBatchNode;
     spriteSheet->initWithFile(str, kDefaultSpriteBatchCapacity);
     
@@ -146,4 +147,49 @@ MCRole::getEntity()
     }
     
     return entity_;
+}
+/**
+ * 某人进入视野
+ * 默认看到的都是敌人
+ */
+void
+MCRole::onSeeSomeone(MCRole *aRole, bool isEnermy)
+{
+}
+
+/**
+ * 某人离开视野
+ * 默认离开的都是敌人
+ */
+void
+MCRole::onSomeoneDidLeave(MCRole *aRole, bool isEnermy)
+{
+}
+
+/**
+ * 被攻击
+ */
+void
+MCRole::wasAttacked(const MCEffect &anEffect)
+{
+    hp_ -= anEffect.hp;
+    
+    if (hp_ < 0) {
+        this->died();
+    } else {
+        pp_ -= anEffect.pp;
+        roleState_ |= anEffect.positive_state;
+        roleState_ ^= anEffect.negative_state;
+    }
+}
+
+/**
+ * 死亡
+ */
+void
+MCRole::died()
+{
+    entity_->removeFromParentAndCleanup(true);
+    entity_ = NULL;
+    CC_SAFE_RELEASE(this);
 }

@@ -10,6 +10,7 @@
 
 #include "MCTestSpriteSheet.h"
 #include "MCTestController.h"
+#include "MCTestLua.h"
 #include "MCTestGame.h"
 
 const int LINE_SPACE = 40;
@@ -49,6 +50,7 @@ public:
 static struct __mc_test_scene __test_scenes[] = {
     {"Test SpriteSheet", MCTestSpriteSheet::scene},
     {"Test Controller", MCTestController::scene},
+    {"Test Lua", MCTestLua::scene},
     {"Enter the Game", MCTestGame::scene},
     {"Quit", __mc_quit::scene}
 };

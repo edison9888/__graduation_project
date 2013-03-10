@@ -30,6 +30,7 @@ class MCRoleEntityMetadata : public CCSprite {
 public:
     MCRoleEntityMetadata();
     ~MCRoleEntityMetadata();
+    
     CCString *spriteSheetPath_;
     CCRect frameV_;
     CCRect frameH_;
@@ -51,6 +52,10 @@ class MCRoleEntity : public CCSprite {
 public:
     MCRoleEntity();
     ~MCRoleEntity();
+    
+    void onEnter();
+    void onExit();
+    void update(float dt);
     
     CCRect getBounds(); /* 碰撞域 */
     

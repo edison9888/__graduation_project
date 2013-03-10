@@ -39,35 +39,52 @@ MCGameScene::createWithScenePackage(MCScenePackage *aPackage)
 void
 MCGameScene::onEnter()
 {
+    CCScene::onEnter();
     
+    /* 预加载场景 */
 }
 
 void
 MCGameScene::onExit()
 {
-    
+    CCScene::onExit();
 }
 
 void
-MCGameScene::controllerMoveUp(MCControllerDelegate *sender)
+MCGameScene::controllerMove(MCControllerDelegate *sender, const CCPoint &delta)
 {
     
 }
 
+/**
+ * 安装触发器
+ */
 void
-MCGameScene::controllerMoveDown(MCControllerDelegate *sender)
+MCGameScene::installTrigger(MCTrigger *aTrigger)
 {
-    
+    CCObject *object = (CCObject *)aTrigger;
+    if (! triggers_->containsObject(object)) {
+        triggers_->addObject(object);
+    }
 }
 
+/**
+ * 卸载触发器
+ */
 void
-MCGameScene::controllerMoveLeft(MCControllerDelegate *sender)
+MCGameScene::uninstallTrigger(MCTrigger *aTrigger)
 {
-    
+    CCObject *object = (CCObject *)aTrigger;
+    triggers_->removeObject(object);
 }
 
+/**
+ * 移动到场景
+ * aSceneId(in): 场景ID
+ * anEntranceName(in): 场景入口名
+ */
 void
-MCGameScene::controllerMoveRight(MCControllerDelegate *sender)
+MCGameScene::gotoScene(mc_object_id_t aSceneId, const char *anEntranceName)
 {
     
 }

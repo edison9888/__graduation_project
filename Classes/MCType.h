@@ -15,6 +15,7 @@
 typedef unsigned char mc_byte_t;
 typedef unsigned int mc_uint_t;
 typedef unsigned short int mc_ushort_t;
+typedef short int mc_short_t;
 typedef unsigned int mc_index_t;
 typedef unsigned int mc_size_t;
 typedef mc_uint_t mc_id_t;
@@ -48,10 +49,5 @@ struct MCObjectID {
 };
 
 const mc_object_id_t NULLObjectId = {0, 0, 0, 0};
-
-/* MCRole 角色属性类型 */
-typedef mc_ushort_t mc_hp_t; /* 生命值类型 */
-typedef mc_ushort_t mc_pp_t; /* 体力值类型 */
-typedef mc_ushort_t mc_load_t; /* 负重类型 */
 
 #endif

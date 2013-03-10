@@ -35,16 +35,6 @@ typedef mc_enum_t MCControlButtonCode;
 /* 基本物件 */
 class MCControllerDelegate {
 public:
-    virtual void controllerMoveUp(MCControllerDelegate *sender) = 0;
-    virtual void controllerMoveDown(MCControllerDelegate *sender) = 0;
-    virtual void controllerMoveLeft(MCControllerDelegate *sender) = 0;
-    virtual void controllerMoveRight(MCControllerDelegate *sender) = 0;
-    
-    virtual void controllerMoveUpLeft(MCControllerDelegate *sender);
-    virtual void controllerMoveUpRight(MCControllerDelegate *sender);
-    virtual void controllerMoveDownLeft(MCControllerDelegate *sender);
-    virtual void controllerMoveDownRight(MCControllerDelegate *sender);
-    
     virtual void controllerMove(MCControllerDelegate *sender, const CCPoint &delta) = 0;
     
     virtual void controllerDidPress(MCControllerDelegate *sender);

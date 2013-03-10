@@ -28,7 +28,7 @@ MCSceneManager::~MCSceneManager()
 }
 
 MCSceneManager *
-MCSceneManager::sharedSceneList()
+MCSceneManager::sharedSceneManager()
 {
     if (__shared_scene_list == NULL) {
         __shared_scene_list = new MCSceneManager;

@@ -1,60 +1,62 @@
 {
 	"T101" : {
-		"category" : 2,
-		"name" : "每日巡逻",
-		"description" : "作为村中的卫士，你每日都要巡逻周边。",
-		"bonus" : [
+		"category: 1,
+		"name": "xxxx",
+		"description": "null",
+		"bonus": [
+			"0001"
 		],
-		"task" : {
-			"steps" : [
-				{
-					"action" : "move",
-					"location" : "area",
-					"map" : "M001",
-					"x" : 10,
-					"y" : 10,
-					"w" : 2,
-					"h" : 2
-				},
-				{
-					"action" : "event",
-				},
-				{
-					"action" : "move",
-					"location" : "area",
-					"map" : "M001",
-					"x" : 50,
-					"y" : 10,
-					"w" : 2,
-					"h" : 2
-				},
-				{
-					"action" : "talk",
-					"id" : "N002"
+		"content": [
+			{
+				"action": "move",
+				"description": "go to",
+				"map": "M001",
+				"x": 20,
+				"y": 20,
+				"w": 1,
+				"h": 1
+			},
+			{
+				"action": "talk",
+				"description": "talk with",
+				"id": "N001"
+			},
+			{
+				"action": "get",
+				"description": "get from",
+				"id": "N002",
+				"items": { 
+					"I001": 1, 
+					"I002": 2
 				}
-			]
-		}
-	},
-	"T102" : {
-		"category" : 2,
-		"name" : "收集物品",
-		"description" : "null",
-		"bonus" : null,
-		"task" : {
-			"completed" : 4,
-			"id" : "0001",
-			"need" : 10
-		}
-	},
-	"T103" : {
-		"category" : 3,
-		"name" : "狩猎",
-		"description" : "null",
-		"bonus" : null,
-		"task" : {
-			"completed" : 0,
-			"id" : "M001"
-			"need" : 1
-		}
-	},
+			},
+			{
+				"action": "give",
+				"description": "give",
+				"id": "N003",
+				"items": { 
+					"I001": 1, 
+					"I002": 2
+				}
+			},
+			{
+				"action": "hunt",
+				"description": "hunt 10",
+				"targets": { 
+					"M001": 10
+				}
+			},
+			{
+				"action": "collect",
+				"description": "need 10",
+				"targets": { 
+					"I010": 10
+				}
+			},
+			{
+				"action": "event",
+				"script": "a.lua"
+			}
+		]
+	}
 }

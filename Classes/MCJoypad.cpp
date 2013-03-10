@@ -215,44 +215,12 @@ MCJoypad::ccTouchesEnded (CCSet *pTouches, CCEvent *pEvent)
 void
 MCJoypad::update(float dt)
 {
-    float angle;
-
     if (! delegate_ || !isValidControl_) {
         return;
     }
     CCPoint point = *joystickDelta_;
+    CCPoint offset = CCPointZero;
     
     delegate_->controllerMove(delegate_, point);
-    return;
-    
-    //每个方向分配60度角的空间
-    getAngle (point.y, point.x, angle);
-    if (angle < 22.5f) {
-        if (point.x > 0) {
-            delegate_->controllerMoveRight(delegate_);
-        } else {
-            delegate_->controllerMoveLeft(delegate_);
-        }
-    } else if (angle < 67.5f) {
-        if (point.x > 0) {
-            if (point.y > 0) {
-                delegate_->controllerMoveUpRight(delegate_);
-            } else {
-                delegate_->controllerMoveDownRight(delegate_);
-            }
-        } else {
-            if (point.y > 0) {
-                delegate_->controllerMoveUpLeft(delegate_);
-            } else {
-                delegate_->controllerMoveDownLeft(delegate_);
-            }
-        }
-    } else {
-        if (point.y > 0) {
-            delegate_->controllerMoveUp(delegate_);
-        } else {
-            delegate_->controllerMoveDown(delegate_);
-        }
-    }
 }
 

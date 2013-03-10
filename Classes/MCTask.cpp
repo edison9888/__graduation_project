@@ -14,9 +14,9 @@ const char *MCMercenaryMissionName  = "佣兵任务";
 const char *MCArenaTaskName         = "竞技场任务";
 
 const char *
-nameForMCTaskType(MCTaskType aTaskType)
+nameForMCTaskType(MCTaskCategory aTaskCategory)
 {
-    switch (aTaskType) {
+    switch (aTaskCategory) {
         case MCMainlineTask:
             return MCMainlineTaskName;
         case MCSideQuest:
@@ -51,67 +51,4 @@ MCTask::loadTask(JsonBox::Object &aTask)
     
     /* task["task"] Object */
     taskContext = aTask["task"].getObject();
-    switch (taskCategory_) {
-        case MCMoveToTask:
-            loadMoveToTaskContext(taskContext);
-            break;
-        case MCCollectionTask:
-            loadCollectionTaskContext(taskContext);
-            break;
-        case MCHuntTask:
-            loadHuntTaskContext(taskContext);
-            break;
-    }
-}
-
-void
-MCTask::loadMoveToTaskContext(JsonBox::Object &aTaskContext)
-{
-    MCMoveToTaskContext *taskContext = new MCMoveToTaskContext;
-    taskContext_ = taskContext;
-    
-    /* taskContext["completed"] Number */
-    taskContext_->completed_ = aTaskContext["completed"].getInt();
-    
-    /* taskContext["steps"] Array */
-}
-
-void
-MCTask::loadCollectionTaskContext(JsonBox::Object &aTaskContext)
-{
-    MCCollectionTaskContext *taskContext = new MCCollectionTaskContext;
-    taskContext_ = taskContext;
-    
-    /* taskContext["completed"] Number */
-    taskContext->completed_ = aTaskContext["completed"].getInt();
-    
-    /* taskContext["id"] String */
-    const char *c_str_o_id = aTaskContext["id"].getString().c_str();
-    taskContext->o_id_.class_ = c_str_o_id[0];
-    taskContext->o_id_.sub_class_ = c_str_o_id[1];
-    taskContext->o_id_.index_ = c_str_o_id[2];
-    taskContext->o_id_.sub_index_ = c_str_o_id[3];
-    
-    /* taskContext["need"] Number */
-    taskContext->need_ = aTaskContext["need"].getInt();
-}
-
-void
-MCTask::loadHuntTaskContext(JsonBox::Object &aTaskContext)
-{
-    MCHuntTaskContext *taskContext = new MCHuntTaskContext;
-    taskContext_ = taskContext;
-    
-    /* taskContext["completed"] Number */
-    taskContext->completed_ = aTaskContext["completed"].getInt();
-    
-    /* taskContext["id"] String */
-    const char *c_str_o_id = aTaskContext["id"].getString().c_str();
-    taskContext->o_id_.class_ = c_str_o_id[0];
-    taskContext->o_id_.sub_class_ = c_str_o_id[1];
-    taskContext->o_id_.index_ = c_str_o_id[2];
-    taskContext->o_id_.sub_index_ = c_str_o_id[3];
-    
-    /* taskContext["need"] Number */
-    taskContext->need_ = aTaskContext["need"].getInt();
 }

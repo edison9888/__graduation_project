@@ -8,27 +8,6 @@
 
 #include "MCControllerDelegate.h"
 
-
-void
-MCControllerDelegate::controllerMoveUpLeft(MCControllerDelegate *sender)
-{
-}
-
-void
-MCControllerDelegate::controllerMoveUpRight(MCControllerDelegate *sender)
-{
-}
-
-void
-MCControllerDelegate::controllerMoveDownLeft(MCControllerDelegate *sender)
-{
-}
-
-void
-MCControllerDelegate::controllerMoveDownRight(MCControllerDelegate *sender)
-{
-}
-
 void
 MCControllerDelegate::controllerDidPress(MCControllerDelegate *sender)
 {

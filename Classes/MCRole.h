@@ -11,40 +11,7 @@
 
 #include "MCObject.h"
 #include "MCRoleEntity.h"
-
-/*
- * 角色种族
- */
-enum {
-    MCTerrans       = MCMakeEnum(0), /* 人类 */
-    MCTerrestrial   = MCMakeEnum(0), /* 陆行种 */
-    MCFlying        = MCMakeEnum(1), /* 飞行种 */
-    MCProtoss       = MCMakeEnum(2), /* 神 */
-};
-typedef mc_enum_t MCRoleRace;
-
-/* 角色类型 */
-enum {
-    MCNPCType       = MCMakeEnum(0), /* NPC */
-    MCHeroType      = MCMakeEnum(1), /* 主角 */
-    MCMercenaryType = MCMakeEnum(2), /* 佣兵 */
-    MCEnemy         = MCMakeEnum(3)  /* 敌人 */
-};
-typedef mc_enum_t MCRoleType;
-
-/* 角色状态 */
-enum {
-    MCNormalState    = MCMakeEnum(0), /* 正常 */
-    MCPoisonedState  = MCMakeEnum(1), /* 中毒 */
-    MCChaosState     = MCMakeEnum(2), /* 混乱 */
-    MCBlindingState  = MCMakeEnum(3), /* 盲 */
-    MCVertigoState   = MCMakeEnum(4), /* 眩晕 */
-    MCBurningState   = MCMakeEnum(5), /* 燃烧 */
-    MCSlowState      = MCMakeEnum(6), /* 迟缓 */
-    MCParalysisState = MCMakeEnum(7), /* 麻痹 */ /* 待定 */
-    MCInjuredState   = MCMakeEnum(8)  /* 受伤 */ /* 待定 */
-};
-typedef mc_enum_t MCRoleState;
+#include "MCEffect.h"
 
 /* 基础角色 */
 class MCRole : public MCObject {
@@ -57,6 +24,29 @@ public:
     const char *nextSentence();
     
     void loadSpriteSheet(const char *aSpritesheetPath);
+    
+    /* 回调事件 */
+    /**
+     * 某人进入视野
+     * 默认看到的都是敌人
+     */
+    virtual void onSeeSomeone(MCRole *aRole, bool isEnermy = true);
+    
+    /**
+     * 某人离开视野
+     * 默认离开的都是敌人
+     */
+    virtual void onSomeoneDidLeave(MCRole *aRole, bool isEnermy = true);
+    
+    /**
+     * 被攻击
+     */
+    virtual void wasAttacked(const MCEffect &anEffect);
+    
+    /**
+     * 死亡
+     */
+    virtual void died();
     
     /* 角色属性 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */

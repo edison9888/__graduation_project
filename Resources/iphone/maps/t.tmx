@@ -7,7 +7,11 @@
    <terrain name="2" tile="33"/>
    <terrain name="wall" tile="9"/>
   </terraintypes>
-  <tile id="0" terrain=",,,2"/>
+  <tile id="0" terrain=",,,2">
+   <properties>
+    <property name="barrier-type" value="1"/>
+   </properties>
+  </tile>
   <tile id="1" terrain=",,2,2"/>
   <tile id="2" terrain=",,2,"/>
   <tile id="3" terrain="0,0,0,"/>
