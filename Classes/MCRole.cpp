@@ -67,6 +67,7 @@ void
 MCRole::loadSpriteSheet(const char *aSpritesheetPath)
 {
     char str[64];
+    const char *plistFilepath;
     CCSpriteFrameCache *spriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
     CCSpriteBatchNode* spriteSheet;
     CCArray *animationFrames[4] = {
@@ -83,23 +84,15 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     /* 生成路径 */
     /* plist */
     sprintf(str, "%s.plist", aSpritesheetPath);
+    plistFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
     /* 把精灵表加载到cache里 */
-    spriteFrameCache->addSpriteFramesWithFile(str);
-    plist = CCDictionary::createWithContentsOfFileThreadSafe(str);
-    metadataDict = (CCDictionary*)plist->objectForKey("metadata");
+    spriteFrameCache->addSpriteFramesWithFile(plistFilepath);
+    plist = CCDictionary::createWithContentsOfFileThreadSafe(plistFilepath);
+    metadataDict = (CCDictionary *)plist->objectForKey("metadata");
     if (entityMetadata_) {
         CC_SAFE_DELETE(entityMetadata_);
     }
     entityMetadata_ = new MCRoleEntityMetadata;
-    /* 不再需要碰撞矩形 */
-//    entityMetadata_->frameV_ = CCRectMake(metadataDict->valueForKey("vx")->intValue(),
-//                                    metadataDict->valueForKey("vy")->intValue(),
-//                                    metadataDict->valueForKey("vwidth")->intValue(),
-//                                    metadataDict->valueForKey("vheight")->intValue());
-//    entityMetadata_->frameH_ = CCRectMake(metadataDict->valueForKey("hx")->intValue(),
-//                                    metadataDict->valueForKey("hy")->intValue(),
-//                                    metadataDict->valueForKey("hwidth")->intValue(),
-//                                    metadataDict->valueForKey("hheight")->intValue());
     
     /* 纹理文件 */
     sprintf(str, "%s.ss", aSpritesheetPath);

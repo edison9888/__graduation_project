@@ -20,17 +20,18 @@ MCStateLayer::init()
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *label;
         CCScale9Sprite *line;
-        int fontSize = 36;
-        int valueFontSize = 24;
-        int contentHeight = winSize.height - 90;
-        int contentHeightWithoutBottom = contentHeight * 2 / 3;
-        int offsetX = 180;
-        int offsetY = contentHeightWithoutBottom / 8 + 4;
-        int offsetYInc = 45;
-        int valuePositionX;
+        float fontSize = 36;
+        float valueFontSize = 24;
+        float contentHeight = winSize.height - 90;
+        float contentHeightWithoutBottom = contentHeight * 2 / 3;
+        float offsetX = 180;
+        float offsetY = contentHeightWithoutBottom / 8 + 4;
+        float offsetYInc = 45;
+        float valuePositionX;
         
         /* HP */
-        label = CCLabelTTF::create("生　命　值", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("生　命　值", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("生命值", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -44,7 +45,8 @@ MCStateLayer::init()
                              label->getPosition().y - (label->getContentSize().height - hp_->getContentSize().height) / 2));
         
         /* PP */
-        label = CCLabelTTF::create("体　力　值", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("体　力　值", "", fontSize);
+//        label = CCLabelTTF::create("体力值", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -57,7 +59,8 @@ MCStateLayer::init()
                              label->getPosition().y - (label->getContentSize().height - pp_->getContentSize().height) / 2));
         
         /* state */
-        label = CCLabelTTF::create("状　　　态", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("状　　　态", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("状态", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -70,7 +73,8 @@ MCStateLayer::init()
                                 label->getPosition().y - (label->getContentSize().height - state_->getContentSize().height) / 2));
         
         /* strength */
-        label = CCLabelTTF::create("力　　　量", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("力　　　量", "Marker Felt", fontSize);
+        label = CCLabelTTF::create("力量", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -83,7 +87,8 @@ MCStateLayer::init()
                                    label->getPosition().y - (label->getContentSize().height - strength_->getContentSize().height) / 2));
         
         /* agile */
-        label = CCLabelTTF::create("敏　　　捷", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("敏　　　捷", "Marker Felt", fontSize);
+        label = CCLabelTTF::create("敏捷", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -96,7 +101,8 @@ MCStateLayer::init()
                                 label->getPosition().y - (label->getContentSize().height - agile_->getContentSize().height) / 2));
         
         /* stamina */
-        label = CCLabelTTF::create("耐　　　力", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("耐　　　力", "Marker Felt", fontSize);
+        label = CCLabelTTF::create("耐力", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -109,7 +115,8 @@ MCStateLayer::init()
                                   label->getPosition().y - (label->getContentSize().height - stamina_->getContentSize().height) / 2));
         
         /* damage */
-        label = CCLabelTTF::create("武 器 伤 害", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("武 器 伤 害", "Marker Felt", fontSize);
+        label = CCLabelTTF::create("武器伤害", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -122,7 +129,8 @@ MCStateLayer::init()
                                  label->getPosition().y - (label->getContentSize().height - damage_->getContentSize().height) / 2));
         
         /* AC */
-        label = CCLabelTTF::create("防 御 等 级", "Marker Felt", fontSize);
+//        label = CCLabelTTF::create("防 御 等 级", "Marker Felt", fontSize);
+        label = CCLabelTTF::create("防御等级", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
@@ -177,7 +185,7 @@ MCStateLayer::init()
         iconBox->setAnchorPoint(ccp(1, 1)); /* 右上角 */
         iconBox->setPosition(ccp(icon_->getPosition().x + 9, icon_->getPosition().y + 9));
         
-        name_ = CCLabelTTF::create("男猪脚", "Marker Felt", valueFontSize);
+//        name_ = CCLabelTTF::create("男猪脚", "Marker Felt", valueFontSize);
         addChild(name_);
         name_->setColor(ccc3(204, 204, 204));
         name_->setAnchorPoint(ccp(1, 1));

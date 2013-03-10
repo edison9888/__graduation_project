@@ -79,7 +79,7 @@ MCTestController::init()
     if (MCTestLayer::initWithColor(ccc4(64, 64, 64, 255)))
     {
         CCSize winSize = CCDirectorGetWindowsSize();
-        
+
         map_ = CCTMXTiledMap::create("maps/forest.tmx");
         addChild(map_);
         

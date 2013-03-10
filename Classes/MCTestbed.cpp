@@ -8,7 +8,6 @@
 
 #include "MCTestbed.h"
 
-#include "MCTestSpriteSheet.h"
 #include "MCTestController.h"
 #include "MCTestLua.h"
 #include "MCTestGame.h"
@@ -48,7 +47,6 @@ public:
 };
 
 static struct __mc_test_scene __test_scenes[] = {
-    {"Test SpriteSheet", MCTestSpriteSheet::scene},
     {"Test Controller", MCTestController::scene},
     {"Test Lua", MCTestLua::scene},
     {"Enter the Game", MCTestGame::scene},

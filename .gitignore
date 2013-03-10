@@ -20,6 +20,7 @@ proj.linux/Military_Confrontation/main.cpp
 *.class
 
 *.o
+*.obj
 
 *.d
 
@@ -33,6 +34,8 @@ proj.linux/Military_Confrontation/main.cpp
 
 *.apk
 
+*.pdb
+
 *~
 
 Resources/PC_/*
@@ -40,3 +43,8 @@ Resources/PC_/*
 docs/*.pdf
 
 proj.ios/.DS_Store
+
+Resources/Makefile*
+Resources/debug*
+Resources/release*
+

@@ -57,10 +57,8 @@ MCDialog::sharedDialog(MCDialogType aType)
 void
 MCDialog::someoneWannaSaySomething(MCRole *role)
 {
-    dialogue_->setString("大家好，我是某人，就是大家口中的男猪脚：）");
-    speakerName_->setString("男猪脚");
-//    dialogue_->setString("大家好，我是路人甲：（");
-//    speakerName_->setString("路人甲");
+    dialogue_->setString(role->nextSentence());
+    dialogue_->setString(role->getName()->getCString());
 }
 
 bool

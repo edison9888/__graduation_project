@@ -37,6 +37,7 @@ René Nyffenegger rene.nyffenegger@adp-gmbh.ch
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
+#include <string.h>
 
 static const char base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                     "abcdefghijklmnopqrstuvwxyz"

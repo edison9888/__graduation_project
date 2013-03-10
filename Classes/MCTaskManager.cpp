@@ -52,10 +52,6 @@ MCTaskManager::loadTasks()
         mercenaryMissionAccessor_ = new MCTaskAccessor;
         mercenaryMissionAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__mercenary_missions_package_file_path));
         
-//        /* 加载竞技场任务 */
-//        arenaTaskAccessor_ = new MCTaskAccessor;
-//        arenaTaskAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__arena_tasks_package_file_path));
-        
         result = true;
     } while (0);
     
@@ -75,9 +71,6 @@ MCTaskManager::taskWithObjectId(mc_object_id_t anObjectId)
             break;
         case MCMercenaryMission:
             task = mercenaryMissionAccessor_->taskWithObjectId(anObjectId);
-            break;
-        case MCArenaTask:
-            task = arenaTaskAccessor_->taskWithObjectId(anObjectId);
             break;
     }
     
@@ -119,7 +112,6 @@ MCTaskManager::acceptTask(MCTask *task)
     if (unfinishedTasks->containsObject(task) /* 在未完成任务列表里 */
         && !currentTasks->containsObject(task)) { /* 且不在已接受任务列表里 */
         currentTasks->addObject(task);
-#warning todo 通知更新系统
         /* 刷新任务面板 */
         return true;
     }

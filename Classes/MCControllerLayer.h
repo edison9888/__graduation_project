@@ -21,7 +21,7 @@ enum {
 typedef mc_enum_t MCControlMode;
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "MCKeyboard.h"
+//#include "MCKeyboardboard.h"
 #endif /* MacOSX、Windows和Linux控制响应 */
 
 class MCControllerLayer : public CCLayer {
@@ -33,7 +33,7 @@ public:
     
 private:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    MCKeyboard *keybord_;
+//    MCKeyboard *keybord_;
 #endif /* MacOSX、Windows和Linux控制响应 */
     MCJoypad *joypad_;
     

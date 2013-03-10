@@ -8,10 +8,9 @@
 
 #include "MCTask.h"
 
-const char *MCMainlineTaskName      = "主线任务";
-const char *MCSideQuestName         = "支线任务";
-const char *MCMercenaryMissionName  = "佣兵任务";
-const char *MCArenaTaskName         = "竞技场任务";
+const char *MCMainlineTaskName = "主线任务";
+const char *MCSideQuestName = "支线任务";
+const char *MCMercenaryMissionName = "佣兵任务";
 
 const char *
 nameForMCTaskType(MCTaskCategory aTaskCategory)
@@ -23,8 +22,6 @@ nameForMCTaskType(MCTaskCategory aTaskCategory)
             return MCSideQuestName;
         case MCMercenaryMission:
             return MCMercenaryMissionName;
-        case MCArenaTask:
-            return MCArenaTaskName;
             
         default:
             return NULL;

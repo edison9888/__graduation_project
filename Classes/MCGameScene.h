@@ -78,7 +78,7 @@ protected:
 private:
     MCControllerLayer *controller_; /* 控制层 */
     CCLayer *objects_; /* 对象层 */
-#warning todo：记得删除调试用视角层
+//#warning todo：记得删除调试用视角层
     CCLayer *viewport_; /* 调试用的视角层 */
     CCLayer *background_; /* 背景层 */
     

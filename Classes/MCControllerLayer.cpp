@@ -9,7 +9,7 @@
 #include "MCControllerLayer.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#include "MCKeyboardDispatcher.h"
+//#include "MCKeyboardDispatcher.h"
 #endif /* MacOSX、Windows和Linux控制响应 */
 
 bool
@@ -25,8 +25,8 @@ MCControllerLayer::init()
         joypad_->setJoystick(MCJoystick::create(bg, control));
         
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-        keybord_ = MCKeyboard::create();
-        addChild (keybord_);
+//        keybord_ = MCKeyboard::create();
+//        addChild (keybord_);
 #endif /* MacOSX、Windows和Linux控制响应 */
         
         return true;
@@ -47,7 +47,7 @@ MCControllerLayer::setDelegate(MCControllerDelegate* aDelegate)
     joypad_->setDelegate(aDelegate);
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-    keybord_->setDelegate(aDelegate);
+//    keybord_->setDelegate(aDelegate);
 #endif /* MacOSX、Windows和Linux控制响应 */
 }
 

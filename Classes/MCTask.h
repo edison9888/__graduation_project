@@ -18,15 +18,13 @@ class MCTaskStatus;
 enum {
     MCMainlineTask      = 1, /* 主线任务 */
     MCSideQuest         = 2, /* 支线任务 */
-    MCMercenaryMission  = 3, /* 佣兵任务 */
-    MCArenaTask         = 4  /* 竞技场任务 */
+    MCMercenaryMission  = 3  /* 佣兵任务 */
 };
 typedef mc_enum_t MCTaskCategory;
 
 extern const char *MCMainlineTaskName;
 extern const char *MCSideQuestName;
 extern const char *MCMercenaryMissionName;
-extern const char *MCArenaTaskName;
 
 const char *nameForMCTaskType(MCTaskCategory aTaskCategory);
 

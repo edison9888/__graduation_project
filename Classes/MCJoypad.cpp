@@ -8,42 +8,9 @@
 
 #include "MCJoypad.h"
 
-#ifndef absf
-#define absf(x) ((x) > 0 ? (x) : -(x))
-#endif
-
-const float PI = 3.1415926f;
-
-/**
- * a: point.y
- * b: point.x
- * tan(angle) = a / b
- * angle = atan (a / b)
- */
-inline static void
-getAngle(float a, float b, float& angle)
-{
-    float theta;
-    
-    a = absf (a);
-    b = absf (b);
-    theta = atan (a / b);
-    
-    if ((int) b == 0) //b不能等于0，否则atan不能计算
-    {
-        angle = 90.0f;
-    }
-    else
-    {
-        angle = theta * 180 / PI;
-    }
-}
-
 static CCPoint s_pJoystickTrailer = CCPointZero;
 static CCPoint *__cc_point_zero = new CCPoint(0.f, 0.f);
 static CCPoint *__mc_joystick_delta = new CCPoint(0.f, 0.f);
-
-#define POINT_EQUAL(p1, p2) (((p1).x == (p2).x) && ((p1).y == (p2).y))
 
 static void
 getIntersectionPoint(CCPoint linePoint, float circleRadius,
@@ -68,6 +35,7 @@ MCJoypad::init()
     if (CCLayer::init())
     {
         joystickDelta_ = __cc_point_zero;
+        isValidControl_ = false;
         setTouchEnabled(true);
         setTouchMode(kCCTouchesAllAtOnce);
         schedule(schedule_selector(MCJoystick::update));
@@ -160,7 +128,7 @@ MCJoypad::ccTouchesMoved (CCSet *pTouches, CCEvent *pEvent)
             if (offset > joystick_->getThreshold()) //有效偏移
             {
                 radius = joystick_->getRadius();
-                if (absf (offsetX) > radius || absf (offsetY) > radius) //越界
+                if (fabsf (offsetX) > radius || fabsf (offsetY) > radius) //越界
                 {
                     getIntersectionPoint (location, radius,
                                           intersectionPointX, intersectionPointY);
@@ -218,9 +186,6 @@ MCJoypad::update(float dt)
     if (! delegate_ || !isValidControl_) {
         return;
     }
-    CCPoint point = *joystickDelta_;
-    CCPoint offset = CCPointZero;
-    
-    delegate_->controllerMove(delegate_, point);
+    delegate_->controllerMove(delegate_, *joystickDelta_);
 }
 
