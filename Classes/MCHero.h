@@ -14,6 +14,7 @@
 /* 主角 */
 class MCHero : public MCRole {
 public:
+    ~MCHero();
     bool init();
     
     static MCHero *sharedHero();

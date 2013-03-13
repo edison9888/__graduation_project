@@ -10,6 +10,7 @@
 #define __Military_Confrontation__MCRoleEntity__
 
 #include "MCObject.h"
+#include "MCOBB.h"
 
 /* 角色朝向 */
 enum {
@@ -57,7 +58,9 @@ public:
     void onExit();
     void update(float dt);
     
-    CCRect getBounds(); /* 碰撞域 */
+    /* 碰撞 */
+    CCRect getAABB(); /* AABB */
+    MCOBB *getOBB();    /* OBB */
     
     void walk(MCFacade aFacade);
     void walkTo(CCPoint &aDestinationPosition);
@@ -79,6 +82,7 @@ protected:
     
 private:
     CCArray *moveToActions_;
+    MCOBB *obb_;
 };
 
 #endif /* defined(__Military_Confrontation__MCRoleEntity__) */

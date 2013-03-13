@@ -7,6 +7,7 @@
 //
 
 #include "MCFlag.h"
+#include "MCFlagManager.h"
 
 bool
 MCFlag::init(const mc_object_id_t &anObjectId, JsonBox::Object &aRoot)
@@ -50,5 +51,5 @@ void
 MCFlag::setState(MCFlagState aFlagState)
 {
     state_ = aFlagState;
-#warning todo: 更新标志管理器里的信息
+    MCFlagManager::sharedFlagManager()->updateFlag(this);
 }

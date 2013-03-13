@@ -1,1 +1,43 @@
-{"id":"M001","name":"地图1","objects":{"NPCs":{},"monsters":{}},"dialogues":{},"background":{"tmx":null,"sound":null},"scenes":{},"description":null,"triggers":{}}
+{
+  "id": "M001",
+  "name": "比奇村",
+  "objects": {
+    "NPCs": {"N001": {
+        "requirement": [
+        ],
+        "x": 100,
+        "y": 100,
+        "w": 4,
+        "h": 1
+      },
+      "N004": {
+        "requirement": [
+        ],
+        "x": 120,
+        "y": 24,
+        "w": 4,
+        "h": 1
+      }
+    },
+    "monsters": {
+    }
+  },
+  "dialogues": {
+  },
+  "background": {
+    "tmx": "maps/village.tmx",
+    "sound": "sounds/bgm-b.mp3"
+  },
+  "scenes": {
+    "forest-1": "M002",
+    "house1": "M002",
+    "cave-1": "M002",
+    "house3": "M002",
+    "house4": "M002",
+    "house5": "M002",
+    "forest-2": "M002"
+  },
+  "description": "比奇村，主角的老家",
+  "triggers": {
+  }
+}

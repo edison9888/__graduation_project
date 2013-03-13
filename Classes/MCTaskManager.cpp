@@ -8,19 +8,15 @@
 
 #include "MCTaskManager.h"
 
-const char *__mainline_tasks_package_file_path = "tasks/1.tpkg";
-const char *__side_quests_package_file_path = "tasks/2.tpkg";
-const char *__mercenary_missions_package_file_path = "tasks/3.tpkg";
-const char *__arena_tasks_package_file_path = "tasks/4.tpkg";
+const char *__side_quests_package_file_path = "tasks/s.tpkg";
+const char *__guile_quests_package_file_path = "tasks/g__guile_quests_package_file_path.tpkg";
 
 static MCTaskManager *__shared_task_manager = NULL;
 
 MCTaskManager::~MCTaskManager()
 {
-    CC_SAFE_DELETE(mainlineTaskAccessor_);
     CC_SAFE_DELETE(sideQuestAccessor_);
-    CC_SAFE_DELETE(mercenaryMissionAccessor_);
-    CC_SAFE_DELETE(arenaTaskAccessor_);
+    CC_SAFE_DELETE(guileQuestAccessor_);
 }
 
 MCTaskManager *
@@ -40,17 +36,14 @@ MCTaskManager::loadTasks()
     
     do {
         CCFileUtils *fileUtils = CCFileUtils::sharedFileUtils();
-        /* 加载主线任务 */
-        mainlineTaskAccessor_ = new MCTaskAccessor;
-        mainlineTaskAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__mainline_tasks_package_file_path));
         
         /* 加载支线任务 */
         sideQuestAccessor_ = new MCTaskAccessor;
         sideQuestAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__side_quests_package_file_path));
         
-        /* 加载佣兵任务 */
-        mercenaryMissionAccessor_ = new MCTaskAccessor;
-        mercenaryMissionAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__mercenary_missions_package_file_path));
+        /* 加载公会任务 */
+        guileQuestAccessor_ = new MCTaskAccessor;
+        guileQuestAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__guile_quests_package_file_path ));
         
         result = true;
     } while (0);
@@ -63,14 +56,11 @@ MCTaskManager::taskWithObjectId(mc_object_id_t anObjectId)
 {
     MCTask *task = NULL;
     switch (anObjectId.sub_class_ - '0') {
-        case MCMainlineTask:
-            task = mainlineTaskAccessor_->taskWithObjectId(anObjectId);
-            break;
         case MCSideQuest:
             task = sideQuestAccessor_->taskWithObjectId(anObjectId);
             break;
-        case MCMercenaryMission:
-            task = mercenaryMissionAccessor_->taskWithObjectId(anObjectId);
+        case MCGuildQuest:
+            task = guileQuestAccessor_->taskWithObjectId(anObjectId);
             break;
     }
     

@@ -9,11 +9,17 @@
 #ifndef __Military_Confrontation__MCGameScene__
 #define __Military_Confrontation__MCGameScene__
 
-#include "MCControllerLayer.h"
 #include "MCScenePackage.h"
+
+#include "MCControllerLayer.h"
+#include "MCObjectLayer.h"
+#include "MCBackgroundLayer.h"
+
+#include "MCViewportLayer.h"
 
 class MCGameScene;
 class MCTrigger;
+class MCRoleEntity;
 
 class MCGameSceneContext : public CCObject {
     friend class MCGameScene;
@@ -21,15 +27,32 @@ public:
     CC_SYNTHESIZE_READONLY(MCGameScene *, scene_, Scene);
 };
 
-class MCGameScene : public CCScene, public MCControllerDelegate {
+class MCGameSceneContextManager {
+private:
+    MCGameSceneContextManager();
+public:
+    ~MCGameSceneContextManager();
     
+    static MCGameSceneContextManager *sharedGameSceneContextManager();
+    
+    void pushContext(MCGameSceneContext *aContext);
+    void popContext();
+    MCGameSceneContext *currentContext();
+    
+private:
+    CCArray* contextStack_;
+};
+
+class MCGameScene : public CCScene, public MCSceneDelegate {
+    friend class MCSceneManager;
 public:
     MCGameScene()
     : controller_(MCControllerLayer::create()),
         objects_(NULL),
         viewport_(NULL),
         background_(NULL),
-        isAtWar_(false) { }
+        isAtWar_(false),
+        isInternalScene_(false) { }
     
     /**
      * 从场景包加载场景初始化 
@@ -45,15 +68,17 @@ public:
     void onExit();
     
     /**
-     * 控制器回调 
-     */
-    void controllerMove(MCControllerDelegate *sender, const CCPoint &delta);
-    
-    /**
      * 是否在战斗状态
      */
     inline bool isAtWar() {
         return isAtWar_;
+    }
+    
+    /**
+     * 是否为内部场景(如房子、商店)
+     */
+    inline bool isInternalScene() {
+        return isInternalScene_;
     }
     
     /**
@@ -71,23 +96,31 @@ public:
      * aSceneId(in): 场景ID
      * anEntranceName(in): 场景入口名
      */
-    void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName);
+    void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false);
+    
+    /**
+     * 从内部场景(比如房子、商店)出去
+     */
+    void goOut();
 
 protected:
+    bool hasEntrance(const char *anEntranceName);
 
-private:
     MCControllerLayer *controller_; /* 控制层 */
-    CCLayer *objects_; /* 对象层 */
+    MCObjectLayer *objects_; /* 对象层 */
 //#warning todo：记得删除调试用视角层
-    CCLayer *viewport_; /* 调试用的视角层 */
-    CCLayer *background_; /* 背景层 */
+    MCViewportLayer *viewport_; /* 调试用的视角层 */
+    MCBackgroundLayer *background_; /* 背景层 */
     
     CCArray *scenes_; /* 场景地图ID数组 */
     CCArray *triggers_; /* 触发器 */
     
     bool isAtWar_;
+    bool isInternalScene_;
     
+    CC_PROPERTY_READONLY(CCDictionary *, entrances_, Entrances);
     CC_SYNTHESIZE_READONLY(MCGameSceneContext *, context, Context);
+    CC_SYNTHESIZE_READONLY(MCScenePackage *, scenePackage_, ScenePackage);
 };
 
 #endif /* defined(__Military_Confrontation__MCGameScene__) */

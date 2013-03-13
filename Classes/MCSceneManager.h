@@ -10,7 +10,15 @@
 #define __Military_Confrontation__MCSceneManager__
 
 #include "MCScenePackage.h"
-#include "MCGameScene.h"
+
+class MCGameScene;
+
+enum {
+    MCPushScene     = 0,
+    MCPopScene      = 1,
+    MCReplaceScene  = 2
+};
+typedef mc_enum_t MCChangeSceneMethod;
 
 class MCSceneManager : public CCObject {
 private:
@@ -21,7 +29,7 @@ public:
     
     static MCSceneManager *sharedSceneManager();
     
-    void loadSceneListFile(const char *aFilepath);
+    void loadSceneListFile();
     
     MCScenePackage *packageWithObjectId(mc_object_id_t anObjectId);
     
@@ -36,9 +44,37 @@ public:
      */
     void cleanupSceneWithObjectId(mc_object_id_t anObjectId);
     
+    /**
+     * 切换当前场景为aNewScene
+     */
+    void changeScene(MCGameScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+    
+    /**
+     * 切换当前场景为ID为anObjectId的场景
+     */
+    void changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+    
 private:
     CCDictionary *scenes_; /* 以mc_object_id_t为key */
     CCDictionary *scenePackages_; /* 以mc_object_id_t为key */
+    
+    MCGameScene *lastScene_;
+    MCGameScene *currentScene_;
+};
+
+class MCSceneDelegate {
+public:
+    /**
+     * 移动到场景
+     * aSceneId(in): 场景ID
+     * anEntranceName(in): 场景入口名
+     */
+    virtual void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false) = 0;
+    
+    /**
+     * 从内部场景(比如房子、商店)出去
+     */
+    virtual void goOut() = 0;
 };
 
 #endif /* defined(__Military_Confrontation__MCSceneManager__) */

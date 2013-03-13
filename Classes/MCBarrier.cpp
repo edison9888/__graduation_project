@@ -24,23 +24,14 @@ MCBarrier *
 MCBarrier::create(const CCRect &aRect, MCBarrierType aBarrierType)
 {
     MCBarrier *pRet = new MCBarrier();
-    if (pRet && pRet->init(aRect, aBarrierType))
-    {
+    if (pRet && pRet->init(aRect, aBarrierType)) {
         pRet->autorelease();
         return pRet;
-    }
-    else
-    {
+    } else {
         delete pRet;
         pRet = NULL;
         return NULL;
     }
-}
-
-bool
-MCBarrier::collideWith(const CCRect &aTargetRect)
-{
-    return rect_.intersectsRect(aTargetRect);
 }
 
 /**
@@ -52,16 +43,16 @@ MCBarrier::collideWith(const CCRect &aTargetRect)
  * 返回值你懂的
  */
 bool
-MCBarrier::collideWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
+MCBarrier::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
 {
     MCRole *role = aRoleEntity->getPrototype();
     MCRoleRace race = role->getRoleRace();
-    CCRect bounds = aRoleEntity->getBounds();
+    CCRect bounds = aRoleEntity->getAABB();
     bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
     
-    if (race > type_) { /* 人物种族级别比障碍物更高，直接无视障碍物 */
-        return false;
+    if (rect_.intersectsRect(bounds)) {
+        return MCHasFlag(type_, race); /* 此障碍物不允许改人物种族经过 */
     }
     
-    return rect_.intersectsRect(bounds);
+    return false;
 }

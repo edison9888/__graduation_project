@@ -11,12 +11,20 @@
 static MCHero *__shared_hero = NULL;
 const char *kMCHeroSpriteSheetPath = "spritesheets/m-19"; //29、22、20、8、13、19
 
+
+MCHero::~MCHero()
+{
+    CC_SAFE_DELETE(viewport_);
+}
+
 bool
 MCHero::init()
 {
     setRoleType(MCHeroType);
     setRoleRace(MCTerrans);
     loadSpriteSheet(kMCHeroSpriteSheetPath);
+    
+    viewport_ = MCViewport::create(getEntity());
     
     return true;
 }

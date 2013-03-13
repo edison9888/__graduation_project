@@ -64,6 +64,13 @@ MCRole::nextSentence()
 }
 
 void
+MCRole::loadSpriteSheet()
+{
+    CCLog("%s", spriteSheet_->getCString());
+    loadSpriteSheet(spriteSheet_->getCString());
+}
+
+void
 MCRole::loadSpriteSheet(const char *aSpritesheetPath)
 {
     char str[64];

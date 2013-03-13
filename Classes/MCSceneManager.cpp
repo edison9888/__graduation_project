@@ -10,15 +10,20 @@
 
 #include "JsonBox.h"
 #include "MCJSONModifier.h"
+#include "MCGameScene.h"
 
+const char *kMCScenesResourceFilePath = "scenes.spkg";
 static MCSceneManager *__shared_scene_list = NULL;
 
 MCSceneManager::MCSceneManager()
 {
     scenes_ = CCDictionary::create();
-    scenes_->retain(); // need?
+    scenes_->retain();
     scenePackages_ = CCDictionary::create();
-    scenePackages_->retain(); // need?
+    scenePackages_->retain();
+    
+    lastScene_ = NULL;
+    currentScene_ = NULL;
 }
 
 MCSceneManager::~MCSceneManager()
@@ -32,13 +37,16 @@ MCSceneManager::sharedSceneManager()
 {
     if (__shared_scene_list == NULL) {
         __shared_scene_list = new MCSceneManager;
+        if (__shared_scene_list) {
+            __shared_scene_list->loadSceneListFile();
+        }
     }
     
     return __shared_scene_list;
 }
 
 void
-MCSceneManager::loadSceneListFile(const char *aFilepath)
+MCSceneManager::loadSceneListFile()
 {
     JsonBox::Value in;
     JsonBox::Value v;
@@ -46,8 +54,9 @@ MCSceneManager::loadSceneListFile(const char *aFilepath)
     JsonBox::Object packages;
     JsonBox::Object::iterator iter;
     const char *c_str_o_id;
+    MCScenePackage *scenaPackage;
     
-    in.loadFromFile(aFilepath);
+    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
     o = in.getObject();
     
     packages = o["scenes"].getObject();
@@ -61,7 +70,9 @@ MCSceneManager::loadSceneListFile(const char *aFilepath)
             c_str_o_id[3]
         };
         /* load package */
-        scenePackages_->setObject(MCScenePackage::create(iter->second.getString().c_str()),
+        scenaPackage = MCScenePackage::create(iter->second.getString().c_str());
+        scenaPackage->setID(o_id);
+        scenePackages_->setObject(scenaPackage,
                                   MCObjectIdToDickKey(o_id));
     }
 }
@@ -81,10 +92,12 @@ MCSceneManager::sceneWithObjectId(mc_object_id_t anObjectId)
 {
     int key = MCObjectIdToDickKey(anObjectId);
     MCGameScene *scene = (MCGameScene *) scenes_->objectForKey(key);
+    MCScenePackage *scenePackage;
     
     if (scene == NULL) {
         scene = new MCGameScene;
-        if (scene && scene->initWithScenePackage((MCScenePackage *) scenePackages_->objectForKey(key))) {
+        scenePackage = (MCScenePackage *) scenePackages_->objectForKey(key);
+        if (scene && scene->initWithScenePackage(scenePackage)) {
             scenes_->setObject(scene, key);
         } else {
             CC_SAFE_DELETE(scene);
@@ -106,4 +119,43 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
     if (scene) {
         scenes_->removeObjectForKey(key);
     }
+}
+
+
+/**
+ * 切换当前场景为aNewScene
+ */
+void
+MCSceneManager::changeScene(MCGameScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
+{
+    if ((aNewScene == NULL && method != MCPopScene)
+        || aNewScene == NULL
+        || (currentScene_ != NULL && !currentScene_->hasEntrance(anEntranceName))) {
+        return;
+    }
+    
+    if (MCPushScene == method) {
+        CCDirector::sharedDirector()->pushScene(aNewScene);
+        lastScene_ = currentScene_;
+        currentScene_ = aNewScene;
+    } else if (MCPopScene == method) {
+        CCDirector::sharedDirector()->popScene();
+        MCGameScene *tmp = lastScene_;
+        lastScene_ = currentScene_;
+        currentScene_ = tmp; /* lastScene_ */
+    } else {
+        CCDirector::sharedDirector()->replaceScene(aNewScene);
+        lastScene_ = currentScene_;
+        currentScene_ = aNewScene;
+    }
+}
+
+/**
+ * 切换当前场景为ID为anObjectId的场景
+ */
+void
+MCSceneManager::changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method)
+{
+    MCGameScene *newScene = sceneWithObjectId(anObjectId);
+    changeScene(newScene, anEntranceName, method);
 }

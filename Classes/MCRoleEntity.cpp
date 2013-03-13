@@ -36,6 +36,7 @@ MCRoleEntity::MCRoleEntity()
 {
     moveToActions_ = new CCArray;
     moveToActions_->init();
+    obb_ = NULL;
 }
 
 MCRoleEntity::~MCRoleEntity()
@@ -65,33 +66,23 @@ MCRoleEntity::update(float dt)
 }
 
 CCRect
-MCRoleEntity::getBounds()
+MCRoleEntity::getAABB()
 {
-//    MCFacade facade = metadata_->facade_;
     CCRect bounds;
-    
-//    if (facade == MCFacingUp || facade == MCFacingDown) {
-//        bounds = CCRect(metadata_->frameV_);
-//    } else if (facade == MCFacingLeft || facade == MCFacingRight) {
-//        bounds = CCRect(metadata_->frameH_);
-//    } else {
-//        CCLog("error");
-//        bounds = CCRectMake(m_obPosition.x, m_obPosition.y,
-//                            m_obContentSize.width, m_obContentSize.height);
-//    }
     CCSize size = getContentSize();
     bounds = CCRectMake(0, 0, size.width, size.height / 2);
-//    if (facade == MCFacingUp || facade == MCFacingDown) {
-//        bounds = CCRect(metadata_->frameV_);
-//    } else if (facade == MCFacingLeft || facade == MCFacingRight) {
-//        bounds = CCRect(metadata_->frameH_);
-//    } else {
-//        CCLog("error");
-//        bounds = CCRectMake(m_obPosition.x, m_obPosition.y,
-//                            m_obContentSize.width, m_obContentSize.height);
-//    }
-    
     return bounds;
+}
+
+MCOBB *
+MCRoleEntity::getOBB()
+{
+    if (obb_ == NULL) {
+        obb_ = MCOBB::create(getAABB(), 0);
+    }
+    obb_->setup(getAABB(), 0);
+    
+    return obb_;
 }
 
 void

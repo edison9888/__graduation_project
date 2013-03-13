@@ -9,7 +9,7 @@
 #ifndef __Military_Confrontation__MCBarrier__
 #define __Military_Confrontation__MCBarrier__
 
-#include "MCRoleEntity.h"
+#include "MCSemiTransparent.h"
 
 extern const char *kMCTypeBarrier;
 
@@ -22,13 +22,11 @@ enum {
 };
 typedef mc_enum_t MCBarrierType;
 
-class MCBarrier : public CCObject {
+class MCBarrier : public MCSemiTransparent {
 public:
     bool init(const CCRect &aRect, MCBarrierType aBarrierType);
     
     static MCBarrier* create(const CCRect &aRect, MCBarrierType aBarrierType);
-    
-    bool collideWith(const CCRect &aTargetRect);
     
     /**
      * 检测是否与人物碰撞
@@ -38,9 +36,8 @@ public:
      *
      * 返回值你懂的
      */
-    bool collideWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
+    bool collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
     
-    CC_SYNTHESIZE_READONLY(CCRect, rect_, Rect);
     CC_SYNTHESIZE_READONLY(MCBarrierType, type_, BarrierType);
 };
 

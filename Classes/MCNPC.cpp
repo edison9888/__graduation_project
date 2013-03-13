@@ -8,10 +8,19 @@
 
 #include "MCNPC.h"
 
+MCNPC::~MCNPC()
+{
+    CC_SAFE_DELETE(viewport_);
+}
+
 bool
 MCNPC::init()
 {
     setRoleType(MCNPCType);
+#warning debug
+    loadSpriteSheet("spritesheets/n-13");
+    
+    viewport_ = MCViewport::create(getEntity());
     
     return true;
 }

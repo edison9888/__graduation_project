@@ -12,17 +12,19 @@
 #include "MCObject.h"
 #include "MCRoleEntity.h"
 #include "MCEffect.h"
+#include "MCViewport.h"
 
 /* 基础角色 */
 class MCRole : public MCObject {
 public:
     MCRole();
-    virtual ~MCRole();
+    ~MCRole();
     virtual bool init() = 0;
     
     /* 下一句话。如果没有则返回NULL；如果本来就没话说则返回默认对白 */
     const char *nextSentence();
     
+    void loadSpriteSheet();
     void loadSpriteSheet(const char *aSpritesheetPath);
     
     /* 回调事件 */
@@ -55,7 +57,8 @@ public:
     CC_SYNTHESIZE(mc_pp_t, pp_, PP); /* 角色体力值 */
     CC_SYNTHESIZE(mc_load_t, load_, Load); /* 角色负重 */
     CC_SYNTHESIZE(MCRoleState, roleState_, RoleState); /* 角色状态 */
-    CC_SYNTHESIZE(CCSprite *, face_, Face); /* 角色头像 */
+    CC_SYNTHESIZE(CCString *, face_, Face); /* 角色头像 */
+    CC_SYNTHESIZE(CCString *, spriteSheet_, SpriteSheet); /* 角色精灵表 */
     
     CC_SYNTHESIZE(CCString *, defaultDialogue_, DefaultDialogue); /* 默认对白 */
     CC_SYNTHESIZE(CCArray *, dialogues_, Dialogues); /* 当前场景可能的对白 */
@@ -65,6 +68,9 @@ public:
     CC_PROPERTY_READONLY(MCRoleEntity *, entity_, Entity); /* entity_将共用metadata_ */
     
     CC_SYNTHESIZE_READONLY(MCRoleEntityMetadata *, entityMetadata_, EntityMetadata); /* entity_将共用这个metadata */
+    
+    /* 视觉 */
+    CC_SYNTHESIZE_READONLY(MCViewport *, viewport_, Viewport);
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

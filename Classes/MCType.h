@@ -25,6 +25,8 @@ typedef int mc_dict_key_t;
 typedef mc_ushort_t mc_enum_t;
 #define MCMakeEnum(offset) (1 << (offset))
 
+#define MCHasFlag(flags, flag) ((bool) ((flags) & (flag) == (flag)))
+
 #define MCObjectIdToDickKey(o_id) \
 (0 | ((mc_dict_key_t)(o_id).class_) * 0x1000000 \
 | ((mc_dict_key_t)(o_id).sub_class_) * 0x10000 \
@@ -33,8 +35,6 @@ typedef mc_ushort_t mc_enum_t;
 )
 
 #define MCObjectIdIsEqualsTo(o1, o2) (MCObjectIdToDickKey(o1)) == MCObjectIdToDickKey(o2))
-
-#define MCObjectIdMake(c, sc, i, si)
 
 /*
  * 物件ID结构体

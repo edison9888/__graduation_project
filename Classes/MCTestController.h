@@ -52,7 +52,6 @@ public:
 private:
     CCPoint viewLocationToTiledMapLocation(CCPoint aViewLocation);
     
-    void moveTo(MCControlButtonCode aCode);
     void moveTo(const CCPoint &delta);
     
     void verticallyMove(MCControlButtonCode aCode);
@@ -66,9 +65,9 @@ private:
     CCAction *heroAction_;
     CCAction *mapAction_;
     
-    MCSize winSize;
-    MCSize mapSize;
-    MCSize tileSize;
+    CCSize winSize;
+    CCSize mapSize;
+    CCSize tileSize;
     CCSize scaledTileSize;
     float contentScaleFactor;
     float blockWidth;

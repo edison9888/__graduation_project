@@ -8,20 +8,17 @@
 
 #include "MCTask.h"
 
-const char *MCMainlineTaskName = "主线任务";
-const char *MCSideQuestName = "支线任务";
-const char *MCMercenaryMissionName = "佣兵任务";
+const char *kMCSideQuestName = "支线任务";
+const char *kMCGuildQuestName = "公会任务";
 
 const char *
 nameForMCTaskType(MCTaskCategory aTaskCategory)
 {
     switch (aTaskCategory) {
-        case MCMainlineTask:
-            return MCMainlineTaskName;
         case MCSideQuest:
-            return MCSideQuestName;
-        case MCMercenaryMission:
-            return MCMercenaryMissionName;
+            return kMCSideQuestName;
+        case MCGuildQuest:
+            return kMCGuildQuestName;
             
         default:
             return NULL;
@@ -31,7 +28,7 @@ nameForMCTaskType(MCTaskCategory aTaskCategory)
 void
 MCTask::loadTask(JsonBox::Object &aTask)
 {
-    JsonBox::Object taskContext;
+    JsonBox::Array taskContent;
     
     /* task["done"] Number */
         //load from another file
@@ -46,6 +43,6 @@ MCTask::loadTask(JsonBox::Object &aTask)
     /* task["description"] String */
     setDescription(CCString::create(aTask["description"].getString()));
     
-    /* task["task"] Object */
-    taskContext = aTask["task"].getObject();
+    /* task["content"] Array */
+    taskContent = aTask["content"].getArray();
 }

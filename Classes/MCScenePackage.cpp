@@ -7,11 +7,19 @@
 //
 
 #include "MCScenePackage.h"
+#include "MCRoleManager.h"
+#include "MCEntrance.h"
 
 MCScenePackage::~MCScenePackage()
 {
     CC_SAFE_RELEASE(NPCs_);
     CC_SAFE_RELEASE(monsters_);
+    CC_SAFE_RELEASE(scenes_);
+    
+    CC_SAFE_RELEASE(tmxTiledMapPath_);
+    CC_SAFE_RELEASE(backgroundMusicPath_);
+
+    MCObject::~MCObject();
 }
 
 bool
@@ -25,6 +33,10 @@ MCScenePackage::init()
         monsters_ = CCDictionary::create();
         CC_BREAK_IF(! monsters_);
         monsters_->retain();
+        
+        scenes_ = CCDictionary::create();
+        CC_BREAK_IF(! monsters_);
+        scenes_->retain();
         
         tmxTiledMapPath_ = NULL;
         backgroundMusicPath_ = NULL;
@@ -41,7 +53,7 @@ MCScenePackage::create(const char *aPackagePath)
     MCScenePackage *package = new MCScenePackage;
     
     if (package && package->init()) {
-        package->loadFromFile(aPackagePath);
+        package->loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aPackagePath));
         package->autorelease();
         return package;
     } else {
@@ -84,6 +96,10 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     };
     setID(o_id);
     
+    /* name String */
+    name_ = CCString::create(root["name"].getString().c_str());
+    name_->retain();
+    
     /* objects Object */
     loadObjects(root);
     
@@ -94,11 +110,13 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     object = root["background"].getObject();
     /* background["tmx"] String */
     tmxTiledMapPath_ = CCString::create(object["tmx"].getString());
+    tmxTiledMapPath_->retain();
     /* background["sound"] String */
     backgroundMusicPath_ = CCString::create(object["sound"].getString());
+    backgroundMusicPath_->retain();
     
-    /* maps Object */
-    loadMaps(root);
+    /* scenes Object */
+    loadScenes(root);
 }
 
 void
@@ -110,6 +128,7 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
     JsonBox::Array::iterator arrayIter;
     JsonBox::Object::iterator objectIter;
     const char *c_str_o_id;
+    MCRoleManager *roleManager = MCRoleManager::sharedRoleManager();
 
     /* objects["NPCs"] Array */
     array = objects["NPCs"].getArray();
@@ -123,8 +142,10 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCNPC *npc = MCNPC::create(o_id);
-        NPCs_->setObject(npc, MCObjectIdToDickKey(o_id));
+        MCNPC *npc = roleManager->NPCForObjectId(o_id);
+        if (npc) {
+            NPCs_->setObject(npc, MCObjectIdToDickKey(o_id));
+        }
     }
     /* objects["monsters"] Array */
     array = objects["monsters"].getArray();
@@ -138,8 +159,10 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCMonster *monster = MCMonster::create(o_id);
-        monsters_->setObject(monster, MCObjectIdToDickKey(o_id));
+        MCMonster *monster = roleManager->monsterForObjectId(o_id);
+        if (monster) {
+            monsters_->setObject(monster, MCObjectIdToDickKey(o_id));
+        }
     }
 }
 
@@ -153,55 +176,24 @@ MCScenePackage::loadDialogues(JsonBox::Object &aRoot)
 }
 
 void
-MCScenePackage::loadMaps(JsonBox::Object &aRoot)
+MCScenePackage::loadScenes(JsonBox::Object &aRoot)
 {
-    JsonBox::Object maps = aRoot["maps"].getObject();
-    JsonBox::Value v;
-    JsonBox::Object object;
+    JsonBox::Object scenes = aRoot["scenes"].getObject();
+    JsonBox::Object::iterator objectIterator;
+    MCEntrance *entrance;
     const char *c_str_o_id;
     
-    /* maps["east"] String/NULL */
-    v = maps["east"];
-    if (v.isString()) {
-        c_str_o_id = v.getString().c_str();
-        eastMapId_.class_ = c_str_o_id[0];
-        eastMapId_.sub_class_ = c_str_o_id[1];
-        eastMapId_.index_ = c_str_o_id[2];
-        eastMapId_.sub_index_ = c_str_o_id[3];
-    } else { /* NULL */
-        memset(&eastMapId_, 0, sizeof(eastMapId_));
-    }
-    /* maps["west"] String/NULL */
-    v = maps["west"];
-    if (v.isString()) {
-        c_str_o_id = v.getString().c_str();
-        westMapId_.class_ = c_str_o_id[0];
-        westMapId_.sub_class_ = c_str_o_id[1];
-        westMapId_.index_ = c_str_o_id[2];
-        westMapId_.sub_index_ = c_str_o_id[3];
-    } else { /* NULL */
-        memset(&westMapId_, 0, sizeof(westMapId_));
-    }
-    /* maps["south"] String/NULL */
-    v = maps["south"];
-    if (v.isString()) {
-        c_str_o_id = v.getString().c_str();
-        southMapId_.class_ = c_str_o_id[0];
-        southMapId_.sub_class_ = c_str_o_id[1];
-        southMapId_.index_ = c_str_o_id[2];
-        southMapId_.sub_index_ = c_str_o_id[3];
-    } else { /* NULL */
-        memset(&southMapId_, 0, sizeof(southMapId_));
-    }
-    /* maps["north"] String/NULL */
-    v = maps["north"];
-    if (v.isString()) {
-        c_str_o_id = v.getString().c_str();
-        northMapId_.class_ = c_str_o_id[0];
-        northMapId_.sub_class_ = c_str_o_id[1];
-        northMapId_.index_ = c_str_o_id[2];
-        northMapId_.sub_index_ = c_str_o_id[3];
-    } else { /* NULL */
-        memset(&northMapId_, 0, sizeof(northMapId_));
+    for (objectIterator = scenes.begin(); objectIterator != scenes.end(); ++objectIterator) {
+        entrance = new MCEntrance;
+        entrance->setName(CCString::create(objectIterator->first.c_str()));
+        c_str_o_id = objectIterator->second.getString().c_str();
+        mc_object_id_t o_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        entrance->setID(o_id);
+        scenes_->setObject(entrance, entrance->getName()->getCString());
     }
 }

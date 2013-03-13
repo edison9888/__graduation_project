@@ -9,8 +9,6 @@
 #include "AppMacros.h"
 #include "MCTestController.h"
 
-#include "MCPointExtension.h"
-
 #define kMCDuraitonMap   0.025f
 
 #include "MCHero.h"
@@ -104,9 +102,9 @@ MCTestController::init()
 //                barriers_->addObject(barrier);
 //            }
 //        }
-        
-        mapSize = MCSizeFromCCSize(map_->getMapSize());
-        tileSize = MCSizeFromCCSize(map_->getTileSize());
+    
+        mapSize = map_->getMapSize();
+        tileSize = map_->getTileSize();
         contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
         mapWidth = mapSize.width * tileSize.width / contentScaleFactor;
         mapHeight = mapSize.height * tileSize.height / contentScaleFactor;
@@ -177,6 +175,7 @@ MCTestController::onExit()
 {
 //    unschedule(schedule_selector(MCTestController::update));
     CCLayerColor::onExit();
+    hero_->getSpriteSheet()->removeFromParent();
 }
 
 void
@@ -264,16 +263,16 @@ MCTestController::moveTo(const CCPoint &offset)
     
     /* 碰撞点debug */
     CCPoint p[4];
-    p[0] = ccpAdd(heroMaybeMoveToPosition, hero_->getBounds().origin);
+    p[0] = ccpAdd(heroMaybeMoveToPosition, hero_->getAABB().origin);
     p[1] = p[0];
     p[2] = p[0];
     p[3] = p[0];
     p[0].y += blockHeight / 2;
-    p[1].x += hero_->getBounds().size.width;
+    p[1].x += hero_->getAABB().size.width;
     p[1].y += blockHeight / 2;
-    p[2].x += hero_->getBounds().size.width;
-    p[2].y += hero_->getBounds().size.height;
-    p[3].y += hero_->getBounds().size.height;
+    p[2].x += hero_->getAABB().size.width;
+    p[2].y += hero_->getAABB().size.height;
+    p[3].y += hero_->getAABB().size.height;
     for (int i = 0; i < 4; ++i) {
         sp[i]->setPosition(p[i]);
     }
@@ -304,7 +303,7 @@ MCTestController::moveTo(const CCPoint &offset)
 ////            }
 //        }
 //    }
-    
+
 //    /* 根据方向2/3点检测方案，抛弃 */
 //    unsigned int *tiles = metaLayer_->getTiles();
 //    CCPoint p[3];

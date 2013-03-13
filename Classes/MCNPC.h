@@ -14,6 +14,7 @@
 /* NPC */
 class MCNPC : public MCRole {
 public:
+    ~MCNPC();
     bool init();
     
     static MCNPC *create(mc_object_id_t anObjectId);

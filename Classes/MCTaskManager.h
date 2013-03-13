@@ -48,10 +48,8 @@ public:
     bool acceptTaskWithObjectId(mc_object_id_t anObjectId);
     
 private:
-    MCTaskAccessor *mainlineTaskAccessor_;      /* 主线任务访问器 */
     MCTaskAccessor *sideQuestAccessor_;         /* 支线任务访问器 */
-    MCTaskAccessor *mercenaryMissionAccessor_;  /* 佣兵任务访问器 */
-    MCTaskAccessor *arenaTaskAccessor_;         /* 竞技场任务访问器 */ //保留
+    MCTaskAccessor *guileQuestAccessor_;        /* 公会任务访问器 */
     
     CCArray *currentTasks_;    /* 当前接受的任务列表 */
     CCArray *unfinishedTasks_; /* 未完成的任务列表 */

@@ -20,15 +20,24 @@ public:
     
     static MCFlagManager *sharedFlagManager();
     
-    MCFlag *createFlag(mc_object_id_t anObjectId);
-    
+    MCFlag *flagForObjectId(mc_object_id_t anObjectId);
     MCFlagState flagStateForObjectId(mc_object_id_t anObjectId);
+    
+    void updateFlag(MCFlag *aFlag);
     
 private:
     /**
      * load all flags
      */
     void loadAllFlags();
+    
+    /**
+     * save all flags
+     */
+    void saveAllFlags();
+    
+    CCDictionary *sourceFlags_; /* 源文件的标志 */
+    CCDictionary *flags_;       /* 存储过的标志 */
 };
 
 #endif /* defined(__Military_Confrontation__MCFlagManager__) */
