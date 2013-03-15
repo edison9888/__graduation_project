@@ -34,6 +34,9 @@ MCRoleManager::sharedRoleManager()
 {
     if (__shared_role_manager == NULL) {
         __shared_role_manager = new MCRoleManager;
+        if (__shared_role_manager) {
+            __shared_role_manager->loadData();
+        }
     }
     
     return __shared_role_manager;

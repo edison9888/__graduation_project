@@ -1,1 +1,1 @@
-{"id":"M002","name":"洞窟","objects":{"NPCs":{"N001":{"requirement":[],"x":368,"y":256,"w":5,"h":1}},"monsters":{}},"dialogues":{},"background":{"tmx":"maps/cave-1.tmx","sound":"sounds/bgm-b.mp3"},"scenes":{"village":"M001"},"description":"洞窟","triggers":{}}
+{"id":"M002","name":"洞窟","objects":{"NPCs":{"N001":{"requirements":[],"x":368,"y":256,"w":5,"h":1}},"monsters":{}},"dialogues":{},"background":{"tmx":"maps/cave-1.tmx","sound":"sounds/bgm-b.mp3"},"scenes":{"village":"M001"},"description":"洞窟","triggers":{}}

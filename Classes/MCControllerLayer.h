@@ -13,6 +13,8 @@
 
 #include "MCJoypad.h"
 
+class MCActionMenu;
+
 /* 控制器模式 */
 enum {
     MCNormalControlMode = MCMakeEnum(0), /* 通常模式 */
@@ -30,6 +32,8 @@ public:
     bool init();
     
     CREATE_FUNC(MCControllerLayer);
+
+    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     
 private:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
@@ -39,6 +43,7 @@ private:
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
     CC_PROPERTY(MCControlMode, controlMode_, ControlMode);
+    CC_SYNTHESIZE(MCActionMenu *, actionMenu_, ActionMenu);
 };
 
 #endif /* defined(__Military_Confrontation__MCControllerLayer__) */

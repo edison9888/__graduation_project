@@ -9,10 +9,11 @@
 #include "MCScenePackage.h"
 #include "MCRoleManager.h"
 #include "MCEntrance.h"
+#include "MCFlagManager.h"
 
 MCScenePackage::~MCScenePackage()
 {
-    CC_SAFE_RELEASE(NPCs_);
+    CC_SAFE_RELEASE(npcs_);
     CC_SAFE_RELEASE(monsters_);
     CC_SAFE_RELEASE(scenes_);
     
@@ -26,9 +27,9 @@ bool
 MCScenePackage::init()
 {
     do {
-        NPCs_ = CCDictionary::create();
-        CC_BREAK_IF(! NPCs_);
-        NPCs_->retain();
+        npcs_ = CCDictionary::create();
+        CC_BREAK_IF(! npcs_);
+        npcs_->retain();
         
         monsters_ = CCDictionary::create();
         CC_BREAK_IF(! monsters_);
@@ -66,7 +67,7 @@ MCScenePackage::create(const char *aPackagePath)
 MCNPC *
 MCScenePackage::NPCForObjectId(mc_object_id_t anObjectId)
 {
-    return (MCNPC *) NPCs_->objectForKey(MCObjectIdToDickKey(anObjectId));
+    return (MCNPC *) npcs_->objectForKey(MCObjectIdToDickKey(anObjectId));
 }
 
 MCMonster *
@@ -124,18 +125,20 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
 {
     JsonBox::Object objects = aRoot["objects"].getObject();
     JsonBox::Value v;
-    JsonBox::Array array;
-    JsonBox::Array::iterator arrayIter;
-    JsonBox::Object::iterator objectIter;
+    JsonBox::Object roles;
+    JsonBox::Array requirements;
+    JsonBox::Array::iterator requirementsIterator;
+    JsonBox::Object::iterator rolesIterator;
+    JsonBox::Object role;
     const char *c_str_o_id;
     MCRoleManager *roleManager = MCRoleManager::sharedRoleManager();
 
-    /* objects["NPCs"] Array */
-    array = objects["NPCs"].getArray();
+    /* objects["NPCs"] Object */
+    roles = objects["NPCs"].getObject();
     /* load NPCs */
-    for (arrayIter = array.begin(); arrayIter != array.end(); ++arrayIter) {
-        v = *arrayIter;
-        c_str_o_id = v.getString().c_str();
+    for (rolesIterator = roles.begin(); rolesIterator != roles.end(); ++rolesIterator) {
+        c_str_o_id = rolesIterator->first.c_str();
+        role = rolesIterator->second.getObject();
         mc_object_id_t o_id = {
             c_str_o_id[0],
             c_str_o_id[1],
@@ -144,15 +147,31 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
         };
         MCNPC *npc = roleManager->NPCForObjectId(o_id);
         if (npc) {
-            NPCs_->setObject(npc, MCObjectIdToDickKey(o_id));
+            MCRoleEntityMetadata *metadata = npc->getEntityMetadata();
+            metadata->setPosition(ccp(role["x"].getInt(), role["y"].getInt()));
+            metadata->setArea(CCSizeMake(role["w"].getInt(), role["w"].getInt()));
+            requirements = role["requirements"].getArray();
+            CCArray *requirementsArray = metadata->getRequirements();
+            for (requirementsIterator = requirements.begin();
+                 requirementsIterator != requirements.end();
+                 ++requirementsIterator) {
+                const char *c_str_flag_id = requirementsIterator->getString().c_str();
+                mc_object_id_t flag_id = {
+                    c_str_flag_id[0],
+                    c_str_flag_id[1],
+                    c_str_flag_id[2],
+                    c_str_flag_id[3]
+                };
+                requirementsArray->addObject(MCFlagManager::sharedFlagManager()->flagForObjectId(flag_id));
+            }
+            npcs_->setObject(npc, MCObjectIdToDickKey(o_id));
         }
     }
-    /* objects["monsters"] Array */
-    array = objects["monsters"].getArray();
+    /* objects["monsters"] Object */
+    roles = objects["monsters"].getObject();
     /* load monsters */
-    for (arrayIter = array.begin(); arrayIter != array.end(); ++arrayIter) {
-        v = *arrayIter;
-        c_str_o_id = v.getString().c_str();
+    for (rolesIterator = roles.begin(); rolesIterator != roles.end(); ++rolesIterator) {
+        c_str_o_id = rolesIterator->first.c_str();
         mc_object_id_t o_id = {
             c_str_o_id[0],
             c_str_o_id[1],
@@ -182,10 +201,13 @@ MCScenePackage::loadScenes(JsonBox::Object &aRoot)
     JsonBox::Object::iterator objectIterator;
     MCEntrance *entrance;
     const char *c_str_o_id;
+    CCString *entranceName;
     
     for (objectIterator = scenes.begin(); objectIterator != scenes.end(); ++objectIterator) {
         entrance = new MCEntrance;
-        entrance->setName(CCString::create(objectIterator->first.c_str()));
+        entranceName = CCString::create(objectIterator->first.c_str());
+        entrance->setName(entranceName);
+        entranceName->retain();
         c_str_o_id = objectIterator->second.getString().c_str();
         mc_object_id_t o_id = {
             c_str_o_id[0],

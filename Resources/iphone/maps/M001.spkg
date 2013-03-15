@@ -3,7 +3,7 @@
   "name": "比奇村",
   "objects": {
     "NPCs": {"N001": {
-        "requirement": [
+        "requirements": [
         ],
         "x": 100,
         "y": 100,
@@ -11,7 +11,7 @@
         "h": 1
       },
       "N004": {
-        "requirement": [
+        "requirements": [
         ],
         "x": 120,
         "y": 24,

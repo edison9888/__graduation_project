@@ -11,6 +11,24 @@
 
 #define kMCDurationHero  0.025f
 
+class CC_DLL __mc_dumy : public CCActionInstant
+{
+public:
+    __mc_dumy(){}
+    virtual ~__mc_dumy() {}
+        //super methods
+    virtual void update(float time) { CC_UNUSED_PARAM(time); }
+    
+    static __mc_dumy *create() {
+        __mc_dumy* pRet = new __mc_dumy;
+        if (pRet) {
+            pRet->autorelease();
+        }
+        
+        return pRet;
+    };
+};
+
 MCRoleEntityMetadata::MCRoleEntityMetadata()
 {
     spriteSheet_ = NULL;
@@ -20,10 +38,17 @@ MCRoleEntityMetadata::MCRoleEntityMetadata()
     animationGoDown_ = NULL;
     animationGoLeft_ = NULL;
     animationGoRight_ = NULL;
+    
+    position_ = CCPointZero;
+    area_ = CCSizeZero;
+    requirements_ = CCArray::create();
+    requirements_->retain();
 }
 
 MCRoleEntityMetadata::~MCRoleEntityMetadata()
 {
+    CC_SAFE_RELEASE(requirements_);
+    
     CC_SAFE_RELEASE(spriteSheet_);
     
     CC_SAFE_RELEASE(animationGoUp_);
@@ -61,8 +86,8 @@ MCRoleEntity::onExit()
 void
 MCRoleEntity::update(float dt)
 {
-    MCRole *role = role_;
-    
+#warning search roles
+//    MCRole *role = role_;
 }
 
 CCRect
@@ -83,6 +108,13 @@ MCRoleEntity::getOBB()
     obb_->setup(getAABB(), 0);
     
     return obb_;
+}
+
+void
+MCRoleEntity::face(MCFacade aFacade)
+{
+    setDisplayFrame(((CCAnimationFrame *) metadata_->animationGoDown_->getFrames()->objectAtIndex(0))->getSpriteFrame());
+    metadata_->facade_ = aFacade;
 }
 
 void
@@ -148,6 +180,17 @@ MCRoleEntity::walkTo(CCPoint &aDestinationPosition)
             walk(MCFacingDown);
         }
     }
+    moveToActions_->addObject(action);
+    runAction(action);
+}
+
+/* 坑爹啊！直接moveby居然不行！ */
+void
+MCRoleEntity::moveBy(CCPoint &aDelta)
+{
+    CCAction *action = CCSequence::create(CCMoveBy::create(kMCDurationHero, aDelta),
+                                          __mc_dumy::create(),
+                                          NULL);
     moveToActions_->addObject(action);
     runAction(action);
 }

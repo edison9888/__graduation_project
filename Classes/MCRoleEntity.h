@@ -45,6 +45,25 @@ public:
     CC_SYNTHESIZE_READONLY(CCAnimation *, animationGoDown_, AnimationGoDown);
     CC_SYNTHESIZE_READONLY(CCAnimation *, animationGoLeft_, AnimationGoLeft);
     CC_SYNTHESIZE_READONLY(CCAnimation *, animationGoRight_, AnimationGoRight);
+    
+    /* 场景包数据 */
+public:
+    inline float getX() {
+        return position_.x;
+    }
+    inline float getY() {
+        return position_.y;
+    }
+    inline float getW() {
+        return area_.width;
+    }
+    inline float getH() {
+        return area_.height;
+    }
+    
+    CC_SYNTHESIZE(CCPoint, position_, Position);
+    CC_SYNTHESIZE(CCSize, area_, Area);
+    CC_SYNTHESIZE(CCArray *, requirements_, Requirements);
 };
 
 class MCRoleEntity : public CCSprite {
@@ -62,8 +81,13 @@ public:
     CCRect getAABB(); /* AABB */
     MCOBB *getOBB();    /* OBB */
     
+    void face(MCFacade aFacade);
     void walk(MCFacade aFacade);
     void walkTo(CCPoint &aDestinationPosition);
+    
+    /* 坑爹啊！直接moveby居然不行！ */
+    void moveBy(CCPoint &aDelta);
+    
     void walkOnScreen(const CCPoint &aDestinationPosition, const CCPoint &offset);
     bool isWalking();
     void stopWalking();

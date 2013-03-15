@@ -52,6 +52,14 @@ protected:
     CCPoint viewLocationToTiledMapLocation(const CCPoint &aViewLocation);
     void moveTo(const CCPoint &delta);
     
+    void detectsCollidesWithEntrances(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollision(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollidesWithSemiTransparents(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollidesWithBarriers(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollidesWithNPCs(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollidesWithMonsters(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    bool detectsCollidesWithMercenaries(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    
 private:
     MCRoleEntity *hero_;
     CCArray *npcs_;

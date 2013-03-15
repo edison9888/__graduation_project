@@ -10,6 +10,11 @@
 
 const char *kMCTypeEntrance = "entrance";
 
+MCEntrance::~MCEntrance()
+{
+    CC_SAFE_RELEASE(destinaion_);
+}
+
 bool
 MCEntrance::init(const CCRect &aRect)
 {

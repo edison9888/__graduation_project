@@ -15,7 +15,7 @@ bool
 MCTestRoleManager::init()
 {
     if (MCTestLayer::initWithColor(ccc4(64, 64, 64, 255))) {
-        MCRoleManager::sharedRoleManager()->loadData();
+        MCRoleManager::sharedRoleManager();
         
         mc_object_id_t oid = {
             'N', '0', '1', '8'

@@ -36,6 +36,12 @@ MCObjectLayer::init()
     if (CCLayer::init()) {
         setTouchEnabled(true);
         
+        npcs_ = CCArray::create();
+        npcs_->retain();
+        monsters_ = CCArray::create();
+        monsters_->retain();
+        mercenaries_ = CCArray::create();
+        mercenaries_->retain();
         
         return true;
     }
@@ -107,9 +113,12 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
         
         if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeEntrance)) {
             entrance = MCEntrance::create(rect);
-            CCString *name = CCString::create(dict->valueForKey("name")->getCString());
-            entrance->setName(name);
-            name->retain();
+            CCString *ccstring = CCString::create(dict->valueForKey("name")->getCString());
+            entrance->setName(ccstring);
+            ccstring->retain();
+            ccstring = CCString::create(dict->valueForKey("dest")->getCString());
+            entrance->setDestination(ccstring);
+            ccstring->retain();
             entrances_->addObject(entrance);
         }
     }
@@ -130,6 +139,13 @@ void
 MCObjectLayer::onEnter()
 {
     CCLayer::onEnter();
+    MCGameSceneContext *context = MCGameSceneContextManager::sharedGameSceneContextManager()->currentContext();
+    MCScenePackage *package = context->getScene()->getScenePackage();
+    CCDictionary *dataDict;
+    CCDictElement *elemNPC;
+    CCDictElement *elemMonster;
+    MCNPC *npc;
+    MCMonster *monster;
     
     /* load all roles */
     /* hero */
@@ -139,16 +155,29 @@ MCObjectLayer::onEnter()
     addChild(spriteSheet);
     
     /* npcs */
-    npcs_ = CCArray::create();
-    npcs_->retain();
+    npcs_->removeAllObjects();
+    dataDict = package->getNPCs();
+    CCDICT_FOREACH(dataDict, elemNPC) {
+        npc = (MCNPC *) elemNPC->getObject();
+        /* 初始化NPC数据 */
+        addChild(npc->getEntity()->getSpriteSheet());
+        npc->getEntity()->setPosition(npc->getEntityMetadata()->getPosition());
+        npcs_->addObject(npc);
+    }
     
     /* monsters */
-    monsters_ = CCArray::create();
-    monsters_->retain();
+    monsters_->removeAllObjects();
+    dataDict = package->getMonsters();
+    CCDICT_FOREACH(dataDict, elemMonster) {
+        monster = (MCMonster *) elemMonster->getObject();
+        /* 初始化NPC数据 */
+#warning initialize monsters data
+        monsters_->addObject(monster);
+    }
     
     /* mercenaries */
-    mercenaries_ = CCArray::create();
-    mercenaries_->retain();
+    mercenaries_->removeAllObjects();
+#warning initialize here?
     
     /* load initialize position */
     CCTMXObjectGroup *objects = map_->objectGroupNamed("objects");
@@ -172,24 +201,28 @@ MCObjectLayer::onExit()
 {
     /* remove all roles */
     CCObject *obj;
-    MCRole *role;
-    
+//    MCRole *role;
+    MCRoleEntity *entity;
     /* hero */
     hero_->getSpriteSheet()->removeFromParent();
+    hero_->face(MCFacingDown);
     /* npcs */
     CCARRAY_FOREACH(npcs_, obj) {
-        role = (MCRole *) obj;
-        role->getEntity()->getSpriteSheet()->removeFromParent();
+        entity = ((MCRole *) obj)->getEntity();
+        entity->getSpriteSheet()->removeFromParentAndCleanup(true);
+        entity->face(MCFacingDown);
     }
     /* monsters */
     CCARRAY_FOREACH(monsters_, obj) {
-        role = (MCRole *) obj;
-        role->getEntity()->getSpriteSheet()->removeFromParent();
+        entity = ((MCRole *) obj)->getEntity();
+        entity->getSpriteSheet()->removeFromParentAndCleanup(true);
+        entity->face(MCFacingDown);
     }
     /* mercenaries */
     CCARRAY_FOREACH(mercenaries_, obj) {
-        role = (MCRole *) obj;
-        role->getEntity()->getSpriteSheet()->removeFromParent();
+        entity = ((MCRole *) obj)->getEntity();
+        entity->getSpriteSheet()->removeFromParentAndCleanup(true);
+        entity->face(MCFacingDown);
     }
     
     CCLayer::onExit();
@@ -307,24 +340,75 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     }
 
     /* 矩形框检测方案 */
+    /* 场景切换检测 */
+    detectsCollidesWithEntrances(heroMaybeMoveToPositionAtMapForCheck);
+    if (detectsCollidesWithNPCs(heroMaybeMoveToPositionAtMapForCheck)) {
+        deltaForMap = CCPointZero;
+        deltaForHero = CCPointZero;
+    }
+    
+    CCObject *obj;
+    CCAction *scrollAction = CCSequence::create(CCMoveBy::create(kMCDuraitonMap, deltaForMap),
+                                                CCCallFunc::create(hero_, callfunc_selector(MCRoleEntity::walkEnded)),
+                                                NULL);
+    map_->runAction(scrollAction);
+    if (deltaForMap.x != 0.0f || deltaForMap.y != 0.0f) {
+        MCNPC *npc;
+        MCMonster *monster;
+        if (npcs_) {
+            CCARRAY_FOREACH(npcs_, obj) {
+                npc = (MCNPC *) obj;
+                npc->getEntity()->moveBy(deltaForMap);
+            }
+        }
+        if (monsters_) {
+            CCARRAY_FOREACH(monsters_, obj) {
+                monster = (MCMonster *) obj;
+                monster->getEntity()->moveBy(deltaForMap);
+            }
+        }
+    }
+    hero_->walkOnScreen(deltaForHero, offset);
+}
+
+void
+MCObjectLayer::detectsCollidesWithEntrances(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+    CCObject *obj;
+    MCEntrance *entrance;
+    CCARRAY_FOREACH(entrances_, obj) {
+        entrance = (MCEntrance *) obj;
+        if (entrance->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
+            if (entrance->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
+                sceneDelegate_->gotoScene(entrance->getID(), entrance->getDestination()->getCString());
+            }
+        }
+    }
+}
+
+bool
+MCObjectLayer::detectsCollision(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+    if (detectsCollidesWithSemiTransparents(heroMaybeMoveToPositionAtMapForCheck)
+        || detectsCollidesWithBarriers(heroMaybeMoveToPositionAtMapForCheck)
+        || detectsCollidesWithNPCs(heroMaybeMoveToPositionAtMapForCheck)
+        || detectsCollidesWithMonsters(heroMaybeMoveToPositionAtMapForCheck)
+        || detectsCollidesWithMercenaries(heroMaybeMoveToPositionAtMapForCheck)) {
+        return true;
+    }
+    
+    return false;
+}
+
+bool
+MCObjectLayer::detectsCollidesWithSemiTransparents(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
     CCObject *obj;
     MCSemiTransparent *semiTransparent;
     bool shouldBeTransparent = false;
     CCARRAY_FOREACH(semiTransparents_, obj) {
         semiTransparent = (MCSemiTransparent *) obj;
         if (semiTransparent->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
-            if (deltaForHero.x < 1.5) {
-                deltaForCheck.x = 0;
-            } else if (deltaForHero.x > -1.5) {
-                deltaForCheck.x = 0;
-            }
-            if (deltaForHero.y < 1.5) {
-                deltaForCheck.y = 0;
-            } else if (deltaForHero.y > -1.5) {
-                deltaForCheck.y = 0;
-            }
-            
-            heroMaybeMoveToPositionAtMapForCheck = ccpAdd(heroCurrentPositionAtMap, deltaForCheck);
             if (semiTransparent->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
                 shouldBeTransparent = true;
                 break;
@@ -332,57 +416,79 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         }
     }
     hero_->setOpacity(shouldBeTransparent ? 160 : 255);
-    
-    MCEntrance *entrance;
-    CCARRAY_FOREACH(entrances_, obj) {
-        entrance = (MCEntrance *) obj;
-//        CCLog("%s", entrance->getName()->getCString());
-        if (entrance->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
-            if (deltaForHero.x < 1.5) {
-                deltaForCheck.x = 0;
-            } else if (deltaForHero.x > -1.5) {
-                deltaForCheck.x = 0;
-            }
-            if (deltaForHero.y < 1.5) {
-                deltaForCheck.y = 0;
-            } else if (deltaForHero.y > -1.5) {
-                deltaForCheck.y = 0;
-            }
-            
-            heroMaybeMoveToPositionAtMapForCheck = ccpAdd(heroCurrentPositionAtMap, deltaForCheck);
-            if (entrance->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
-#warning change scene
-                sceneDelegate_->gotoScene(entrance->getID(), entrance->getName()->getCString());
-            }
-        }
-    }
-    
+    return shouldBeTransparent;
+}
+
+bool
+MCObjectLayer::detectsCollidesWithBarriers(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+    CCObject *obj;
     MCBarrier *barrier;
     CCARRAY_FOREACH(barriers_, obj) {
         barrier = (MCBarrier *) obj;
         if (barrier->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
-            if (deltaForHero.x < 1.5) {
-                deltaForCheck.x = 0;
-            } else if (deltaForHero.x > -1.5) {
-                deltaForCheck.x = 0;
-            }
-            if (deltaForHero.y < 1.5) {
-                deltaForCheck.y = 0;
-            } else if (deltaForHero.y > -1.5) {
-                deltaForCheck.y = 0;
-            }
-            
-            heroMaybeMoveToPositionAtMapForCheck = ccpAdd(heroCurrentPositionAtMap, deltaForCheck);
+//            if (deltaForHero.x < 1.5) {
+//                deltaForCheck.x = 0;
+//            } else if (deltaForHero.x > -1.5) {
+//                deltaForCheck.x = 0;
+//            }
+//            if (deltaForHero.y < 1.5) {
+//                deltaForCheck.y = 0;
+//            } else if (deltaForHero.y > -1.5) {
+//                deltaForCheck.y = 0;
+//            }
+//            
+//            heroMaybeMoveToPositionAtMapForCheck = ccpAdd(heroCurrentPositionAtMap, deltaForCheck);
             if (barrier->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
-                deltaForMap = CCPointZero;
-                deltaForHero = CCPointZero;
-                break;
+                return true;
             }
         }
     }
     
-    map_->runAction(CCSequence::create(CCMoveBy::create(kMCDuraitonMap, deltaForMap),
-                                       CCCallFunc::create(hero_, callfunc_selector(MCRoleEntity::walkEnded)),
-                                       NULL));
-    hero_->walkOnScreen(deltaForHero, offset);
+    return false;
+}
+
+bool
+MCObjectLayer::detectsCollidesWithNPCs(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+//    CCObject *obj;
+//    MCNPC *npc;
+//    CCARRAY_FOREACH(barriers_, obj) {
+//        npc = (MCNPC *) obj;
+//        if (npc->getEntity()->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
+//            return true;
+//        }
+//    }
+    
+    return false;
+}
+
+bool
+MCObjectLayer::detectsCollidesWithMonsters(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+//    CCObject *obj;
+//    MCMonster *monster;
+//    CCARRAY_FOREACH(barriers_, obj) {
+//        monster = (MCMonster *) obj;
+//        if (npc->getEntity()->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
+//            return true;
+//        }
+//    }
+    
+    return false;
+}
+
+bool
+MCObjectLayer::detectsCollidesWithMercenaries(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
+{
+//    CCObject *obj;
+//    MCMonster *monster;
+//    CCARRAY_FOREACH(barriers_, obj) {
+//        monster = (MCMonster *) obj;
+//        if (npc->getEntity()->collidesWith(hero_, heroMaybeMoveToPositionAtMapForCheck)) {
+//            return true;
+//        }
+//    }
+    
+    return false;
 }

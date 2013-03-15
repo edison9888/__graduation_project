@@ -90,7 +90,7 @@ MCSceneManager::packageWithObjectId(mc_object_id_t anObjectId)
 MCGameScene *
 MCSceneManager::sceneWithObjectId(mc_object_id_t anObjectId)
 {
-    int key = MCObjectIdToDickKey(anObjectId);
+    mc_dict_key_t key = MCObjectIdToDickKey(anObjectId);
     MCGameScene *scene = (MCGameScene *) scenes_->objectForKey(key);
     MCScenePackage *scenePackage;
     
@@ -121,7 +121,6 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
     }
 }
 
-
 /**
  * 切换当前场景为aNewScene
  */
@@ -130,7 +129,7 @@ MCSceneManager::changeScene(MCGameScene *aNewScene, const char *anEntranceName, 
 {
     if ((aNewScene == NULL && method != MCPopScene)
         || aNewScene == NULL
-        || (currentScene_ != NULL && !currentScene_->hasEntrance(anEntranceName))) {
+        || !aNewScene->hasEntrance(anEntranceName)) {
         return;
     }
     

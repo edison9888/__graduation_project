@@ -14,33 +14,33 @@
 #include "MCTestLayer.h"
 #include "MCSceneManager.h"
 
-class _MCScenePackage : public MCScenePackage {
-public:
-    void setTMXTiledMapPath(const char *path) {
-        tmxTiledMapPath_ = CCString::create(path);
-        tmxTiledMapPath_->retain();
-    }
-    void setBackgroundMusic(const char *path) {
-        backgroundMusicPath_ = CCString::create(path);
-        backgroundMusicPath_->retain();
-    }
-};
-
-class _MCGameScene : public MCGameScene {
-public:
-    void init() {
-        _MCScenePackage *p = new _MCScenePackage;
-        p->setTMXTiledMapPath(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("maps/village.tmx"));
-        p->setBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("sounds/bgm-b.mp3"));
-        this->initWithScenePackage(p);
-        this->setSilent();
-        MCHero::sharedHero()->getEntity()->setPosition(ccp(160, 160));
-    }
-    
-    void setSilent() {
-        background_->setPlayBackgroundMusicImmediately(false);
-    }
-};
+//class _MCScenePackage : public MCScenePackage {
+//public:
+//    void setTMXTiledMapPath(const char *path) {
+//        tmxTiledMapPath_ = CCString::create(path);
+//        tmxTiledMapPath_->retain();
+//    }
+//    void setBackgroundMusic(const char *path) {
+//        backgroundMusicPath_ = CCString::create(path);
+//        backgroundMusicPath_->retain();
+//    }
+//};
+//
+//class _MCGameScene : public MCGameScene {
+//public:
+//    void init() {
+//        _MCScenePackage *p = new _MCScenePackage;
+//        p->setTMXTiledMapPath(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("maps/village.tmx"));
+//        p->setBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("sounds/bgm-b.mp3"));
+//        this->initWithScenePackage(p);
+//        this->setSilent();
+//        MCHero::sharedHero()->getEntity()->setPosition(ccp(160, 160));
+//    }
+//    
+//    void setSilent() {
+//        background_->setPlayBackgroundMusicImmediately(false);
+//    }
+//};
 
 class MCTestGameScene : public MCTestLayer {
 public:

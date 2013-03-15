@@ -15,6 +15,8 @@ extern const char *kMCTypeEntrance;
 
 class MCEntrance : public MCObject {
 public:
+    ~MCEntrance();
+    
     bool init(const CCRect &aRect);
     
     static MCEntrance* create(const CCRect &aRect);
@@ -31,6 +33,7 @@ public:
      */
     bool collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
     
+    CC_SYNTHESIZE(CCString *, destinaion_, Destination);
     CC_SYNTHESIZE_READONLY(CCRect, rect_, Rect);
 };
 

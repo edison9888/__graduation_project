@@ -24,6 +24,8 @@ public:
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     
+    void onEnter();
+    void onExit();
     void update(float fDelta);
     
 private:

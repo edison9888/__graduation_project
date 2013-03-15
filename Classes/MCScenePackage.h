@@ -30,8 +30,8 @@ private:
     void loadDialogues(JsonBox::Object &aRoot); /* 加载对白元数据 */
     void loadScenes(JsonBox::Object &aRoot); /* 加载地图元数据 */
     
-    CCDictionary *NPCs_; /* NPC */
-    CCDictionary *monsters_; /* 怪物 */
+    CC_SYNTHESIZE_READONLY(CCDictionary *, npcs_, NPCs) /* NPC */
+    CC_SYNTHESIZE_READONLY(CCDictionary *, monsters_, Monsters) /* 怪物 */
     
     CC_SYNTHESIZE_READONLY(CCString *, tmxTiledMapPath_, TMXTiledMapPath); /* 贴图地图路径 */
     CC_SYNTHESIZE_READONLY(CCString *, backgroundMusicPath_, BackgroundMusicPath); /* 背景音乐文件路径，NULL为无音乐 */

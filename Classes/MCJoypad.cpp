@@ -37,8 +37,7 @@ MCJoypad::init()
         joystickDelta_ = __cc_point_zero;
         isValidControl_ = false;
         setTouchEnabled(true);
-        setTouchMode(kCCTouchesAllAtOnce);
-        schedule(schedule_selector(MCJoystick::update));
+//        setTouchMode(kCCTouchesAllAtOnce);
 
         return true;
     }
@@ -178,6 +177,21 @@ MCJoypad::ccTouchesEnded (CCSet *pTouches, CCEvent *pEvent)
         }
     }
     isValidControl_ = false;
+    CCLayer::ccTouchesEnded(pTouches, pEvent);
+}
+
+void
+MCJoypad::onEnter()
+{
+    CCLayer::onEnter();
+    schedule(schedule_selector(MCJoystick::update));
+}
+
+void
+MCJoypad::onExit()
+{
+    unschedule(schedule_selector(MCJoystick::update));
+    CCLayer::onExit();
 }
 
 void
