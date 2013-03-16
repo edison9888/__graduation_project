@@ -13,6 +13,8 @@
 
 extern const char *kMCTypeSemiTransparent;
 
+class MCOBB;
+
 class MCSemiTransparent : public CCObject {
 public:
     bool init(const CCRect &aRect);
@@ -20,7 +22,8 @@ public:
     static MCSemiTransparent* create(const CCRect &aRect);
     
     bool collidesWith(const CCRect &aTargetRect);
-    
+    bool collidesWith(const MCOBB &anOBB);
+
     /**
      * 检测是否与人物碰撞
      *
@@ -31,7 +34,7 @@ public:
      */
     bool collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
     
-    CC_SYNTHESIZE_READONLY(CCRect, rect_, Rect);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
 };
 
 #endif /* defined(__Military_Confrontation__MCSemiTransparent__) */

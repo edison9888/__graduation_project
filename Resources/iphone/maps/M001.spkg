@@ -1,28 +1,20 @@
 {
   "id": "M001",
+  "type": 1,
   "name": "比奇村",
   "objects": {
-    "NPCs": {"N001": {
-        "requirements": [
-        ],
-        "x": 100,
-        "y": 100,
-        "w": 4,
-        "h": 1
-      },
-      "N004": {
-        "requirements": [
-        ],
-        "x": 120,
-        "y": 24,
-        "w": 4,
-        "h": 1
-      }
+    "N001": {
+      "requirements": [
+      ],
+      "x": 200,
+      "y": 100
     },
-    "monsters": {
+    "N004": {
+      "requirements": [
+      ],
+      "x": 120,
+      "y": 24
     }
-  },
-  "dialogues": {
   },
   "background": {
     "tmx": "maps/village.tmx",

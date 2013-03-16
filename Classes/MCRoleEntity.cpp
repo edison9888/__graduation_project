@@ -8,6 +8,7 @@
 
 #include "MCRoleEntity.h"
 #include "MCMicsUtil.h"
+#include "MCScene.h"
 
 #define kMCDurationHero  0.025f
 
@@ -40,7 +41,6 @@ MCRoleEntityMetadata::MCRoleEntityMetadata()
     animationGoRight_ = NULL;
     
     position_ = CCPointZero;
-    area_ = CCSizeZero;
     requirements_ = CCArray::create();
     requirements_->retain();
 }
@@ -61,7 +61,6 @@ MCRoleEntity::MCRoleEntity()
 {
     moveToActions_ = new CCArray;
     moveToActions_->init();
-    obb_ = NULL;
 }
 
 MCRoleEntity::~MCRoleEntity()
@@ -90,24 +89,35 @@ MCRoleEntity::update(float dt)
 //    MCRole *role = role_;
 }
 
-CCRect
-MCRoleEntity::getAABB()
-{
-    CCRect bounds;
-    CCSize size = getContentSize();
-    bounds = CCRectMake(0, 0, size.width, size.height / 2);
-    return bounds;
-}
-
-MCOBB *
+const MCOBB &
 MCRoleEntity::getOBB()
 {
-    if (obb_ == NULL) {
-        obb_ = MCOBB::create(getAABB(), 0);
+    CCPoint origin = getPosition();
+    CCSize size = getContentSize();
+    CCPoint center(origin.x + size.width / 2,
+                   origin.y + size.height / 4);
+    
+    /* 加上地图的偏移值 */
+    MCSceneContext *currentContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+    if (currentContext) {
+        center = ccpSub(center,
+                        currentContext->getScene()->getMapOffset());
     }
-    obb_->setup(getAABB(), 0);
+    obb_.setup(center, size.width, size.height / 2, 0);
     
     return obb_;
+}
+
+/* AABB */
+bool
+MCRoleEntity::shouldBeSelected(const CCPoint &aPoint)
+{
+    CCPoint origin = getPosition();
+    CCPoint offsetOrigin = ccpAdd(CCPointZero, origin);
+    CCSize size = getContentSize();
+
+    return CCRectMake(offsetOrigin.x, offsetOrigin.y,
+                      size.width, size.height).containsPoint(aPoint);
 }
 
 void

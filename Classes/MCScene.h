@@ -17,6 +17,7 @@
 
 #include "MCViewportLayer.h"
 
+class MCScene;
 class MCTrigger;
 class MCRoleEntity;
 class MCActionMenu;
@@ -63,8 +64,16 @@ public:
      */
     static MCScene *createWithScenePackage(MCScenePackage *aPackage);
     
+    /**
+     * 获取地图偏移值
+     */
+    CCPoint getMapOffset() const;
+    
     void onEnter();
     void onExit();
+    void update(float dt);
+    
+    virtual void installController() {}
     
     /**
      * 是否为内部场景(如房子、商店)
@@ -109,7 +118,7 @@ protected:
     
     bool isInternalScene_;
     
-    CC_PROPERTY_READONLY(CCDictionary *, entrances_, Entrances);
+    CC_SYNTHESIZE_READONLY(CCDictionary *, entrances_, Entrances);
     CC_SYNTHESIZE_READONLY(MCSceneContext *, context, Context);
     CC_SYNTHESIZE_READONLY(MCScenePackage *, scenePackage_, ScenePackage);
 };

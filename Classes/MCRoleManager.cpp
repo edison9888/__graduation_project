@@ -9,7 +9,7 @@
 #include "JsonBox.h"
 #include "MCRoleManager.h"
 #include "MCNPC.h"
-#include "MCMonster.h"
+#include "MCEnemy.h"
 
 const char *kMCNPCResourceFilePath = "npcs.npkg";
 
@@ -19,13 +19,13 @@ MCRoleManager::MCRoleManager()
 {
     npcs_ = CCDictionary::create();
     npcs_->retain();
-    monsters_ = CCDictionary::create();
-    monsters_->retain();
+    enemies_ = CCDictionary::create();
+    enemies_->retain();
 }
 
 MCRoleManager::~MCRoleManager()
 {
-    CC_SAFE_RELEASE(monsters_);
+    CC_SAFE_RELEASE(enemies_);
     CC_SAFE_RELEASE(npcs_);
 }
 
@@ -52,11 +52,14 @@ MCRoleManager::loadData()
 MCRole *
 MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 {
-    MCRole *role;
+    MCRole *role = (MCRole *) metaRoleForObjectId(anObjectId)->copy();
     
-    role = (MCRole *) monsterForObjectId(anObjectId);
-    if (role == NULL) {
-        role = (MCRole *) NPCForObjectId(anObjectId);
+    if (role && role->init()) {
+        role->autorelease();
+        role->loadSpriteSheet();
+    } else {
+        CC_SAFE_DELETE(role);
+        role = NULL;
     }
     
     return role;
@@ -65,6 +68,51 @@ MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 MCNPC *
 MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
 {
+    MCNPC *npc = (MCNPC *) metaNPCForObjectId(anObjectId)->copy();
+    
+    if (npc && npc->init()) {
+        npc->autorelease();
+        npc->loadSpriteSheet();
+    } else {
+        CC_SAFE_DELETE(npc);
+        npc = NULL;
+    }
+    
+    return npc;
+}
+
+MCEnemy *
+MCRoleManager::enemyForObjectId(mc_object_id_t anObjectId)
+{
+    MCEnemy *enemy = (MCEnemy *) metaEnemyForObjectId(anObjectId)->copy();
+    
+    if (enemy && enemy->MCRole::init()) {
+        enemy->autorelease();
+        enemy->loadSpriteSheet();
+    } else {
+        CC_SAFE_DELETE(enemy);
+        enemy = NULL;
+    }
+    
+    return enemy;
+}
+
+MCRole *
+MCRoleManager::metaRoleForObjectId(mc_object_id_t anObjectId)
+{
+    MCRole *role;
+    
+    role = (MCRole *) metaEnemyForObjectId(anObjectId);
+    if (role == NULL) {
+        role = (MCRole *) metaNPCForObjectId(anObjectId);
+    }
+    
+    return role;
+}
+
+MCNPC *
+MCRoleManager::metaNPCForObjectId(mc_object_id_t anObjectId)
+{
     MCNPC *npc;
     
     npc = (MCNPC *) npcs_->objectForKey(MCObjectIdToDickKey(anObjectId));
@@ -72,14 +120,14 @@ MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
     return npc;
 }
 
-MCMonster *
-MCRoleManager::monsterForObjectId(mc_object_id_t anObjectId)
+MCEnemy *
+MCRoleManager::metaEnemyForObjectId(mc_object_id_t anObjectId)
 {
-    MCMonster *monster;
+    MCEnemy *enemy;
     
-    monster = (MCMonster *) monsters_->objectForKey(MCObjectIdToDickKey(anObjectId));
+    enemy = (MCEnemy *) enemies_->objectForKey(MCObjectIdToDickKey(anObjectId));
     
-    return monster;
+    return enemy;
 }
 
 void
@@ -89,7 +137,7 @@ MCRoleManager::loadNPCData()
     JsonBox::Array npcs;
     JsonBox::Array::iterator npcsIterator;
     JsonBox::Object npcObject;
-    MCNPC *npc;
+    MCNPC *role;
     const char *c_str_object_id;
     mc_object_id_t object_id;
     CCString *ccstring;
@@ -103,16 +151,20 @@ MCRoleManager::loadNPCData()
         object_id.sub_class_ = c_str_object_id[1];
         object_id.index_ = c_str_object_id[2];
         object_id.sub_index_ = c_str_object_id[3];
-        npc = MCNPC::create(object_id);
+        role = new MCNPC;
+        CCAssert(role != NULL, "内存不足！");
         ccstring = CCString::create(npcObject["face"].getString().c_str());
-        npc->setFace(ccstring);
+        role->setFace(ccstring);
         ccstring = CCString::create(npcObject["name"].getString().c_str());
-        npc->setName(ccstring);
+        role->setName(ccstring);
         ccstring = CCString::create(npcObject["spritesheet"].getString().c_str());
-        npc->setSpriteSheet(ccstring);
+        role->setSpriteSheet(ccstring);
         ccstring = CCString::create(npcObject["description"].getString().c_str());
-        npc->setDescription(ccstring);
-        npcs_->setObject(npc, MCObjectIdToDickKey(object_id));
+        role->setDescription(ccstring);
+        role->setID(object_id);
+        role->init();
+        role->autorelease();
+        npcs_->setObject(role, MCObjectIdToDickKey(object_id));
     }
 }
 

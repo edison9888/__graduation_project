@@ -16,7 +16,6 @@
  */
 typedef mc_ushort_t mc_hp_t;   /* 生命值类型 */
 typedef mc_ushort_t mc_pp_t;   /* 体力值类型 */
-typedef mc_ushort_t mc_load_t; /* 负重类型 */
 
 /**
  * 角色种族
@@ -28,17 +27,6 @@ enum {
     MCProtoss       = MCMakeEnum(2), /* 神 */
 };
 typedef mc_enum_t MCRoleRace;
-
-/**
- * 角色类型
- */
-enum {
-    MCNPCType       = MCMakeEnum(0), /* NPC */
-    MCHeroType      = MCMakeEnum(1), /* 主角 */
-    MCMercenaryType = MCMakeEnum(2), /* 佣兵 */
-    MCEnemy         = MCMakeEnum(3)  /* 敌人 */
-};
-typedef mc_enum_t MCRoleType;
 
 /**
  * 角色状态

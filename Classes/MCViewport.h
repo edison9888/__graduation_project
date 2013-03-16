@@ -12,6 +12,8 @@
 #include "MCRoleEntity.h"
 #include "MCGeometry.h"
 
+class MCOBB;
+
 class MCViewport {
 public:
     ~MCViewport();
@@ -21,28 +23,7 @@ public:
     static MCViewport *create(MCRoleEntity *aRoleEntity);
     
 #warning for debug
-    MCViewport *getDebugViewport() {
-        MCViewport *vp = MCViewport::create(roleEntity_);
-        MCFacade facade = roleEntity_->getFacade();
-        CCRect bounds = roleEntity_->getAABB();
-        
-        bounds.origin = ccpAdd(bounds.origin, roleEntity_->getPosition());
-        if (facade == MCFacingUp) {
-            vp->boundingBox_.origin = ccpAdd(bounds.origin, ccp(-2 * bounds.size.width, bounds.size.height));
-            vp->boundingBox_.size = CCSizeMake(5 * bounds.size.width, 4 * bounds.size.height);
-        } else if (facade == MCFacingDown) {
-            vp->boundingBox_.origin = ccpAdd(bounds.origin, ccp(-2 * bounds.size.width, -4 * bounds.size.height));
-            vp->boundingBox_.size = CCSizeMake(5 * bounds.size.width, 4 * bounds.size.height);
-        } else if (facade == MCFacingLeft) {
-            vp->boundingBox_.origin = ccpAdd(bounds.origin, ccp(-5 * bounds.size.height, -1.5 * bounds.size.width));
-            vp->boundingBox_.size = CCSizeMake(5 * bounds.size.height, 4 * bounds.size.width);
-        } else if (facade == MCFacingRight) {
-            vp->boundingBox_.origin = ccpAdd(bounds.origin, ccp(bounds.size.height * 2, -1.5 * bounds.size.width));
-            vp->boundingBox_.size = CCSizeMake(5 * bounds.size.height, 4 * bounds.size.width);
-        }
-        
-        return vp;
-    }
+    MCViewport *getDebugViewport();
     
     /**
      * 检测是否与人物碰撞
@@ -60,9 +41,8 @@ public:
     MCRoleEntity *roleEntity_;
     CCRect       boundingBox_;
     float        unitLength_;
-    /* deprecated */
-//    MCLine       *line1_;
-//    MCLine       *line2_;
+    
+    CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
 };
 
 #endif /* defined(__Military_Confrontation__MCViewport__) */

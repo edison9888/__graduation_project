@@ -18,6 +18,8 @@ public:
     bool init();
     
     static MCHero *sharedHero();
+    
+    CCObject *copy() { return copyWithZone(0); }
 };
 
 #endif /* defined(__Military_Confrontation__MCHero__) */

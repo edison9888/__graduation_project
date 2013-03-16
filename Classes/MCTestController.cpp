@@ -128,7 +128,8 @@ MCTestController::init()
         addChild(label_);
         label_->setPosition(CCPointMake(20, 20));
         label_->setAnchorPoint(CCPointZero);
-        
+    
+#warning debug collision
         for (int i=0; i<4; ++i) {
             sp[i]=CCSprite::create("p.png");
             addChild(sp[i]);
@@ -261,21 +262,22 @@ MCTestController::moveTo(const CCPoint &offset)
         deltaForMap.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
     }
     
-    /* 碰撞点debug */
-    CCPoint p[4];
-    p[0] = ccpAdd(heroMaybeMoveToPosition, hero_->getAABB().origin);
-    p[1] = p[0];
-    p[2] = p[0];
-    p[3] = p[0];
-    p[0].y += blockHeight / 2;
-    p[1].x += hero_->getAABB().size.width;
-    p[1].y += blockHeight / 2;
-    p[2].x += hero_->getAABB().size.width;
-    p[2].y += hero_->getAABB().size.height;
-    p[3].y += hero_->getAABB().size.height;
-    for (int i = 0; i < 4; ++i) {
-        sp[i]->setPosition(p[i]);
-    }
+#warning debug collision
+//    /* 碰撞点debug */
+//    CCPoint p[4];
+//    p[0] = ccpAdd(heroMaybeMoveToPosition, hero_->getAABB().origin);
+//    p[1] = p[0];
+//    p[2] = p[0];
+//    p[3] = p[0];
+//    p[0].y += blockHeight / 2;
+//    p[1].x += hero_->getAABB().size.width;
+//    p[1].y += blockHeight / 2;
+//    p[2].x += hero_->getAABB().size.width;
+//    p[2].y += hero_->getAABB().size.height;
+//    p[3].y += hero_->getAABB().size.height;
+//    for (int i = 0; i < 4; ++i) {
+//        sp[i]->setPosition(p[i]);
+//    }
     
     /* 矩形框检测方案 */
 //    CCObject *obj;

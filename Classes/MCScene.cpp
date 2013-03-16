@@ -66,21 +66,13 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
                                                 aPackage->getBackgroundMusicPath()->getCString());
         addChild(background_);
         
-        objects_ = MCObjectLayer::create();
+        objects_ = MCObjectLayer::create(aPackage->getScenePackageType());
         objects_->setTMXTiledMap(background_->getMap());
         objects_->setSceneDelegate(this);
         objects_->loadEntrancesFromScenePackage(aPackage);
         addChild(objects_);
         
-        controller_ = MCControllerLayer::create();
-        controller_->setDelegate(objects_);
-        addChild(controller_);
-        
-        viewport_ = MCViewportLayer::create();
-        addChild(viewport_);
-        
-#warning debug
-//        controller_->getActionMenu()->attach(this);
+        installController();
         
         /* entrances */
         entrances_ = aPackage->getScenes();
@@ -107,25 +99,47 @@ MCScene::createWithScenePackage(MCScenePackage *aPackage)
     return scene;
 }
 
+CCPoint
+MCScene::getMapOffset() const
+{
+    return background_->getMap()->getPosition();
+}
+
 void
 MCScene::onEnter()
 {
     MCSceneContext *context = new MCSceneContext;
     context->scene_ = this;
-    MCSceneContextManager::sharedGameSceneContextManager()->pushContext(context);
+    MCSceneContextManager::sharedSceneContextManager()->pushContext(context);
     CCScene::onEnter();
     /* 预加载场景 */
+    schedule(schedule_selector(MCScene::update));
+#warning for debug
+    if (viewport_ == NULL) {
+        viewport_ = MCViewportLayer::create();
+        addChild(viewport_);
+        viewport_->loadObjects(objects_->objects_);
+        viewport_->loadSemis(objects_->semiTransparents_);
+        viewport_->loadBarriers(objects_->barriers_);
+        viewport_->map = background_->getMap();
+    }
 }
 
 void
 MCScene::onExit()
 {
+    unschedule(schedule_selector(MCScene::update));
     
     CCScene::onExit();
     
-    MCSceneContext *context = MCSceneContextManager::sharedGameSceneContextManager()->currentContext();
-    MCSceneContextManager::sharedGameSceneContextManager()->popContext();
+    MCSceneContext *context = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+    MCSceneContextManager::sharedSceneContextManager()->popContext();
     CC_SAFE_RELEASE(context);
+}
+
+void
+MCScene::update(float dt)
+{
 }
 
 /**
@@ -179,10 +193,4 @@ bool
 MCScene::hasEntrance(const char *anEntranceName)
 {
     return entrances_->objectForKey(anEntranceName) ? true : false;
-}
-
-CCDictionary *
-MCScene::getEntrances()
-{
-    return entrances_;
 }

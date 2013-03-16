@@ -19,7 +19,7 @@ class MCRole : public MCObject {
 public:
     MCRole();
     ~MCRole();
-    virtual bool init() = 0;
+    virtual bool init();
     
     /* 下一句话。如果没有则返回NULL；如果本来就没话说则返回默认对白 */
     const char *nextSentence();
@@ -50,12 +50,12 @@ public:
      */
     virtual void died();
     
+    virtual CCObject *copy() = 0;
+    
     /* 角色属性 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
-    CC_SYNTHESIZE(MCRoleType, roleType_, RoleType); /* 角色类型 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
     CC_SYNTHESIZE(mc_pp_t, pp_, PP); /* 角色体力值 */
-    CC_SYNTHESIZE(mc_load_t, load_, Load); /* 角色负重 */
     CC_SYNTHESIZE(MCRoleState, roleState_, RoleState); /* 角色状态 */
     CC_SYNTHESIZE(CCString *, face_, Face); /* 角色头像 */
     CC_SYNTHESIZE(CCString *, spriteSheet_, SpriteSheet); /* 角色精灵表 */

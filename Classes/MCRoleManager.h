@@ -12,7 +12,7 @@
 #include "MCRole.h"
 
 class MCNPC;
-class MCMonster;
+class MCEnemy;
 
 class MCRoleManager {
 private:
@@ -25,9 +25,15 @@ public:
     
     void loadData();
     
+    /* copied data */
     MCRole *roleForObjectId(mc_object_id_t anObjectId);
     MCNPC *NPCForObjectId(mc_object_id_t anObjectId);
-    MCMonster *monsterForObjectId(mc_object_id_t anObjectId);
+    MCEnemy *enemyForObjectId(mc_object_id_t anObjectId);
+    
+    /* metadata */
+    MCRole *metaRoleForObjectId(mc_object_id_t anObjectId);
+    MCNPC *metaNPCForObjectId(mc_object_id_t anObjectId);
+    MCEnemy *metaEnemyForObjectId(mc_object_id_t anObjectId);
     
 protected:
     void loadNPCData();
@@ -35,7 +41,7 @@ protected:
     
 private:
     CCDictionary *npcs_; /* NPC */
-    CCDictionary *monsters_; /* 怪物 */
+    CCDictionary *enemies_; /* 怪物 */
 };
 
 

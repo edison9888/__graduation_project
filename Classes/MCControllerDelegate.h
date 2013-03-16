@@ -32,18 +32,16 @@ enum {
 };
 typedef mc_enum_t MCControlButtonCode;
 
+class MCRole;
+
 /* 基本物件 */
 class MCControllerDelegate {
 public:
-    virtual void controllerMove(MCControllerDelegate *sender, const CCPoint &delta) = 0;
+    /* joypad */
+    virtual void controllerMove(MCControllerDelegate *sender, const CCPoint &delta) {}
     
-    virtual void controllerDidPress(MCControllerDelegate *sender);
-    virtual void controllerDidRelease(MCControllerDelegate *sender);
-    
-    virtual void controllerDidClickEsc();
-    virtual void controllerDidClickEnter();
-    virtual void controllerDidClickMenu();
-    virtual void controllerDidClickBack();
+    /* free */
+    virtual void controllerDidSelectRole(MCRole *aRole) {}
 };
 
 #endif /* defined(__Military_Confrontation__MCControllerDelegate__) */

@@ -29,7 +29,9 @@ public:
     CCPoint p2;
 };
 
-#define CCPointLog(p) CCLog("%d::%s: (%.1f, %.1f)", __LINE__, #p, (p).x, (p).y)
-#define CCSizeLog(s) CCLog("%d::%s: (%.1f, %.1f)", __LINE__, #s, (s).width, (s).height)
+#define CCPointLog(p) CCLog("%s::%d::%s: (%.1f, %.1f)", __FILE__+85, __LINE__, #p, (p).x, (p).y)
+#define CCSizeLog(s) CCLog("%s::%d::%s: (%.1f, %.1f)", __FILE__+85, __LINE__, #s, (s).width, (s).height)
+#define CCRectLog(r) CCLog("%s::%d::%s: (%.1f, %.1f) - (%.1f, %.1f)", __FILE__+85, __LINE__, #r, \
+                        (r).origin.x, (r).origin.y, (r).size.width, (r).size.height)
 
 #endif /* defined(__Military_Confrontation__MCGeometry__) */

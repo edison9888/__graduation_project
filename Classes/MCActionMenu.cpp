@@ -19,6 +19,8 @@ MCActionMenu::MCActionMenu()
     actionItemHolder_ = CCDictionary::create();
     actionItemHolder_->retain();
     activeActionGroupRadius_ = 0;
+    
+    gameScene_ = NULL;
 }
 
 MCActionMenu::~MCActionMenu()
@@ -164,15 +166,6 @@ MCActionMenu::hideActions()
 }
 
 void
-MCActionMenu::popoverAtPosition(const CCPoint &aPosition)
-{
-    if (!closeItem_->isVisible()) {
-        setPosition(aPosition);
-        showActions();
-    }
-}
-
-void
 MCActionMenu::onEnter()
 {
     CCMenu::onEnter();
@@ -191,7 +184,6 @@ void
 MCActionMenu::attach(MCGameScene *aGameScene)
 {
     CCAssert(aGameScene != NULL, "aGameScene cannot be NULL!");
-    
     if (gameScene_ == NULL) {
         aGameScene->addChild(this);
         if (actionMenuType_ == MCFloatMenu) {

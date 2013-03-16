@@ -15,9 +15,10 @@
 class MCNPC : public MCRole {
 public:
     ~MCNPC();
-    bool init();
     
     static MCNPC *create(mc_object_id_t anObjectId);
+    
+    CCObject *copy();
 };
 
 #endif /* defined(__Military_Confrontation__MCNPC__) */

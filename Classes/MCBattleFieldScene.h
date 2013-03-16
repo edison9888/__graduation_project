@@ -12,7 +12,10 @@
 #include "MCGameScene.h"
 
 class MCBattleFieldScene : public MCGameScene {
+public:
+    void installController();
     
+    void dragScene(const CCPoint &anOffset);
 };
 
 #endif /* defined(__Military_Confrontation__MCBattleFieldScene__) */

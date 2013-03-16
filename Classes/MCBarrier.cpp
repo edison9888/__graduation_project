@@ -14,7 +14,7 @@ const char *kMCTypeBarrier = "barrier";
 bool
 MCBarrier::init(const CCRect &aRect, MCBarrierType aBarrierType)
 {
-    rect_ = CCRect(aRect);
+    MCSemiTransparent::init(aRect);
     type_ = aBarrierType;
     
     return true;
@@ -45,14 +45,14 @@ MCBarrier::create(const CCRect &aRect, MCBarrierType aBarrierType)
 bool
 MCBarrier::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
 {
-    MCRole *role = aRoleEntity->getPrototype();
-    MCRoleRace race = role->getRoleRace();
-    CCRect bounds = aRoleEntity->getAABB();
-    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
-    
-    if (rect_.intersectsRect(bounds)) {
-        return MCHasFlag(type_, race); /* 此障碍物不允许改人物种族经过 */
-    }
-    
+//    MCRole *role = aRoleEntity->getPrototype();
+//    MCRoleRace race = role->getRoleRace();
+//    CCRect bounds = aRoleEntity->getAABB();
+//    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
+//    
+//    if (rect_.intersectsRect(bounds)) {
+//        return MCHasFlag(type_, race); /* 此障碍物不允许改人物种族经过 */
+//    }
+//    
     return false;
 }

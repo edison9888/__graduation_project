@@ -14,25 +14,27 @@ USING_NS_CC;
 
 class MCOBB {
 public:
-    bool init(const CCRect &aBoundingBox, float rotation);
+    MCOBB();
+    MCOBB(const MCOBB &anOBB);
     
-    static MCOBB *create(const CCRect &aBoundingBox, float rotation);
+    static void convertAABBToOBB(const CCRect &anAABB, MCOBB &obb);
     
     void setup(const CCRect &aBoundingBox, float rotation);
     void setup(const CCPoint &aCenterPoint, float width, float height, float rotation);
+    void setup(const CCPoint &anOffset);
+    void setup(const MCOBB &anOBB);
     
-    bool collidesWith(MCOBB *anOBB);
+    bool collidesWith(const MCOBB &anOBB);
     
-    float getProjectionRadius(const CCPoint anAxis);
+    float getProjectionRadius(const CCPoint &anAxis) const;
     
-    
-private:
-    CCPoint center_;
-    CCSize  extents_;
-    CCPoint axes_[2];
-    float width_;
-    float height_;
-    float rotation_;
+public:
+    CCPoint center;
+    CCSize  extents;
+    CCPoint axes[2];
+    float width;
+    float height;
+    float rotation;
 };
 
 #endif /* defined(__Military_Confrontation__MCOBB__) */

@@ -44,8 +44,6 @@ public:
     void openMenu(CCObject *aMenuItem);
     void closeMenu(CCObject *aMenuItem);
     
-    void popoverAtPosition(const CCPoint &aPosition);
-    
     void onEnter();
     void onExit();
     
@@ -85,6 +83,13 @@ private:
     CCArray *activeActionGroup_;
     float activeActionGroupRadius_;
     CCDictionary *actionItemHolder_;
+};
+
+class MCActionMenuDelegate {
+public:
+    virtual MCActionMenu *actionMenu() = 0;
+    virtual void actionMenuDidOpen(MCActionMenu *anActionMenu) { CC_UNUSED_PARAM(anActionMenu); }
+    virtual void actionMenuDidClosd(MCActionMenu *anActionMenu) { CC_UNUSED_PARAM(anActionMenu); }
 };
 
 #endif /* defined(__Military_Confrontation__MCActionMenu__) */

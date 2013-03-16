@@ -20,8 +20,6 @@ MCHero::~MCHero()
 bool
 MCHero::init()
 {
-    setRoleType(MCHeroType);
-    setRoleRace(MCTerrans);
     loadSpriteSheet(kMCHeroSpriteSheetPath);
     
     viewport_ = MCViewport::create(getEntity());

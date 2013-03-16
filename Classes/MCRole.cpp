@@ -47,6 +47,12 @@ MCRole::~MCRole()
     CC_SAFE_RELEASE(entity_);
 }
 
+bool
+MCRole::init()
+{
+    return true;
+}
+
 /* 下一句话。如果没有则返回NULL；如果本来就没话说则返回默认对白 */
 const char *
 MCRole::nextSentence()
@@ -66,7 +72,6 @@ MCRole::nextSentence()
 void
 MCRole::loadSpriteSheet()
 {
-    CCLog("%s", spriteSheet_->getCString());
     loadSpriteSheet(spriteSheet_->getCString());
 }
 
@@ -128,6 +133,9 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     entityMetadata_->spriteSheet_ = spriteSheet;
     entityMetadata_->spriteSheetPath_ = CCString::create(aSpritesheetPath);
     entityMetadata_->facade_ = MCFacingUnknown;
+    
+    /* 创建可视范围 */
+    viewport_ = MCViewport::create(getEntity());
 }
 
 MCRoleEntity *

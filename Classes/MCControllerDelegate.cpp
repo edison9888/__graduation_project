@@ -7,39 +7,3 @@
 //
 
 #include "MCControllerDelegate.h"
-
-void
-MCControllerDelegate::controllerDidPress(MCControllerDelegate *sender)
-{
-    
-}
-
-void
-MCControllerDelegate::controllerDidRelease(MCControllerDelegate *sender)
-{
-    
-}
-
-void
-MCControllerDelegate::controllerDidClickEsc()
-{
-    
-}
-
-void
-MCControllerDelegate::controllerDidClickEnter()
-{
-    
-}
-
-void
-MCControllerDelegate::controllerDidClickMenu()
-{
-    
-}
-
-void
-MCControllerDelegate::controllerDidClickBack()
-{
-    
-}

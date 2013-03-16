@@ -12,65 +12,83 @@
 #include "MCRoleEntity.h"
 #include "MCControllerDelegate.h"
 #include "MCSceneManager.h"
+#include "MCActionMenu.h"
 
-class MCObjectLayer : public CCLayer, public MCControllerDelegate {
+class MCObjectDataSource {
+public:
+    virtual CCArray *objects() = 0;
+};
+
+class MCObjectLayer : public CCLayer, public MCControllerDelegate, public MCObjectDataSource {
     
 public:
     ~MCObjectLayer();
     bool init();
     
-    CREATE_FUNC(MCObjectLayer);
+    static MCObjectLayer *create(MCScenePackageType aScenePackageType);
     
     void setTMXTiledMap(CCTMXTiledMap *aMap);
     
-#warning debug rect
-    void draw(void) {
-        CCLayer::draw();
-        CCRect r = hero_->getAABB();
-        CCPoint realPosition = ccpAdd(r.origin, hero_->getPosition());
-        CCPoint *ps = new CCPoint[2];
-        ps[0] = realPosition;
-        ps[1] = realPosition;
-        ps[1].x += r.size.width;
-        ps[1].y += r.size.height;
-        ccDrawSolidRect(ps[0],
-                        ps[1],
-                        ccc4f(0.2, 0.4, 0.9, 0.8));
-    }
+//#warning debug rect
+//    void draw(void) {
+//        CCLayer::draw();
+//        CCRect r = hero_->getAABB();
+//        CCPoint realPosition = ccpAdd(r.origin, hero_->getPosition());
+//        CCPoint *ps = new CCPoint[2];
+//        ps[0] = realPosition;
+//        ps[1] = realPosition;
+//        ps[1].x += r.size.width;
+//        ps[1].y += r.size.height;
+//        ccDrawSolidRect(ps[0],
+//                        ps[1],
+//                        ccc4f(0.2, 0.4, 0.9, 0.8));
+//    }
     
     void onEnter();
     void onExit();
     
-    void loadEntrancesFromScenePackage(MCScenePackage *aScenePackage);
+    inline CCArray *objects() {
+        return objects_;
+    }
     
-    /**
-     * 控制器回调
-     */
-    void controllerMove(MCControllerDelegate *sender, const CCPoint &delta);
+    void loadEntrancesFromScenePackage(MCScenePackage *aScenePackage);
     
 protected:
     CCPoint viewLocationToTiledMapLocation(const CCPoint &aViewLocation);
-    void moveTo(const CCPoint &delta);
+    virtual void moveTo(const CCPoint &delta);
     
-    void detectsCollidesWithEntrances(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollision(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollidesWithSemiTransparents(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollidesWithBarriers(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollidesWithNPCs(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollidesWithMonsters(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
-    bool detectsCollidesWithMercenaries(const CCPoint &heroMaybeMoveToPositionAtMapForCheck);
+    virtual void detectsCollidesWithEntrances(const MCOBB &anOBB);
+    virtual void detectsCollidesWithEntrances(const MCOBB &anOBB, const CCPoint &anOffset);
     
-private:
+    virtual bool detectsCollision(const MCOBB &anOBB);
+    virtual bool detectsCollision(const MCOBB &anOBB, const CCPoint &anOffset);
+    
+    virtual void detectsCollidesWithSemiTransparents(const MCOBB &anOBB);
+    virtual void detectsCollidesWithSemiTransparents(const MCOBB &anOBB, const CCPoint &anOffset);
+    
+    virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB);
+    virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB, const CCPoint &anOffset);
+    
+    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
+    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB, const CCPoint &anOffset);
+    
+    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB) { return false; }
+    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
+    
+//protected:
+#warning debug
+public:
     MCRoleEntity *hero_;
-    CCArray *npcs_;
-    CCArray *monsters_;
     CCArray *mercenaries_;
     CCTMXTiledMap *map_;
     CCTMXLayer *metaLayer_;
     
+    MCActionMenu *actionMenu_;
+    
     CCArray *barriers_;          /* 障碍物 */
     CCArray *semiTransparents_;  /* 半透明 */
     CCArray *entrances_;         /* 入口 */
+    CCArray *objects_;
     
     CC_SYNTHESIZE(MCSceneDelegate *, sceneDelegate_, SceneDelegate);
     
@@ -84,5 +102,23 @@ private:
     int winHeight_;
 };
 
+class MCGameSceneObjectLayer : public MCObjectLayer {
+public:
+    /**
+     * 控制器回调
+     */
+    void controllerMove(MCControllerDelegate *sender, const CCPoint &delta);
+    
+protected:
+};
+
+class MCBattleFieldSceneObjectLayer : public MCObjectLayer {
+public:
+    void didSelectRole(MCRole *aRole);
+    
+protected:
+    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);
+    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset);
+};
 
 #endif /* defined(__Military_Confrontation__MCObjectLayer__) */

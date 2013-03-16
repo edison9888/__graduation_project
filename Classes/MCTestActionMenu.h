@@ -23,7 +23,7 @@ public:
         mc_object_id_t m_id = {
             'M', '0', '0', '1'
         };
-        MCGameScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
+        MCScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
         
         MCTestActionMenu *s = new MCTestActionMenu;
         

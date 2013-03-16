@@ -33,8 +33,6 @@ public:
     ~MCRoleEntityMetadata();
     
     CCString *spriteSheetPath_;
-    CCRect frameV_;
-    CCRect frameH_;
     
     /* 显示相关 */
     CC_SYNTHESIZE_READONLY(CCSpriteBatchNode *, spriteSheet_, SpriteSheet);
@@ -54,15 +52,8 @@ public:
     inline float getY() {
         return position_.y;
     }
-    inline float getW() {
-        return area_.width;
-    }
-    inline float getH() {
-        return area_.height;
-    }
     
     CC_SYNTHESIZE(CCPoint, position_, Position);
-    CC_SYNTHESIZE(CCSize, area_, Area);
     CC_SYNTHESIZE(CCArray *, requirements_, Requirements);
 };
 
@@ -76,10 +67,9 @@ public:
     void onEnter();
     void onExit();
     void update(float dt);
-    
-    /* 碰撞 */
-    CCRect getAABB(); /* AABB */
-    MCOBB *getOBB();    /* OBB */
+
+    /* 选中 */
+    bool shouldBeSelected(const CCPoint &aPoint); /* AABB */
     
     void face(MCFacade aFacade);
     void walk(MCFacade aFacade);
@@ -106,7 +96,9 @@ protected:
     
 private:
     CCArray *moveToActions_;
-    MCOBB *obb_;
+    
+    /* 碰撞 */
+    CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);    /* OBB */
 };
 
 #endif /* defined(__Military_Confrontation__MCRoleEntity__) */

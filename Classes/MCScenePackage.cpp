@@ -13,8 +13,7 @@
 
 MCScenePackage::~MCScenePackage()
 {
-    CC_SAFE_RELEASE(npcs_);
-    CC_SAFE_RELEASE(monsters_);
+    CC_SAFE_RELEASE(objects_);
     CC_SAFE_RELEASE(scenes_);
     
     CC_SAFE_RELEASE(tmxTiledMapPath_);
@@ -27,16 +26,11 @@ bool
 MCScenePackage::init()
 {
     do {
-        npcs_ = CCDictionary::create();
-        CC_BREAK_IF(! npcs_);
-        npcs_->retain();
-        
-        monsters_ = CCDictionary::create();
-        CC_BREAK_IF(! monsters_);
-        monsters_->retain();
+        objects_ = CCDictionary::create();
+        objects_->retain();
         
         scenes_ = CCDictionary::create();
-        CC_BREAK_IF(! monsters_);
+        CC_BREAK_IF(! scenes_);
         scenes_->retain();
         
         tmxTiledMapPath_ = NULL;
@@ -64,16 +58,10 @@ MCScenePackage::create(const char *aPackagePath)
     return NULL;
 }
 
-MCNPC *
-MCScenePackage::NPCForObjectId(mc_object_id_t anObjectId)
+MCRole *
+MCScenePackage::objectForObjectId(mc_object_id_t anObjectId)
 {
-    return (MCNPC *) npcs_->objectForKey(MCObjectIdToDickKey(anObjectId));
-}
-
-MCMonster *
-MCScenePackage::monsterForObjectId(mc_object_id_t anObjectId)
-{
-    return (MCMonster *) monsters_->objectForKey(MCObjectIdToDickKey(anObjectId));
+    return (MCRole *) objects_->objectForKey(MCObjectIdToDickKey(anObjectId));
 }
 
 void
@@ -97,15 +85,15 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     };
     setID(o_id);
     
+    /* type int */
+    scenePackageType_ = root["type"].getInt();
+    
     /* name String */
     name_ = CCString::create(root["name"].getString().c_str());
     name_->retain();
     
     /* objects Object */
     loadObjects(root);
-    
-    /* dialogues Object */
-    loadDialogues(root);
     
     /* background Object */
     object = root["background"].getObject();
@@ -128,29 +116,26 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
     JsonBox::Object roles;
     JsonBox::Array requirements;
     JsonBox::Array::iterator requirementsIterator;
-    JsonBox::Object::iterator rolesIterator;
-    JsonBox::Object role;
+    JsonBox::Object::iterator objectsIterator;
+    JsonBox::Object roleObject;
     const char *c_str_o_id;
     MCRoleManager *roleManager = MCRoleManager::sharedRoleManager();
 
-    /* objects["NPCs"] Object */
-    roles = objects["NPCs"].getObject();
-    /* load NPCs */
-    for (rolesIterator = roles.begin(); rolesIterator != roles.end(); ++rolesIterator) {
-        c_str_o_id = rolesIterator->first.c_str();
-        role = rolesIterator->second.getObject();
+    /* load objects */
+    for (objectsIterator = objects.begin(); objectsIterator != objects.end(); ++objectsIterator) {
+        c_str_o_id = objectsIterator->first.c_str();
+        roleObject = objectsIterator->second.getObject();
         mc_object_id_t o_id = {
             c_str_o_id[0],
             c_str_o_id[1],
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCNPC *npc = roleManager->NPCForObjectId(o_id);
-        if (npc) {
-            MCRoleEntityMetadata *metadata = npc->getEntityMetadata();
-            metadata->setPosition(ccp(role["x"].getInt(), role["y"].getInt()));
-            metadata->setArea(CCSizeMake(role["w"].getInt(), role["w"].getInt()));
-            requirements = role["requirements"].getArray();
+        MCRole *role = roleManager->roleForObjectId(o_id);
+        if (role) {
+            MCRoleEntityMetadata *metadata = role->getEntityMetadata();
+            metadata->setPosition(ccp(roleObject["x"].getInt(), roleObject["y"].getInt()));
+            requirements = roleObject["requirements"].getArray();
             CCArray *requirementsArray = metadata->getRequirements();
             for (requirementsIterator = requirements.begin();
                  requirementsIterator != requirements.end();
@@ -164,34 +149,9 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
                 };
                 requirementsArray->addObject(MCFlagManager::sharedFlagManager()->flagForObjectId(flag_id));
             }
-            npcs_->setObject(npc, MCObjectIdToDickKey(o_id));
+            objects_->setObject(role, MCObjectIdToDickKey(o_id));
         }
     }
-    /* objects["monsters"] Object */
-    roles = objects["monsters"].getObject();
-    /* load monsters */
-    for (rolesIterator = roles.begin(); rolesIterator != roles.end(); ++rolesIterator) {
-        c_str_o_id = rolesIterator->first.c_str();
-        mc_object_id_t o_id = {
-            c_str_o_id[0],
-            c_str_o_id[1],
-            c_str_o_id[2],
-            c_str_o_id[3]
-        };
-        MCMonster *monster = roleManager->monsterForObjectId(o_id);
-        if (monster) {
-            monsters_->setObject(monster, MCObjectIdToDickKey(o_id));
-        }
-    }
-}
-
-void
-MCScenePackage::loadDialogues(JsonBox::Object &aRoot)
-{
-    JsonBox::Object dialogues = aRoot["dialogues"].getObject();
-    JsonBox::Value v;
-    JsonBox::Object object;
-//    const char *c_str_o_id;
 }
 
 void

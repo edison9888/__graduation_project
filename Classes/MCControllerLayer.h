@@ -13,36 +13,28 @@
 
 #include "MCJoypad.h"
 
-class MCActionMenu;
+#include "MCActionMenu.h"
 
-/* 控制器模式 */
-enum {
-    MCNormalControlMode = MCMakeEnum(0), /* 通常模式 */
-    MCBattleControlMode = MCMakeEnum(1), /* 战斗模式 */
-};
-typedef mc_enum_t MCControlMode;
+class MCObjectDataSource;
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//#include "MCKeyboardboard.h"
-#endif /* MacOSX、Windows和Linux控制响应 */
-
-class MCControllerLayer : public CCLayer {
+class MCControllerLayer : public CCLayer, public MCActionMenuDelegate {
     
 public:
     bool init();
     
     CREATE_FUNC(MCControllerLayer);
-
+    
+    MCActionMenu *actionMenu();
+    
+    void actionMenuDidOpen(MCActionMenu *anActionMenu);
+    
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     
 private:
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//    MCKeyboard *keybord_;
-#endif /* MacOSX、Windows和Linux控制响应 */
     MCJoypad *joypad_;
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
-    CC_PROPERTY(MCControlMode, controlMode_, ControlMode);
+    CC_SYNTHESIZE(MCObjectDataSource *, objectDataSource_, ObjectDataSource);
     CC_SYNTHESIZE(MCActionMenu *, actionMenu_, ActionMenu);
 };
 

@@ -14,7 +14,7 @@ const char *kMCTypeSemiTransparent = "semi-transparent";
 bool
 MCSemiTransparent::init(const CCRect &aRect)
 {
-    rect_ = CCRect(aRect);
+    obb_.setup(aRect, 0);
     
     return true;
 }
@@ -36,7 +36,18 @@ MCSemiTransparent::create(const CCRect &aRect)
 bool
 MCSemiTransparent::collidesWith(const CCRect &aTargetRect)
 {
-    return rect_.intersectsRect(aTargetRect);
+    MCOBB obb;
+    
+    MCOBB::convertAABBToOBB(aTargetRect, obb);
+    
+    return obb_.collidesWith(obb);
+}
+
+
+bool
+MCSemiTransparent::collidesWith(const MCOBB &anOBB)
+{
+    return obb_.collidesWith(anOBB);
 }
 
 /**
@@ -50,8 +61,12 @@ MCSemiTransparent::collidesWith(const CCRect &aTargetRect)
 bool
 MCSemiTransparent::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
 {
-    CCRect bounds = aRoleEntity->getAABB();
-    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
+//    CCRect bounds = aRoleEntity->getAABB();
+//    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
     
-    return rect_.intersectsRect(bounds);
+//    return rect_.intersectsRect(bounds);
+//    MCOBB *obb = aRoleEntity->getOBB();
+    
+//    return obb_.collidesWith(obb);
+    return false;
 }

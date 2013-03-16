@@ -13,7 +13,7 @@
 
 class MCGameScene : public MCScene {
 public:
-    ;
+    void installController();
 };
 
 #endif /* defined(__Military_Confrontation__MCGameScene__) */

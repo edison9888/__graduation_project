@@ -8,10 +8,8 @@
 
 #include "MCControllerLayer.h"
 #include "MCActionMenu.h"
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//#include "MCKeyboardDispatcher.h"
-#endif /* MacOSX、Windows和Linux控制响应 */
+#include "MCRoleEntity.h"
+#include "MCObjectLayer.h"
 
 bool
 MCControllerLayer::init()
@@ -24,15 +22,12 @@ MCControllerLayer::init()
         addChild (joypad_);
         
         joypad_->setJoystick(MCJoystick::create(bg, control));
+        joypad_->setVisible(false);
+        joypad_->setTouchEnabled(false);
         
         actionMenu_ = MCActionMenu::create(MCFixedMenu);
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//        keybord_ = MCKeyboard::create();
-//        addChild (keybord_);
-#endif /* MacOSX、Windows和Linux控制响应 */
         setTouchEnabled(true);
-//        setControlMode(MCBattleControlMode);
         
         return true;
     }
@@ -49,37 +44,55 @@ MCControllerLayer::getDelegate()
 void
 MCControllerLayer::setDelegate(MCControllerDelegate* aDelegate)
 {
-    joypad_->setDelegate(aDelegate);
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//    keybord_->setDelegate(aDelegate);
-#endif /* MacOSX、Windows和Linux控制响应 */
-}
-
-MCControlMode
-MCControllerLayer::getControlMode()
-{
-    return 0;
-}
-
-void
-MCControllerLayer::setControlMode(MCControlMode aControlMode)
-{
-    if (aControlMode == MCBattleControlMode) {
+    if (aDelegate) {
+        joypad_->setVisible(true);
+        joypad_->setTouchEnabled(true);
+    } else {
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
-    } else {
-        joypad_->setTouchEnabled(true);
-        joypad_->setVisible(true);
     }
-    controlMode_ = aControlMode;
+    joypad_->setDelegate(aDelegate);
+}
+
+MCActionMenu *
+MCControllerLayer::actionMenu()
+{
+    return actionMenu_;
 }
 
 void
-MCControllerLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent) {
+MCControllerLayer::actionMenuDidOpen(MCActionMenu *anActionMenu)
+{
+    actionMenu_->openMenu(actionMenu_->getChildren()->objectAtIndex(0));
+}
+
+void
+MCControllerLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
     CCLayer::ccTouchesBegan(pTouches, pEvent);
-#warning debug
-//    if (actionMenu_ && actionMenu_->getActionMenuType() == MCFloatMenu) {
-//        actionMenu_->openMenu(NULL);
-//    }
+    if (! objectDataSource_) {
+        return;
+    }
+    CCObject *obj;
+    MCRole *role;
+    MCRoleEntity *entity;
+    CCTouch *touch = (CCTouch *) pTouches->anyObject();
+    CCPoint touchedLoaction = touch->getLocation();
+    CCArray *objects = objectDataSource_->objects();
+    bool selected = false;
+    
+    CCARRAY_FOREACH(objects, obj) {
+        role = (MCRole *)obj;
+        entity = role->getEntity();
+        if (entity->shouldBeSelected(touchedLoaction)) {
+            actionMenuDidOpen(actionMenu_);
+            selected = true;
+            break;
+        }
+    }
+    
+    if (!selected) {
+#warning hero/mercenary moveTo
+        ;
+    }
 }

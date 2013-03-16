@@ -248,5 +248,17 @@
     <property name="barrier-type" value="1"/>
    </properties>
   </object>
+  <object x="592" y="112">
+   <polygon points="0,0 96,-48 96,0"/>
+  </object>
+  <object x="656" y="176">
+   <polyline points="0,0 80,-48 96,-16 16,32 0,0"/>
+  </object>
+  <object x="528" y="96">
+   <polyline points="0,0 48,-16"/>
+  </object>
+  <object x="544" y="96">
+   <polyline points="0,0 0,64"/>
+  </object>
  </objectgroup>
 </map>

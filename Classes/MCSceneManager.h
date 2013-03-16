@@ -11,7 +11,7 @@
 
 #include "MCScenePackage.h"
 
-class MCGameScene;
+class MCScene;
 
 enum {
     MCPushScene     = 0,
@@ -37,7 +37,7 @@ public:
      * 根据ID生成场景并返回
      * IMPORTANT：场景由MCSceneManager管理，注意内存泄漏！
      */
-    MCGameScene *sceneWithObjectId(mc_object_id_t anObjectId);
+    MCScene *sceneWithObjectId(mc_object_id_t anObjectId);
     
     /*
      * 清除由sceneWithObjectId:方法生成的MCGameScene对象
@@ -47,7 +47,7 @@ public:
     /**
      * 切换当前场景为aNewScene
      */
-    void changeScene(MCGameScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+    void changeScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
     
     /**
      * 切换当前场景为ID为anObjectId的场景
@@ -58,8 +58,8 @@ private:
     CCDictionary *scenes_; /* 以mc_object_id_t为key */
     CCDictionary *scenePackages_; /* 以mc_object_id_t为key */
     
-    MCGameScene *lastScene_;
-    MCGameScene *currentScene_;
+    MCScene *lastScene_;
+    MCScene *currentScene_;
 };
 
 class MCSceneDelegate {
@@ -75,6 +75,8 @@ public:
      * 从内部场景(比如房子、商店)出去
      */
     virtual void goOut() = 0;
+    
+    virtual MCScenePackage *getScenePackage() const = 0;
 };
 
 #endif /* defined(__Military_Confrontation__MCSceneManager__) */

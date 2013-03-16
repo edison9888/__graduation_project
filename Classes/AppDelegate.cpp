@@ -3,6 +3,8 @@
 #include "script_support/CCScriptSupport.h"
 #include "CCLuaEngine.h"
 
+#include "MCRoleManager.h"
+
 #include "MCTestbed.h"
 
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)

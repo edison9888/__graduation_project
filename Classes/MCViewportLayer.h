@@ -21,8 +21,16 @@ public:
     
     void draw(void);
     
+    void loadObjects(CCArray *objects);
+    void loadBarriers(CCArray *barriers);
+    void loadSemis(CCArray *semis);
+    
 public:
-    CCArray *roles;
+    CCArray *objects;
+    CCArray *barriers;
+    CCArray *semis;
+    CCArray *entrances;
+    CCTMXTiledMap *map;
 };
 
 #endif /* defined(__Military_Confrontation__MCViewportLayer__) */

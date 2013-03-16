@@ -69,12 +69,10 @@ public:
         b->setAnchorPoint(ccp(0.5, 0.5));
         b->setRotation(b->getRotation() + -1);
         
-        obbA->setup(a->getPosition(), 72, 24, CC_DEGREES_TO_RADIANS(a->getRotation()));
-        obbB->setup(b->getPosition(), 72, 24, CC_DEGREES_TO_RADIANS(b->getRotation()));
+        obbA.setup(a->getPosition(), 72, 24, CC_DEGREES_TO_RADIANS(a->getRotation()));
+        obbB.setup(b->getPosition(), 72, 24, CC_DEGREES_TO_RADIANS(b->getRotation()));
         
-        
-        
-        if (obbA->collidesWith(obbB)) {
+        if (obbA.collidesWith(obbB)) {
             b->setOpacity(64);
         } else {
             b->setOpacity(255);
@@ -82,8 +80,8 @@ public:
     }
     
 private:
-    MCOBB *obbA;
-    MCOBB *obbB;
+    MCOBB obbA;
+    MCOBB obbB;
 };
 
 #endif /* defined(__Military_Confrontation__MCTestOBB__) */

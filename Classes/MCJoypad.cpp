@@ -83,10 +83,6 @@ MCJoypad::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
         joystick_->setPosition (location);
         joystickDelta_ = __mc_joystick_delta;
-        
-        if (delegate_) {
-            delegate_->controllerDidPress(delegate_);
-        }
     }
 }
 
@@ -171,10 +167,6 @@ MCJoypad::ccTouchesEnded (CCSet *pTouches, CCEvent *pEvent)
         joystickDelta_ = __cc_point_zero;
         __mc_joystick_delta->x = 0;
         __mc_joystick_delta->y = 0;
-        
-        if (delegate_) {
-            delegate_->controllerDidRelease(delegate_);
-        }
     }
     isValidControl_ = false;
     CCLayer::ccTouchesEnded(pTouches, pEvent);

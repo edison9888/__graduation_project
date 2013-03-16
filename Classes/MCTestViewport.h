@@ -25,7 +25,7 @@ public:
     }
 };
 
-class _viewport_MCGameScene : public MCGameScene {
+class _viewport_MCGameScene : public MCScene {
 public:
     void init() {
         _viewport_MCScenePackage *p = new _viewport_MCScenePackage;

@@ -9,7 +9,7 @@
 #include "MCTestRoleManager.h"
 #include "MCRoleManager.h"
 #include "MCNPC.h"
-#include "MCMonster.h"
+#include "MCEnemy.h"
 
 bool
 MCTestRoleManager::init()

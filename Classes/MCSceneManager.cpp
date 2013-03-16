@@ -11,6 +11,21 @@
 #include "JsonBox.h"
 #include "MCJSONModifier.h"
 #include "MCGameScene.h"
+#include "MCBattleFieldScene.h"
+
+static MCScene *
+MCSceneMake(MCScenePackageType aScenePackageType) {
+    CCAssert(MCUnknownPackage != aScenePackageType, "unknown scene package type");
+    MCScene *scene;
+    
+    if (MCGameScenePackage == aScenePackageType) {
+        scene = new MCGameScene;
+    } else {
+        scene = new MCBattleFieldScene;
+    }
+    
+    return scene;
+};
 
 const char *kMCScenesResourceFilePath = "scenes.spkg";
 static MCSceneManager *__shared_scene_list = NULL;
@@ -87,16 +102,16 @@ MCSceneManager::packageWithObjectId(mc_object_id_t anObjectId)
  * 根据ID生成场景并返回
  * IMPORTANT：场景由MCSceneManager管理，主意内存泄漏！
  */
-MCGameScene *
+MCScene *
 MCSceneManager::sceneWithObjectId(mc_object_id_t anObjectId)
 {
     mc_dict_key_t key = MCObjectIdToDickKey(anObjectId);
-    MCGameScene *scene = (MCGameScene *) scenes_->objectForKey(key);
+    MCScene *scene = (MCScene *) scenes_->objectForKey(key);
     MCScenePackage *scenePackage;
     
     if (scene == NULL) {
-        scene = new MCGameScene;
         scenePackage = (MCScenePackage *) scenePackages_->objectForKey(key);
+        scene = MCSceneMake(scenePackage->getScenePackageType());
         if (scene && scene->initWithScenePackage(scenePackage)) {
             scenes_->setObject(scene, key);
         } else {
@@ -115,7 +130,7 @@ void
 MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
 {
     int key = MCObjectIdToDickKey(anObjectId);
-    MCGameScene *scene = (MCGameScene *) scenes_->objectForKey(key);
+    MCScene *scene = (MCScene *) scenes_->objectForKey(key);
     if (scene) {
         scenes_->removeObjectForKey(key);
     }
@@ -125,7 +140,7 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
  * 切换当前场景为aNewScene
  */
 void
-MCSceneManager::changeScene(MCGameScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
+MCSceneManager::changeScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
 {
     if ((aNewScene == NULL && method != MCPopScene)
         || aNewScene == NULL
@@ -139,7 +154,7 @@ MCSceneManager::changeScene(MCGameScene *aNewScene, const char *anEntranceName, 
         currentScene_ = aNewScene;
     } else if (MCPopScene == method) {
         CCDirector::sharedDirector()->popScene();
-        MCGameScene *tmp = lastScene_;
+        MCScene *tmp = lastScene_;
         lastScene_ = currentScene_;
         currentScene_ = tmp; /* lastScene_ */
     } else {
@@ -155,6 +170,6 @@ MCSceneManager::changeScene(MCGameScene *aNewScene, const char *anEntranceName, 
 void
 MCSceneManager::changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method)
 {
-    MCGameScene *newScene = sceneWithObjectId(anObjectId);
+    MCScene *newScene = sceneWithObjectId(anObjectId);
     changeScene(newScene, anEntranceName, method);
 }

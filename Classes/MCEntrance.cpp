@@ -15,32 +15,40 @@ MCEntrance::~MCEntrance()
     CC_SAFE_RELEASE(destinaion_);
 }
 
-bool
+void
 MCEntrance::init(const CCRect &aRect)
 {
-    rect_ = CCRect(aRect);
-    
-    return true;
+    obb_.setup(aRect, 0);
 }
 
 MCEntrance *
 MCEntrance::create(const CCRect &aRect)
 {
-    MCEntrance *pRet = new MCEntrance();
-    if (pRet && pRet->init(aRect)) {
+    MCEntrance *pRet = new MCEntrance;
+    if (pRet) {
+        pRet->init(aRect);
         pRet->autorelease();
-        return pRet;
     } else {
         delete pRet;
         pRet = NULL;
-        return NULL;
     }
+    return pRet;
 }
 
 bool
 MCEntrance::collidesWith(const CCRect &aTargetRect)
 {
-    return rect_.intersectsRect(aTargetRect);
+    MCOBB obb;
+    
+    MCOBB::convertAABBToOBB(aTargetRect, obb);
+    
+    return obb_.collidesWith(obb);
+}
+
+bool
+MCEntrance::collidesWith(const MCOBB &anOBB)
+{
+    return obb_.collidesWith(anOBB);
 }
 
 /**
@@ -54,8 +62,9 @@ MCEntrance::collidesWith(const CCRect &aTargetRect)
 bool
 MCEntrance::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
 {
-    CCRect bounds = aRoleEntity->getAABB();
-    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
+//    CCRect bounds = aRoleEntity->getAABB();
+//    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
     
-    return rect_.intersectsRect(bounds);
+//    return rect_.intersectsRect(bounds);
+    return false;
 }

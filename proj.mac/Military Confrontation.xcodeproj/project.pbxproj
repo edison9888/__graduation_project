@@ -38,7 +38,7 @@
 		A30DDB0516B664A00001C53F /* MCTaskManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0216B664A00001C53F /* MCTaskManager.cpp */; };
 		A30DDB0816B664BB0001C53F /* MCDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0616B664BB0001C53F /* MCDialog.cpp */; };
 		A30DDB0B16B664D20001C53F /* MCNPC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0916B664D20001C53F /* MCNPC.cpp */; };
-		A30DDB0E16B664DA0001C53F /* MCMonster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0C16B664DA0001C53F /* MCMonster.cpp */; };
+		A30DDB0E16B664DA0001C53F /* MCEnemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */; };
 		A30DDB1116B664E30001C53F /* MCDialogue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0F16B664E30001C53F /* MCDialogue.cpp */; };
 		A312D2C816EF3EBC008AAD4B /* MCRoleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A312D2C616EF3EBC008AAD4B /* MCRoleManager.cpp */; };
 		A312D2CC16EF41FC008AAD4B /* MCTestRoleManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A312D2CA16EF41FC008AAD4B /* MCTestRoleManager.cpp */; };
@@ -157,9 +157,7 @@
 		A35DAC5616F058700047371A /* MCTestActionMenu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A35DAC5416F0586F0047371A /* MCTestActionMenu.cpp */; };
 		A35F21A016E8805500D466B9 /* MCLuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A35F219F16E8805500D466B9 /* MCLuaCocos2d.cpp */; };
 		A365552716F373C30062DDF8 /* MCBattleFieldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A365552516F373C30062DDF8 /* MCBattleFieldScene.cpp */; };
-		A365552816F373C30062DDF8 /* MCBattleFieldScene.h in Sources */ = {isa = PBXBuildFile; fileRef = A365552616F373C30062DDF8 /* MCBattleFieldScene.h */; };
 		A365552B16F376B50062DDF8 /* MCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A365552916F376B40062DDF8 /* MCScene.cpp */; };
-		A365552C16F376B50062DDF8 /* MCScene.h in Sources */ = {isa = PBXBuildFile; fileRef = A365552A16F376B50062DDF8 /* MCScene.h */; };
 		A36D12AF16DF9E8500A940ED /* MCTestbed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */; };
 		A37E617D16EF03D10027A56A /* MCOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37E617B16EF03D10027A56A /* MCOBB.cpp */; };
 		A37E618116EF11F10027A56A /* MCTestOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37E617F16EF11F10027A56A /* MCTestOBB.cpp */; };
@@ -259,8 +257,8 @@
 		A30DDB0716B664BB0001C53F /* MCDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDialog.h; path = ../Classes/MCDialog.h; sourceTree = "<group>"; };
 		A30DDB0916B664D20001C53F /* MCNPC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCNPC.cpp; path = ../Classes/MCNPC.cpp; sourceTree = "<group>"; };
 		A30DDB0A16B664D20001C53F /* MCNPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCNPC.h; path = ../Classes/MCNPC.h; sourceTree = "<group>"; };
-		A30DDB0C16B664DA0001C53F /* MCMonster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMonster.cpp; path = ../Classes/MCMonster.cpp; sourceTree = "<group>"; };
-		A30DDB0D16B664DA0001C53F /* MCMonster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCMonster.h; path = ../Classes/MCMonster.h; sourceTree = "<group>"; };
+		A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCEnemy.cpp; path = ../Classes/MCEnemy.cpp; sourceTree = "<group>"; };
+		A30DDB0D16B664DA0001C53F /* MCEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCEnemy.h; path = ../Classes/MCEnemy.h; sourceTree = "<group>"; };
 		A30DDB0F16B664E30001C53F /* MCDialogue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDialogue.cpp; path = ../Classes/MCDialogue.cpp; sourceTree = "<group>"; };
 		A30DDB1016B664E30001C53F /* MCDialogue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDialogue.h; path = ../Classes/MCDialogue.h; sourceTree = "<group>"; };
 		A312D2C616EF3EBC008AAD4B /* MCRoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRoleManager.cpp; path = ../Classes/MCRoleManager.cpp; sourceTree = "<group>"; };
@@ -1047,8 +1045,8 @@
 				A39C946116AEE05000B92E33 /* MCRole.h */,
 				A30DDB0916B664D20001C53F /* MCNPC.cpp */,
 				A30DDB0A16B664D20001C53F /* MCNPC.h */,
-				A30DDB0C16B664DA0001C53F /* MCMonster.cpp */,
-				A30DDB0D16B664DA0001C53F /* MCMonster.h */,
+				A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */,
+				A30DDB0D16B664DA0001C53F /* MCEnemy.h */,
 				A3FE729B16BCC29300AE9739 /* MCHero.cpp */,
 				A3FE729C16BCC29300AE9739 /* MCHero.h */,
 				A30DDB0F16B664E30001C53F /* MCDialogue.cpp */,
@@ -1472,7 +1470,7 @@
 				A30DDB0516B664A00001C53F /* MCTaskManager.cpp in Sources */,
 				A30DDB0816B664BB0001C53F /* MCDialog.cpp in Sources */,
 				A30DDB0B16B664D20001C53F /* MCNPC.cpp in Sources */,
-				A30DDB0E16B664DA0001C53F /* MCMonster.cpp in Sources */,
+				A30DDB0E16B664DA0001C53F /* MCEnemy.cpp in Sources */,
 				A30DDB1116B664E30001C53F /* MCDialogue.cpp in Sources */,
 				A38D11BE16B81C42009E1CB8 /* MCDetailScene.cpp in Sources */,
 				A38D11C116B81C4D009E1CB8 /* MCBase64.cpp in Sources */,
@@ -1550,9 +1548,7 @@
 				A35DAC5216F050A40047371A /* MCActionMenu.cpp in Sources */,
 				A35DAC5616F058700047371A /* MCTestActionMenu.cpp in Sources */,
 				A365552716F373C30062DDF8 /* MCBattleFieldScene.cpp in Sources */,
-				A365552816F373C30062DDF8 /* MCBattleFieldScene.h in Sources */,
 				A365552B16F376B50062DDF8 /* MCScene.cpp in Sources */,
-				A365552C16F376B50062DDF8 /* MCScene.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
