@@ -56,6 +56,8 @@ public:
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
     CC_SYNTHESIZE(mc_pp_t, pp_, PP); /* 角色体力值 */
+    CC_SYNTHESIZE(mc_hp_t, maxHP_, MaxHP); /* 角色满生命值 */
+    CC_SYNTHESIZE(mc_pp_t, maxPP_, MaxPP); /* 角色满体力值 */
     CC_SYNTHESIZE(MCRoleState, roleState_, RoleState); /* 角色状态 */
     CC_SYNTHESIZE(CCString *, face_, Face); /* 角色头像 */
     CC_SYNTHESIZE(CCString *, spriteSheet_, SpriteSheet); /* 角色精灵表 */

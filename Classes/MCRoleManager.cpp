@@ -164,6 +164,8 @@ MCRoleManager::loadNPCData()
         role->setID(object_id);
         role->init();
         role->autorelease();
+#warning 需要retain？
+        role->retain();
         npcs_->setObject(role, MCObjectIdToDickKey(object_id));
     }
 }

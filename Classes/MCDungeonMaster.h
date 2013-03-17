@@ -13,6 +13,11 @@
 
 USING_NS_CC;
 
+#include "MCTeam.h"
+
+/**
+ * 城主
+ */
 class MCDungeonMaster : public CCObject {
 private:
     MCDungeonMaster() { };
@@ -21,6 +26,9 @@ private:
     
 public:
     static MCDungeonMaster *sharedDungeonMaster();
+    
+private:
+    MCTeam *team_; /* 队伍 */
 };
 
 #endif /* defined(__Military_Confrontation__MCDungeonMaster__) */

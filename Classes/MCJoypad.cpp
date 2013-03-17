@@ -192,6 +192,6 @@ MCJoypad::update(float dt)
     if (! delegate_ || !isValidControl_) {
         return;
     }
-    delegate_->controllerMove(delegate_, *joystickDelta_);
+    delegate_->controllerDidMove(delegate_, *joystickDelta_);
 }
 

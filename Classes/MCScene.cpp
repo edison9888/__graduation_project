@@ -9,7 +9,6 @@
 #include "MCSceneManager.h"
 #include "MCScene.h"
 #include "MCEntrance.h"
-#include "MCActionMenu.h"
 
 #pragma mark *** MCSceneContextManager ***
 

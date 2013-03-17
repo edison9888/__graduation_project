@@ -12,30 +12,25 @@
 #include "MCControllerDelegate.h"
 
 #include "MCJoypad.h"
+#include "MCRoleBaseInfo.h"
 
-#include "MCActionMenu.h"
-
-class MCObjectDataSource;
-
-class MCControllerLayer : public CCLayer, public MCActionMenuDelegate {
+class MCControllerLayer : public CCLayer {
     
 public:
     bool init();
     
     CREATE_FUNC(MCControllerLayer);
     
-    MCActionMenu *actionMenu();
-    
-    void actionMenuDidOpen(MCActionMenu *anActionMenu);
-    
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
+    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
 private:
     MCJoypad *joypad_;
+    MCTeam *team_;
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
-    CC_SYNTHESIZE(MCObjectDataSource *, objectDataSource_, ObjectDataSource);
-    CC_SYNTHESIZE(MCActionMenu *, actionMenu_, ActionMenu);
 };
 
 #endif /* defined(__Military_Confrontation__MCControllerLayer__) */

@@ -54,9 +54,6 @@ private:
     
     void moveTo(const CCPoint &delta);
     
-    void verticallyMove(MCControlButtonCode aCode);
-    void horizontallyMove(MCControlButtonCode aCode);
-    
     MCRoleEntity *hero_;
     CCTMXTiledMap *map_;
     CCTMXLayer *metaLayer_;

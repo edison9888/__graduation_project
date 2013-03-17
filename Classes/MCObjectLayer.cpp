@@ -578,11 +578,8 @@ MCGameSceneObjectLayer::controllerMove(MCControllerDelegate *sender, const CCPoi
     moveTo(delta);
 }
 
-//bool
-//MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const CCPoint &heroMaybeMoveToPositionAtMapForCheck)
-//{
-//    return false;
-//}
+#pragma mark -
+#pragma mark *** MCBattleFieldSceneObjectLayer ***
 
 bool
 MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB)
@@ -594,4 +591,85 @@ bool
 MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB, const cocos2d::CCPoint &anOffset)
 {
     return false;
+}
+
+#pragma mark -
+#pragma mark *** MCBattleFieldSceneObjectLayer::控制器 ***
+
+void 
+MCBattleFieldSceneObjectLayer::controllerDidSelectRole(MCControllerDelegate *aSender, MCRole *aSelectedRole)
+{
+    
+}
+
+/**
+ * 取消了选择的人物。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidUnselectRole(MCControllerDelegate *aSender, MCRole *aSelectedRole)
+{
+    
+}
+
+/**
+ * 切换多选模式。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidToggleMultiSelectionMode(MCControllerDelegate *aSender, bool isMultiSelectionMode)
+{
+    
+}
+
+/**
+ * 选择全部，若已经全部选择，则全部取消选择。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidSelectAll(MCControllerDelegate *aSender, bool isMultiSelectionMode)
+{
+    
+}
+
+/**
+ * 在选择了人物的情况下，指定移动到某个位置(在地图上的)
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidPointTo(MCControllerDelegate *aSender, const CCPoint &locationAtMap)
+{
+    
+}
+
+/**
+ * 是否允许拖动anItem。按下图标的时候执行。
+ */
+bool
+MCBattleFieldSceneObjectLayer::controllerShouldDragItem(MCControllerDelegate *aSender, MCItem *anItem)
+{
+    return false;
+}
+
+/**
+ * 将要开始拖动anItem。按下图标后，首次移动anItem的时候执行。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerWillDragItem(MCControllerDelegate *aSender, MCItem *anItem)
+{
+    
+}
+
+/**
+ * 拖动完anItem，拖动到了人物aRole上，若aRole等于NULL，则表示没有拖动到任何人物上。放开anItem的时候执行。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidFinishDragItem(MCControllerDelegate *aSender, MCItem *anItem, MCRole *aRole)
+{
+    
+}
+
+/**
+ * 选择了anItem。按下和放开手指都在anItem的范围内时执行。
+ */
+void 
+MCBattleFieldSceneObjectLayer::controllerDidSelectItem(MCControllerDelegate *aSender, MCItem *anItem)
+{
+    
 }

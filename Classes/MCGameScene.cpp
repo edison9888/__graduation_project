@@ -18,9 +18,5 @@ MCGameScene::installController()
         controller_ = MCControllerLayer::create();
         controller_->setDelegate(objects_);
         addChild(controller_);
-        
-        MCActionMenu *actionMenu = MCActionMenu::create(MCFixedMenu);
-        controller_->setActionMenu(actionMenu);
-        actionMenu->attach(this);
     }
 }

@@ -8,8 +8,6 @@
 
 #include "MCBattleFieldScene.h"
 
-#include "MCActionMenu.h"
-
 void
 MCBattleFieldScene::installController()
 {
@@ -18,12 +16,7 @@ MCBattleFieldScene::installController()
     CCAssert(scenePackageType != MCUnknownPackage, "unknown scene package type!");
     if (MCBattleFieldScenePackage == scenePackageType) {
         controller_ = MCControllerLayer::create();
-        controller_->setObjectDataSource(objects_);
         addChild(controller_);
-        
-        MCActionMenu *actionMenu = MCActionMenu::create(MCFloatMenu);
-        controller_->setActionMenu(actionMenu);
-        actionMenu->attach(this);
     }
 }
 

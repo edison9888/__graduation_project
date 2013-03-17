@@ -16,7 +16,7 @@
 #include "MCTestGameScene.h"
 #include "MCTestViewport.h"
 #include "MCTestOBB.h"
-#include "MCTestActionMenu.h"
+#include "MCTestRoleBaseInfo.h"
 
 const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
@@ -59,8 +59,8 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test Role Manager", MCTestRoleManager::scene},
     {"Test Game Scene", MCTestGameScene::scene},
     {"Test Viewport", MCTestViewport::scene},
-    {"Test Action Menu", MCTestActionMenu::scene},
     {"Test OBB", MCTestOBB::scene},
+    {"Test Role Base Info", MCTestRoleBaseInfo::scene},
     {"Enter the Game", MCTestGame::scene},
     {"Quit", __mc_quit::scene}
 };
