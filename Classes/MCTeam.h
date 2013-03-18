@@ -18,16 +18,17 @@ public:
     
     CREATE_FUNC(MCTeam);
     
-    void selectAll();
-    void unselectAll();
-    void selectRole(MCRole *aRole);
-    void unselectRole(MCRole *aRole);
-    
     MCRoleBaseInfo *infoForRole(MCRole *aRole);
     bool hasRole(MCRole *aRole);
     void addRole(MCRole *aRole);
     void removeRole(MCRole *aRole);
     mc_size_t size();
+    
+    /* 选择控制 */
+    void selectAll();
+    void unselectAll();
+    void selectRole(MCRole *aRole);
+    void unselectRole(MCRole *aRole);
     
     inline bool isMultiSeletionMode() {
         return isMultiSeletionMode_;

@@ -10,6 +10,8 @@
 #include "MCRoleEntity.h"
 #include "MCObjectLayer.h"
 
+#include "MCTeam.h"
+
 bool
 MCControllerLayer::init()
 {
@@ -23,6 +25,23 @@ MCControllerLayer::init()
         joypad_->setJoystick(MCJoystick::create(bg, control));
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
+        
+#warning 木有debug
+        team_ = MCTeam::create();
+        addChild(team_);
+        
+        CCMenu *menu;
+        CCMenuItemLabel *menuItem;
+        CCLabelTTF *label;
+        
+        menu = CCMenu::create();
+        label = CCLabelTTF::create("全选", "Marker Felt", 24);
+        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCControllerLayer::didSelectAll));
+        addChild(menu);
+        CCSize menuSize = menuItem->getContentSize();
+        menu->setPosition(ccp(menuSize.width / 2, menuSize.height / 2));
+        menu->setVisible(false);
+        selectAllMenu_ = menu;
         
         setTouchEnabled(true);
         
@@ -44,9 +63,11 @@ MCControllerLayer::setDelegate(MCControllerDelegate* aDelegate)
     if (aDelegate) {
         joypad_->setVisible(true);
         joypad_->setTouchEnabled(true);
+        selectAllMenu_->setVisible(true);
     } else {
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
+        selectAllMenu_->setVisible(false);
     }
     joypad_->setDelegate(aDelegate);
 }
@@ -73,4 +94,12 @@ void
 MCControllerLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
     CCLayer::ccTouchesCancelled(pTouches, pEvent);
+}
+
+void
+MCControllerLayer::didSelectAll(CCObject *aSender)
+{
+    if (delegate_) {
+        delegate_->controllerDidSelectAll(delegate_, team_);
+    }
 }

@@ -38,7 +38,8 @@ enum {
     MCBlindingState  = MCMakeEnum(3), /* 盲 */
     MCVertigoState   = MCMakeEnum(4), /* 眩晕 */
     MCBurningState   = MCMakeEnum(5), /* 燃烧 */
-    MCSlowState      = MCMakeEnum(6), /* 迟缓 */
+    MCSlowState      = MCMakeEnum(6), /* 诅咒 */
+    MCParalysisState = MCMakeEnum(7)  /* 麻痹 */
 };
 typedef mc_enum_t MCRoleState;
 

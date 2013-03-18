@@ -78,13 +78,24 @@ public:
     /* 坑爹啊！直接moveby居然不行！ */
     void moveBy(CCPoint &aDelta);
     
-    void walkOnScreen(const CCPoint &aDestinationPosition, const CCPoint &offset);
+    void walkOnScreen(const CCPoint &aDestinationLocation, const CCPoint &offset);
     bool isWalking();
     void stopWalking();
+    
+    /**
+     * 使用寻路算法
+     */
+    void findPath(const CCPoint &aDestinationLocation);
+    
+    /**
+     * 寻路结束
+     */
+    void findPathDidFinish(CCObject *obj);
     
     void walkEnded();
     
 protected:
+    
     void actionEnded(CCObject* anObject);
     void stopAllMoveToActions();
     
@@ -96,6 +107,7 @@ protected:
     
 private:
     CCArray *moveToActions_;
+    CCArray *moveToDestinations_; /* 移动目标列表 */
     
     /* 碰撞 */
     CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);    /* OBB */

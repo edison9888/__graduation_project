@@ -28,6 +28,8 @@ public:
     
     float getProjectionRadius(const CCPoint &anAxis) const;
     
+    CCPoint getOrigin() const;
+    
 public:
     CCPoint center;
     CCSize  extents;

@@ -20,7 +20,7 @@
 class MCScene;
 class MCTrigger;
 class MCRoleEntity;
-class MCActionMenu;
+class MCAStar;
 
 class MCSceneContext : public CCObject {
     friend class MCScene;
@@ -54,6 +54,8 @@ public:
     background_(NULL),
     isInternalScene_(false) { }
     
+    ~MCScene();
+    
     /**
      * 从场景包加载场景初始化
      */
@@ -68,6 +70,11 @@ public:
      * 获取地图偏移值
      */
     CCPoint getMapOffset() const;
+    
+    /**
+     * 获取地图
+     */
+    CCTMXTiledMap *getMap() const;
     
     void onEnter();
     void onExit();
@@ -104,7 +111,9 @@ public:
      */
     void goOut();
     
-protected:
+//protected:
+#warning protected is right
+public:
     bool hasEntrance(const char *anEntranceName);
     
     MCControllerLayer *controller_; /* 控制层 */
@@ -118,6 +127,8 @@ protected:
     
     bool isInternalScene_;
     
+    
+    CC_SYNTHESIZE_READONLY(MCAStar *, aStar_, AStar); /* A*算法实现 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, entrances_, Entrances);
     CC_SYNTHESIZE_READONLY(MCSceneContext *, context, Context);
     CC_SYNTHESIZE_READONLY(MCScenePackage *, scenePackage_, ScenePackage);

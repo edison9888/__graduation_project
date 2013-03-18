@@ -7,3 +7,15 @@
 //
 
 #include "MCItem.h"
+
+bool
+MCItem::init()
+{
+    id_ = NULLObjectId;
+    tag_ = CC_INVALID_INDEX;
+    name_ = NULL;
+    description_ = NULL;
+    itemType_ = MCUnknownItem;
+    
+    return true;
+}

@@ -12,6 +12,20 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
+//class MCPositionProtocol {
+//public:
+//    virtual CCPoint *getPosition() const = 0;
+//};
+//
+//class MCPosition : public CCPoint, public MCPositionProtocol {
+//public:
+//    bool init(const CCPoint &aPoint);
+//    
+//    static MCPosition *create(const CCPoint &aPoint);
+//
+//    CCPoint *getPosition() const;
+//};
+
 class MCLine {
 public:
     MCLine() : p1(CCPointZero),

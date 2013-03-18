@@ -11,16 +11,19 @@
 
 #include "MCObject.h"
 
-/* 物品类型 */
-enum {
-    MCNormalItem    = MCMakeEnum(0), /* 普通物品 */
-    MCEquipmentItem = MCMakeEnum(1), /* 装备物品 */
-    MCTaskItem      = MCMakeEnum(2), /* 任务物品 */
-};
 typedef mc_enum_t MCItemType;
 
 class MCItem : public MCObject {
 public:
+    /* 物品类型 */
+    enum {
+        MCUnknownItem   = 0,             /* 未知物品 */
+        MCNormalItem    = MCMakeEnum(0), /* 普通物品 */
+        MCEquipmentItem = MCMakeEnum(1)  /* 装备物品 */
+    };
+    
+    bool init();
+    
     CC_SYNTHESIZE(MCItemType, itemType_, ItemType); /* 物品类型 */
 };
 

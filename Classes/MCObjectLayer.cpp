@@ -612,27 +612,34 @@ MCBattleFieldSceneObjectLayer::controllerDidUnselectRole(MCControllerDelegate *a
 }
 
 /**
- * 切换多选模式。
+ * 选择全部，若已经全部选择，则全部取消选择。
  */
-void 
-MCBattleFieldSceneObjectLayer::controllerDidToggleMultiSelectionMode(MCControllerDelegate *aSender, bool isMultiSelectionMode)
+void
+MCBattleFieldSceneObjectLayer::controllerDidSelectAll(MCControllerDelegate *aSender, MCTeam *aTeam)
 {
     
 }
 
 /**
- * 选择全部，若已经全部选择，则全部取消选择。
+ * 进入多选模式
  */
-void 
-MCBattleFieldSceneObjectLayer::controllerDidSelectAll(MCControllerDelegate *aSender, bool isMultiSelectionMode)
+void
+MCBattleFieldSceneObjectLayer::controllerDidEnterMultiSelectionMode(MCControllerDelegate *aSender)
 {
-    
+}
+
+/**
+ * 退出多选模式
+ */
+void
+MCBattleFieldSceneObjectLayer::controllerDidExitMultiSelectionMode(MCControllerDelegate *aSender)
+{
 }
 
 /**
  * 在选择了人物的情况下，指定移动到某个位置(在地图上的)
  */
-void 
+void
 MCBattleFieldSceneObjectLayer::controllerDidPointTo(MCControllerDelegate *aSender, const CCPoint &locationAtMap)
 {
     

@@ -15,6 +15,7 @@
 USING_NS_CC;
 
 class MCRole;
+class MCTeam;
 class MCItem;
 
 /* 控制器代理 */
@@ -35,14 +36,19 @@ public:
     virtual void controllerDidUnselectRole(MCControllerDelegate *aSender, MCRole *aSelectedRole) {}
     
     /**
-     * 切换多选模式。
-     */
-    virtual void controllerDidToggleMultiSelectionMode(MCControllerDelegate *aSender, bool isMultiSelectionMode) {}
-    
-    /**
      * 选择全部，若已经全部选择，则全部取消选择。
      */
-    virtual void controllerDidSelectAll(MCControllerDelegate *aSender, bool isMultiSelectionMode) {}
+    virtual void controllerDidSelectAll(MCControllerDelegate *aSender, MCTeam *aTeam) {}
+    
+    /**
+     * 进入多选模式
+     */
+    virtual void controllerDidEnterMultiSelectionMode(MCControllerDelegate *aSender) {}
+    
+    /**
+     * 退出多选模式
+     */
+    virtual void controllerDidExitMultiSelectionMode(MCControllerDelegate *aSender) {}
     
     /**
      * 在选择了人物的情况下，指定移动到某个位置(在地图上的)

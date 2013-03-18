@@ -9,6 +9,7 @@
 #include "MCSceneManager.h"
 #include "MCScene.h"
 #include "MCEntrance.h"
+#include "MCAStar.h"
 
 #pragma mark *** MCSceneContextManager ***
 
@@ -55,6 +56,11 @@ MCSceneContextManager::currentContext()
 #pragma mark -
 #pragma mark *** MCScene ***
 
+MCScene::~MCScene()
+{
+    CC_SAFE_RELEASE(aStar_);
+}
+
 /* 从场景包加载场景初始化 */
 bool
 MCScene::initWithScenePackage(MCScenePackage *aPackage)
@@ -70,6 +76,9 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         objects_->setSceneDelegate(this);
         objects_->loadEntrancesFromScenePackage(aPackage);
         addChild(objects_);
+        
+        aStar_ = new MCAStar;
+        aStar_->init(background_->getMap());
         
         installController();
         
@@ -102,6 +111,12 @@ CCPoint
 MCScene::getMapOffset() const
 {
     return background_->getMap()->getPosition();
+}
+
+CCTMXTiledMap *
+MCScene::getMap() const
+{
+    return background_->getMap();
 }
 
 void

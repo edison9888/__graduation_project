@@ -12,7 +12,8 @@
 #include "MCControllerDelegate.h"
 
 #include "MCJoypad.h"
-#include "MCRoleBaseInfo.h"
+
+class MCTeam;
 
 class MCControllerLayer : public CCLayer {
     
@@ -26,9 +27,13 @@ public:
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
+protected:
+    void didSelectAll(CCObject *aSender);
+    
 private:
     MCJoypad *joypad_;
     MCTeam *team_;
+    CCMenu *selectAllMenu_;
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);
 };

@@ -1,0 +1,32 @@
+{
+  "I001": {
+    "name": "",
+    "description": "",
+    "effect": {
+      "hp": "",
+      "pp": "",
+      "positive-state": 0,
+      "negative-state": 0
+    }
+  },
+  "I002": {
+    "name": "",
+    "description": "",
+    "effect": {
+      "hp": "",
+      "pp": "",
+      "positive-state": 0,
+      "negative-state": 0
+    }
+  },
+  "I003": {
+    "name": "",
+    "description": "",
+    "effect": {
+      "hp": "",
+      "pp": "",
+      "positive-state": 0,
+      "negative-state": 0
+    }
+  }
+}

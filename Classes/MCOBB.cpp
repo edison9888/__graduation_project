@@ -114,3 +114,9 @@ MCOBB::getProjectionRadius(const CCPoint &anAxis) const
 {
     return extents.width * fabsf(ccpDot(anAxis, axes[0])) + extents.height * fabsf(ccpDot(anAxis, axes[1]));
 }
+
+CCPoint
+MCOBB::getOrigin() const
+{
+    return ccp(center.x - extents.width, center.y - extents.height);
+}

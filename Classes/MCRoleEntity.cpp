@@ -9,6 +9,7 @@
 #include "MCRoleEntity.h"
 #include "MCMicsUtil.h"
 #include "MCScene.h"
+#include "MCAStar.h"
 
 #define kMCDurationHero  0.025f
 
@@ -59,12 +60,16 @@ MCRoleEntityMetadata::~MCRoleEntityMetadata()
 
 MCRoleEntity::MCRoleEntity()
 {
-    moveToActions_ = new CCArray;
-    moveToActions_->init();
+    moveToActions_ = CCArray::create();
+    moveToActions_->retain();
+    
+    moveToDestinations_ = CCArray::create();
+    moveToDestinations_->retain();
 }
 
 MCRoleEntity::~MCRoleEntity()
 {
+    CC_SAFE_RELEASE(moveToDestinations_);
     CC_SAFE_RELEASE(moveToActions_);
 }
 
@@ -206,7 +211,7 @@ MCRoleEntity::moveBy(CCPoint &aDelta)
 }
 
 void
-MCRoleEntity::walkOnScreen(const CCPoint &aDestinationPosition, const CCPoint &offset)
+MCRoleEntity::walkOnScreen(const CCPoint &aDestinationLocation, const CCPoint &offset)
 {
     CCFiniteTimeAction *action = NULL;
     float angle;
@@ -234,7 +239,7 @@ MCRoleEntity::walkOnScreen(const CCPoint &aDestinationPosition, const CCPoint &o
         }
     }
     
-    action = CCSequence::create(CCMoveBy::create(kMCDurationHero, aDestinationPosition),
+    action = CCSequence::create(CCMoveBy::create(kMCDurationHero, aDestinationLocation),
                                 CCCallFunc::create(this, callfunc_selector(MCRoleEntity::walkEnded)),
                                 NULL);
     moveToActions_->addObject(action);
@@ -299,6 +304,52 @@ MCRoleEntity::actionEnded(CCObject* anObject)
 //    if (moveToAction->isDone()) {
 //        moveToActions_->removeLastObject();
 //    }
+}
+
+/**
+ * 使用寻路算法
+ */
+void
+MCRoleEntity::findPath(const CCPoint &aDestinationLocation)
+{
+    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+    MCAStar *aStar = sceneContext->getScene()->getAStar();
+    CCTime c;
+    struct cc_timeval tp;
+    c.gettimeofdayCocos2d(&tp, NULL);
+    CCLog("start: %ld.%ld",tp.tv_sec,tp.tv_usec);
+    aStar->findPath(getPrototype(), aDestinationLocation);
+}
+
+/**
+ * 寻路结束
+ */
+void
+MCRoleEntity::findPathDidFinish(CCObject *obj)
+{
+    MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
+    CCLog("%s::finished: %p",__FILE__+85,algo);
+    CCArray *route = algo->getRoute();
+    CCPoint *position;
+    CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
+    
+    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithm);
+    CCLog("%s::nodes: %d", __FILE__+85,route->count());
+    CCARRAY_FOREACH(route, obj) {
+        position = (CCPoint *) obj;
+        moveToDestinations_->addObject(position);
+    }
+    CC_SAFE_RELEASE(route);
+    
+#warning goto destination
+    if (moveToDestinations_->count() > 0) {
+        CCPoint *destination = (CCPoint *) moveToDestinations_->lastObject();
+        CCLog("%s::destination is: (%.0f %.0f)", __FILE__+85, destination->x, destination->y);
+        CCARRAY_FOREACH(moveToDestinations_, obj) {
+            destination = (CCPoint *) obj;
+            CCLog("%s::Point(%.0f %.0f)", __FILE__+85, destination->x, destination->y);
+        }
+    }
 }
 
 void
