@@ -7,42 +7,88 @@
 //
 
 #include "MCTask.h"
+#include "MCFlagManager.h"
+#include "MCTaskBonus.h"
+#include "MCTaskTarget.h"
 
-const char *kMCSideQuestName = "支线任务";
-const char *kMCGuildQuestName = "公会任务";
-
-const char *
-nameForMCTaskType(MCTaskCategory aTaskCategory)
+MCTask::MCTask()
 {
-    switch (aTaskCategory) {
-        case MCSideQuest:
-            return kMCSideQuestName;
-        case MCGuildQuest:
-            return kMCGuildQuestName;
-            
-        default:
-            return NULL;
-    }
+    bonus_ = CCArray::create();
+    bonus_->retain();
+}
+
+MCTask::~MCTask()
+{
+    CC_SAFE_RELEASE(bonus_);
 }
 
 void
-MCTask::loadTask(JsonBox::Object &aTask)
+MCTask::loadTaskContent(JsonBox::Object &aTaskContent)
 {
-    JsonBox::Array taskContent;
-    
-    /* task["done"] Number */
-        //load from another file
-//    isDone_ = false;
-    
-    /* task["category"] Number */
-    taskCategory_ = aTask["category"].getInt();
     
     /* task["name"] String */
-    setName(CCString::create(aTask["name"].getString()));
+    setName(CCString::create(aTaskContent["name"].getString()));
     
     /* task["description"] String */
-    setDescription(CCString::create(aTask["description"].getString()));
+    setDescription(CCString::create(aTaskContent["description"].getString()));
     
-    /* task["content"] Array */
-    taskContent = aTask["content"].getArray();
+    /* flag["description"] String */
+    const char *s_f_id = aTaskContent["flag"].getString().c_str();
+    mc_object_id_t f_id = {
+        s_f_id[0],
+        s_f_id[1],
+        s_f_id[2],
+        s_f_id[3]
+    };
+    setFlag(MCFlagManager::sharedFlagManager()->flagForObjectId(f_id));
+    
+    /* task["bonus"] Object */
+    JsonBox::Object objects = aTaskContent["bonus"].getObject();
+    for (JsonBox::Object::iterator iterator = objects.begin(); iterator != objects.end(); ++iterator) {
+        const char *s_b_id = iterator->first.c_str();
+        mc_object_id_t b_id = {
+            s_b_id[0],
+            s_b_id[1],
+            s_b_id[2],
+            s_b_id[3]
+        };
+        MCTaskBonus *bonus = new MCTaskBonus;
+        bonus->autorelease();
+        bonus->objectID = b_id;
+        bonus->count = iterator->second.getInt();
+        bonus_->addObject(bonus);
+    }
+    
+    /* task["context"] Object */objects = aTaskContent["context"].getObject();
+    for (JsonBox::Object::iterator iterator = objects.begin(); iterator != objects.end(); ++iterator) {
+        const char *s_b_id = iterator->first.c_str();
+        mc_object_id_t b_id = {
+            s_b_id[0],
+            s_b_id[1],
+            s_b_id[2],
+            s_b_id[3]
+        };
+        MCTaskTarget *target = new MCTaskTarget;
+        target->autorelease();
+        target->objectID = b_id;
+        target->count = iterator->second.getInt();
+        bonus_->addObject(target);
+    }
+}
+
+MCTaskStatus
+MCTask::getTaskStatus()
+{
+    return taskStatus_;
+}
+
+void
+MCTask::setTaskStatus(MCTaskStatus var)
+{
+    taskStatus_ = var;
+    if (var == MCTaskActiviting) {
+        flag_->setState(MCOnState);
+    } else {
+        flag_->setState(MCOffState);
+    }
 }

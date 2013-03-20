@@ -16,12 +16,25 @@ public:
     MCTaskAccessor();
     ~MCTaskAccessor();
     
+    /**
+     * 从数据包加载任务
+     */
     bool loadTasks(const char *aFilePath);
+    
+    /**
+     * 储存数据
+     */
+    void saveData();
+    
+    /**
+     * 从存档读取数据
+     */
+    void loadData();
     
     MCTask *taskWithObjectId(mc_object_id_t anObjectId);
     
 private:
-    CCDictionary *tasks_;
+    CC_SYNTHESIZE_READONLY(CCDictionary *, tasks_, Tasks);
 };
 
 #endif /* defined(__Military_Confrontation__MCTaskAccessor__) */

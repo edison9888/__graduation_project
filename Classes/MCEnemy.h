@@ -9,10 +9,10 @@
 #ifndef __Military_Confrontation__MCEnemy__
 #define __Military_Confrontation__MCEnemy__
 
-#include "MCRole.h"
+#include "MCNPC.h"
 
 /* 基础怪物 */
-class MCEnemy : public MCRole {
+class MCEnemy : public MCNPC {
 public:
     bool init(MCRoleRace aRoleRace);
     

@@ -12,13 +12,22 @@
 #include "MCItem.h"
 #include "MCEffect.h"
 
+typedef mc_short_t mc_area_t;
+
+class MCItemManager;
+
 class MCEffectiveItem : public MCItem {
+    friend class MCItemManager;
 public:
     bool init();
     
     CREATE_FUNC(MCEffectiveItem);
     
-    MCEffect effect;
+    CCObject *copy();
+    
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCEffect, effect_, Effect);
+    CC_SYNTHESIZE(mc_area_t, area_, Area); /* 效果区域半径 */
+    CC_SYNTHESIZE(CCString *, path_, Path); /* 效果路径 */
 };
 
 #endif /* defined(__Military_Confrontation__MCEffectiveItem__) */

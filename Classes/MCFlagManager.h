@@ -25,16 +25,17 @@ public:
     
     void updateFlag(MCFlag *aFlag);
     
-private:
-    /**
-     * load all flags
-     */
-    void loadAllFlags();
-    
     /**
      * save all flags
      */
     void saveAllFlags();
+    
+private:
+    
+    /**
+     * load all flags
+     */
+    void loadAllFlags();
     
     CCDictionary *sourceFlags_; /* 源文件的标志 */
     CCDictionary *flags_;       /* 存储过的标志 */

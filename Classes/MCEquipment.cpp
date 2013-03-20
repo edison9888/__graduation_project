@@ -7,3 +7,5 @@
 //
 
 #include "MCEquipment.h"
+
+;

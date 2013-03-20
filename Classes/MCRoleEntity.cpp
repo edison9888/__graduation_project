@@ -350,6 +350,7 @@ MCRoleEntity::findPathDidFinish(CCObject *obj)
             CCLog("%s::Point(%.0f %.0f)", __FILE__+85, destination->x, destination->y);
         }
     }
+    runAction(CCMoveTo::create(1, *((CCPoint *)moveToDestinations_->lastObject())));
 }
 
 void

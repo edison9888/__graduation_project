@@ -29,8 +29,6 @@ public:
     
     static MCSceneManager *sharedSceneManager();
     
-    void loadSceneListFile();
-    
     MCScenePackage *packageWithObjectId(mc_object_id_t anObjectId);
     
     /*
@@ -53,6 +51,8 @@ public:
      * 切换当前场景为ID为anObjectId的场景
      */
     void changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+private:
+    void loadSceneListFile();
     
 private:
     CCDictionary *scenes_; /* 以mc_object_id_t为key */

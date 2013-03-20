@@ -74,13 +74,13 @@ public:
     void execute();
     
 protected:
-//    MCAStarItem *minFItemAtOpenList();
     MCAStarNode *minFItemAtList(CCDictionary *aList);
     
     /**
      * 坐标(x,y)是否为障碍 
      */
     bool isBarrier(int x, int y);
+    bool isBarrier(const CCPoint &aPoint);
     
     /**
      * 算法执行过程
@@ -104,12 +104,17 @@ protected:
      */
     void process(CCObject *obj);
     
-private:
+    inline void setMetaLayer(CCTMXLayer *metaLayer) {
+        metaLayer_ = metaLayer;
+    }
     
+private:
     unsigned int *tiles_;
     float layerWidth_;
     MCAStarNode *startPoint_;
     MCAStarNode *endPoint_;
+    
+    CCTMXLayer *metaLayer_;
     
     CC_SYNTHESIZE(CCArray *, route_, Route); /* 寻路结果 */
 };
@@ -132,6 +137,7 @@ protected:
      * 算法结束
      */
     void algorithmDidFinish(CCObject *obj);
+    
     
 private:
     CCArray *algoInstances_; /* 算法实例，算法执行完毕后会自动删除 */

@@ -1,4 +1,12 @@
 {
+  "F00": {
+    "name": "",
+    "description": "test"
+  },
+  "F000": {
+    "name": "test",
+    "description": ""
+  },
   "F001": {
     "name": "重生",
     "description": "从最近重生点复活"

@@ -1,0 +1,26 @@
+{
+  "T000": {
+    "name": "",
+    "description": "",
+    "flag": "F001",
+    "bonus": {
+      "MMMM":0,
+      "I00":0
+    },
+    "context": {
+      "M00":0
+    }
+  },
+  "T001": {
+    "name": "",
+    "description": "",
+    "flag": "F000",
+    "bonus": {
+      "MMMM":0,
+      "I00":0
+    },
+    "context": {
+      "M00":0
+    }
+  }
+}

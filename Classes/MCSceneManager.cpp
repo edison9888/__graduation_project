@@ -60,38 +60,6 @@ MCSceneManager::sharedSceneManager()
     return __shared_scene_list;
 }
 
-void
-MCSceneManager::loadSceneListFile()
-{
-    JsonBox::Value in;
-    JsonBox::Value v;
-    JsonBox::Object o;
-    JsonBox::Object packages;
-    JsonBox::Object::iterator iter;
-    const char *c_str_o_id;
-    MCScenePackage *scenaPackage;
-    
-    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
-    o = in.getObject();
-    
-    packages = o["scenes"].getObject();
-    for (iter = packages.begin(); iter != packages.end(); ++iter) {
-        v = iter->first;
-        c_str_o_id = v.getString().c_str();
-        mc_object_id_t o_id = {
-            c_str_o_id[0],
-            c_str_o_id[1],
-            c_str_o_id[2],
-            c_str_o_id[3]
-        };
-        /* load package */
-        scenaPackage = MCScenePackage::create(iter->second.getString().c_str());
-        scenaPackage->setID(o_id);
-        scenePackages_->setObject(scenaPackage,
-                                  MCObjectIdToDickKey(o_id));
-    }
-}
-
 MCScenePackage *
 MCSceneManager::packageWithObjectId(mc_object_id_t anObjectId)
 {
@@ -172,4 +140,36 @@ MCSceneManager::changeSceneWithObjectId(mc_object_id_t anObjectId, const char *a
 {
     MCScene *newScene = sceneWithObjectId(anObjectId);
     changeScene(newScene, anEntranceName, method);
+}
+
+void
+MCSceneManager::loadSceneListFile()
+{
+    JsonBox::Value in;
+    JsonBox::Value v;
+    JsonBox::Object o;
+    JsonBox::Object packages;
+    JsonBox::Object::iterator iter;
+    const char *c_str_o_id;
+    MCScenePackage *scenaPackage;
+    
+    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
+    o = in.getObject();
+    
+    packages = o["scenes"].getObject();
+    for (iter = packages.begin(); iter != packages.end(); ++iter) {
+        v = iter->first;
+        c_str_o_id = v.getString().c_str();
+        mc_object_id_t o_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        /* load package */
+        scenaPackage = MCScenePackage::create(iter->second.getString().c_str());
+        scenaPackage->setID(o_id);
+        scenePackages_->setObject(scenaPackage,
+                                  MCObjectIdToDickKey(o_id));
+    }
 }

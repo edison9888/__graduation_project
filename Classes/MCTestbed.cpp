@@ -11,7 +11,7 @@
 #include "MCTestController.h"
 #include "MCTestLua.h"
 #include "MCTestGame.h"
-#include "MCTestFlagManager.h"
+#include "MCTestManagers.h"
 #include "MCTestRoleManager.h"
 #include "MCTestGameScene.h"
 #include "MCTestViewport.h"
@@ -57,6 +57,8 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test Controller", MCTestController::scene},
     {"Test Lua", MCTestLua::scene},
     {"Test Flag Manager", MCTestFlagManager::scene},
+    {"Test Task Manager", MCTestTaskManager::scene},
+    {"Test Backpack ", MCTestBackpack::scene},
     {"Test Role Manager", MCTestRoleManager::scene},
     {"Test Game Scene", MCTestGameScene::scene},
     {"Test Viewport", MCTestViewport::scene},

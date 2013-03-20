@@ -22,13 +22,19 @@ class MCDungeonMaster : public CCObject {
 private:
     MCDungeonMaster() { };
     
-    bool _init();
-    
 public:
     static MCDungeonMaster *sharedDungeonMaster();
     
+    void saveSpawnPoint();
+    
+private:
+    
+    void loadSpawnPoint();
+    
 private:
     MCTeam *team_; /* 队伍 */
+
+    CC_SYNTHESIZE(mc_object_id_t, spawnPointID_, SpawnPointID); /* 重生点场景的ID */
 };
 
 #endif /* defined(__Military_Confrontation__MCDungeonMaster__) */

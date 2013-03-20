@@ -9,22 +9,10 @@
 #include "MCEquipmentItem.h"
 
 bool
-MCEquipmentItem::init()
-{
-    if (MCItem::init()) {
-        equipment.type = MCUnknownEquipment;
-        
-        return true;
-    }
-    
-    return false;
-}
-
-bool
 MCEquipmentItem::init(MCEquipmentType aEquipmentType)
 {
     if (MCItem::init()) {
-        equipment.type = aEquipmentType;
+        equipment_.type = aEquipmentType;
         
         return true;
     }
@@ -46,3 +34,21 @@ MCEquipmentItem::create(MCEquipmentType aEquipmentType)
     
     return equipmentItem;
 }
+
+CCObject *
+MCEquipmentItem::copy()
+{
+    MCEquipmentItem *equipmentItem = new MCEquipmentItem;
+    
+    equipmentItem->setID(id_);
+    equipmentItem->setTag(tag_);
+    equipmentItem->setName(name_);
+    equipmentItem->setDescription(description_);
+    equipmentItem->setItemType(itemType_);
+    equipmentItem->setIcon(icon_);
+    equipmentItem->equipment_ = equipment_;
+    equipmentItem->setOre(ore_);
+    
+    return equipmentItem;
+}
+

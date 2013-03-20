@@ -159,6 +159,14 @@ MCAStarAlgorithm::isBarrier(int x, int y)
     return gid != 0;
 }
 
+bool
+MCAStarAlgorithm::isBarrier(const CCPoint &aPoint)
+{
+    int gid = tiles_[(int) (aPoint.x + aPoint.y * layerWidth_)] & kCCFlippedMask;
+    
+    return gid != 0;
+}
+
 //MCAStarItem *
 //MCAStarAlgorithm::minFItemAtOpenList()
 //{
@@ -260,14 +268,16 @@ MCAStarAlgorithm::process(CCObject *obj)
          */
         for (mc_index_t i = 0; i < sizeof(__delta) / sizeof(struct __mc_offset); ++i) {
             /* 先检查关闭列表中有没此位置 */
-            key = MCPositionToDictKey(currentPosition->position_.x + __delta[i].x,
-                                      currentPosition->position_.y + __delta[i].y);
+            CCPoint checkPoint = ccp(currentPosition->position_.x + __delta[i].x,
+                                     currentPosition->position_.y + __delta[i].y);
+#warning 检查越界
+            key = MCPositionToDictKey(checkPoint.x,
+                                      checkPoint.y);
             tempObject = closedList->objectForKey(key);
             
             /* 如果它不可通过或者已经在关闭列表中，略过它。反之如下。 */
             if (tempObject
-                || isBarrier(currentPosition->position_.x + __delta[i].x,
-                             currentPosition->position_.y + __delta[i].y)) {
+                || isBarrier(checkPoint)) {
                 continue;
             }
             
@@ -283,7 +293,6 @@ MCAStarAlgorithm::process(CCObject *obj)
                  */
                 tempNode.position_ = side->position_;
                 tempNode.setParent(currentPosition);
-                tempNode.manhattanMethod(endPoint_);
 //                CCLog("already at open list %d: old: (%.2f %.2f)[%d] - new: (%.2f %.2f)[%d]",
 //                      i + 1,
 //                      side->position_.x,side->position_.y,side->f_,
@@ -300,8 +309,11 @@ MCAStarAlgorithm::process(CCObject *obj)
 //                    side->setG(g);
 //                    side->manhattanMethod(endPoint_);
 //                }
-                openList->removeObjectForKey(key);
-                closedList->setObject(side, key);
+                if (tempNode.g_ < side->g_) {
+                    side->g_ = tempNode.g_;
+                    side->setParent(currentPosition);
+                    side->manhattanMethod(endPoint_);
+                }
             /**
              * 如果它不在开启列表中，把它添加进去。把当前格作为这一格的父节点。记录这一格的F,G,和H值。
              */
@@ -319,6 +331,8 @@ MCAStarAlgorithm::process(CCObject *obj)
                 openList->setObject(side, key);
             }
         }
+        openList->removeObjectForKey(key);
+        closedList->setObject(side, key);
     }
     
     CCLog("end->parent: %p(%u)", endPoint_->parent_, c);
@@ -326,7 +340,8 @@ MCAStarAlgorithm::process(CCObject *obj)
                               endPoint_->position_.y);
     side = (MCAStarNode *) openList->objectForKey(key);
     for (;;) {
-        CCPoint *position = new CCPoint(side->position_.x, side->position_.y);
+        CCPoint positionAtTileCoordinate = metaLayer_->positionAt(side->position_);
+        CCPoint *position = new CCPoint(positionAtTileCoordinate.x, positionAtTileCoordinate.y);
         position->autorelease();
         route_->addObject(position);
         if (side->parent_ == NULL) {
@@ -405,9 +420,9 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
                metaLayer->getLayerSize().width,
                startPoint,
                endPoint);
+    algo->setMetaLayer(metaLayer);
     algoInstances_->addObject(algo);
     CCLog("%s::finished: %d",__FILE__+85,algo->retainCount());
-//    algo->release();
     notificatinCenter->addObserver(this,
                                    callfuncO_selector(MCAStar::algorithmDidFinish),
                                    kMCAStarDidFinishAlgorithm,

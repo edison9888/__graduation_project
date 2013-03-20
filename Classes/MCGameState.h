@@ -15,6 +15,7 @@ USING_NS_CC;
 /**
  * 保存或读取游戏的状态
  * 单例模式
+ * 游戏只会在开始任务前和任务结束的时候，还有退出游戏的时候储存。没有中断游戏的功能！
  */
 class MCGameState {
 private:
@@ -25,24 +26,23 @@ public:
     static MCGameState* sharedGameState();
     
     /**
-     * 保存checkpoint
+     * 保存
+     *
+     * 保存的东西列表
+     * 装备信息
+     * 背包(道具)信息
+     * 佣兵信息 所雇佣的佣兵和佣兵的状态
+     * 标志信息
+     * 任务信息
+     * 技能信息
+     * 重生点 重生点所在场景的ID
      */
-    void saveCheckPoint();
+    void save();
     
     /**
-     * 读取checkpoint
+     * 读取
      */
-    void loadCheckPoint();
-    
-    /**
-     * 中断游戏
-     */
-    void interrupt();
-    
-    /**
-     * 读取中断的游戏
-     */
-    void loadInterruption();
+    void load();
 };
 
 #endif /* defined(__Military_Confrontation__MCGameState__) */

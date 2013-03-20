@@ -14,28 +14,29 @@
 class MCTaskManager {
 private:
     MCTaskManager() :
-    currentTasks_(NULL),
-    unfinishedTasks_(NULL)
-    {};
+    currentTask_(NULL) {};
     
 public:
     ~MCTaskManager();
     
     static MCTaskManager *sharedTaskManager();
     
-    bool loadTasks();
-    
     MCTask *taskWithObjectId(mc_object_id_t anObjectId);
     
     /**
-     * 当前接受的任务列表
+     * 储存数据
      */
-    CCArray *currentTasks();
+    void saveData();
     
     /**
-     * 未完成的任务列表
+     * 从存档读取数据
      */
-    CCArray *unfinishedTasks();
+    void loadData();
+    
+    /**
+     * 任务列表
+     */
+    CCDictionary *tasks();
     
     /**
      * 接受一个任务，成功接受返回true，否则返回false
@@ -47,12 +48,36 @@ public:
      */
     bool acceptTaskWithObjectId(mc_object_id_t anObjectId);
     
-private:
-    MCTaskAccessor *sideQuestAccessor_;         /* 支线任务访问器 */
-    MCTaskAccessor *guileQuestAccessor_;        /* 公会任务访问器 */
+    /**
+     * 放弃一个任务，成功放弃返回true，否则返回false
+     */
+    void abortTask(MCTask *task);
     
-    CCArray *currentTasks_;    /* 当前接受的任务列表 */
-    CCArray *unfinishedTasks_; /* 未完成的任务列表 */
+    /**
+     * 以任务ID放弃一个任务，成功放弃返回true，否则返回false
+     */
+    void abortTaskWithObjectId(mc_object_id_t anObjectId);
+    
+    /**
+     * 完成一个任务，成功完成返回true，否则返回false
+     */
+    void taskDidComplete(MCTask *task);
+    
+    /**
+     * 以任务ID完成一个任务，成功完成返回true，否则返回false
+     */
+    void taskDidCompleteWithObjectId(mc_object_id_t anObjectId);
+    
+private:
+    /**
+     * 从数据包加载任务 
+     */
+    bool loadTasks();
+    
+private:
+    MCTaskAccessor *taskAccessor_;        /* 任务访问器 */
+    
+    MCTask *currentTask_;    /* 当前接受的任务 */
 };
 
 #endif /* defined(__Military_Confrontation__MCTaskManager__) */

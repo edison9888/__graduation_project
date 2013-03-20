@@ -31,10 +31,16 @@ enum {
     MC2D20Dice  = MCMakeDiceType(2, 20), /* 2个20面骰子 */
     
     /* 特殊骰子 */
-    MC3D4Dice   = MCMakeDiceType(2, 4)   /* 3个4面骰子 */
+    MC3D4Dice   = MCMakeDiceType(3, 4)   /* 3个4面骰子 */
 };
 typedef mc_ushort_t MCDiceType;
 typedef mc_ushort_t mc_dice_unit_t;
+
+typedef struct {
+    mc_ushort_t    min;
+    mc_ushort_t    max;
+    mc_dice_unit_t dice;
+} MCDiceRange;
 
 class MCDice : public CCObject {
 public:

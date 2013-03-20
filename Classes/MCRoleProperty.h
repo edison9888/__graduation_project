@@ -32,14 +32,13 @@ typedef mc_enum_t MCRoleRace;
  * 角色状态
  */
 enum {
-    MCNormalState    = MCMakeEnum(0), /* 正常 */
-    MCPoisonedState  = MCMakeEnum(1), /* 中毒 */
-    MCChaosState     = MCMakeEnum(2), /* 混乱 */
-    MCBlindingState  = MCMakeEnum(3), /* 盲 */
-    MCVertigoState   = MCMakeEnum(4), /* 眩晕 */
-    MCBurningState   = MCMakeEnum(5), /* 燃烧 */
-    MCSlowState      = MCMakeEnum(6), /* 诅咒 */
-    MCParalysisState = MCMakeEnum(7)  /* 麻痹 */
+    MCNormalState    = 0,             /* 正常 */ /* 通常状态 */
+    MCSlowState      = MCMakeEnum(0), /* 诅咒 */ /* 移动减少的体力值增加，发动攻击会扣血 */
+    MCParalysisState = MCMakeEnum(1), /* 麻痹 */ /* 不动几秒钟 */
+    MCVertigoState   = MCMakeEnum(1), /* 眩晕 */ /* 不动几秒钟 */
+    MCPoisonedState  = MCMakeEnum(2), /* 中毒 */ /* 持续扣血 */
+    MCBlindingState  = MCMakeEnum(3), /* 盲 */   /* 命中下降 */
+    MCChaosState     = MCMakeEnum(4)  /* 混乱 */ /* 把所有人当做敌人 */
 };
 typedef mc_enum_t MCRoleState;
 

@@ -242,6 +242,12 @@ MCObjectLayer::loadEntrancesFromScenePackage(MCScenePackage *aScenePackage)
     }
 }
 
+void
+MCObjectLayer::controllerDidMove(MCControllerDelegate *aSender, const CCPoint &delta)
+{
+    moveTo(delta);
+}
+
 CCPoint
 MCObjectLayer::viewLocationToTiledMapLocation(const CCPoint &aViewLocation)
 {

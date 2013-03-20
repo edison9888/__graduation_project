@@ -32,6 +32,9 @@ public:
     
     void loadEntrancesFromScenePackage(MCScenePackage *aScenePackage);
     
+    /* joypad */
+    void controllerDidMove(MCControllerDelegate *aSender, const CCPoint &delta);
+    
 protected:
     CCPoint viewLocationToTiledMapLocation(const CCPoint &aViewLocation);
     virtual void moveTo(const CCPoint &delta);

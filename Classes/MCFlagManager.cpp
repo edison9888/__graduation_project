@@ -6,12 +6,41 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
+#include <vector>
+#include <string.h>
+using namespace std;
+
+#include "MCBase64.h"
 #include "JsonBox.h"
 #include "MCFlagManager.h"
 
+const char *kMCFlagsKey = "ZmxhZ3M"; /* flags的BASE64编码没有最后的= */
+
 static MCFlagManager *__shared_flag_manager = NULL;
 
-const char *kMCFlagsFilepath = "flags.fpkg";
+#warning delete .json
+const char *kMCFlagsFilepath = "flags.fpkg.json";
+
+static vector<string>
+split(string& str,const char* c)
+{
+    char *cstr;
+    char *p;
+    string stdString;
+    vector<string> result;
+    
+    cstr = new char[str.size()+1];
+    strcpy(cstr,str.c_str());
+    p = strtok(cstr,c);
+    while (p != NULL) {
+        result.push_back(p);
+        p = strtok(NULL,c);
+    }
+    
+    delete cstr;
+    
+    return result;
+}
 
 MCFlagManager::MCFlagManager()
 {
@@ -79,26 +108,52 @@ MCFlagManager::loadAllFlags()
     JsonBox::Object root;
     JsonBox::Object::iterator flagsIterator;
     JsonBox::Object flagValueRoot;
-    const char *c_sitr_flag_d;
-    mc_object_id_t flagId;
+    const char *c_str_flag_id;
+    mc_object_id_t flag_id;
     MCFlag *flag;
     
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCFlagsFilepath));
     root = v.getObject();
     
     for (flagsIterator = root.begin(); flagsIterator != root.end(); ++flagsIterator) {
-        c_sitr_flag_d = flagsIterator->first.c_str();
+        c_str_flag_id = flagsIterator->first.c_str();
         flagValueRoot = flagsIterator->second.getObject();
-        flagId.class_ = c_sitr_flag_d[0];
-        flagId.sub_class_ = c_sitr_flag_d[1];
-        flagId.index_ = c_sitr_flag_d[2];
-        flagId.sub_index_ = c_sitr_flag_d[3];
+        flag_id.class_ = c_str_flag_id[0];
+        flag_id.sub_class_ = c_str_flag_id[1];
+        flag_id.index_ = c_str_flag_id[2];
+        flag_id.sub_index_ = c_str_flag_id[3];
         
-        flag = MCFlag::create(flagId, flagValueRoot);
-        sourceFlags_->setObject(flag, MCObjectIdToDickKey(flagId));
+        flag = MCFlag::create(flag_id, flagValueRoot);
+        sourceFlags_->setObject(flag, MCObjectIdToDickKey(flag_id));
     }
     
-#warning load flags from CCUserDefault
+    /* 从存档读取数据 */
+    string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCFlagsKey, "");
+    if (data.size() > 0) {
+        const char *input = data.c_str();
+        char  *output;
+        mc_size_t len = strlen(input);
+        MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+        data.assign(output);
+        vector<string> result = split(data, ",");
+        for (vector<string>::iterator iterator = result.begin(); iterator != result.end(); ++iterator) {
+            if (iterator->at(4) != '-') { /* 第4位为separator,若非则为不合法数据 */
+                continue;
+            }
+            mc_object_id_t o_id = {
+                iterator->at(0),
+                iterator->at(1),
+                iterator->at(2),
+                iterator->at(3)
+            };
+            string count = iterator->substr(5);
+            MCFlagState state = atoi(count.c_str()) - 1; /* MCInvalidState为-1。。。储存的时候多加了1。。。 */
+            MCFlag *flag = (MCFlag *) flags_->objectForKey(MCObjectIdToDickKey(o_id));
+            if (flag) {
+                flag->setState(state);
+            }
+        }
+    }
 }
 
 /**
@@ -107,5 +162,33 @@ MCFlagManager::loadAllFlags()
 void
 MCFlagManager::saveAllFlags()
 {
-#warning save to CCUserDefault
+    string data;
+    
+    CCDictElement *elem;
+    MCFlag *flag;
+    mc_byte_t b_o_id[5] = {0};
+    const char *c_s_o_id = (const char *) b_o_id;
+    CCDICT_FOREACH(flags_, elem) {
+        flag = (MCFlag *) elem->getObject();
+        mc_object_id_t o_id = flag->getID();
+        b_o_id[0] = o_id.class_;
+        b_o_id[1] = o_id.sub_class_;
+        b_o_id[2] = o_id.index_;
+        b_o_id[3] = o_id.sub_index_;
+        data.append(c_s_o_id);
+        data.append("-");
+        string status;
+        status.assign(1, flag->getState() + '1'); /* MCInvalidState为-1。。。从1开始吧。。。 */
+        data.append(status);
+        data.append(",");
+    }
+    if (data.size() > 0) {
+        data.erase(data.size() - 1);
+    }
+    const char *input = data.c_str();
+    char  *output;
+    mc_size_t len = strlen(input);
+    MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+    CCUserDefault::sharedUserDefault()->setStringForKey(kMCFlagsKey, output);
+    delete []output;
 }

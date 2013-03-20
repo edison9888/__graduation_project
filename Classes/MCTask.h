@@ -12,29 +12,31 @@
 #include "MCObject.h"
 #include "JsonBox.h"
 
-class MCTaskStatus;
+class MCFlag;
 
-/* 任务类别，对应category字段 */
 enum {
-    MCSideQuest   = 1, /* 支线任务 */
-    MCGuildQuest  = 2  /* 公会任务 */
+    MCTaskUnknownStatus = 0,
+    MCTaskDone          = MCMakeEnum(0),
+    MCTaskActiviting    = MCMakeEnum(1),
+    MCTaskUncompleted   = MCMakeEnum(2)
 };
-typedef mc_enum_t MCTaskCategory;
+typedef mc_enum_t MCTaskStatus;
 
-extern const char *kMCSideQuestName;
-extern const char *kMCGuildQuestName;
-
-const char *nameForMCTaskType(MCTaskCategory aTaskCategory);
+class MCTaskContext;
 
 class MCTask : public MCObject {
     friend class MCTaskAccessor;
 public:
-    void loadTask(JsonBox::Object &aTask);
+    MCTask();
+    ~MCTask();
     
-    CC_SYNTHESIZE_READONLY(MCTaskCategory, taskCategory_, TaskCategory); /* 任务类别 */
+private:
+    void loadTaskContent(JsonBox::Object &aTaskContent);
+    
     CC_SYNTHESIZE_READONLY(CCArray *, bonus_, Bonus);                    /* 任务奖励 */
-    CC_SYNTHESIZE_READONLY(CCArray *, content_, Content);                /* 任务内容 */
-    CC_SYNTHESIZE_READONLY(MCTaskStatus *, status_, Status);             /* 任务状态 */
+    CC_SYNTHESIZE_READONLY(MCTaskContext *, taskContext_, TaskContext);  /* 任务内容 */
+    CC_PROPERTY(MCTaskStatus, taskStatus_, TaskStatus);                  /* 任务状态 */
+    CC_SYNTHESIZE(MCFlag *, flag_, Flag);                                /* 开启标签 */
 };
 
 #endif /* defined(__Military_Confrontation__MCTask__) */
