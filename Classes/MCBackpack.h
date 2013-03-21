@@ -13,76 +13,7 @@
 #include "MCOreManager.h"
 #include "MCEffectiveItem.h"
 #include "MCEquipmentItem.h"
-
-#define kMCNotEnoughMoney -1
-#define kMCHandleSucceed 0
-
-/**
- * 购买接口，返回购买的个数。不够钱购买则返回-1
- */
-#define MCDefineBuyInterface(var, Var) \
-inline mc_ssize_t buy##Var(mc_size_t aValue) { \
-    mc_ssize_t difference = var.count + aValue - kMCItemMax; \
-    MCEffectiveItem *item = (MCEffectiveItem *) var.item; \
-    if (difference > 0) { \
-        var.count -= difference; \
-        aValue -= difference; \
-    } \
-    mc_price_t cost = item->getPrice() * aValue; \
-    if (cost > price_) { \
-        return kMCNotEnoughMoney; \
-    } \
-    price_ -= cost; \
-    return aValue;\
-}
-
-/**
- * 卖出接口，返回卖出的个数。
- */
-#define MCDefineSellInterface(var, Var) \
-inline mc_size_t sell##Var(mc_size_t aValue) { \
-    mc_size_t difference = var.count - aValue; \
-    if (difference < 0) { \
-        var.count += difference; \
-        aValue += difference;\
-    } \
-    return aValue;\
-}
-
-/**
- * 使用接口，返回是否成功使用。
- */
-#define MCDefineUseInterface(var, Var) \
-inline mc_size_t use##Var() { \
-    bool used = false; \
-    if (var.count > 0) { \
-        var.count -= 1; \
-        used = true; \
-    } \
-    return used; \
-}
-
-/**
- * 定义操作接口
- */
-#define MCDefineInterface(var, Var) \
-    MCDefineBuyInterface(var, Var) \
-    MCDefineUseInterface(var, Var) \
-
-#define MCDefineLevelUpInterface(var, Var) \
-inline mc_ssize_t levelUp##Var() { \
-    MCEquipmentItem *item = (MCEquipmentItem *) var.item; \
-    MCOre *currentOre = item->getOre(); \
-    MCOre *nextLevelOre = currentOre->getNextLevel(); \
-    if (nextLevelOre) { \
-        if (nextLevelOre->getPrice() > price_) { \
-            return kMCNotEnoughMoney; \
-        } \
-        price_ -= nextLevelOre->getPrice(); \
-    } \
-    return kMCHandleSucceed; \
-}
-
+#include "MCInterfaceMacros.h"
 
 extern const mc_size_t kMCItemMax;
 
@@ -115,6 +46,23 @@ public:
     MCDefineInterface(fogTrapDamage_, FogTrapDamage);
     MCDefineInterface(flashTrapWide_, FlashTrapWide);
     MCDefineInterface(flashTrapDamage_, FlashTrapDamage);
+    
+    inline mc_ssize_t levelUp(const MCBackpackItem &anItem) {
+        MCEquipmentItem *item = (MCEquipmentItem *) anItem.item;
+        MCOre *currentOre = item->getOre();
+        MCOre *nextLevelOre = currentOre->getNextLevel();
+        
+        if (nextLevelOre) {
+            if (nextLevelOre->getPrice() > money_) {
+                return kMCNotEnoughMoney;
+            }
+            money_ -= nextLevelOre->getPrice();
+            
+            return kMCHandleSucceed;
+        }
+        
+        return kMCFullLevel;
+    }
     
     /* 装备 */
     /* 武器 */
@@ -154,7 +102,7 @@ protected:
     void loadEquipmentItems();
 
 private:
-    CC_SYNTHESIZE(mc_price_t, price_, Price); /* 身上的金钱 */
+    CC_SYNTHESIZE(mc_price_t, money_, Money); /* 身上的金钱 */
     
     /* 道具 */
     /* 数据就按这个顺序储存 */

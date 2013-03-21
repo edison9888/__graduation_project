@@ -13,6 +13,7 @@
 #include "MCRoleEntity.h"
 #include "MCEffect.h"
 #include "MCViewport.h"
+#include "MCAI.h"
 
 /* 基础角色 */
 class MCRole : public MCObject {
@@ -73,6 +74,9 @@ public:
     
     /* 视觉 */
     CC_SYNTHESIZE_READONLY(MCViewport *, viewport_, Viewport);
+    
+    /* AI */
+    CC_SYNTHESIZE_READONLY(MCAI *, ai_, AI);
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

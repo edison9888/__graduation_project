@@ -21,7 +21,7 @@ MCEnemy::create(mc_object_id_t anObjectId)
 {
     MCEnemy *enemy = new MCEnemy;
     
-    if (enemy && enemy->MCRole::init()) {
+    if (enemy && enemy->init(MCTerrestrial)) {
         enemy->setID(anObjectId);
         enemy->autorelease();
         /* 加载enemy数据 */
@@ -49,7 +49,7 @@ MCEnemy::copy()
     enemy->roleState_ = roleState_;
     enemy->face_ = face_;
     enemy->spriteSheet_ = spriteSheet_;
-#warning should design dialogue system
+    enemy->ai_ = ai_;
     
     return enemy;
 }

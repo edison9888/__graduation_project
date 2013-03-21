@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CSV Convertor' target in the 'CSV Convertor' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+#endif

@@ -7,107 +7,45 @@
 //
 
 #include "MCTeam.h"
+#include "MCHero.h"
 
-
-#pragma mark -
 #pragma mark *** MCTeam ***
+
+static MCTeam *__shared_team = NULL;
+
+MCTeam::MCTeam()
+{
+    maxSize_ = 5;
+    teams_ = CCArray::createWithCapacity(maxSize_);
+    teams_->retain();
+}
 
 MCTeam::~MCTeam()
 {
-    CC_SAFE_RELEASE(selecredRoles_);
-    CC_SAFE_RELEASE(group_);
+    CC_SAFE_RELEASE(teams_);
 }
 
-bool
-MCTeam::init()
+MCTeam *
+MCTeam::sharedTeam()
 {
-    if (CCLayer::init()) {
-        group_ = MCRoleBaseInfoGroup::create();
-        group_->retain();
-        selecredRoles_ = CCArray::create();
-        selecredRoles_->retain();
-        isMultiSeletionMode_ = false;
-        return true;
+    if (__shared_team) {
+        __shared_team = new MCTeam;
     }
     
-    return false;
+    return __shared_team;
 }
 
-void
-MCTeam::selectAll()
+CCArray *
+MCTeam::getRoles()
 {
-    CCObject *obj;
-    MCRoleBaseInfo *info;
-    selecredRoles_->removeAllObjects();
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        info->setSelected(true);
-        selecredRoles_->addObject(info->getRole());
-    }
+    return teams_;
 }
 
-void
-MCTeam::unselectAll()
+MCRole *
+MCTeam::roleAtIndex(mc_index_t anIndex)
 {
-    CCObject *obj;
-    MCRoleBaseInfo *info;
-    selecredRoles_->removeAllObjects();
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        info->setSelected(false);
-    }
-}
-
-void
-MCTeam::selectRole(MCRole *aRole)
-{
-    CCObject *obj;
-    MCRoleBaseInfo *info;
-    MCRole *role;
-    mc_object_id_t aRoleId = aRole->getID();
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        role = info->getRole();
-        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId) {
-            info->selected();
-            selecredRoles_->addObject(role);
-            break;
-        }
-    }
-}
-  
-void      
-MCTeam::unselectRole(MCRole *aRole)
-{
-    CCObject *obj;
-    MCRoleBaseInfo *info;
-    MCRole *role;
-    mc_object_id_t aRoleId = aRole->getID();
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        role = info->getRole();
-        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId) {
-            info->unselected();
-            selecredRoles_->removeObject(role);
-            break;
-        }
-    }
-}
-
-MCRoleBaseInfo *
-MCTeam::infoForRole(MCRole *aRole)
-{
-    CCObject *obj;
-    MCRoleBaseInfo *info;
-    MCRole *role;
-    mc_object_id_t aRoleId = aRole->getID();
-    
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        role = info->getRole();
-        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId) {
-            return info;
-        }
+    if (anIndex < teams_->count()) {
+        return (MCRole *) teams_->objectAtIndex(anIndex);
     }
     
     return NULL;
@@ -117,13 +55,11 @@ bool
 MCTeam::hasRole(MCRole *aRole)
 {
     CCObject *obj;
-    MCRoleBaseInfo *info;
     MCRole *role;
     mc_object_id_t aRoleId = aRole->getID();
-    CCARRAY_FOREACH(group_->infoList_, obj) {
-        info = (MCRoleBaseInfo *)obj;
-        role = info->getRole();
-        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId) {
+    CCARRAY_FOREACH(teams_, obj) {
+        role = (MCRole *)obj;
+        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId)) {
             return true;
         }
     }
@@ -135,22 +71,18 @@ void
 MCTeam::addRole(MCRole *aRole)
 {
     if (!hasRole(aRole)) {
-        MCRoleBaseInfo *info = MCRoleBaseInfo::create(aRole);
-        group_->addRoleBaseInfo(info);
+        teams_->addObject(aRole);
     }
 }
 
 void
 MCTeam::removeRole(MCRole *aRole)
 {
-    MCRoleBaseInfo *info = infoForRole(aRole);
-    if (info) {
-        group_->removeRoleBaseInfo(info);
-    }
+    teams_->removeObject(aRole);
 }
 
 mc_size_t
 MCTeam::size()
 {
-    return group_->size();
+    return teams_->count();
 }

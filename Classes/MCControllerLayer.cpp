@@ -10,7 +10,7 @@
 #include "MCRoleEntity.h"
 #include "MCObjectLayer.h"
 
-#include "MCTeam.h"
+#include "MCTeamLayer.h"
 
 bool
 MCControllerLayer::init()
@@ -27,8 +27,8 @@ MCControllerLayer::init()
         joypad_->setTouchEnabled(false);
         
 #warning 木有debug
-        team_ = MCTeam::create();
-        addChild(team_);
+        teamLayer_ = MCTeamLayer::create();
+        addChild(teamLayer_);
         
         CCMenu *menu;
         CCMenuItemLabel *menuItem;
@@ -100,6 +100,6 @@ void
 MCControllerLayer::didSelectAll(CCObject *aSender)
 {
     if (delegate_) {
-        delegate_->controllerDidSelectAll(delegate_, team_);
+        delegate_->controllerDidSelectAll(delegate_, teamLayer_->getTeam());
     }
 }

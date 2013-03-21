@@ -24,6 +24,7 @@ typedef mc_enum_t MCEquipmentType;
 typedef struct {
     mc_dexterity_t price; /* 升级基础价格 */
     mc_dice_unit_t damage; /* 伤害值 */
+    mc_bonus_t damage_bonus; /* 伤害值加成 */
     MCDiceRange critical_hit_visible; /* 可视区域内重击范围 */
     MCDiceRange critical_hit_invisible; /* 非可视区域内重击范围 */
     mc_critical_hit_t critical_hit; /* 重击倍数 */

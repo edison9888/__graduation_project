@@ -45,6 +45,7 @@ MCNPC::copy()
     npc->roleState_ = roleState_;
     npc->face_ = face_;
     npc->spriteSheet_ = spriteSheet_;
+    npc->ai_ = ai_;
 #warning should design dialogue system
     
     return npc;

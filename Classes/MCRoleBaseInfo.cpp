@@ -132,9 +132,20 @@ MCRoleBaseInfo::create(MCRole *aRole)
 
 MCRoleBaseInfoGroup::MCRoleBaseInfoGroup()
 {
+    team_ = MCTeam::sharedTeam();
     infoList_ = CCArray::create();
     infoList_->retain();
-    maxSize_ = 5;
+    
+    CCArray *roles = team_->getRoles();
+    CCObject *obj;
+    MCRole *role;
+    CCARRAY_FOREACH(roles, obj) {
+        role = (MCRole *) obj;
+        MCRoleBaseInfo *info = MCRoleBaseInfo::create(role);
+        addChild(info);
+        infoList_->addObject(info);
+    }
+    align();
 }
 
 MCRoleBaseInfoGroup::~MCRoleBaseInfoGroup()
@@ -145,9 +156,10 @@ MCRoleBaseInfoGroup::~MCRoleBaseInfoGroup()
 void
 MCRoleBaseInfoGroup::addRoleBaseInfo(MCRoleBaseInfo *anInfo)
 {
-    if (infoList_->count() < maxSize_) {
+    if (infoList_->count() < team_->getMaxSize()) {
         addChild(anInfo);
         infoList_->addObject(anInfo);
+        team_->addRole(anInfo->getRole());
         align();
     }
 }
@@ -157,6 +169,7 @@ MCRoleBaseInfoGroup::removeRoleBaseInfo(MCRoleBaseInfo *anInfo)
 {
     infoList_->removeObject(anInfo);
     removeChild(anInfo);
+    team_->removeRole(anInfo->getRole());
 }
 
 mc_size_t

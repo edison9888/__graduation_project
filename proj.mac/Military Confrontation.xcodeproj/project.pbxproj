@@ -34,6 +34,10 @@
 		A301703216EE06E60058B9A3 /* MCObjectLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A301703016EE06E60058B9A3 /* MCObjectLayer.cpp */; };
 		A301703A16EE15900058B9A3 /* MCViewportLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A301703816EE15900058B9A3 /* MCViewportLayer.cpp */; };
 		A301703E16EE15A10058B9A3 /* MCBackgroundLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A301703C16EE15A00058B9A3 /* MCBackgroundLayer.cpp */; };
+		A30A0AC016FABB5500F1F5B9 /* MCAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0ABE16FABB5500F1F5B9 /* MCAI.cpp */; };
+		A30A0AC416FABC3A00F1F5B9 /* MCMercenaryManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC216FABC3A00F1F5B9 /* MCMercenaryManager.cpp */; };
+		A30A0AC916FACE3B00F1F5B9 /* MCTeamLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC716FACE3B00F1F5B9 /* MCTeamLayer.cpp */; };
+		A30A0ACA16FACE3B00F1F5B9 /* MCTeamLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC816FACE3B00F1F5B9 /* MCTeamLayer.h */; };
 		A30DDB0416B664A00001C53F /* MCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0016B664A00001C53F /* MCTask.cpp */; };
 		A30DDB0516B664A00001C53F /* MCTaskManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0216B664A00001C53F /* MCTaskManager.cpp */; };
 		A30DDB0816B664BB0001C53F /* MCDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0616B664BB0001C53F /* MCDialog.cpp */; };
@@ -64,9 +68,7 @@
 		A31CB02616F5EB8400011901 /* MCEquipmentItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31CB02416F5EB8300011901 /* MCEquipmentItem.cpp */; };
 		A31CB02A16F5EC0B00011901 /* MCEquipment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31CB02816F5EC0B00011901 /* MCEquipment.cpp */; };
 		A32A034D16F98ED900000A79 /* MCOreManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A32A034B16F98ED800000A79 /* MCOreManager.cpp */; };
-		A32A034E16F98ED900000A79 /* MCOreManager.h in Sources */ = {isa = PBXBuildFile; fileRef = A32A034C16F98ED900000A79 /* MCOreManager.h */; };
 		A32A035216F98EF200000A79 /* MCOre.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A32A035016F98EF200000A79 /* MCOre.cpp */; };
-		A32A035316F98EF200000A79 /* MCOre.h in Sources */ = {isa = PBXBuildFile; fileRef = A32A035116F98EF200000A79 /* MCOre.h */; };
 		A32CFBFB16E635D70062F47F /* CCLuaEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A32CFBA816E635D60062F47F /* CCLuaEngine.cpp */; };
 		A32CFBFD16E635D70062F47F /* Cocos2dxLuaLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A32CFBAA16E635D60062F47F /* Cocos2dxLuaLoader.cpp */; };
 		A32CFC0116E635D70062F47F /* tolua_fix.c in Sources */ = {isa = PBXBuildFile; fileRef = A32CFBAE16E635D60062F47F /* tolua_fix.c */; };
@@ -202,9 +204,18 @@
 		A3C2C87316F846F600A14FD2 /* MCSkill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87116F846F400A14FD2 /* MCSkill.cpp */; };
 		A3C2C87816F849C200A14FD2 /* MCSkillManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87616F849C200A14FD2 /* MCSkillManager.cpp */; };
 		A3C2C87C16F8515F00A14FD2 /* MCMercenary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */; };
-		A3C2C87D16F8515F00A14FD2 /* MCMercenary.h in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87B16F8515F00A14FD2 /* MCMercenary.h */; };
 		A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */; };
 		A3E8C49F16DCF92700060C94 /* MCBarrier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */; };
+		A3F9EA3F16FB305F00150CFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C8B15BF7793005E6F29 /* Foundation.framework */; };
+		A3F9EA4216FB305F00150CFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4116FB305F00150CFB /* main.m */; };
+		A3F9EA4616FB305F00150CFB /* CSV_Convertor.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = A3F9EA4516FB305F00150CFB /* CSV_Convertor.1 */; };
+		A3F9EA4E16FB30AD00150CFB /* MCCSVConvertor.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */; };
+		A3F9EA5116FB33CD00150CFB /* MCCSVHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */; };
+		A3F9EA5216FB33CD00150CFB /* MCCSVHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */; };
+		A3F9EA5516FB3A0100150CFB /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5316FB3A0100150CFB /* JSONKit.h */; };
+		A3F9EA5616FB3A0100150CFB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5416FB3A0100150CFB /* JSONKit.m */; };
+		A3F9EA5B16FB3CE700150CFB /* MCEnemyHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */; };
+		A3F9EA5C16FB3CE700150CFB /* MCEnemyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */; };
 		A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3FE729B16BCC29300AE9739 /* MCHero.cpp */; };
 /* End PBXBuildFile section */
 
@@ -224,6 +235,19 @@
 			remoteInfo = cocos2dx;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A3F9EA3C16FB305E00150CFB /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				A3F9EA4616FB305F00150CFB /* CSV_Convertor.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1514DA3C163004980095A81C /* ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipad; path = ../Resources/ipad; sourceTree = "<group>"; };
@@ -267,6 +291,13 @@
 		A301703916EE15900058B9A3 /* MCViewportLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCViewportLayer.h; path = ../Classes/MCViewportLayer.h; sourceTree = "<group>"; };
 		A301703C16EE15A00058B9A3 /* MCBackgroundLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBackgroundLayer.cpp; path = ../Classes/MCBackgroundLayer.cpp; sourceTree = "<group>"; };
 		A301703D16EE15A00058B9A3 /* MCBackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBackgroundLayer.h; path = ../Classes/MCBackgroundLayer.h; sourceTree = "<group>"; };
+		A30A0ABE16FABB5500F1F5B9 /* MCAI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCAI.cpp; path = ../Classes/MCAI.cpp; sourceTree = "<group>"; };
+		A30A0ABF16FABB5500F1F5B9 /* MCAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCAI.h; path = ../Classes/MCAI.h; sourceTree = "<group>"; };
+		A30A0AC216FABC3A00F1F5B9 /* MCMercenaryManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMercenaryManager.cpp; path = ../Classes/MCMercenaryManager.cpp; sourceTree = "<group>"; };
+		A30A0AC316FABC3A00F1F5B9 /* MCMercenaryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCMercenaryManager.h; path = ../Classes/MCMercenaryManager.h; sourceTree = "<group>"; };
+		A30A0AC616FAC66B00F1F5B9 /* MCInterfaceMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; name = MCInterfaceMacros.h; path = ../Classes/MCInterfaceMacros.h; sourceTree = "<group>"; };
+		A30A0AC716FACE3B00F1F5B9 /* MCTeamLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTeamLayer.cpp; path = ../Classes/MCTeamLayer.cpp; sourceTree = "<group>"; };
+		A30A0AC816FACE3B00F1F5B9 /* MCTeamLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTeamLayer.h; path = ../Classes/MCTeamLayer.h; sourceTree = "<group>"; };
 		A30DDB0016B664A00001C53F /* MCTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTask.cpp; path = ../Classes/MCTask.cpp; sourceTree = "<group>"; };
 		A30DDB0116B664A00001C53F /* MCTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCTask.h; path = ../Classes/MCTask.h; sourceTree = "<group>"; };
 		A30DDB0216B664A00001C53F /* MCTaskManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTaskManager.cpp; path = ../Classes/MCTaskManager.cpp; sourceTree = "<group>"; };
@@ -612,6 +643,18 @@
 		A3D5AF9516AC3B8B00E74791 /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
 		A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBarrier.cpp; path = ../Classes/MCBarrier.cpp; sourceTree = "<group>"; };
 		A3E8C49E16DCF92700060C94 /* MCBarrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBarrier.h; path = ../Classes/MCBarrier.h; sourceTree = "<group>"; };
+		A3F9EA3E16FB305E00150CFB /* CSV Convertor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSV Convertor"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F9EA4116FB305F00150CFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A3F9EA4416FB305F00150CFB /* CSV Convertor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CSV Convertor-Prefix.pch"; sourceTree = "<group>"; };
+		A3F9EA4516FB305F00150CFB /* CSV_Convertor.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CSV_Convertor.1; sourceTree = "<group>"; };
+		A3F9EA4B16FB30AD00150CFB /* MCCSVConvertor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCCSVConvertor.h; sourceTree = "<group>"; };
+		A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCSVConvertor.m; sourceTree = "<group>"; };
+		A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCCSVHandler.h; sourceTree = "<group>"; };
+		A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCSVHandler.m; sourceTree = "<group>"; };
+		A3F9EA5316FB3A0100150CFB /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = JSONKit.h; sourceTree = "<group>"; };
+		A3F9EA5416FB3A0100150CFB /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCEnemyHandler.h; sourceTree = "<group>"; };
+		A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEnemyHandler.m; sourceTree = "<group>"; };
 		A3FE729B16BCC29300AE9739 /* MCHero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCHero.cpp; path = ../Classes/MCHero.cpp; sourceTree = "<group>"; };
 		A3FE729C16BCC29300AE9739 /* MCHero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHero.h; path = ../Classes/MCHero.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -636,6 +679,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A3F9EA3B16FB305E00150CFB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F9EA3F16FB305F00150CFB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -648,10 +699,12 @@
 				A33BC94A169EA65600196286 /* extensions */,
 				A314558B16B117B900EE6194 /* JSON */,
 				A32CFBA616E635D60062F47F /* lua */,
+				A3F9EA1A16FB2E4300150CFB /* tools */,
 				41CD6C5E15BF7514005E6F29 /* Frameworks */,
 				41CD6C5F15BF7522005E6F29 /* mac */,
 				41EFC1BB15BF7AC30083EA95 /* Products */,
 				41CD6C6115BF7556005E6F29 /* Resources */,
+				A3F9EA3E16FB305E00150CFB /* CSV Convertor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1119,18 +1172,8 @@
 				A37FEDDC16DBAA3D0014885A /* MCRoleEntity.h */,
 				A3A8FAE416EEC858004EE947 /* MCViewport.cpp */,
 				A3A8FAE516EEC858004EE947 /* MCViewport.h */,
-				A312D2C616EF3EBC008AAD4B /* MCRoleManager.cpp */,
-				A312D2C716EF3EBC008AAD4B /* MCRoleManager.h */,
 				A39C946016AEE05000B92E33 /* MCRole.cpp */,
 				A39C946116AEE05000B92E33 /* MCRole.h */,
-				A30DDB0916B664D20001C53F /* MCNPC.cpp */,
-				A30DDB0A16B664D20001C53F /* MCNPC.h */,
-				A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */,
-				A30DDB0D16B664DA0001C53F /* MCEnemy.h */,
-				A3FE729B16BCC29300AE9739 /* MCHero.cpp */,
-				A3FE729C16BCC29300AE9739 /* MCHero.h */,
-				A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */,
-				A3C2C87B16F8515F00A14FD2 /* MCMercenary.h */,
 				A30DDB0F16B664E30001C53F /* MCDialogue.cpp */,
 				A30DDB1016B664E30001C53F /* MCDialogue.h */,
 				A3E814A616B5507500BB70BB /* Objects */,
@@ -1147,6 +1190,8 @@
 				A388EE5D16BD09F800D6124D /* MCFaceBox.h */,
 				A32D040E16F5775F005AFF90 /* MCRoleBaseInfo.cpp */,
 				A32D040F16F5775F005AFF90 /* MCRoleBaseInfo.h */,
+				A30A0AC716FACE3B00F1F5B9 /* MCTeamLayer.cpp */,
+				A30A0AC816FACE3B00F1F5B9 /* MCTeamLayer.h */,
 			);
 			name = UI;
 			sourceTree = "<group>";
@@ -1311,6 +1356,11 @@
 				A301701816ECF6150058B9A3 /* MCFlag.h */,
 				A301701916ECF6150058B9A3 /* MCFlagManager.cpp */,
 				A301701A16ECF6150058B9A3 /* MCFlagManager.h */,
+				A312D2C616EF3EBC008AAD4B /* MCRoleManager.cpp */,
+				A312D2C716EF3EBC008AAD4B /* MCRoleManager.h */,
+				A30A0AC216FABC3A00F1F5B9 /* MCMercenaryManager.cpp */,
+				A30A0AC316FABC3A00F1F5B9 /* MCMercenaryManager.h */,
+				A30A0AC616FAC66B00F1F5B9 /* MCInterfaceMacros.h */,
 				A32A035416F98F8900000A79 /* Equipment */,
 				A32A034F16F98EDF00000A79 /* Ores */,
 				A32A034A16F9795C00000A79 /* Backpack */,
@@ -1327,6 +1377,8 @@
 		A3D0AFFD16ADB56C0014605E /* Battle Subsystem */ = {
 			isa = PBXGroup;
 			children = (
+				A30A0ABE16FABB5500F1F5B9 /* MCAI.cpp */,
+				A30A0ABF16FABB5500F1F5B9 /* MCAI.h */,
 				A39C945716AEE05000B92E33 /* MCBattle.cpp */,
 				A39C945816AEE05000B92E33 /* MCBattle.h */,
 				A39C945B16AEE05000B92E33 /* MCMutiplayerBattleImpl.cpp */,
@@ -1391,6 +1443,14 @@
 		A3E814A616B5507500BB70BB /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				A30DDB0916B664D20001C53F /* MCNPC.cpp */,
+				A30DDB0A16B664D20001C53F /* MCNPC.h */,
+				A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */,
+				A30DDB0D16B664DA0001C53F /* MCEnemy.h */,
+				A3FE729B16BCC29300AE9739 /* MCHero.cpp */,
+				A3FE729C16BCC29300AE9739 /* MCHero.h */,
+				A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */,
+				A3C2C87B16F8515F00A14FD2 /* MCMercenary.h */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -1414,6 +1474,64 @@
 			name = Tasks;
 			sourceTree = "<group>";
 		};
+		A3F9EA1A16FB2E4300150CFB /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA4016FB305F00150CFB /* CSV Convertor */,
+			);
+			name = tools;
+			sourceTree = "<group>";
+		};
+		A3F9EA4016FB305F00150CFB /* CSV Convertor */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA4116FB305F00150CFB /* main.m */,
+				A3F9EA5816FB3CCA00150CFB /* Core */,
+				A3F9EA5D16FB3CEA00150CFB /* Handler */,
+				A3F9EA5716FB3A0700150CFB /* JSONKit */,
+				A3F9EA4316FB305F00150CFB /* Supporting Files */,
+			);
+			path = "CSV Convertor";
+			sourceTree = "<group>";
+		};
+		A3F9EA4316FB305F00150CFB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA4516FB305F00150CFB /* CSV_Convertor.1 */,
+				A3F9EA4416FB305F00150CFB /* CSV Convertor-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A3F9EA5716FB3A0700150CFB /* JSONKit */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA5316FB3A0100150CFB /* JSONKit.h */,
+				A3F9EA5416FB3A0100150CFB /* JSONKit.m */,
+			);
+			name = JSONKit;
+			sourceTree = "<group>";
+		};
+		A3F9EA5816FB3CCA00150CFB /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */,
+				A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */,
+				A3F9EA4B16FB30AD00150CFB /* MCCSVConvertor.h */,
+				A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		A3F9EA5D16FB3CEA00150CFB /* Handler */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */,
+				A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */,
+			);
+			name = Handler;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1434,6 +1552,23 @@
 			productName = Paralaxer;
 			productReference = 41CD6C5115BF748C005E6F29 /* Military Confrontation.app */;
 			productType = "com.apple.product-type.application";
+		};
+		A3F9EA3D16FB305E00150CFB /* CSV Convertor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "CSV Convertor" */;
+			buildPhases = (
+				A3F9EA3A16FB305E00150CFB /* Sources */,
+				A3F9EA3B16FB305E00150CFB /* Frameworks */,
+				A3F9EA3C16FB305E00150CFB /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CSV Convertor";
+			productName = "CSV Convertor";
+			productReference = A3F9EA3E16FB305E00150CFB /* CSV Convertor */;
+			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
 
@@ -1463,6 +1598,7 @@
 			projectRoot = "";
 			targets = (
 				41851B9115B93C32004083E9 /* Military Confrontation */,
+				A3F9EA3D16FB305E00150CFB /* CSV Convertor */,
 			);
 		};
 /* End PBXProject section */
@@ -1674,11 +1810,27 @@
 				A3C2C87316F846F600A14FD2 /* MCSkill.cpp in Sources */,
 				A3C2C87816F849C200A14FD2 /* MCSkillManager.cpp in Sources */,
 				A3C2C87C16F8515F00A14FD2 /* MCMercenary.cpp in Sources */,
-				A3C2C87D16F8515F00A14FD2 /* MCMercenary.h in Sources */,
 				A32A034D16F98ED900000A79 /* MCOreManager.cpp in Sources */,
-				A32A034E16F98ED900000A79 /* MCOreManager.h in Sources */,
 				A32A035216F98EF200000A79 /* MCOre.cpp in Sources */,
-				A32A035316F98EF200000A79 /* MCOre.h in Sources */,
+				A30A0AC016FABB5500F1F5B9 /* MCAI.cpp in Sources */,
+				A30A0AC416FABC3A00F1F5B9 /* MCMercenaryManager.cpp in Sources */,
+				A30A0AC916FACE3B00F1F5B9 /* MCTeamLayer.cpp in Sources */,
+				A30A0ACA16FACE3B00F1F5B9 /* MCTeamLayer.h in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F9EA3A16FB305E00150CFB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F9EA4216FB305F00150CFB /* main.m in Sources */,
+				A3F9EA4E16FB30AD00150CFB /* MCCSVConvertor.m in Sources */,
+				A3F9EA5116FB33CD00150CFB /* MCCSVHandler.h in Sources */,
+				A3F9EA5216FB33CD00150CFB /* MCCSVHandler.m in Sources */,
+				A3F9EA5516FB3A0100150CFB /* JSONKit.h in Sources */,
+				A3F9EA5616FB3A0100150CFB /* JSONKit.m in Sources */,
+				A3F9EA5B16FB3CE700150CFB /* MCEnemyHandler.h in Sources */,
+				A3F9EA5C16FB3CE700150CFB /* MCEnemyHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1852,6 +2004,36 @@
 			};
 			name = Release;
 		};
+		A3F9EA4816FB305F00150CFB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CSV Convertor/CSV Convertor-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A3F9EA4916FB305F00150CFB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CSV Convertor/CSV Convertor-Prefix.pch";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1869,6 +2051,15 @@
 			buildConfigurations = (
 				41851BB115B93C33004083E9 /* Debug */,
 				41851BB215B93C33004083E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "CSV Convertor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3F9EA4816FB305F00150CFB /* Debug */,
+				A3F9EA4916FB305F00150CFB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

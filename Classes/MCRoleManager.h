@@ -30,12 +30,12 @@ public:
     MCNPC *NPCForObjectId(mc_object_id_t anObjectId);
     MCEnemy *enemyForObjectId(mc_object_id_t anObjectId);
     
+private:
     /* metadata */
     MCRole *metaRoleForObjectId(mc_object_id_t anObjectId);
     MCNPC *metaNPCForObjectId(mc_object_id_t anObjectId);
     MCEnemy *metaEnemyForObjectId(mc_object_id_t anObjectId);
     
-protected:
     void loadNPCData();
     void loadMonsterData();
     

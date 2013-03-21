@@ -15,6 +15,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 #include "MCRole.h"
+#include "MCTeam.h"
 
 /**
  * BaseInfo指的是HP和PP值
@@ -53,10 +54,10 @@ private:
     CC_SYNTHESIZE_READONLY(MCRole *, role_, Role);
 };
 
-class MCTeam;
+class MCTeamLayer;
 
 class MCRoleBaseInfoGroup : public CCLayer {
-    friend class MCTeam;
+    friend class MCTeamLayer;
 public:
     MCRoleBaseInfoGroup();
     ~MCRoleBaseInfoGroup();
@@ -70,9 +71,8 @@ public:
 protected:
     void align();
     
-    CC_SYNTHESIZE(mc_size_t, maxSize_, MaxSize);
-    
 private:
+    MCTeam *team_;
     CCArray *infoList_;
 };
 

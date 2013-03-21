@@ -13,7 +13,7 @@
 
 #include "MCJoypad.h"
 
-class MCTeam;
+class MCTeamLayer;
 
 class MCControllerLayer : public CCLayer {
     
@@ -32,7 +32,7 @@ protected:
     
 private:
     MCJoypad *joypad_;
-    MCTeam *team_;
+    MCTeamLayer *teamLayer_;
     CCMenu *selectAllMenu_;
     
     CC_PROPERTY(MCControllerDelegate *, delegate_, Delegate);

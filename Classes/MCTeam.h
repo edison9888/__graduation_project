@@ -9,40 +9,28 @@
 #ifndef __Military_Confrontation__MCTeam__
 #define __Military_Confrontation__MCTeam__
 
-#include "MCRoleBaseInfo.h"
+#include "MCRole.h"
 
-class MCTeam : public CCLayer {
+class MCTeam {
+private:
+    MCTeam();
 public:
     ~MCTeam();
-    bool init();
     
-    CREATE_FUNC(MCTeam);
+    static MCTeam *sharedTeam();
     
-    MCRoleBaseInfo *infoForRole(MCRole *aRole);
+    CCArray *getRoles();
+    MCRole *roleAtIndex(mc_index_t anIndex);
+    
     bool hasRole(MCRole *aRole);
     void addRole(MCRole *aRole);
     void removeRole(MCRole *aRole);
     mc_size_t size();
     
-    /* 选择控制 */
-    void selectAll();
-    void unselectAll();
-    void selectRole(MCRole *aRole);
-    void unselectRole(MCRole *aRole);
-    
-    inline bool isMultiSeletionMode() {
-        return isMultiSeletionMode_;
-    }
-    
-    inline void setMultiSeletionMode(bool var) {
-        isMultiSeletionMode_ = var;
-    }
-    
 private:
-    MCRoleBaseInfoGroup *group_;
-    bool isMultiSeletionMode_;
+    CCArray *teams_;
     
-    CC_SYNTHESIZE_READONLY(CCArray *, selecredRoles_, SelecredRoles);
+    CC_SYNTHESIZE(mc_size_t, maxSize_, MaxSize);
 };
 
 #endif /* defined(__Military_Confrontation__MCTeam__) */

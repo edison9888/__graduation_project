@@ -13,6 +13,7 @@
 #include "MCTaskManager.h"
 #include "MCSkillManager.h"
 #include "MCDungeonMaster.h"
+#include "MCMercenaryManager.h"
 
 static MCGameState *__shared_game_state = NULL;
 
@@ -40,7 +41,7 @@ MCGameState::sharedGameState()
  * 保存
  * 
  * 保存的东西列表
- * 装备信息
+ * 背包(装备)信息
  * 背包(道具)信息
  * 佣兵信息 所雇佣的佣兵和佣兵的状态
  * 标志信息
@@ -51,9 +52,8 @@ MCGameState::sharedGameState()
 void
 MCGameState::save()
 {
-#warning 装备信息
     MCBackpack::sharedBackpack()->saveData();
-#warning 佣兵信息 所雇佣的佣兵和佣兵的状态
+    MCMercenaryManager::sharedMercenaryManager()->saveData();
     MCFlagManager::sharedFlagManager()->saveAllFlags();
     MCTaskManager::sharedTaskManager()->saveData();
     MCSkillManager::sharedSkillManager()->saveData();
@@ -69,9 +69,8 @@ MCGameState::save()
 void
 MCGameState::load()
 {
-#warning 装备信息
     MCBackpack::sharedBackpack();
-#warning 佣兵信息 所雇佣的佣兵和佣兵的状态
+    MCMercenaryManager::sharedMercenaryManager();
     MCFlagManager::sharedFlagManager();
     MCTaskManager::sharedTaskManager();
     MCSkillManager::sharedSkillManager();

@@ -35,7 +35,7 @@ typedef mc_ushort_t mc_enum_t;
 | ((mc_dict_key_t)(o_id).sub_index_) \
 )
 
-#define MCObjectIdIsEqualsTo(o1, o2) (MCObjectIdToDickKey(o1)) == MCObjectIdToDickKey(o2))
+#define MCObjectIdIsEqualsTo(o1, o2) ((MCObjectIdToDickKey(o1)) == MCObjectIdToDickKey(o2))
 
 /*
  * 物件ID结构体

@@ -11,8 +11,13 @@
 
 #include "MCNPC.h"
 
-/* NPC */
+typedef mc_ushort_t mc_cose_t;
+
+class MCMercenaryManager;
+
+/* 佣兵 */
 class MCMercenary : public MCNPC {
+    friend class MCMercenaryManager;
 public:
     ~MCMercenary();
     
@@ -21,6 +26,8 @@ public:
     static MCMercenary *create(mc_object_id_t anObjectId);
     
     CCObject *copy();
+    
+    CC_SYNTHESIZE_READONLY(mc_cose_t, cost_, Cost); /* 雇佣所需费用 */
 };
 
 #endif /* defined(__Military_Confrontation__MCMercenary__) */

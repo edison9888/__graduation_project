@@ -7,7 +7,6 @@
 //
 
 #include <string.h>
-#include <vector>
 #include <sstream>
 using namespace std;
 
@@ -460,6 +459,7 @@ MCBackpack::loadEffectiveItems()
         fogTrapDamage_.count = effectiveItems.at(9).getInt();
         flashTrapWide_.count = effectiveItems.at(10).getInt();
         flashTrapDamage_.count = effectiveItems.at(11).getInt();
+        delete []output;
     }
     
     /* load items */
@@ -505,6 +505,26 @@ MCBackpack::loadEquipmentItems()
     armor_.item = itemManager->equipmentItemForObjectId(itemsOID[kMCArmor]);
     shinGuard_.item = itemManager->equipmentItemForObjectId(itemsOID[kMCShinGuard]);
     
+    dagger_.count = 1;
+    sword_.count = 1;
+    greatsword_.count = 1;
+    scimitar_.count = 1;
+    broadsword_.count = 1;
+    machete_.count = 1;
+    warhammer_.count = 1;
+    heavyDutyHammer_.count = 1;
+    handAxe_.count = 1;
+    warAxe_.count = 1;
+    greataxe_.count = 1;
+    spear_.count = 1;
+    lance_.count = 1;
+    giantSickle_.count = 1;
+    shortbow_.count = 1;
+    longbow_.count = 1;
+    helmet_.count = 1;
+    armor_.count = 1;
+    shinGuard_.count = 1;
+    
     if (data.size() > 0) {
         const char *input = data.c_str();
         char *output;
@@ -534,5 +554,6 @@ MCBackpack::loadEquipmentItems()
             };
             itemManager->equipmentItemForObjectId(o_id)->setOre(oreManager->oreForObjectId(ore_id));
         }
+        delete []output;
     }
 }

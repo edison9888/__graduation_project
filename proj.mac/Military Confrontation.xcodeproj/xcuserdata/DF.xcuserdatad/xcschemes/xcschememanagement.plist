@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>CSV Convertor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Military Confrontation.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>41851B9115B93C32004083E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3F9EA2316FB2F8400150CFB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3F9EA3D16FB305E00150CFB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
