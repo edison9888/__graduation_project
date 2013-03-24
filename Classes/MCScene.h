@@ -112,13 +112,13 @@ public:
     void goOut();
     
 //protected:
-#warning protected is right
+    //warning: protected is right
 public:
     bool hasEntrance(const char *anEntranceName);
     
     MCControllerLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */
-#warning todo：记得删除调试用视角层
+        //warning: todo：记得删除调试用视角层
     MCViewportLayer *viewport_; /* 调试用的视角层 */
     MCBackgroundLayer *background_; /* 背景层 */
     

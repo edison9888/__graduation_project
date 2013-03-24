@@ -1,1 +1,1 @@
-{"H001":{"name":"头盔","icon":"icons/","price":60,"defense":3,"dexterity":2,"armor-check-penalty":-2},"A001":{"name":"铠甲","icon":"icons/","price":100,"defense":5,"dexterity":1,"armor-check-penalty":-4},"B001":{"name":"护胫","icon":"icons/","price":40,"defense":2,"dexterity":3,"armor-check-penalty":-1}}
+{"B001":{"defense":2,"armor-check-penalty":-1,"price":40,"dexterity":3,"name":"护胫","icon":""},"A001":{"defense":5,"armor-check-penalty":-4,"price":100,"dexterity":1,"name":"铠甲","icon":""},"H001":{"defense":3,"armor-check-penalty":-2,"price":60,"dexterity":2,"name":"头盔","icon":""}}

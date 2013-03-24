@@ -25,6 +25,7 @@ public:
 
 class MCBackpack {
 private:
+    MCBackpack();
     
 public:
     static MCBackpack *sharedBackpack();
@@ -62,6 +63,10 @@ public:
         }
         
         return kMCFullLevel;
+    }
+    
+    inline void changeWeapon(const MCBackpackItem &anItem) {
+        currentWeapon_ = (MCEquipmentItem *) anItem.item;
     }
     
     /* 装备 */
@@ -146,6 +151,8 @@ private:
     /* 弓弩类 */
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, shortbow_, Shortbow); /* 短弓 */
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, longbow_, Longbow); /* 长弓 */
+    
+    CC_SYNTHESIZE(MCEquipmentItem *, currentWeapon_, CurrentWeapon); /* 装备的武器 */
     
     /* 防具 */
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, helmet_, Helmet); /* 头盔 */

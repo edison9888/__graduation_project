@@ -46,7 +46,7 @@ MCNPC::copy()
     npc->face_ = face_;
     npc->spriteSheet_ = spriteSheet_;
     npc->ai_ = ai_;
-#warning should design dialogue system
+    //warning: should design dialogue system
     
     return npc;
 }

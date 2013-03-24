@@ -90,7 +90,7 @@ MCRoleEntity::onExit()
 void
 MCRoleEntity::update(float dt)
 {
-#warning search roles
+    //warning: search roles
 //    MCRole *role = role_;
 }
 
@@ -341,7 +341,7 @@ MCRoleEntity::findPathDidFinish(CCObject *obj)
     }
     CC_SAFE_RELEASE(route);
     
-#warning goto destination
+    //warning: goto destination
     if (moveToDestinations_->count() > 0) {
         CCPoint *destination = (CCPoint *) moveToDestinations_->lastObject();
         CCLog("%s::destination is: (%.0f %.0f)", __FILE__+85, destination->x, destination->y);

@@ -270,7 +270,7 @@ MCAStarAlgorithm::process(CCObject *obj)
             /* 先检查关闭列表中有没此位置 */
             CCPoint checkPoint = ccp(currentPosition->position_.x + __delta[i].x,
                                      currentPosition->position_.y + __delta[i].y);
-#warning 检查越界
+    //warning: 检查越界
             key = MCPositionToDictKey(checkPoint.x,
                                       checkPoint.y);
             tempObject = closedList->objectForKey(key);

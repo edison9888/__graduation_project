@@ -77,7 +77,7 @@ private:
 private:
     MCTaskAccessor *taskAccessor_;        /* 任务访问器 */
     
-    MCTask *currentTask_;    /* 当前接受的任务 */
+    CC_SYNTHESIZE_READONLY(MCTask *, currentTask_, CurrentTask); /* 当前接受的任务 */
 };
 
 #endif /* defined(__Military_Confrontation__MCTaskManager__) */

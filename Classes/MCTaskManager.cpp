@@ -8,7 +8,7 @@
 
 #include "MCTaskManager.h"
 
-#warning delete .json
+    //warning: delete .json
 const char *__task_package_file_path = "T000.tpkg.json";
 
 static MCTaskManager *__shared_task_manager = NULL;

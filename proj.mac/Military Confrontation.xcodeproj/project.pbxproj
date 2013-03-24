@@ -36,7 +36,6 @@
 		A30A0AC016FABB5500F1F5B9 /* MCAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0ABE16FABB5500F1F5B9 /* MCAI.cpp */; };
 		A30A0AC416FABC3A00F1F5B9 /* MCMercenaryManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC216FABC3A00F1F5B9 /* MCMercenaryManager.cpp */; };
 		A30A0AC916FACE3B00F1F5B9 /* MCTeamLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC716FACE3B00F1F5B9 /* MCTeamLayer.cpp */; };
-		A30A0ACA16FACE3B00F1F5B9 /* MCTeamLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A30A0AC816FACE3B00F1F5B9 /* MCTeamLayer.h */; };
 		A30DDB0416B664A00001C53F /* MCTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0016B664A00001C53F /* MCTask.cpp */; };
 		A30DDB0516B664A00001C53F /* MCTaskManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0216B664A00001C53F /* MCTaskManager.cpp */; };
 		A30DDB0816B664BB0001C53F /* MCDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A30DDB0616B664BB0001C53F /* MCDialog.cpp */; };
@@ -1831,7 +1830,6 @@
 				A30A0AC016FABB5500F1F5B9 /* MCAI.cpp in Sources */,
 				A30A0AC416FABC3A00F1F5B9 /* MCMercenaryManager.cpp in Sources */,
 				A30A0AC916FACE3B00F1F5B9 /* MCTeamLayer.cpp in Sources */,
-				A30A0ACA16FACE3B00F1F5B9 /* MCTeamLayer.h in Sources */,
 				A31AA3DE16FC12EE0040801F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

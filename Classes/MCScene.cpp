@@ -128,7 +128,7 @@ MCScene::onEnter()
     CCScene::onEnter();
     /* 预加载场景 */
     schedule(schedule_selector(MCScene::update));
-#warning for debug
+    //warning: for debug
     if (viewport_ == NULL) {
         viewport_ = MCViewportLayer::create();
         addChild(viewport_);

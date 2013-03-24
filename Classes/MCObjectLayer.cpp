@@ -74,7 +74,7 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     
     map_ = aMap;
     
-#warning should delete
+    //warning: should delete
     metaLayer_ = map_->layerNamed("meta");
     metaLayer_->setVisible(false);
     
@@ -183,13 +183,13 @@ MCObjectLayer::onEnter()
     
     /* mercenaries */
     mercenaries_->removeAllObjects();
-#warning initialize here?
+    //warning: initialize here?
     
     /* load initialize position */
     CCTMXObjectGroup *objects = map_->objectGroupNamed("objects");
     if (objects) {
         CCDictionary *spawnPoint = objects->objectNamed("spawn-point");
-#warning 搞个入口用着先
+    //warning: 搞个入口用着先
         mc_object_id_t flagId = {
             'F', '0', '0', '1'
         };

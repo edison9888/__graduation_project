@@ -9,8 +9,8 @@
 #ifndef Military_Confrontation_MCType_h
 #define Military_Confrontation_MCType_h
 
-#include <cstdio>
-#include <cstdlib>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef unsigned char mc_byte_t;
 typedef unsigned int mc_uint_t;

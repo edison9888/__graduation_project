@@ -15,7 +15,7 @@
 #import "MCArmorHandler.h"
 #import "MCItemHandler.h"
 
-static NSString *root = @"/Users/DF/Desktop/游戏";
+static NSString *root = @"/Users/DF/Desktop/游戏策划";
 
 int main(int argc, const char * argv[])
 {
@@ -26,45 +26,45 @@ int main(int argc, const char * argv[])
         
         [convertor setCsvDirectory:root];
         
-//        /* 佣兵 */
-//        handler = [[MCMercenaryHandler alloc] init];
-//        handler.startLine = 3;
-//        handler.ignoreLine = 4;
-//        [convertor setHandler:handler];
-//        [convertor convert];
-//        [handler release];
-//
-//        /* 敌人 */
-//        handler = [[MCEnemyHandler alloc] init];
-//        handler.startLine = 3;
-//        handler.ignoreLine = 4;
-//        [convertor setHandler:handler];
-//        [convertor convert];
-//        [handler release];
-//
-//        /* 武器 */
-//        handler = [[MCWeaponHandler alloc] init];
-//        handler.startLine = 3;
-//        handler.ignoreLine = 4;
-//        [convertor setHandler:handler];
-//        [convertor convert];
-//        [handler release];
-//
-//        /* 防具 */
-//        handler = [[MCArmorHandler alloc] init];
-//        handler.startLine = 1;
-//        handler.ignoreLine = 0;
-//        [convertor setHandler:handler];
-//        [convertor convert];
-//        [handler release];
-//
-//        /* 道具 */
-//        handler = [[MCItemHandler alloc] init];
-//        handler.startLine = 3;
-//        handler.ignoreLine = 0;
-//        [convertor setHandler:handler];
-//        [convertor convert];
-//        [handler release];
+        /* 佣兵 */
+        handler = [[MCMercenaryHandler alloc] init];
+        handler.startLine = 3;
+        handler.ignoreLine = 4;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+
+        /* 敌人 */
+        handler = [[MCEnemyHandler alloc] init];
+        handler.startLine = 3;
+        handler.ignoreLine = 4;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+
+        /* 武器 */
+        handler = [[MCWeaponHandler alloc] init];
+        handler.startLine = 3;
+        handler.ignoreLine = 4;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+
+        /* 防具 */
+        handler = [[MCArmorHandler alloc] init];
+        handler.startLine = 1;
+        handler.ignoreLine = 0;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+
+        /* 道具 */
+        handler = [[MCItemHandler alloc] init];
+        handler.startLine = 3;
+        handler.ignoreLine = 0;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
     }
     return 0;
 }

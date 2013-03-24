@@ -58,7 +58,7 @@ protected:
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
     
 //protected:
-#warning debug
+    //warning: debug
 public:
     MCRoleEntity *hero_;
     CCArray *mercenaries_;

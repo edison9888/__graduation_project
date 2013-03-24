@@ -26,7 +26,7 @@ MCControllerLayer::init()
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
         
-#warning 木有debug
+    //warning: 木有debug
 //        teamLayer_ = MCTeamLayer::create();
 //        addChild(teamLayer_);
         

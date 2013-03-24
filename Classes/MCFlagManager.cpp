@@ -18,8 +18,7 @@ const char *kMCFlagsKey = "ZmxhZ3M"; /* flags的BASE64编码没有最后的= */
 
 static MCFlagManager *__shared_flag_manager = NULL;
 
-#warning delete .json
-const char *kMCFlagsFilepath = "flags.fpkg.json";
+const char *kMCFlagsFilepath = "F000.fpkg";
 
 static vector<string>
 split(string& str,const char* c)

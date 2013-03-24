@@ -22,7 +22,7 @@ public:
     
     static MCViewport *create(MCRoleEntity *aRoleEntity);
     
-#warning for debug
+        //warning: debug
     MCViewport *getDebugViewport();
     
     /**
@@ -35,7 +35,7 @@ public:
      */
     bool collideWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
     
-#warning private is right
+        //warning: private is right
 //private:
 public:
     MCRoleEntity *roleEntity_;

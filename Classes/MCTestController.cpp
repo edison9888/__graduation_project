@@ -129,7 +129,7 @@ MCTestController::init()
         label_->setPosition(CCPointMake(20, 20));
         label_->setAnchorPoint(CCPointZero);
     
-#warning debug collision
+    //warning: debug collision
         for (int i=0; i<4; ++i) {
             sp[i]=CCSprite::create("p.png");
             addChild(sp[i]);
@@ -262,7 +262,7 @@ MCTestController::moveTo(const CCPoint &offset)
         deltaForMap.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
     }
     
-#warning debug collision
+    //warning: debug collision
 //    /* 碰撞点debug */
 //    CCPoint p[4];
 //    p[0] = ccpAdd(heroMaybeMoveToPosition, hero_->getAABB().origin);

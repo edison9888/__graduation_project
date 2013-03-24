@@ -16,9 +16,12 @@ using namespace std;
 #include "MCItemManager.h"
 #include "MCEffectiveItem.h"
 
-#warning 木有测试过
+    //warning: 木有测试过
 
 const mc_size_t kMCItemMax = 99;
+const char *kMCMoneyKey = "bW9uZXk"; /* money的BASE64编码没有最后的= */
+const char *kMCCurrentWeaponKey = "Y3VycmVudC13ZWFwb24"; /* current-weapon的BASE64编码没有最后的= */
+const char *kMCBackpackKey = "YmFja3BhY2s"; /* backpack的BASE64编码没有最后的= */
 const char *kMCEffectiveItemsKey = "ZWZmZWN0aXZlLWl0ZW1z"; /* effective-items的BASE64编码 */
 const char *kMCEquipmentItemsKey = "ZXF1aXBtZW50LWl0ZW1z"; /* equipment-items的BASE64编码 */
 
@@ -121,6 +124,12 @@ split(string& str,const char* c)
     return result;
 }
 
+MCBackpack::MCBackpack()
+{
+    money_ = 0;
+    currentWeapon_ = NULL;
+}
+
 MCBackpack *
 MCBackpack::sharedBackpack()
 {
@@ -135,15 +144,99 @@ MCBackpack::sharedBackpack()
 void
 MCBackpack::saveData()
 {
+    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+    
     saveEffectiveItems();
     saveEquipmentItems();
+    
+    JsonBox::Object backpack;
+    
+    /* 储存金钱 */
+    backpack[kMCMoneyKey] = JsonBox::Value(money_);
+    /* 储存当前使用的武器 */
+    char o_id_buffer[5] = {0};
+    char *c_str_o_id = o_id_buffer;
+    mc_object_id_t o_id = currentWeapon_->getID();
+    o_id_buffer[0] = o_id.class_;
+    o_id_buffer[1] = o_id.sub_class_;
+    o_id_buffer[2] = o_id.index_;
+    o_id_buffer[3] = o_id.sub_index_;
+    backpack[kMCCurrentWeaponKey] = JsonBox::Value(c_str_o_id);
+    
+    JsonBox::Value backpackValue(backpack);
+    ostringstream outputStream;
+    backpackValue.writeToStream(outputStream);
+    string data = outputStream.str();
+    const char *input = data.c_str();
+    char  *output;
+    mc_size_t len = strlen(input);
+    MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+    userDefault->setStringForKey(kMCBackpackKey, output);
+    delete []output;
 }
 
 void
 MCBackpack::loadData()
 {
+    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+    
     loadEffectiveItems();
     loadEquipmentItems();
+    
+    string data = userDefault->getStringForKey(kMCBackpackKey, "");
+    if (data.size() > 0) {
+        const char *input = data.c_str();
+        char *output;
+        mc_size_t len = strlen(input);
+        MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+        JsonBox::Value v;
+        v.loadFromString(output);
+        
+        JsonBox::Object backpack;
+        /* 加载金钱 */
+        money_ = backpack[kMCMoneyKey].getInt();
+        /* 加载当前使用的武器 */
+        const char *c_str_o_id = backpack[kMCCurrentWeaponKey].getString().c_str();
+        mc_object_id_t o_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCDagger])) {
+            currentWeapon_ = (MCEquipmentItem *) dagger_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCSword])) {
+            currentWeapon_ = (MCEquipmentItem *) sword_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGreatsword])) {
+            currentWeapon_ = (MCEquipmentItem *) greatsword_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCScimitar])) {
+            currentWeapon_ = (MCEquipmentItem *) scimitar_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCBroadsword])) {
+            currentWeapon_ = (MCEquipmentItem *) broadsword_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCMachete])) {
+            currentWeapon_ = (MCEquipmentItem *) machete_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCWarhammer])) {
+            currentWeapon_ = (MCEquipmentItem *) warhammer_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCHeavyDutyHammer])) {
+            currentWeapon_ = (MCEquipmentItem *) heavyDutyHammer_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCHandAxe])) {
+            currentWeapon_ = (MCEquipmentItem *) handAxe_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCWarAxe])) {
+            currentWeapon_ = (MCEquipmentItem *) warAxe_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGreataxe])) {
+            currentWeapon_ = (MCEquipmentItem *) greataxe_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCSpear])) {
+            currentWeapon_ = (MCEquipmentItem *) spear_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCLance])) {
+            currentWeapon_ = (MCEquipmentItem *) lance_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGiantSickle])) {
+            currentWeapon_ = (MCEquipmentItem *) giantSickle_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCShortbow])) {
+            currentWeapon_ = (MCEquipmentItem *) shortbow_.item;
+        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCLongbow])) {
+            currentWeapon_ = (MCEquipmentItem *) longbow_.item;
+        }
+    }
 }
 
 
