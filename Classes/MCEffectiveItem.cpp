@@ -35,7 +35,7 @@ MCEffectiveItem::copy()
     effectiveItem->setItemType(itemType_);
     effectiveItem->setIcon(icon_);
     effectiveItem->effect_ = effect_;
-    effectiveItem->setArea(area_);
+    effectiveItem->setRadius(radius_);
     effectiveItem->setPath(path_);
     
     return effectiveItem;

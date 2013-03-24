@@ -12,7 +12,7 @@
 #include "MCItem.h"
 #include "MCEffect.h"
 
-typedef mc_short_t mc_area_t;
+typedef mc_short_t mc_radius_t;
 
 class MCItemManager;
 
@@ -26,7 +26,7 @@ public:
     CCObject *copy();
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCEffect, effect_, Effect);
-    CC_SYNTHESIZE(mc_area_t, area_, Area); /* 效果区域半径 */
+    CC_SYNTHESIZE(mc_radius_t, radius_, Radius); /* 效果区域半径 */
     CC_SYNTHESIZE(CCString *, path_, Path); /* 效果路径 */
 };
 

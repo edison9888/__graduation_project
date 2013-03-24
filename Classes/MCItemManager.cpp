@@ -260,14 +260,12 @@ MCItemManager::loadEffectiveItems()
         item->setPath(ccstring);
         ccstring->retain();
         item->setPrice(object["price"].getInt());
-        item->setArea(object["area"].getInt());
+        item->setRadius(object["radius"].getInt());
         item->effect_.hp = object["hp"].getInt();
         item->effect_.pp = object["pp"].getInt();
-        item->effect_.positive_state = object["positive_state"].getInt();
-        item->effect_.negative_state = object["negative_state"].getInt();
-        item->effect_.adjusted_hp = object["adjusted_hp"].getInt();
-        item->effect_.adjusted_pp = object["adjusted_pp"].getInt();
-        item->effect_.lasting_time = object["lasting_time"].getDouble();
+        item->effect_.positive_state = object["positive-state"].getInt();
+        item->effect_.negative_state = object["negative-state"].getInt();
+        item->effect_.lasting_time = object["lasting-time"].getDouble();
         effectiveItems_->setObject(item, MCObjectIdToDickKey(o_id));
     }
 }

@@ -12,7 +12,6 @@
 		1514DA41163004980095A81C /* iphone in Resources */ = {isa = PBXBuildFile; fileRef = 1514DA3E163004980095A81C /* iphone */; };
 		41BC70AD15BF7CCE006A0A6C /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70AC15BF7CCE006A0A6C /* Icon.icns */; };
 		41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6315BF7574005E6F29 /* AppController.mm */; };
-		41CD6C6615BF7574005E6F29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C6415BF7574005E6F29 /* main.m */; };
 		41CD6C6E15BF7673005E6F29 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41CD6C6815BF7673005E6F29 /* InfoPlist.strings */; };
 		41CD6C6F15BF7673005E6F29 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41CD6C6A15BF7673005E6F29 /* MainMenu.xib */; };
 		41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41CD6C7115BF76FB005E6F29 /* AppDelegate.cpp */; };
@@ -61,6 +60,7 @@
 		A31455C416B11A4F00EE6194 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455BC16B11A4F00EE6194 /* Value.cpp */; };
 		A31455D416B12AD600EE6194 /* MCJSONModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455D016B12AD600EE6194 /* MCJSONModifier.cpp */; };
 		A31455D516B12AD600EE6194 /* MCSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455D216B12AD600EE6194 /* MCSceneManager.cpp */; };
+		A31AA3DE16FC12EE0040801F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A31AA3DD16FC12EE0040801F /* main.m */; };
 		A31CB01216F5E58000011901 /* MCPotion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31CB01016F5E58000011901 /* MCPotion.cpp */; };
 		A31CB01616F5E63000011901 /* MCTrap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31CB01416F5E63000011901 /* MCTrap.cpp */; };
 		A31CB01E16F5E6A600011901 /* MCEffectiveItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31CB01C16F5E6A600011901 /* MCEffectiveItem.cpp */; };
@@ -167,6 +167,10 @@
 		A33BCA5F169EA6CE00196286 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCA5E169EA6CE00196286 /* libcurl.dylib */; };
 		A3592B3416B9440900E0AD58 /* MCDetailLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */; };
 		A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */; };
+		A35CB97E16FDE53400A345C6 /* MCMercenaryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */; };
+		A35CB98216FDE5B100A345C6 /* MCItemHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB98016FDE5B100A345C6 /* MCItemHandler.m */; };
+		A35CB98616FDEF2500A345C6 /* MCArmorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB98416FDEF2500A345C6 /* MCArmorHandler.m */; };
+		A35CB98A16FDF17E00A345C6 /* MCWeaponHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB98816FDF17E00A345C6 /* MCWeaponHandler.m */; };
 		A35F21A016E8805500D466B9 /* MCLuaCocos2d.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A35F219F16E8805500D466B9 /* MCLuaCocos2d.cpp */; };
 		A365552716F373C30062DDF8 /* MCBattleFieldScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A365552516F373C30062DDF8 /* MCBattleFieldScene.cpp */; };
 		A365552B16F376B50062DDF8 /* MCScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A365552916F376B40062DDF8 /* MCScene.cpp */; };
@@ -210,11 +214,8 @@
 		A3F9EA4216FB305F00150CFB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4116FB305F00150CFB /* main.m */; };
 		A3F9EA4616FB305F00150CFB /* CSV_Convertor.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = A3F9EA4516FB305F00150CFB /* CSV_Convertor.1 */; };
 		A3F9EA4E16FB30AD00150CFB /* MCCSVConvertor.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */; };
-		A3F9EA5116FB33CD00150CFB /* MCCSVHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */; };
 		A3F9EA5216FB33CD00150CFB /* MCCSVHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */; };
-		A3F9EA5516FB3A0100150CFB /* JSONKit.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5316FB3A0100150CFB /* JSONKit.h */; };
 		A3F9EA5616FB3A0100150CFB /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5416FB3A0100150CFB /* JSONKit.m */; };
-		A3F9EA5B16FB3CE700150CFB /* MCEnemyHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */; };
 		A3F9EA5C16FB3CE700150CFB /* MCEnemyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */; };
 		A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3FE729B16BCC29300AE9739 /* MCHero.cpp */; };
 /* End PBXBuildFile section */
@@ -258,7 +259,6 @@
 		41CD6C5115BF748C005E6F29 /* Military Confrontation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Military Confrontation.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		41CD6C6215BF7574005E6F29 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		41CD6C6315BF7574005E6F29 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
-		41CD6C6415BF7574005E6F29 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		41CD6C6915BF7673005E6F29 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
 		41CD6C6B15BF7673005E6F29 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = MainMenu.xib; sourceTree = "<group>"; };
 		41CD6C6C15BF7673005E6F29 /* Military Confrontation_Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Military Confrontation_Info.plist"; sourceTree = "<group>"; };
@@ -347,6 +347,7 @@
 		A31455D116B12AD600EE6194 /* MCJSONModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJSONModifier.h; path = ../Classes/MCJSONModifier.h; sourceTree = "<group>"; };
 		A31455D216B12AD600EE6194 /* MCSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSceneManager.cpp; path = ../Classes/MCSceneManager.cpp; sourceTree = "<group>"; };
 		A31455D316B12AD600EE6194 /* MCSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSceneManager.h; path = ../Classes/MCSceneManager.h; sourceTree = "<group>"; };
+		A31AA3DD16FC12EE0040801F /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A31CB01016F5E58000011901 /* MCPotion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCPotion.cpp; path = ../Classes/MCPotion.cpp; sourceTree = "<group>"; };
 		A31CB01116F5E58000011901 /* MCPotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCPotion.h; path = ../Classes/MCPotion.h; sourceTree = "<group>"; };
 		A31CB01416F5E63000011901 /* MCTrap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTrap.cpp; path = ../Classes/MCTrap.cpp; sourceTree = "<group>"; };
@@ -561,6 +562,14 @@
 		A3592B3316B9440800E0AD58 /* MCDetailLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailLayer.h; path = ../Classes/MCDetailLayer.h; sourceTree = "<group>"; };
 		A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCStateLayer.cpp; path = ../Classes/MCStateLayer.cpp; sourceTree = "<group>"; };
 		A3592B3616B9442E00E0AD58 /* MCStateLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCStateLayer.h; path = ../Classes/MCStateLayer.h; sourceTree = "<group>"; };
+		A35CB97B16FDE53400A345C6 /* MCMercenaryHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCMercenaryHandler.h; sourceTree = "<group>"; };
+		A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMercenaryHandler.m; sourceTree = "<group>"; };
+		A35CB97F16FDE5B100A345C6 /* MCItemHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCItemHandler.h; sourceTree = "<group>"; };
+		A35CB98016FDE5B100A345C6 /* MCItemHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCItemHandler.m; sourceTree = "<group>"; };
+		A35CB98316FDEF2500A345C6 /* MCArmorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCArmorHandler.h; sourceTree = "<group>"; };
+		A35CB98416FDEF2500A345C6 /* MCArmorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCArmorHandler.m; sourceTree = "<group>"; };
+		A35CB98716FDF17E00A345C6 /* MCWeaponHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCWeaponHandler.h; sourceTree = "<group>"; };
+		A35CB98816FDF17E00A345C6 /* MCWeaponHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCWeaponHandler.m; sourceTree = "<group>"; };
 		A35F219E16E875D500D466B9 /* _T_.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; name = _T_.h; path = ../Classes/_T_.h; sourceTree = "<group>"; };
 		A35F219F16E8805500D466B9 /* MCLuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCLuaCocos2d.cpp; path = ../Classes/MCLuaCocos2d.cpp; sourceTree = "<group>"; };
 		A35F21A216E8808400D466B9 /* MCLuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCLuaCocos2d.h; path = ../Classes/MCLuaCocos2d.h; sourceTree = "<group>"; };
@@ -747,7 +756,7 @@
 			children = (
 				41CD6C6215BF7574005E6F29 /* AppController.h */,
 				41CD6C6315BF7574005E6F29 /* AppController.mm */,
-				41CD6C6415BF7574005E6F29 /* main.m */,
+				A31AA3DD16FC12EE0040801F /* main.m */,
 				41BC70AC15BF7CCE006A0A6C /* Icon.icns */,
 				41CD6C6715BF7673005E6F29 /* en.lproj */,
 				41CD6C6C15BF7673005E6F29 /* Military Confrontation_Info.plist */,
@@ -1526,8 +1535,16 @@
 		A3F9EA5D16FB3CEA00150CFB /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				A35CB97B16FDE53400A345C6 /* MCMercenaryHandler.h */,
+				A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */,
 				A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */,
 				A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */,
+				A35CB98716FDF17E00A345C6 /* MCWeaponHandler.h */,
+				A35CB98816FDF17E00A345C6 /* MCWeaponHandler.m */,
+				A35CB98316FDEF2500A345C6 /* MCArmorHandler.h */,
+				A35CB98416FDEF2500A345C6 /* MCArmorHandler.m */,
+				A35CB97F16FDE5B100A345C6 /* MCItemHandler.h */,
+				A35CB98016FDE5B100A345C6 /* MCItemHandler.m */,
 			);
 			name = Handler;
 			sourceTree = "<group>";
@@ -1635,7 +1652,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				41CD6C6515BF7574005E6F29 /* AppController.mm in Sources */,
-				41CD6C6615BF7574005E6F29 /* main.m in Sources */,
 				41CD6C7515BF76FB005E6F29 /* AppDelegate.cpp in Sources */,
 				A33BC9D4169EA65600196286 /* CDAudioManager.m in Sources */,
 				A33BC9D5169EA65600196286 /* CDOpenALSupport.m in Sources */,
@@ -1816,6 +1832,7 @@
 				A30A0AC416FABC3A00F1F5B9 /* MCMercenaryManager.cpp in Sources */,
 				A30A0AC916FACE3B00F1F5B9 /* MCTeamLayer.cpp in Sources */,
 				A30A0ACA16FACE3B00F1F5B9 /* MCTeamLayer.h in Sources */,
+				A31AA3DE16FC12EE0040801F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1825,12 +1842,13 @@
 			files = (
 				A3F9EA4216FB305F00150CFB /* main.m in Sources */,
 				A3F9EA4E16FB30AD00150CFB /* MCCSVConvertor.m in Sources */,
-				A3F9EA5116FB33CD00150CFB /* MCCSVHandler.h in Sources */,
 				A3F9EA5216FB33CD00150CFB /* MCCSVHandler.m in Sources */,
-				A3F9EA5516FB3A0100150CFB /* JSONKit.h in Sources */,
 				A3F9EA5616FB3A0100150CFB /* JSONKit.m in Sources */,
-				A3F9EA5B16FB3CE700150CFB /* MCEnemyHandler.h in Sources */,
 				A3F9EA5C16FB3CE700150CFB /* MCEnemyHandler.m in Sources */,
+				A35CB97E16FDE53400A345C6 /* MCMercenaryHandler.m in Sources */,
+				A35CB98216FDE5B100A345C6 /* MCItemHandler.m in Sources */,
+				A35CB98616FDEF2500A345C6 /* MCArmorHandler.m in Sources */,
+				A35CB98A16FDF17E00A345C6 /* MCWeaponHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="scene-type" value="field"/>
+  <property name="sound" value="sounds/bg.mp3"/>
+  <property name="tmx" value="maps/cave-1.tmx"/>
+ </properties>
  <tileset firstgid="1" name="underground" tilewidth="16" tileheight="16">
   <image source="underground.png" trans="ffffff" width="256" height="1056"/>
  </tileset>
@@ -22,9 +27,9 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="50" height="50">
-  <object name="village" type="entrance" x="528" y="48" width="64" height="32">
+  <object name="cave-1" type="entrance" x="528" y="48" width="64" height="32">
    <properties>
-    <property name="dest" value="forest-2"/>
+    <property name="dest" value="forest-1-centre"/>
    </properties>
   </object>
  </objectgroup>
@@ -91,10 +96,19 @@
     <property name="barrier-type" value="3"/>
    </properties>
   </object>
+  <object x="448" y="384"/>
  </objectgroup>
  <layer name="meta" width="50" height="50">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAA+3XQQqAIAAFURdepLr/HVuEEJKkEjjaPPjbcDaSIUha3RHHb8/W+53Z2cFiB4sdLHaw/KUj/19IG2WL13KzdZTYwWIHy1sH4b1SuqPuZuioYQcL9Vyt7GCxg8UOFjtY7GCxo016Q9S8JXrYwWIHix0sM3Y83X2rdTj39U56yjFoECcAAA==
   </data>
  </layer>
+ <objectgroup name="objects" width="50" height="50">
+  <object type="object" x="464" y="256">
+   <properties>
+    <property name="ID" value="M101"/>
+    <property name="requirement" value="F001,F002"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

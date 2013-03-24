@@ -147,16 +147,14 @@ MCSceneManager::loadSceneListFile()
 {
     JsonBox::Value in;
     JsonBox::Value v;
-    JsonBox::Object o;
     JsonBox::Object packages;
     JsonBox::Object::iterator iter;
     const char *c_str_o_id;
     MCScenePackage *scenaPackage;
     
     in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
-    o = in.getObject();
+    packages = in.getObject();
     
-    packages = o["scenes"].getObject();
     for (iter = packages.begin(); iter != packages.end(); ++iter) {
         v = iter->first;
         c_str_o_id = v.getString().c_str();

@@ -13,6 +13,9 @@
 @property (nonatomic, assign) NSUInteger startLine;  /* 数据从第几行开始 */
 @property (nonatomic, assign) NSUInteger ignoreLine; /* 忽略最后几行 */
 
++ (NSString *)filename;
++ (NSString *)sourceFilename;
+
 - (void)handleLine:(NSString *)aLine;
 
 - (void)setObject:(NSObject *)anObject forKey:(NSString *)aKey;

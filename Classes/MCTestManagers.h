@@ -65,7 +65,8 @@ class MCTestBackpack : public MCTestLayer {
 public:
     bool init() {
         if (MCTestLayer::initWithColor(ccc4(64, 64, 64, 255))) {
-            MCGameState::sharedGameState()->save();
+//            MCGameState::sharedGameState()->save();
+            
             return true;
         }
         

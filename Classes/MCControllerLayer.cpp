@@ -27,8 +27,8 @@ MCControllerLayer::init()
         joypad_->setTouchEnabled(false);
         
 #warning 木有debug
-        teamLayer_ = MCTeamLayer::create();
-        addChild(teamLayer_);
+//        teamLayer_ = MCTeamLayer::create();
+//        addChild(teamLayer_);
         
         CCMenu *menu;
         CCMenuItemLabel *menuItem;

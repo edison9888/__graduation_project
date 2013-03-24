@@ -10,8 +10,22 @@
 
 @implementation MCEnemyHandler
 
++ (NSString *)filename
+{
+    return @"E400.epkg";
+}
+
++ (NSString *)sourceFilename
+{
+    return @"游戏角色-敌人列表.csv";
+}
+
 - (void)handleLine:(NSString *)aLine
 {
+    if ([aLine rangeOfString:@"E"].location != 0
+        || [aLine rangeOfString:@"00"].location == 2) {
+        return;
+    }
     NSArray *data = [aLine componentsSeparatedByString:@","];
     NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:16];
     id object;
@@ -75,24 +89,26 @@
                                          @"size":@(20)}};
     }
     [content setObject:criticalHitInvisible forKey:@"critical-hit-invisible"];
+    /* critical-hit */
+    [content setObject:@([[data objectAtIndex:13] integerValue]) forKey:@"critical-hit"];
     /* distance */
-    [content setObject:@([[data objectAtIndex:13] integerValue]) forKey:@"distance"];
+    [content setObject:@([[data objectAtIndex:14] integerValue]) forKey:@"distance"];
     /* skills */
-    NSString *skillA = [data objectAtIndex:14];
-    NSString *skillB = [data objectAtIndex:15];
-    NSString *skillC = [data objectAtIndex:16];
-    NSString *skillD = [data objectAtIndex:17];
+    NSString *skillA = [data objectAtIndex:15];
+    NSString *skillB = [data objectAtIndex:16];
+    NSString *skillC = [data objectAtIndex:17];
+    NSString *skillD = [data objectAtIndex:18];
     NSDictionary *skills = @{@"A":[skillA compare:@"-"] == NSOrderedSame ? [NSNull null] : skillA,
                              @"B":[skillB compare:@"-"] == NSOrderedSame ? [NSNull null] : skillB,
                              @"C":[skillC compare:@"-"] == NSOrderedSame ? [NSNull null] : skillC,
                              @"D":[skillD compare:@"-"] == NSOrderedSame ? [NSNull null] : skillD};
     [content setObject:skills forKey:@"skills"];
     /* effect */
-    id effect = [data objectAtIndex:18];
+    id effect = [data objectAtIndex:19];
     if ([(NSString *) effect compare:@"-"] != NSOrderedSame) {
         [content setObject:effect forKey:@"effect"];
         /* effect-check */
-        object = [data objectAtIndex:19];
+        object = [data objectAtIndex:20];
         NSDictionary *effectCheck;
         if ([object rangeOfString:@"-"].length == 0) {
             effectCheck = @{

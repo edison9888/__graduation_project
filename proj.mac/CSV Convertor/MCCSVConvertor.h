@@ -12,12 +12,12 @@
 
 @interface MCCSVConvertor : NSObject
 {
-    NSString *csvFilepath_;
+    NSString *csvDirectory_;
     NSString *outputFilepath_;
     MCCSVHandler *handler_;
 }
 
-@property (nonatomic, copy) NSString *csvFilepath;
+@property (nonatomic, copy) NSString *csvDirectory;
 @property (nonatomic, copy) NSString *outputFilepath;
 @property (nonatomic, retain) MCCSVHandler *handler;
 

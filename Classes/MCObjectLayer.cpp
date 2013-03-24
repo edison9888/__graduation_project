@@ -74,6 +74,7 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     
     map_ = aMap;
     
+#warning should delete
     metaLayer_ = map_->layerNamed("meta");
     metaLayer_->setVisible(false);
     
@@ -199,6 +200,7 @@ MCObjectLayer::onEnter()
                                    spawnPoint->valueForKey("y")->floatValue()));
         }
     }
+    CCPointLog(hero_->getPosition());
 }
 
 void

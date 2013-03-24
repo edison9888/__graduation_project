@@ -34,6 +34,16 @@
     [super dealloc];
 }
 
++ (NSString *)filename
+{
+    return nil;
+}
+
++ (NSString *)sourceFilename
+{
+    return nil;
+}
+
 - (void)handleLine:(NSString *)aLine
 {
 }

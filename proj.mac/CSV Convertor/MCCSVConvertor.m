@@ -10,7 +10,7 @@
 #import "MCCSVHandler.h"
 
 @implementation MCCSVConvertor
-@synthesize csvFilepath=csvFilepath_;
+@synthesize csvDirectory=csvDirectory_;
 @synthesize handler=handler_;
 @synthesize outputFilepath=outputFilepath_;
 
@@ -18,7 +18,7 @@
 {
     self = [super init];
     if (self) {
-        csvFilepath_ = nil;
+        csvDirectory_ = nil;
         handler_ = nil;
         outputFilepath_ = nil;
     }
@@ -28,9 +28,10 @@
 
 - (void)convert
 {
-    assert(csvFilepath_ != nil && handler_ != nil);
+    assert(csvDirectory_ != nil && handler_ != nil);
     
-    NSString *csv = [NSString stringWithContentsOfFile:csvFilepath_
+    NSString *sourceFilepath = [csvDirectory_ stringByAppendingPathComponent:[[handler_ class] sourceFilename]];
+    NSString *csv = [NSString stringWithContentsOfFile:sourceFilepath
                                               encoding:NSUTF8StringEncoding
                                                  error:nil];
     NSArray *csvContent = [csv componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
@@ -41,7 +42,7 @@
     NSUInteger ignore = [handler_ ignoreLine] * 2;
     NSUInteger endIndex = [csvContent count] - ignore;
     
-    for (index = startIndex; index < endIndex; index += 2) {
+    for (index = startIndex; index < endIndex; ++index) {
         currentContent = [csvContent objectAtIndex:index];
         [handler_ handleLine:currentContent];
     }
@@ -49,8 +50,15 @@
     if (outputFilepath_) {
         outputFilepath = outputFilepath_;
     } else {
-        outputFilepath = [NSString stringWithFormat:@"%@.json", csvFilepath_];
+        outputFilepath = [NSString stringWithFormat:@"%@.json", sourceFilepath];
     }
+    
+    NSString *filename = [[handler_ class] filename];
+    if (filename != nil) {
+        outputFilepath = [[outputFilepath stringByDeletingLastPathComponent]
+                            stringByAppendingPathComponent:filename];
+    }
+    
     [handler_ writeTo:outputFilepath];
 }
 

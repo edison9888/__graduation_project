@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="35" height="35" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="scene-type" value="field"/>
+ </properties>
+ <tileset firstgid="1" name="050-DarkSpace01" tilewidth="16" tileheight="16">
+  <image source="050-DarkSpace01.png" width="256" height="640"/>
+ </tileset>
+ <tileset firstgid="641" name="barrier-mask4" tilewidth="16" tileheight="16">
+  <image source="barrier-mask4.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QsQ0AIAwEsYgubAD7D0qWQPrCxel696raUwf8TDfkCR5cuHDhwoVLggcXLly4cOGS4MGFCxcuv/8A81fr3CQTAAA=
+  </data>
+ </layer>
+ <layer name="first" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8XXt28TURzA8bsMLKnUJZW60OtClUAs1H+BsoQkEm0JCZ0lJHQmQlshdYXUPVWILbFjAVtixxSxJHb4nvSzeL68i+/M5Tjpo/d7d773+/l3lnzPMLwfM4gihmmJE0hiDkVmFotmeeSa6bnVuJxrFQHWUkyuMziLc8p4HluxLcBaNpLrEi7jijJexUEcCrCWveS6jTu4q4z3/rGGQQxhGCMe5k/I+xTPlPG5+fezbtdU43GEEMZEhnnIo7Bynz3WnavEBVShOsM86lFM6GLduVpcQx3qM8wTHiWFLtada8B9NKLpP8+9PKPFnnt5Ros9d9vDSpvUd/H7GalrO8W1trl9tN/nZk01TuVQ++QUN9jm9tF+n5s11TiVQ+3TQrE6t48LfdZNbGlFG9rRgU68w3u0OFyfRDO+4Cu+iReIuLjf6Xo3etCLPvTjAz6iy+G69S71CT/wE7/EZ8Rd3O90PZvju60navw7yzWzPUwzvSdqvETz3jBgzP+vHvWplqXkW4blyrgCK7FKU8uYMf//P+JTLavJtwZrlXEd1mODphbrtz5lpL+vx32qZTv5dmIXdijxbuzR1GL91meN9Hd0w6f30CrWqcYR1OCwxBdxVJPD2jfkIR8FKDT927fUsU69uI4buIlbeKvJYe0bSlCKMtPffUsj6zSJB3iIR3iMTk0Oa9+wCZuxxed9SzPrvBSv8BpvpCf9mhzWvmEf9uOAz/uWFtZpFW1oR4f0ZFST4xjnjuMETuIUTvtUSxfrdIse9KJPehIJcJ9mHQPkGxRDGMaI9CQecC1j5BsXIYQxkepJTrC1TJJzSkQRw7T0pCjgWmbIOSsSSGJOelIRcC255MsT+ShAYU7wPbGOYnKWiFKUodyHnvwBIYY5syQTAAA=
+  </data>
+ </layer>
+ <layer name="second" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2UyQkCQRBFa/qmGWgCLgm4ROCCnl0ScEnAJSPXSUCd0HxCDTQeFD1YCPXg0Zei/+8+lIjjvKeAResSSgnL1iWUGtatSygtbFuXUCpYtS6hNLBplN0JIl3sYT/Y/suI/DFOcBps/2VG/hwXuAy2+2VF/ho3uA3/s19uItkVL/iLLvF+GSaSHcjd4w7PeMIjplGfx9wged0vn8nPNHrX8/nJvY7jOI7jOI7zDXe9QR3rJBMAAA==
+  </data>
+ </layer>
+ <layer name="meta" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WQQoAIAgAQenn/Ty6C5WaKOxAp6CWDpXIuzl885G6tOy5Si2edS0jer3MszyhRUeLjhYdLbpqLT/u6qw34LYlAy32fTJbOv1FAABAjAVOHBCjJBMAAA==
+  </data>
+ </layer>
+ <objectgroup name="entrances" width="35" height="35">
+  <object name="dungeon-3-west" type="entrance" x="-16" y="80" width="16" height="160">
+   <properties>
+    <property name="dest" value="dungeon-2-east"/>
+   </properties>
+  </object>
+  <object name="dungeon-3-north" type="entrance" x="224" y="-16" width="112" height="16">
+   <properties>
+    <property name="dest" value="dungeon-0"/>
+   </properties>
+  </object>
+  <object name="dungeon-3-east" type="entrance" x="464" y="144" width="64" height="48">
+   <properties>
+    <property name="dest" value="dungeon-king"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="barriers" width="35" height="35">
+  <object type="barrier" x="0" y="240" width="208" height="16"/>
+  <object type="barrier" x="0" y="64" width="208" height="16"/>
+  <object type="barrier" x="352" y="240" width="208" height="16"/>
+  <object type="barrier" x="320" y="64" width="240" height="16"/>
+  <object type="barrier" x="208" y="0" width="16" height="80"/>
+  <object type="barrier" x="192" y="256" width="16" height="80"/>
+  <object type="barrier" x="208" y="320" width="128" height="16"/>
+  <object type="barrier" x="336" y="240" width="16" height="96"/>
+  <object type="barrier" x="320" y="32" width="16" height="32"/>
+  <object type="barrier" x="336" y="0" width="16" height="48"/>
+  <object type="barrier" x="544" y="80" width="16" height="160"/>
+  <object type="barrier" x="208" y="-16" width="160" height="16"/>
+  <object type="barrier" x="-16" y="64" width="16" height="192"/>
+ </objectgroup>
+ <objectgroup name="semi-transparents" width="35" height="35"/>
+</map>
