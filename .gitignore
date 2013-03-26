@@ -10,8 +10,7 @@ proj.win32/ipch/*
 
 proj.android/assets/*
 
-proj.linux/Military_Confrontation-build-desktop-Qt_4_8_1_in_PATH__System____/*
-proj.linux/Military_Confrontation/main.cpp
+proj.linux/*
 
 *.DS_Store
 
