@@ -201,6 +201,20 @@ MCBackpack::sharedBackpack()
     return __shared_backpack;
 }
 
+/**
+ * 返回是否花费成功
+ */
+bool
+MCBackpack::spend(mc_price_t money)
+{
+    if (money_ >= money) {
+        money_ -= money;
+        return true;
+    }
+    
+    return false;
+}
+
 void
 MCBackpack::saveData()
 {

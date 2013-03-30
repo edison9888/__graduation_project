@@ -17,18 +17,17 @@ public:
     
     CREATE_FUNC(MCStateLayer);
     
+protected:
+    void loadData();
+    
 private:
     CCLabelTTF *hp_;
     CCLabelTTF *pp_;
     CCLabelTTF *state_;
     
-    CCLabelTTF *strength_;
-    CCLabelTTF *agile_;
-    CCLabelTTF *stamina_;
     CCLabelTTF *damage_;
     CCLabelTTF *ac_;
     
-    CCLabelTTF *load_;
     CCLabelTTF *money_;
     
     CCLabelTTF *name_;

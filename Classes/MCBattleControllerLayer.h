@@ -10,10 +10,11 @@
 #define __Military_Confrontation__MCBattleControllerLayer__
 
 #include "MCControllerDelegate.h"
+#include "MCControllerLayer.h"
 
 class MCBattleController;
 
-class MCBattleControllerLayer : public CCLayer {
+class MCBattleControllerLayer : public MCControllerLayer {
     
 public:
     MCBattleControllerLayer();
@@ -22,6 +23,9 @@ public:
     bool init();
     
     CREATE_FUNC(MCBattleControllerLayer);
+    
+    bool isEnable();
+    void setEnable(bool var);
     
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);

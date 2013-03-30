@@ -18,6 +18,9 @@ public:
     virtual void hide();
     
     void onEnter();
+    
+protected:
+    virtual void loadData() {}
 };
 
 #endif /* defined(__Military_Confrontation__MCDetailLayer__) */

@@ -51,6 +51,19 @@ MCBattleControllerLayer::setDelegate(MCBattleControllerDelegate* aDelegate)
     controller_->setDelegate(aDelegate);
 }
 
+bool
+MCBattleControllerLayer::isEnable()
+{
+    return controller_->isTouchEnabled();
+}
+
+void
+MCBattleControllerLayer::setEnable(bool var)
+{
+    controller_->setVisible(var);
+    controller_->setTouchEnabled(var);
+}
+
 void
 MCBattleControllerLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {

@@ -15,11 +15,13 @@
 #include "MCBackgroundLayer.h"
 
 #include "MCViewportLayer.h"
+#include "MCControllerLayer.h"
 
 class MCScene;
 class MCTrigger;
 class MCRoleEntity;
 class MCAStar;
+class MCDetail;
 
 class MCSceneContext : public CCObject {
     friend class MCScene;
@@ -45,6 +47,7 @@ private:
 
 class MCScene : public CCScene, public MCSceneDelegate {
     friend class MCSceneManager;
+    friend class MCSceneController;
 public:
     MCScene()
     : controller_(NULL),
@@ -110,12 +113,13 @@ public:
      */
     void goOut();
     
-//protected:
-    //warning: protected is right
-public:
+protected:
     bool hasEntrance(const char *anEntranceName);
     
-    CCLayer *controller_; /* 控制层 */
+    void showDetail();
+    void detailDidHide();
+    
+    MCControllerLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */
         //warning: todo：记得删除调试用视角层
     MCViewportLayer *viewport_; /* 调试用的视角层 */
@@ -126,6 +130,7 @@ public:
     
     bool isInternalScene_;
     
+    MCDetail *detail_; /* 状态界面 */
     
     CC_SYNTHESIZE_READONLY(MCAStar *, aStar_, AStar); /* A*算法实现 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, entrances_, Entrances);

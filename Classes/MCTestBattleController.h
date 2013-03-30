@@ -46,7 +46,7 @@ public:
         
         m_id.sub_class_ = '0';
         m_id.index_ = '0';
-        m_id.sub_index_ = '1';
+        m_id.sub_index_ = '2';
         CCScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
 
         scene->init();

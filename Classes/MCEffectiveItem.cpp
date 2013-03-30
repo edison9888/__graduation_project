@@ -37,7 +37,10 @@ MCEffectiveItem::copy()
     effectiveItem->tag_ = tag_;
     effectiveItem->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
     effectiveItem->name_->retain();
-    effectiveItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+    if (description_ != NULL) {
+        effectiveItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+        effectiveItem->description_->retain();
+    }
     effectiveItem->description_->retain();
     effectiveItem->itemType_ = itemType_;
     effectiveItem->icon_ = icon_;

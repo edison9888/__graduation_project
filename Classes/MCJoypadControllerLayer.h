@@ -6,19 +6,23 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
-#ifndef __Military_Confrontation__MCControllerLayer__
-#define __Military_Confrontation__MCControllerLayer__
+#ifndef __Military_Confrontation__MCJoypadControllerLayer__
+#define __Military_Confrontation__MCJoypadControllerLayer__
 
 #include "MCControllerDelegate.h"
+#include "MCControllerLayer.h"
 
 #include "MCJoypad.h"
 
-class MCJoypadControllerLayer : public CCLayer {
+class MCJoypadControllerLayer : public MCControllerLayer {
     
 public:
     bool init();
     
     CREATE_FUNC(MCJoypadControllerLayer);
+    
+    bool isEnable();
+    void setEnable(bool var);
     
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
@@ -34,4 +38,4 @@ private:
     CC_PROPERTY(MCJoypadControllerDelegate *, delegate_, Delegate);
 };
 
-#endif /* defined(__Military_Confrontation__MCControllerLayer__) */
+#endif /* defined(__Military_Confrontation__MCJoypadControllerLayer__) */

@@ -102,6 +102,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCRoleEntity.cpp \
 					../../Classes/MCRoleManager.cpp \
 					../../Classes/MCScene.cpp \
+					../../Classes/MCSceneController.cpp \
 					../../Classes/MCSceneManager.cpp \
 					../../Classes/MCScenePackage.cpp \
 					../../Classes/MCScript.cpp \

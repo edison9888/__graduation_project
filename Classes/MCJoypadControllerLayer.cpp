@@ -53,6 +53,19 @@ MCJoypadControllerLayer::setDelegate(MCJoypadControllerDelegate* aDelegate)
     joypad_->setDelegate(aDelegate);
 }
 
+bool
+MCJoypadControllerLayer::isEnable()
+{
+    return joypad_->isTouchEnabled();
+}
+
+void
+MCJoypadControllerLayer::setEnable(bool var)
+{
+    joypad_->setVisible(var);
+    joypad_->setTouchEnabled(var);
+}
+
 void
 MCJoypadControllerLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
 {

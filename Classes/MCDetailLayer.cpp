@@ -8,6 +8,8 @@
 #include "AppMacros.h"
 #include "MCDetailLayer.h"
 
+static const float kMCActionDuration = 0.1f;
+
 void
 MCDetailLayer::onEnter()
 {
@@ -21,12 +23,13 @@ void
 MCDetailLayer::show()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
-    runAction(CCMoveTo::create(0.1, CCPointZero));
+    loadData();
+    runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }
 
 void
 MCDetailLayer::hide()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
-    runAction(CCMoveTo::create(0.1, ccp(winSize.width, 0)));
+    runAction(CCMoveTo::create(kMCActionDuration, ccp(winSize.width, 0)));
 }

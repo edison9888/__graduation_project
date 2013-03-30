@@ -67,7 +67,10 @@ public:
     ~MCBackpack();
     static MCBackpack *sharedBackpack();
     
-    void saveData();
+    /**
+     * 返回是否花费成功
+     */
+    bool spend(mc_price_t money);
     
     /* 道具 */
     /* 药品 */
@@ -130,6 +133,8 @@ public:
     MCDefineLevelUpInterface(helmet_, Helmet); /* 头盔 */
     MCDefineLevelUpInterface(armor_, Armor); /* 铠甲 */
     MCDefineLevelUpInterface(shinGuard_, ShinGuard); /* 护胫 */
+    
+    void saveData();
     
 protected:
     void loadData();

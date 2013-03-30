@@ -198,19 +198,17 @@ MCMercenaryManager::hire(mc_object_id_t anObjectId)
 {
     MCBackpack *backpack = MCBackpack::sharedBackpack();
     MCMercenary *mercenary = mercenaryForObjectId(anObjectId);
-
-    if (mercenary->cost_ > backpack->getMoney()) {
-        return kMCNotEnoughMoney;
-    }
     
-    if (hired_->hasRole(mercenary)) {
-        return kMCHired;
-    }
+    
     if (hired_->isFull()) {
         return kMCFullTeam;
     }
     
-    hired_->addRole(mercenary);
+    if (backpack->spend(mercenary->cost_)) {
+        hired_->addRole(mercenary);
+    } else {
+        return kMCNotEnoughMoney;
+    }
 
     return kMCHandleSucceed;
 }

@@ -6,12 +6,18 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
+#include "AppMacros.h"
 #include "MCSceneController.h"
 #include "MCScene.h"
+#include "MCControllerLayer.h"
+#include "MCDetail.h"
 #include "MCEntrance.h"
 #include "MCAStar.h"
 
 #pragma mark *** MCSceneContextManager ***
+
+const char *kMCDetailButtonPressedFilepath = "UI/d_details_pressed.png";
+const char *kMCDetailButtonFilepath = "UI/d_details.png";
 
 static MCSceneContextManager *__shared_scene_context_manager = NULL;
 
@@ -84,6 +90,27 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         
         /* entrances */
         entrances_ = aPackage->getScenes();
+        
+        /* detail menu */
+        CCMenu *detailMenu = CCMenu::create();
+        addChild(detailMenu);
+        CCSize winSize = CCDirectorGetWindowsSize();
+        CCMenuItemImage *detailMenuItem = CCMenuItemImage::create(kMCDetailButtonFilepath,
+                                                                  kMCDetailButtonPressedFilepath);
+        detailMenuItem->setTarget(this, menu_selector(MCScene::showDetail));
+        detailMenu->addChild(detailMenuItem);
+        detailMenu->alignItemsHorizontally();
+        CCSize buttonSize = detailMenuItem->getContentSize();
+        detailMenu->setPosition(ccp(winSize.width - buttonSize.width,
+                                    winSize.height - buttonSize.height));
+        
+        detail_ = MCDetail::create();
+        detail_->initPosition();
+        addChild(detail_);
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                      callfuncO_selector(MCScene::detailDidHide),
+                                                                      kMCDetailDidHideNotification,
+                                                                      NULL);
         
         return true;
     }
@@ -210,4 +237,17 @@ bool
 MCScene::hasEntrance(const char *anEntranceName)
 {
     return entrances_->objectForKey(anEntranceName) ? true : false;
+}
+
+void
+MCScene::showDetail()
+{
+    controller_->setEnable(false);
+    detail_->show();
+}
+
+void
+MCScene::detailDidHide()
+{
+    controller_->setEnable(true);
 }
