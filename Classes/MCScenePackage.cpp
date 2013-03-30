@@ -18,8 +18,6 @@ MCScenePackage::~MCScenePackage()
     
     CC_SAFE_RELEASE(tmxTiledMapPath_);
     CC_SAFE_RELEASE(backgroundMusicPath_);
-
-    MCObject::~MCObject();
 }
 
 bool
