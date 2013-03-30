@@ -104,13 +104,13 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
         CC_SAFE_RELEASE(entityMetadata_);
     }
     entityMetadata_ = new MCRoleEntityMetadata;
-    
+
     /* 纹理文件 */
-    sprintf(str, "%s.ss", aSpritesheetPath);
+    sprintf(str, "%s.st", aSpritesheetPath);
     textureFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
     spriteSheet = new CCSpriteBatchNode;
     spriteSheet->initWithFile(textureFilepath, kDefaultSpriteBatchCapacity);
-    
+
     /* 添加帧 */
     for (int i = 0; i < sizeof(__mc_directions) / sizeof(const char *); ++i) {
         for (int j = 0; j < 4; ++j) {

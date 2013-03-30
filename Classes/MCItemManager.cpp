@@ -63,7 +63,7 @@ MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
     MCEquipmentItem *equipmentItem = (MCEquipmentItem *) metaEquipmentItemForObjectId(anObjectId)->copy();
-    
+
     if (equipmentItem) {
         equipmentItem->autorelease();
     } else {
@@ -107,7 +107,7 @@ MCEquipmentItem *
 MCItemManager::metaEquipmentItemForObjectId(mc_object_id_t anObjectId)
 {
     MCEquipmentItem *equipmentItem;
-    
+
     equipmentItem = (MCEquipmentItem *) equipmentItems_->objectForKey(MCObjectIdToDickKey(anObjectId));
     
     return equipmentItem;
@@ -211,6 +211,9 @@ MCItemManager::loadEquipmentItems()
         item->setID(o_id);
         ccstring = CCString::create(object["name"].getString().c_str());
         item->setName(ccstring);
+        ccstring->retain();
+        ccstring = CCString::create(object["description"].getString().c_str());
+        item->setDescription(ccstring);
         ccstring->retain();
         ccstring = CCString::create(object["icon"].getString().c_str());
         item->setIcon(ccstring);

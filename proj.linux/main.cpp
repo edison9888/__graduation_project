@@ -1,6 +1,6 @@
 #include "main.h"
 #include "../Classes/AppDelegate.h"
-#include "cocos2d.h"
+#include <cocos2d.h>
 
 
 #include <stdlib.h>

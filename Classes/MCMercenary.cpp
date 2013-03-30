@@ -17,6 +17,7 @@ MCMercenary::~MCMercenary()
 bool
 MCMercenary::init()
 {
+    MCNPC::init();
     setRoleRace(MCTerrans);
     defaultDialogue_ = NULL;
     
@@ -44,13 +45,14 @@ MCMercenary::copy()
 {
     MCMercenary *mercenary = new MCMercenary;
     
+    mercenary->init();
     mercenary->id_ = id_;
     mercenary->tag_ = tag_;
     mercenary->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
     mercenary->name_->retain();
     mercenary->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
     mercenary->description_->retain();
-    
+
     mercenary->roleRace_ = roleRace_;
     mercenary->hp_ = hp_;
     mercenary->pp_ = pp_;

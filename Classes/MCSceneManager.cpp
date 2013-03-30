@@ -15,7 +15,9 @@
 
 static MCScene *
 MCSceneMake(MCScenePackageType aScenePackageType) {
+    CCLog("%s(%d)",__FILE__+49,__LINE__);
     CCAssert(MCUnknownPackage != aScenePackageType, "unknown scene package type");
+    CCLog("%s(%d)",__FILE__+49,__LINE__);
     MCScene *scene;
     
     if (MCGameScenePackage == aScenePackageType) {

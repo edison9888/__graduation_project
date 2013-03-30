@@ -159,6 +159,10 @@ MCMercenaryManager::loadMercenaries()
         mercenary->effectCheck_.max = diceRange["max"].getInt();
         mercenary->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                       diceRangeDice["size"].getInt());
+        /* description String */
+        ccstring = CCString::create(mercenaryObject["description"].getString().c_str());
+        mercenary->setDescription(ccstring);
+        ccstring->retain();
         
         mercenaries_->setObject(mercenary, MCObjectIdToDickKey(m_id));
     }
@@ -168,7 +172,7 @@ MCMercenary *
 MCMercenaryManager::mercenaryForObjectId(mc_object_id_t anObjectId)
 {
     MCMercenary *mercenary = (MCMercenary *) metaMercenaryForObjectId(anObjectId)->copy();
-    
+
     if (mercenary && mercenary->MCRole::init()) {
         mercenary->autorelease();
         mercenary->loadSpriteSheet();
@@ -194,7 +198,7 @@ MCMercenaryManager::hire(mc_object_id_t anObjectId)
 {
     MCBackpack *backpack = MCBackpack::sharedBackpack();
     MCMercenary *mercenary = mercenaryForObjectId(anObjectId);
-    
+
     if (mercenary->cost_ > backpack->getMoney()) {
         return kMCNotEnoughMoney;
     }

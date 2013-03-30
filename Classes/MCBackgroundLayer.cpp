@@ -26,7 +26,7 @@ MCBackgroundLayer::init(const char *aMapFilePath, const char *aBackgroundMusicFi
             return false;
         }
         addChild(map_);
-        
+
         backgroundMusic_ = CCString::create(aBackgroundMusicFilePath);
         backgroundMusic_->retain();
         

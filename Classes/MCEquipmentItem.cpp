@@ -39,13 +39,16 @@ CCObject *
 MCEquipmentItem::copy()
 {
     MCEquipmentItem *equipmentItem = new MCEquipmentItem;
-    
+
+    equipmentItem->init(equipment_.type);
     equipmentItem->id_ = id_;
     equipmentItem->tag_ = tag_;
     equipmentItem->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
     equipmentItem->name_->retain();
-    equipmentItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
-    equipmentItem->description_->retain();
+    if (description_ != NULL) {
+        equipmentItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+        equipmentItem->description_->retain();
+    }
     equipmentItem->itemType_ = itemType_;
     equipmentItem->icon_ = icon_;
     equipmentItem->equipment_ = equipment_;

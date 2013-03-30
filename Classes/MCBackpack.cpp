@@ -239,7 +239,7 @@ void
 MCBackpack::loadData()
 {
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-    
+
     loadEffectiveItems();
     loadEquipmentItems();
     
@@ -595,7 +595,7 @@ MCBackpack::loadEquipmentItems()
     MCOreManager *oreManager = MCOreManager::sharedOreManager();
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
     string data = userDefault->getStringForKey(kMCEffectiveItemsKey, "");
-    
+
     dagger_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCDagger]);
     sword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCSword]);
     greatsword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGreatsword]);
@@ -612,7 +612,7 @@ MCBackpack::loadEquipmentItems()
     helmet_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHelmet]);
     armor_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCArmor]);
     shinGuard_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCShinGuard]);
-    
+
     dagger_->count = 1;
     sword_->count = 1;
     greatsword_->count = 1;
