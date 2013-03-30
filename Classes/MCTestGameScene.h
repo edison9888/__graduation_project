@@ -13,6 +13,9 @@
 #include "MCHero.h"
 #include "MCTestLayer.h"
 #include "MCSceneManager.h"
+#include "MCGameState.h"
+#include "MCMercenaryManager.h"
+#include "MCBackpack.h"
 
 //class _MCScenePackage : public MCScenePackage {
 //public:
@@ -46,9 +49,27 @@ class MCTestGameScene : public MCTestLayer {
 public:
     
     static CCScene *scene() {
+        MCGameState::sharedGameState()->load();
+        MCBackpack::sharedBackpack()->setMoney(10000);
+        
         mc_object_id_t m_id = {
-            'M', '0', '0', '1'
+            'M', '0', '0', '2'
         };
+
+        mc_ssize_t ret;
+        m_id.sub_class_ = '9';
+        m_id.sub_index_ = '1';
+        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        CCLog("ret: %d", ret);
+        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        CCLog("ret: %d", ret);
+        m_id.sub_index_ = '2';
+        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        CCLog("ret: %d", ret);
+        
+        m_id.sub_class_ = '0';
+        m_id.index_ = '0';
+        m_id.sub_index_ = '2';
         CCScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
 
         scene->init();

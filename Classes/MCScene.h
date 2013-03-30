@@ -11,7 +11,6 @@
 
 #include "MCScenePackage.h"
 
-#include "MCControllerLayer.h"
 #include "MCObjectLayer.h"
 #include "MCBackgroundLayer.h"
 
@@ -48,7 +47,7 @@ class MCScene : public CCScene, public MCSceneDelegate {
     friend class MCSceneManager;
 public:
     MCScene()
-    : controller_(MCControllerLayer::create()),
+    : controller_(NULL),
     objects_(NULL),
     viewport_(NULL),
     background_(NULL),
@@ -116,7 +115,7 @@ public:
 public:
     bool hasEntrance(const char *anEntranceName);
     
-    MCControllerLayer *controller_; /* 控制层 */
+    CCLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */
         //warning: todo：记得删除调试用视角层
     MCViewportLayer *viewport_; /* 调试用的视角层 */

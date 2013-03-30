@@ -14,12 +14,13 @@
 #import "MCWeaponHandler.h"
 #import "MCArmorHandler.h"
 #import "MCItemHandler.h"
+#import "MCFlagHandler.h"
+#import "MCTaskHandler.h"
 
 static NSString *root = @"/Users/DF/Desktop/游戏策划";
 
 int main(int argc, const char * argv[])
 {
-
     @autoreleasepool {
         MCCSVConvertor *convertor = [[MCCSVConvertor alloc] init];
         MCCSVHandler *handler;
@@ -57,10 +58,26 @@ int main(int argc, const char * argv[])
         [convertor setHandler:handler];
         [convertor convert];
         [handler release];
-
+        
         /* 道具 */
         handler = [[MCItemHandler alloc] init];
         handler.startLine = 3;
+        handler.ignoreLine = 0;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+        
+        /* 标志 */
+        handler = [[MCFlagHandler alloc] init];
+        handler.startLine = 1;
+        handler.ignoreLine = 0;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
+
+        /* 任务 */
+        handler = [[MCTaskHandler alloc] init];
+        handler.startLine = 2;
         handler.ignoreLine = 0;
         [convertor setHandler:handler];
         [convertor convert];

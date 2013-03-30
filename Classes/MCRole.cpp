@@ -80,6 +80,7 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
 {
     char str[64];
     const char *plistFilepath;
+    const char *textureFilepath;
     CCSpriteFrameCache *spriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
     CCSpriteBatchNode* spriteSheet;
     CCArray *animationFrames[4] = {
@@ -91,7 +92,6 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     CCSpriteFrame *spriteFrame;
     const char *basename = __basename(aSpritesheetPath);
     CCDictionary *plist;
-    CCDictionary* metadataDict;
     
     /* 生成路径 */
     /* plist */
@@ -100,16 +100,16 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     /* 把精灵表加载到cache里 */
     spriteFrameCache->addSpriteFramesWithFile(plistFilepath);
     plist = CCDictionary::createWithContentsOfFileThreadSafe(plistFilepath);
-    metadataDict = (CCDictionary *)plist->objectForKey("metadata");
     if (entityMetadata_) {
-        CC_SAFE_DELETE(entityMetadata_);
+        CC_SAFE_RELEASE(entityMetadata_);
     }
     entityMetadata_ = new MCRoleEntityMetadata;
     
     /* 纹理文件 */
     sprintf(str, "%s.ss", aSpritesheetPath);
+    textureFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
     spriteSheet = new CCSpriteBatchNode;
-    spriteSheet->initWithFile(str, kDefaultSpriteBatchCapacity);
+    spriteSheet->initWithFile(textureFilepath, kDefaultSpriteBatchCapacity);
     
     /* 添加帧 */
     for (int i = 0; i < sizeof(__mc_directions) / sizeof(const char *); ++i) {

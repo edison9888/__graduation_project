@@ -13,13 +13,6 @@
 
 class MCScene;
 
-enum {
-    MCPushScene     = 0,
-    MCPopScene      = 1,
-    MCReplaceScene  = 2
-};
-typedef mc_enum_t MCChangeSceneMethod;
-
 class MCSceneManager : public CCObject {
 private:
     MCSceneManager();
@@ -41,25 +34,12 @@ public:
      * 清除由sceneWithObjectId:方法生成的MCGameScene对象
      */
     void cleanupSceneWithObjectId(mc_object_id_t anObjectId);
-    
-    /**
-     * 切换当前场景为aNewScene
-     */
-    void changeScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
-    
-    /**
-     * 切换当前场景为ID为anObjectId的场景
-     */
-    void changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
 private:
     void loadSceneListFile();
     
 private:
     CCDictionary *scenes_; /* 以mc_object_id_t为key */
     CCDictionary *scenePackages_; /* 以mc_object_id_t为key */
-    
-    MCScene *lastScene_;
-    MCScene *currentScene_;
 };
 
 class MCSceneDelegate {

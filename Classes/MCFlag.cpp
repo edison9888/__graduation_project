@@ -13,16 +13,21 @@ bool
 MCFlag::init(const mc_object_id_t &anObjectId, JsonBox::Object &aRoot)
 {
     JsonBox::Value v;
+    CCString *ccstring;
     
     setID(anObjectId);
-    v = aRoot["name"];
-    if (v.isString()) {
-        setName(CCString::create(v.getString()));
-    }
-    v = aRoot["description"];
-    if (v.isString()) {
-        setDescription(CCString::create(v.getString()));
-    }
+    
+    /* name String */
+    ccstring = CCString::create(aRoot["name"].getString());
+    setName(ccstring);
+    ccstring->retain();
+    /* state Integer */
+    setState(aRoot["state"].getInt());
+    /* description String */
+    ccstring = CCString::create(aRoot["description"].getString());
+    setName(ccstring);
+    ccstring->retain();
+    
     return true;
 }
 

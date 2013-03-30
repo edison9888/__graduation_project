@@ -35,7 +35,7 @@ private:
     CC_PROPERTY(MCJoystick *, joystick_, Joystick)
     CC_SYNTHESIZE_PASS_BY_REF(CCPoint, joystickPosition_, JoystickPosition)
     CC_SYNTHESIZE(CCPoint *, joystickDelta_, JoystickDelta)
-    CC_SYNTHESIZE(MCControllerDelegate *, delegate_, Delegate);
+    CC_SYNTHESIZE(MCJoypadControllerDelegate *, delegate_, Delegate);
 };
 
 #endif /* defined(__Military_Confrontation__MCJoypad__) */

@@ -29,7 +29,7 @@
  <objectgroup name="entrances" width="50" height="50">
   <object name="cave-1" type="entrance" x="528" y="48" width="64" height="32">
    <properties>
-    <property name="dest" value="forest-1-centre"/>
+    <property name="dest" value="forest-1"/>
    </properties>
   </object>
  </objectgroup>

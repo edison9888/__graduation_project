@@ -42,6 +42,10 @@ public:
         faceBoxSelected_->setVisible(false);
     }
     
+    inline CCScale9Sprite *getFaceBox() {
+        return faceBox_;
+    }
+    
 private:
     CCSprite *face_;
     CCScale9Sprite *faceBox_;

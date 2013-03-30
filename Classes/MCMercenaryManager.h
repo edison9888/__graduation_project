@@ -22,6 +22,8 @@ public:
     
     static MCMercenaryManager *sharedMercenaryManager();
     
+    void loadMercenaries();
+    
     MCMercenary *mercenaryForObjectId(mc_object_id_t anObjectId);
     MCMercenary *metaMercenaryForObjectId(mc_object_id_t anObjectId);
     

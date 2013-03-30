@@ -52,7 +52,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         faceBoxSelected_->setVisible(false);
         
         /* PP */
-        CCString *ccstring = CCString::createWithFormat("%d", aRole->getPP());
+        CCString *ccstring = CCString::createWithFormat("%hu", aRole->getPP());
         ppLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
         addChild(ppLabel_);
         labelSize = ppLabel_->getContentSize();
@@ -69,7 +69,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         separatorLabel->setPosition(ccp(96 + labelSize.width, y));
         
         labelPosition = separatorLabel->getPosition();
-        ccstring = CCString::createWithFormat("%d", aRole->getMaxPP());
+        ccstring = CCString::createWithFormat("%hu", aRole->getMaxPP());
         maxPPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
         addChild(maxPPLabel_);
         maxPPLabel_->setColor(ccc3(204, 204, 204));
@@ -78,7 +78,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         ccstring->retain();
         
         /* HP */
-        ccstring = CCString::createWithFormat("%d", aRole->getHP());
+        ccstring = CCString::createWithFormat("%hu", aRole->getHP());
         hpLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
         addChild(hpLabel_);
         labelSize = hpLabel_->getContentSize();
@@ -95,7 +95,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         separatorLabel->setPosition(ccp(96 + labelSize.width, y));
         
         labelPosition = separatorLabel->getPosition();
-        ccstring = CCString::createWithFormat("%d", aRole->getMaxHP());
+        ccstring = CCString::createWithFormat("%hu", aRole->getMaxHP());
         maxHPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
         addChild(maxHPLabel_);
         maxHPLabel_->setColor(ccc3(51, 153, 51));

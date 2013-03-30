@@ -12,6 +12,8 @@ bool
 MCEnemy::init(MCRoleRace aRoleRace)
 {
     setRoleRace(aRoleRace);
+    face_ = NULL;
+    defaultDialogue_ = NULL;
     
     return true;
 }
@@ -39,16 +41,21 @@ MCEnemy::copy()
 {
     MCEnemy *enemy = new MCEnemy;
     
-    /* 浅copy是也 */
-    enemy->name_ = name_;
-    enemy->description_ = description_;
+    enemy->id_ = id_;
+    enemy->tag_ = tag_;
+    enemy->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
+    enemy->name_->retain();
+    enemy->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+    enemy->description_->retain();
     
     enemy->roleRace_ = roleRace_;
     enemy->hp_ = hp_;
     enemy->pp_ = pp_;
     enemy->roleState_ = roleState_;
-    enemy->face_ = face_;
-    enemy->spriteSheet_ = spriteSheet_;
+    enemy->face_ = NULL;
+    enemy->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */
+    enemy->spriteSheet_->retain();
+    enemy->defaultDialogue_ = NULL;
     enemy->ai_ = ai_;
     
     return enemy;

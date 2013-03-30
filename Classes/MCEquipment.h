@@ -29,7 +29,6 @@ typedef struct {
     MCDiceRange critical_hit_invisible; /* 非可视区域内重击范围 */
     mc_critical_hit_t critical_hit; /* 重击倍数 */
     mc_distance_t distance; /* 攻击距离，单位为资源缩放值*32像素 */
-    MCDamageType damage_type; /* 伤害类型 */
     MCRoleState effect; /* 附带效果 */
     MCDiceRange effect_check; /* 效果判定 */
     mc_dexterity_t dexterity; /* 敏捷调整值 */

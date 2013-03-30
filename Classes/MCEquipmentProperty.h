@@ -20,6 +20,8 @@ typedef mc_ushort_t mc_bonus_t;
 typedef mc_ushort_t mc_damage_t;
 typedef mc_ushort_t mc_distance_t; /* 攻击距离 */
 
+typedef mc_ushort_t mc_ac_t;
+
 enum {
     MCPuncture  = MCMakeEnum(0), /* 穿刺 */
     MCSlash     = MCMakeEnum(1), /* 挥砍 */

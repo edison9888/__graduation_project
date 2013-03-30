@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Thu Mar  7 16:14:21 2013.
+** Generated automatically by tolua++-1.0.92 on Thu Mar 28 01:29:37 2013.
 */
 
 /****************************************************************************
@@ -267,12 +267,16 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"ccQuad3");
  tolua_usertype(tolua_S,"CCProgressFromTo");
  tolua_usertype(tolua_S,"ccVertex2F");
+ tolua_usertype(tolua_S,"mc_object_id_t");
  tolua_usertype(tolua_S,"tCCImageFormat");
+ tolua_usertype(tolua_S,"mc_enum_t");
  tolua_usertype(tolua_S,"CCNotificationCenter");
  tolua_usertype(tolua_S,"ccBezierConfig");
+ tolua_usertype(tolua_S,"MCScene");
  tolua_usertype(tolua_S,"CCSpriteBatchNode");
  tolua_usertype(tolua_S,"CCEaseExponentialIn");
  tolua_usertype(tolua_S,"CCApplication");
+ tolua_usertype(tolua_S,"MCSceneController");
  tolua_usertype(tolua_S,"_T_");
  tolua_usertype(tolua_S,"SimpleAudioEngine");
  tolua_usertype(tolua_S,"CCTwirl");
@@ -54801,6 +54805,165 @@ static int tolua_Cocos2d__T__getAge00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: sharedSceneController of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController_sharedSceneController00
+static int tolua_Cocos2d_MCSceneController_sharedSceneController00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   MCSceneController* tolua_ret = (MCSceneController*)  MCSceneController::sharedSceneController();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCSceneController");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sharedSceneController'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pushExpectedScene of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController_pushExpectedScene00
+static int tolua_Cocos2d_MCSceneController_pushExpectedScene00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCScene",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"mc_enum_t",1,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCSceneController* self = (MCSceneController*)  tolua_tousertype(tolua_S,1,0);
+  MCScene* aNewScene = ((MCScene*)  tolua_tousertype(tolua_S,2,0));
+  const char* anEntranceName = ((const char*)  tolua_tostring(tolua_S,3,0));
+   mc_enum_t method = *((  mc_enum_t*)  tolua_tousertype(tolua_S,4,(void*)MCReplaceScene));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pushExpectedScene'", NULL);
+#endif
+  {
+   self->pushExpectedScene(aNewScene,anEntranceName,method);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'pushExpectedScene'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: pushExpectedScene of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController_pushExpectedScene01
+static int tolua_Cocos2d_MCSceneController_pushExpectedScene01(lua_State* tolua_S)
+{
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"mc_object_id_t",0,&tolua_err)) ||
+     !tolua_isstring(tolua_S,3,0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,4,&tolua_err) || !tolua_isusertype(tolua_S,4,"mc_enum_t",1,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,5,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+ {
+  MCSceneController* self = (MCSceneController*)  tolua_tousertype(tolua_S,1,0);
+  mc_object_id_t anObjectId = *((mc_object_id_t*)  tolua_tousertype(tolua_S,2,0));
+  const char* anEntranceName = ((const char*)  tolua_tostring(tolua_S,3,0));
+   mc_enum_t method = *((  mc_enum_t*)  tolua_tousertype(tolua_S,4,(void*)MCReplaceScene));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'pushExpectedScene'", NULL);
+#endif
+  {
+   self->pushExpectedScene(anObjectId,anEntranceName,method);
+  }
+ }
+ return 0;
+tolua_lerror:
+ return tolua_Cocos2d_MCSceneController_pushExpectedScene00(tolua_S);
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: requestChangingScene of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController_requestChangingScene00
+static int tolua_Cocos2d_MCSceneController_requestChangingScene00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCSceneController* self = (MCSceneController*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'requestChangingScene'", NULL);
+#endif
+  {
+   self->requestChangingScene();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'requestChangingScene'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: __changeScene of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController___changeScene00
+static int tolua_Cocos2d_MCSceneController___changeScene00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCSceneController* self = (MCSceneController*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function '__changeScene'", NULL);
+#endif
+  {
+   self->__changeScene();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function '__changeScene'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* Open function */
 TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
 {
@@ -57380,6 +57543,17 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"create",tolua_Cocos2d__T__create00);
    tolua_function(tolua_S,"setAge",tolua_Cocos2d__T__setAge00);
    tolua_function(tolua_S,"getAge",tolua_Cocos2d__T__getAge00);
+  tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"MCPushScene",MCPushScene);
+  tolua_constant(tolua_S,"MCPopScene",MCPopScene);
+  tolua_constant(tolua_S,"MCReplaceScene",MCReplaceScene);
+  tolua_cclass(tolua_S,"MCSceneController","MCSceneController","",NULL);
+  tolua_beginmodule(tolua_S,"MCSceneController");
+   tolua_function(tolua_S,"sharedSceneController",tolua_Cocos2d_MCSceneController_sharedSceneController00);
+   tolua_function(tolua_S,"pushExpectedScene",tolua_Cocos2d_MCSceneController_pushExpectedScene00);
+   tolua_function(tolua_S,"pushExpectedScene",tolua_Cocos2d_MCSceneController_pushExpectedScene01);
+   tolua_function(tolua_S,"requestChangingScene",tolua_Cocos2d_MCSceneController_requestChangingScene00);
+   tolua_function(tolua_S,"__changeScene",tolua_Cocos2d_MCSceneController___changeScene00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

@@ -16,6 +16,42 @@
 #include "MCInterfaceMacros.h"
 
 extern const mc_size_t kMCItemMax;
+enum {
+    /* 道具 */
+    kMCHealthPotion,
+    kMCPhysicalPotion,
+    kMCFireballWide,
+    kMCFireballDamage,
+    kMCCurseWide,
+    kMCCurseDamage,
+    kMCParalysisWide,
+    kMCParalysisDamage,
+    kMCFogWide,
+    kMCFogDamage,
+    kMCFlashWide,
+    kMCFlashDamage,
+    
+    /* 装备 */
+    kMCDagger,
+    kMCSword,
+    kMCGreatsword,
+    kMCWarhammer,
+    kMCHeavyDutyHammer,
+    kMCHandAxe,
+    kMCWarAxe,
+    kMCGreataxe,
+    kMCSpear,
+    kMCLance,
+    kMCGiantSickle,
+    kMCShortbow,
+    kMCLongbow,
+    kMCHelmet,
+    kMCArmor,
+    kMCShinGuard
+};
+typedef mc_enum_t MCItemIndex;
+
+mc_object_id_t itemObjectItem(MCItemIndex anIndex);
 
 class MCBackpackItem {
 public:
@@ -28,6 +64,7 @@ private:
     MCBackpack();
     
 public:
+    ~MCBackpack();
     static MCBackpack *sharedBackpack();
     
     void saveData();
@@ -74,10 +111,6 @@ public:
     MCDefineLevelUpInterface(dagger_, Dagger); /* 短剑 */
     MCDefineLevelUpInterface(sword_, Sword); /* 长剑 */
     MCDefineLevelUpInterface(greatsword_, Greatsword); /* 巨剑 */
-    /* 刀类 */
-    MCDefineLevelUpInterface(scimitar_, Scimitar); /* 弯刀 */
-    MCDefineLevelUpInterface(broadsword_, Broadsword); /* 大刀 */
-    MCDefineLevelUpInterface(machete_, Machete); /* 大砍刀 */
     /* 锤类 */
     MCDefineLevelUpInterface(warhammer_, Warhammer); /* 轻型战锤 */
     MCDefineLevelUpInterface(heavyDutyHammer_, HeavyDutyHammer); /* 重型战锤 */
@@ -112,52 +145,48 @@ private:
     /* 道具 */
     /* 数据就按这个顺序储存 */
     /* 药品 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, healthPotion_, HealthPotion);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, physicalPotion_, PhysicalPotion);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, healthPotion_, HealthPotion);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, physicalPotion_, PhysicalPotion);
     /* 陷阱 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, fireballTrapWide_, FireballTrapWide);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, fireballTrapDamage_, FireballTrapDamage);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, curseTrapWide_, CurseTrapWide);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, curseTrapDamage_, CurseTrapDamage);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, paralysisTrapWide_, ParalysisTrapWide);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, paralysisTrapDamage_, ParalysisTrapDamage);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, fogTrapWide_, FogTrapWide);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, fogTrapDamage_, FogTrapDamage);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, flashTrapWide_, FlashTrapWide);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, flashTrapDamage_, FlashTrapDamage);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, fireballTrapWide_, FireballTrapWide);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, fireballTrapDamage_, FireballTrapDamage);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, curseTrapWide_, CurseTrapWide);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, curseTrapDamage_, CurseTrapDamage);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, paralysisTrapWide_, ParalysisTrapWide);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, paralysisTrapDamage_, ParalysisTrapDamage);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, fogTrapWide_, FogTrapWide);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, fogTrapDamage_, FogTrapDamage);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, flashTrapWide_, FlashTrapWide);
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, flashTrapDamage_, FlashTrapDamage);
     
     /* 装备 */
     /* 数据就按这个顺序储存 */
     /* 武器 */
     /* 剑类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, dagger_, Dagger); /* 短剑 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, sword_, Sword); /* 长剑 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, greatsword_, Greatsword); /* 巨剑 */
-    /* 刀类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, scimitar_, Scimitar); /* 弯刀 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, broadsword_, Broadsword); /* 大刀 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, machete_, Machete); /* 大砍刀 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, dagger_, Dagger); /* 短剑 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, sword_, Sword); /* 长剑 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, greatsword_, Greatsword); /* 巨剑 */
     /* 锤类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, warhammer_, Warhammer); /* 轻型战锤 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, heavyDutyHammer_, HeavyDutyHammer); /* 重型战锤 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, warhammer_, Warhammer); /* 轻型战锤 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, heavyDutyHammer_, HeavyDutyHammer); /* 重型战锤 */
     /* 斧类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, handAxe_, HandAxe); /* 手斧 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, warAxe_, WarAxe); /* 战斧 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, greataxe_, Greataxe); /* 巨斧 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, handAxe_, HandAxe); /* 手斧 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, warAxe_, WarAxe); /* 战斧 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, greataxe_, Greataxe); /* 巨斧 */
     /* 枪矛类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, spear_, Spear); /* 长枪 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, lance_, Lance); /* 长矛 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, giantSickle_, GiantSickle); /* 巨镰 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, spear_, Spear); /* 长枪 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, lance_, Lance); /* 长矛 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, giantSickle_, GiantSickle); /* 巨镰 */
     /* 弓弩类 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, shortbow_, Shortbow); /* 短弓 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, longbow_, Longbow); /* 长弓 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, shortbow_, Shortbow); /* 短弓 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, longbow_, Longbow); /* 长弓 */
     
     CC_SYNTHESIZE(MCEquipmentItem *, currentWeapon_, CurrentWeapon); /* 装备的武器 */
     
     /* 防具 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, helmet_, Helmet); /* 头盔 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, armor_, Armor); /* 铠甲 */
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCBackpackItem, shinGuard_, ShinGuard); /* 护胫 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, helmet_, Helmet); /* 头盔 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, armor_, Armor); /* 铠甲 */
+    CC_SYNTHESIZE_READONLY(MCBackpackItem *, shinGuard_, ShinGuard); /* 护胫 */
 };
 
 #endif /* defined(__Military_Confrontation__MCBackpack__) */

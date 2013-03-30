@@ -40,14 +40,16 @@ MCEquipmentItem::copy()
 {
     MCEquipmentItem *equipmentItem = new MCEquipmentItem;
     
-    equipmentItem->setID(id_);
-    equipmentItem->setTag(tag_);
-    equipmentItem->setName(name_);
-    equipmentItem->setDescription(description_);
-    equipmentItem->setItemType(itemType_);
-    equipmentItem->setIcon(icon_);
+    equipmentItem->id_ = id_;
+    equipmentItem->tag_ = tag_;
+    equipmentItem->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
+    equipmentItem->name_->retain();
+    equipmentItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+    equipmentItem->description_->retain();
+    equipmentItem->itemType_ = itemType_;
+    equipmentItem->icon_ = icon_;
     equipmentItem->equipment_ = equipment_;
-    equipmentItem->setOre(ore_);
+    equipmentItem->ore_ = ore_;
     
     return equipmentItem;
 }

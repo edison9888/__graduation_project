@@ -58,21 +58,18 @@ public:
      */
     void abortTaskWithObjectId(mc_object_id_t anObjectId);
     
-    /**
-     * 完成一个任务，成功完成返回true，否则返回false
-     */
-    void taskDidComplete(MCTask *task);
-    
-    /**
-     * 以任务ID完成一个任务，成功完成返回true，否则返回false
-     */
-    void taskDidCompleteWithObjectId(mc_object_id_t anObjectId);
+    void startCurrentTask();
     
 private:
     /**
      * 从数据包加载任务 
      */
     bool loadTasks();
+    
+    /**
+     * 任务完成通知
+     */
+    void taskDidFinish(CCObject *obj);
     
 private:
     MCTaskAccessor *taskAccessor_;        /* 任务访问器 */

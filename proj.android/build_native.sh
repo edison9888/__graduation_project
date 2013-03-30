@@ -1,4 +1,4 @@
-APPNAME="Adventure"
+APPNAME="Military Confrontation_Info"
 
 # options
 

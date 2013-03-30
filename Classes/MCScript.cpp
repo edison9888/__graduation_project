@@ -16,7 +16,7 @@ MCScript::MCScript()
 
 MCScript::~MCScript()
 {
-    CC_SAFE_DELETE(scriptPath_);
+    CC_SAFE_RELEASE(scriptPath_);
 }
 
 void

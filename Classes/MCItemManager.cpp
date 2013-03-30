@@ -12,9 +12,9 @@
 #include "JsonBox.h"
 #include "MCOreManager.h"
 
-const char *kMCEquipmentItemWeaponFilepath = "E001.epkg";
-const char *kMCEquipmentItemArmorFilepath = "E002.epkg";
-const char *kMCEffectiveItemFilepath = "E100.epkg";
+const char *kMCEquipmentItemWeaponFilepath = "E001.jpkg";
+const char *kMCEquipmentItemArmorFilepath = "E002.jpkg";
+const char *kMCEffectiveItemFilepath = "E100.jpkg";
 
 static MCItemManager *__shared_item_manager = NULL;
 
@@ -177,7 +177,6 @@ MCItemManager::loadEquipmentItems()
                                                                                        diceRangeDice["size"].getInt());
         item->equipment_.equipment.weapon.critical_hit = object["critical-hit"].getDouble();
         item->equipment_.equipment.weapon.distance = object["distance"].getInt();
-        item->equipment_.equipment.weapon.damage_type = object["damage-type"].getInt();
         if (object["effect"].isInteger()) {
             item->equipment_.equipment.weapon.effect = object["effect"].getInt();
             diceRange = object["effect-check"].getObject();

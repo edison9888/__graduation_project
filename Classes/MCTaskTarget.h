@@ -13,6 +13,8 @@
 
 class MCTaskTarget : public CCObject {
 public:
+    CCObject *copy();
+    
     mc_object_id_t objectID;
     mc_size_t      count;
 };

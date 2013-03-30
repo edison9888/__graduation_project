@@ -7,6 +7,7 @@
 //
 
 #include "MCBattleFieldScene.h"
+#include "MCBattleControllerLayer.h"
 
 void
 MCBattleFieldScene::installController()
@@ -15,8 +16,10 @@ MCBattleFieldScene::installController()
     
     CCAssert(scenePackageType != MCUnknownPackage, "unknown scene package type!");
     if (MCBattleFieldScenePackage == scenePackageType) {
-        controller_ = MCControllerLayer::create();
-        addChild(controller_);
+        MCBattleControllerLayer *battleController = MCBattleControllerLayer::create();
+        battleController->setDelegate(objects_);
+        addChild(battleController);
+        controller_ = battleController;
     }
 }
 

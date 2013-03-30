@@ -15,7 +15,7 @@
     "sound": "sounds/bgm-b.mp3"
   },
   "scenes": {
-    "village": "M001"
+    "cave-1": "M001"
   },
   "description": "洞窟",
   "triggers": {

@@ -15,6 +15,8 @@
 #include "MCDungeonMaster.h"
 #include "MCMercenaryManager.h"
 
+const char *kMCSaveFileExistsKey = "c2F2ZS1maWxlLWV4aXN0cw"; /* save-file-exists的BASE64编码没有最后的== */
+
 static MCGameState *__shared_game_state = NULL;
 
 MCGameState::MCGameState()
@@ -37,6 +39,14 @@ MCGameState::sharedGameState()
     return __shared_game_state;
 }
 
+bool
+MCGameState::isSaveFileExists()
+{
+    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+    
+    return userDefault->getBoolForKey(kMCSaveFileExistsKey, false);
+}
+
 /**
  * 保存
  * 
@@ -52,6 +62,9 @@ MCGameState::sharedGameState()
 void
 MCGameState::save()
 {
+    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+    
+    userDefault->setBoolForKey(kMCSaveFileExistsKey, true);
     MCBackpack::sharedBackpack()->saveData();
     MCMercenaryManager::sharedMercenaryManager()->saveData();
     MCFlagManager::sharedFlagManager()->saveAllFlags();

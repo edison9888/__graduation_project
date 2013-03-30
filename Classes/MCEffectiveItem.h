@@ -19,6 +19,7 @@ class MCItemManager;
 class MCEffectiveItem : public MCItem {
     friend class MCItemManager;
 public:
+    ~MCEffectiveItem();
     bool init();
     
     CREATE_FUNC(MCEffectiveItem);

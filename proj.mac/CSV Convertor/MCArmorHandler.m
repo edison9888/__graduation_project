@@ -7,12 +7,22 @@
 //
 
 #import "MCArmorHandler.h"
+#import "MCCSVHandlerMacros.h"
+
+static const NSUInteger kMCIDIndex = 0;
+
+MCDefineIndexAndKey(Name, 1, name);
+MCDefineIndexAndKey(Icon, 2, icon);
+MCDefineIndexAndKey(Price, 3, price);
+MCDefineIndexAndKey(Defense, 4, defense);
+MCDefineIndexAndKey(Dexterity, 5, dexterity);
+MCDefineIndexAndKey(ArmorCheckPenalty, 7, armor-check-penalty);
 
 @implementation MCArmorHandler
 
 + (NSString *)filename
 {
-    return @"E002.epkg";
+    return @"E002.jpkg";
 }
 
 + (NSString *)sourceFilename
@@ -46,21 +56,21 @@
     NSString *ID = [data objectAtIndex:0];
     
     /* name */
-    [content setObject:[data objectAtIndex:1] forKey:@"name"];
+    [content setObject:[data objectAtIndex:kMCNameIndex] forKey:kMCNameKey];
     /* icon */
-    object = [data objectAtIndex:2];
+    object = [data objectAtIndex:kMCIconIndex];
     [content setObject:([(NSString *) object compare:@"-"] == NSOrderedSame
                         ? @""
                         : object)
-                forKey:@"icon"];
+                forKey:kMCIconKey];
     /* price */
-    [content setObject:@([[data objectAtIndex:3] integerValue]) forKey:@"price"];
+    [content setObject:[data objectAtIndex:kMCPriceIndex] forKey:kMCPriceKey];
     /* defense */
-    [content setObject:@([[data objectAtIndex:4] integerValue]) forKey:@"defense"];
+    [content setObject:[data objectAtIndex:kMCDefenseIndex] forKey:kMCDefenseKey];
     /* dexterity */
-    [content setObject:@([[data objectAtIndex:5] integerValue]) forKey:@"dexterity"];
+    [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     /* armor-check-penalty */
-    [content setObject:@([[data objectAtIndex:7] integerValue]) forKey:@"armor-check-penalty"];
+    [content setObject:@([[data objectAtIndex:kMCArmorCheckPenaltyIndex] integerValue]) forKey:kMCArmorCheckPenaltyKey];
     
     [self setObject:content forKey:ID];
 }

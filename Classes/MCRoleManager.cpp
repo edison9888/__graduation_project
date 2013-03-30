@@ -46,7 +46,7 @@ void
 MCRoleManager::loadData()
 {
     loadNPCData();
-    loadMonsterData();
+    loadEnemyData();
 }
 
 MCRole *
@@ -171,6 +171,6 @@ MCRoleManager::loadNPCData()
 }
 
 void
-MCRoleManager::loadMonsterData()
+MCRoleManager::loadEnemyData()
 {
 }

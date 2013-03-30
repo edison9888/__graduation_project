@@ -73,6 +73,7 @@ private:
 class MCDiceMaker : public CCObject {
     
 public:
+    ~MCDiceMaker();
     /* 初始化 */
     bool init();
     

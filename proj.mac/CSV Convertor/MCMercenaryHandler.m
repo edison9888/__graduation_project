@@ -7,12 +7,40 @@
 //
 
 #import "MCMercenaryHandler.h"
+#import "MCCSVHandlerMacros.h"
+
+static const NSUInteger kMCIDIndex = 0;
+
+MCDefineIndexAndKey(Name, 1, name);
+MCDefineIndexAndKey(Face, 2, face);
+MCDefineIndexAndKey(SpriteSheet, 3, sprite-sheet);
+MCDefineIndexAndKey(AI, 4, AI);
+MCDefineIndexAndKey(Cost, 5, cost);
+MCDefineIndexAndKey(HP, 6, HP);
+MCDefineIndexAndKey(PP, 7, PP);
+MCDefineIndexAndKey(AC, 8, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 9, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 10, damage);
+MCDefineIndexAndKey(DamageBonus, 13, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 14, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 15, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 16, critical-hit);
+MCDefineIndexAndKey(Distance, 17, distance);
+
+static const NSUInteger kMCSkillAIndex = 18;
+static const NSUInteger kMCSkillBIndex = 19;
+static const NSUInteger kMCSkillCIndex = 20;
+static const NSUInteger kMCSkillDIndex = 21;
+static const NSString   *kMCSkillsKey = @"skills";
+
+MCDefineIndexAndKey(Effect, 22, effect);
+MCDefineIndexAndKey(EffectCheck, 23, effect-check);
 
 @implementation MCMercenaryHandler
 
 + (NSString *)filename
 {
-    return @"M000.mpkg";
+    return @"M000.jpkg";
 }
 
 + (NSString *)sourceFilename
@@ -27,34 +55,40 @@
         return;
     }
     NSArray *data = [aLine componentsSeparatedByString:@","];
-    NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:16];
+    NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:24];
     id object;
     
     /* ID */
     NSString *ID = [data objectAtIndex:0];
     
     /* name */
-    [content setObject:[data objectAtIndex:1] forKey:@"name"];
+    [content setObject:[data objectAtIndex:kMCNameIndex] forKey:kMCNameKey];
+    /* face */
+    [content setObject:[data objectAtIndex:kMCFaceIndex] forKey:kMCFaceKey];
+    /* sprite-sheet */
+    [content setObject:[data objectAtIndex:kMCSpriteSheetIndex] forKey:kMCSpriteSheetKey];
     /* AI */
-    [content setObject:[data objectAtIndex:2] forKey:@"AI"];
+    [content setObject:[data objectAtIndex:kMCAIIndex] forKey:kMCAIKey];
+    /* cost */
+    [content setObject:[data objectAtIndex:kMCCostIndex] forKey:kMCCostKey];
     /* HP */
-    [content setObject:@([[data objectAtIndex:3] integerValue]) forKey:@"HP"];
+    [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
     /* PP */
-    [content setObject:@([[data objectAtIndex:4] integerValue]) forKey:@"PP"];
+    [content setObject:@([[data objectAtIndex:kMCPPIndex] integerValue]) forKey:kMCPPKey];
     /* AC */
-    [content setObject:@([[data objectAtIndex:5] integerValue]) forKey:@"AC"];
+    [content setObject:@([[data objectAtIndex:kMCACIndex] integerValue]) forKey:kMCACKey];
     /* armor-check-penalty */
-    [content setObject:@([[data objectAtIndex:6] integerValue]) forKey:@"armor-check-penalty"];
+    [content setObject:@([[data objectAtIndex:kMCArmorCheckPenaltyIndex] integerValue]) forKey:kMCArmorCheckPenaltyKey];
     /* damage */
-    NSArray *tempComponents = [[data objectAtIndex:7] componentsSeparatedByString:@"d"];
+    NSArray *tempComponents = [[data objectAtIndex:kMCDamageIndex] componentsSeparatedByString:@"d"];
     NSDictionary *damage = @{
                              @"count": @([[tempComponents objectAtIndex:0] integerValue]),
                              @"size": @([[tempComponents objectAtIndex:1] integerValue])};
-    [content setObject:damage forKey:@"damage"];
+    [content setObject:damage forKey:kMCDamageKey];
     /* damage-bonus */
-    [content setObject:@([[data objectAtIndex:10] integerValue]) forKey:@"damage-bonus"];
+    [content setObject:@([[data objectAtIndex:kMCDamageBonusIndex] integerValue]) forKey:kMCDamageBonusKey];
     /* critical-hit-visible */
-    object = [data objectAtIndex:11];
+    object = [data objectAtIndex:kMCCriticalHitVisibleIndex];
     NSDictionary *criticalHitVisible;
     if ([object rangeOfString:@"-"].length == 0) {
         criticalHitVisible = @{
@@ -70,9 +104,9 @@
                                @"dice":@{@"count":@(1),
                                          @"size":@(20)}};
     }
-    [content setObject:criticalHitVisible forKey:@"critical-hit-visible"];
+    [content setObject:criticalHitVisible forKey:kMCCriticalHitVisibleKey];
     /* critical-hit-invisible */
-    object = [data objectAtIndex:12];
+    object = [data objectAtIndex:kMCCriticalHitInvisibleIndex];
     NSDictionary *criticalHitInvisible;
     if ([object rangeOfString:@"-"].length == 0) {
         criticalHitInvisible = @{
@@ -88,27 +122,27 @@
                                  @"dice":@{@"count":@(1),
                                            @"size":@(20)}};
     }
-    [content setObject:criticalHitInvisible forKey:@"critical-hit-invisible"];
+    [content setObject:criticalHitInvisible forKey:kMCCriticalHitInvisibleKey];
     /* critical-hit */
-    [content setObject:@([[data objectAtIndex:13] integerValue]) forKey:@"critical-hit"];
+    [content setObject:@([[data objectAtIndex:kMCCriticalHitIndex] integerValue]) forKey:kMCCriticalHitKey];
     /* distance */
-    [content setObject:@([[data objectAtIndex:14] integerValue]) forKey:@"distance"];
+    [content setObject:@([[data objectAtIndex:kMCDistanceIndex] integerValue]) forKey:kMCDistanceKey];
     /* skills */
-    NSString *skillA = [data objectAtIndex:15];
-    NSString *skillB = [data objectAtIndex:16];
-    NSString *skillC = [data objectAtIndex:17];
-    NSString *skillD = [data objectAtIndex:18];
+    NSString *skillA = [data objectAtIndex:kMCSkillAIndex];
+    NSString *skillB = [data objectAtIndex:kMCSkillBIndex];
+    NSString *skillC = [data objectAtIndex:kMCSkillCIndex];
+    NSString *skillD = [data objectAtIndex:kMCSkillDIndex];
     NSDictionary *skills = @{@"A":[skillA compare:@"-"] == NSOrderedSame ? [NSNull null] : skillA,
                              @"B":[skillB compare:@"-"] == NSOrderedSame ? [NSNull null] : skillB,
                              @"C":[skillC compare:@"-"] == NSOrderedSame ? [NSNull null] : skillC,
                              @"D":[skillD compare:@"-"] == NSOrderedSame ? [NSNull null] : skillD};
-    [content setObject:skills forKey:@"skills"];
+    [content setObject:skills forKey:kMCSkillsKey];
     /* effect */
-    id effect = [data objectAtIndex:19];
+    id effect = [data objectAtIndex:kMCEffectIndex];
     if ([(NSString *) effect compare:@"-"] != NSOrderedSame) {
-        [content setObject:effect forKey:@"effect"];
+        [content setObject:effect forKey:kMCEffectKey];
         /* effect-check */
-        object = [data objectAtIndex:20];
+        object = [data objectAtIndex:kMCEffectCheckIndex];
         NSDictionary *effectCheck;
         if ([object rangeOfString:@"-"].length == 0) {
             effectCheck = @{
@@ -124,10 +158,10 @@
                             @"dice":@{@"count":@(1),
                                       @"size":@(20)}};
         }
-        [content setObject:effectCheck forKey:@"effect-check"];
+        [content setObject:effectCheck forKey:kMCEffectCheckKey];
     } else {
-        [content setObject:[NSNull null] forKey:@"effect"];
-        [content setObject:[NSNull null] forKey:@"effect-check"];
+        [content setObject:[NSNull null] forKey:kMCEffectKey];
+        [content setObject:[NSNull null] forKey:kMCEffectCheckKey];
     }
     
     [self setObject:content forKey:ID];

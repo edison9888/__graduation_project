@@ -10,7 +10,10 @@
 
 MCNPC::~MCNPC()
 {
-    CC_SAFE_DELETE(viewport_);
+    CC_SAFE_RELEASE(face_);
+    CC_SAFE_RELEASE(spriteSheet_);
+    CC_SAFE_RELEASE(defaultDialogue_);
+    CC_SAFE_DELETE(viewport_); /* 非CCObject子类 */
 }
 
 MCNPC *
@@ -35,16 +38,23 @@ MCNPC::copy()
 {
     MCNPC *npc = new MCNPC;
     
-    /* 浅copy是也 */
-    npc->name_ = name_;
-    npc->description_ = description_;
+    npc->id_ = id_;
+    npc->tag_ = tag_;
+    npc->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
+    npc->name_->retain();
+    npc->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+    npc->description_->retain();
     
     npc->roleRace_ = roleRace_;
     npc->hp_ = hp_;
     npc->pp_ = pp_;
     npc->roleState_ = roleState_;
-    npc->face_ = face_;
-    npc->spriteSheet_ = spriteSheet_;
+    npc->face_ = CCString::create(face_->getCString()); /* 会被释放掉，所以要copy一个 */
+    npc->face_->retain();
+    npc->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */
+    npc->spriteSheet_->retain();
+    npc->defaultDialogue_ = CCString::create(defaultDialogue_->getCString()); /* 会被释放掉，所以要copy一个 */
+    npc->defaultDialogue_->retain();
     npc->ai_ = ai_;
     //warning: should design dialogue system
     

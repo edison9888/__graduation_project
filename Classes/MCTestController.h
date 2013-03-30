@@ -10,7 +10,7 @@
 #define __Military_Confrontation__MCTestController__
 
 #include "MCTestLayer.h"
-#include "MCControllerLayer.h"
+#include "MCJoypadControllerLayer.h"
 
 #include "MCGeometry.h"
 
@@ -18,7 +18,7 @@ USING_NS_CC;
 
 class MCRoleEntity;
 
-class MCTestController : public MCTestLayer, public MCControllerDelegate {
+class MCTestController : public MCTestLayer, public MCJoypadControllerDelegate {
     CCLabelTTF *label_;
     void draw();
     CCSprite *sp[4];
@@ -36,14 +36,14 @@ public:
         l1->init();
         scene->addChild(l1);
         
-        MCControllerLayer *layer = MCControllerLayer::create();
+        MCJoypadControllerLayer *layer = MCJoypadControllerLayer::create();
         layer->setDelegate(l1);
         scene->addChild(layer);
         
         return scene;
     }
     
-    void controllerMove(MCControllerDelegate *sender, const CCPoint &delta);
+    void controllerMove(MCJoypadControllerDelegate *sender, const CCPoint &delta);
     
     void onEnter();
     void onExit();

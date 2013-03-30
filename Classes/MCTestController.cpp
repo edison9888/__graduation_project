@@ -156,7 +156,7 @@ MCTestController::viewLocationToTiledMapLocation(CCPoint aViewLocation)
 }
 
 void
-MCTestController::controllerMove(MCControllerDelegate *sender, const CCPoint &delta)
+MCTestController::controllerMove(MCJoypadControllerDelegate *sender, const CCPoint &delta)
 {
     moveTo(delta);
 }

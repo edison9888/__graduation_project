@@ -27,6 +27,10 @@ public:
     void removeRole(MCRole *aRole);
     mc_size_t size();
     
+    inline bool isFull() {
+        return teams_->count() >= maxSize_;
+    }
+    
 private:
     CCArray *teams_;
     

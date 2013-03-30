@@ -18,7 +18,12 @@ const char *kMCFlagsKey = "ZmxhZ3M"; /* flags的BASE64编码没有最后的= */
 
 static MCFlagManager *__shared_flag_manager = NULL;
 
-const char *kMCFlagsFilepath = "F000.fpkg";
+const char *kMCFlagsFilepath = "F000.jpkg";
+
+/* 任务状态 */
+static mc_object_id_t kMCTaskFlagId = {'F', '0', '0', '1'};
+/* 高级区域封锁 */
+static mc_object_id_t kMCAreaBlockedFlagId = {'F', '0', '0', '2'};
 
 static vector<string>
 split(string& str,const char* c)
@@ -153,6 +158,10 @@ MCFlagManager::loadAllFlags()
             }
         }
     }
+    
+    /* 初始化特殊flag */
+    taskFlag_ = flagForObjectId(kMCTaskFlagId);
+    areaBlockedFlag_ = flagForObjectId(kMCAreaBlockedFlagId);
 }
 
 /**

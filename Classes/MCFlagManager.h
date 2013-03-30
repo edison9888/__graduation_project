@@ -30,6 +30,14 @@ public:
      */
     void saveAllFlags();
     
+    inline void setTaskStarted(bool flag) {
+        taskFlag_->setState(flag ? MCOnState : MCOffState);
+    }
+    
+    inline void unblockArea() {
+        areaBlockedFlag_->setState(MCOffState);
+    }
+    
 private:
     
     /**
@@ -39,6 +47,10 @@ private:
     
     CCDictionary *sourceFlags_; /* 源文件的标志 */
     CCDictionary *flags_;       /* 存储过的标志 */
+    
+    /* 特殊flag */
+    MCFlag *taskFlag_; /* 任务状态 */
+    MCFlag *areaBlockedFlag_; /* 高级区域封锁 */
 };
 
 #endif /* defined(__Military_Confrontation__MCFlagManager__) */

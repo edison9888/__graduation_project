@@ -328,13 +328,13 @@ void
 MCRoleEntity::findPathDidFinish(CCObject *obj)
 {
     MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
-    CCLog("%s::finished: %p",__FILE__+85,algo);
+    CCLog("%s::finished: %p",__FILE__+76,algo);
     CCArray *route = algo->getRoute();
     CCPoint *position;
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     
-    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithm);
-    CCLog("%s::nodes: %d", __FILE__+85,route->count());
+    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithmNotification);
+    CCLog("%s::nodes: %d", __FILE__+76,route->count());
     CCARRAY_FOREACH(route, obj) {
         position = (CCPoint *) obj;
         moveToDestinations_->addObject(position);
@@ -344,10 +344,10 @@ MCRoleEntity::findPathDidFinish(CCObject *obj)
     //warning: goto destination
     if (moveToDestinations_->count() > 0) {
         CCPoint *destination = (CCPoint *) moveToDestinations_->lastObject();
-        CCLog("%s::destination is: (%.0f %.0f)", __FILE__+85, destination->x, destination->y);
+        CCLog("%s::destination is: (%.0f %.0f)", __FILE__+76, destination->x, destination->y);
         CCARRAY_FOREACH(moveToDestinations_, obj) {
             destination = (CCPoint *) obj;
-            CCLog("%s::Point(%.0f %.0f)", __FILE__+85, destination->x, destination->y);
+            CCLog("%s::Point(%.0f %.0f)", __FILE__+76, destination->x, destination->y);
         }
     }
     runAction(CCMoveTo::create(1, *((CCPoint *)moveToDestinations_->lastObject())));

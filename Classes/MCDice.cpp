@@ -32,6 +32,11 @@ MCDice::roll()
     return sum;
 }
 
+MCDiceMaker::~MCDiceMaker()
+{
+    CC_SAFE_RELEASE(dices_);
+}
+
 /* 初始化 */
 bool
 MCDiceMaker::init()
@@ -71,6 +76,7 @@ MCDiceMaker::diceWithType(MCDiceType type)
     if (dice == NULL) {
         dice = MCDice::create();
         dice->_type = type;
+        dices_->setObject(dice, type);
     }
     
     return dice;

@@ -7,12 +7,27 @@
 //
 
 #import "MCWeaponHandler.h"
+#import "MCCSVHandlerMacros.h"
+
+static const NSUInteger kMCIDIndex = 0;
+
+MCDefineIndexAndKey(Name, 1, name);
+MCDefineIndexAndKey(Icon, 2, icon);
+MCDefineIndexAndKey(Price, 3, price);
+MCDefineIndexAndKey(Damage, 4, damage);
+MCDefineIndexAndKey(CriticalHitVisible, 7, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 8, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 9, critical-hit);
+MCDefineIndexAndKey(Distance, 12, distance);
+MCDefineIndexAndKey(Effect, 13, effect);
+MCDefineIndexAndKey(EffectCheck, 14, effect-check);
+MCDefineIndexAndKey(Dexterity, 15, dexterity);
 
 @implementation MCWeaponHandler
 
 + (NSString *)filename
 {
-    return @"E001.epkg";
+    return @"E001.jpkg";
 }
 
 + (NSString *)sourceFilename
@@ -32,7 +47,6 @@
  critical-hit-invisible | 非可视区域内重击范围 | D20的骰子的范围，有min、max，dice三个属性，dice为对象有count和size两个属性
  critical-hit           | 重击倍数           | 重击时伤害值乘以这个值得出重击伤害值
  distance               | 攻击距离           | 只能在此距离内攻击
- damage-type            | 伤害类型           | 值为1、2、4，分别代表穿刺、挥砍、钝击
  effect                 | 武器附带效果        | 只有锤子有击晕效果，其他武器为null值
  effect-check           | 武器附带效果判定范围 | 只有锤子有击晕效果判定，有min、max，dice三个属性，dice为对象有count和size两个属性，其他武器为null值
  dexterity              | 敏捷调整值         | 参与命中判定的值
@@ -52,23 +66,23 @@
     NSString *ID = [data objectAtIndex:0];
     
     /* name */
-    [content setObject:[data objectAtIndex:1] forKey:@"name"];
+    [content setObject:[data objectAtIndex:kMCNameIndex] forKey:kMCNameKey];
     /* icon */
-    object = [data objectAtIndex:2];
+    object = [data objectAtIndex:kMCIconIndex];
     [content setObject:([(NSString *) object compare:@"-"] == NSOrderedSame
                         ? @""
                         : object)
-                forKey:@"icon"];
+                forKey:kMCIconKey];
     /* price */
-    [content setObject:@([[data objectAtIndex:3] integerValue]) forKey:@"price"];
+    [content setObject:[data objectAtIndex:kMCPriceIndex] forKey:kMCPriceKey];
     /* damage */
-    tempComponents = [[data objectAtIndex:4] componentsSeparatedByString:@"d"];
+    tempComponents = [[data objectAtIndex:kMCDamageIndex] componentsSeparatedByString:@"d"];
     NSDictionary *damage = @{
                              @"count": @([[tempComponents objectAtIndex:0] integerValue]),
                              @"size": @([[tempComponents objectAtIndex:1] integerValue])};
-    [content setObject:damage forKey:@"damage"];
+    [content setObject:damage forKey:kMCDamageKey];
     /* critical-hit-visible */
-    object = [data objectAtIndex:7];
+    object = [data objectAtIndex:kMCCriticalHitVisibleIndex];
     NSDictionary *criticalHitVisible;
     if ([object rangeOfString:@"-"].length == 0) {
         criticalHitVisible = @{
@@ -84,9 +98,9 @@
                                @"dice":@{@"count":@(1),
                                          @"size":@(20)}};
     }
-    [content setObject:criticalHitVisible forKey:@"critical-hit-visible"];
+    [content setObject:criticalHitVisible forKey:kMCCriticalHitVisibleKey];
     /* critical-hit-invisible */
-    object = [data objectAtIndex:8];
+    object = [data objectAtIndex:kMCCriticalHitInvisibleIndex];
     NSDictionary *criticalHitInvisible;
     if ([object rangeOfString:@"-"].length == 0) {
         criticalHitInvisible = @{
@@ -102,30 +116,17 @@
                                  @"dice":@{@"count":@(1),
                                            @"size":@(20)}};
     }
+    [content setObject:criticalHitInvisible forKey:kMCCriticalHitInvisibleKey];
     /* critical-hit */
-    [content setObject:@([[data objectAtIndex:9] integerValue]) forKey:@"critical-hit"];
+    [content setObject:@([[data objectAtIndex:kMCCriticalHitIndex] integerValue]) forKey:kMCCriticalHitKey];
     /* distance */
-    [content setObject:@([[data objectAtIndex:12] integerValue]) forKey:@"distance"];
-    /* damage-type */
-    NSString *damageType = [data objectAtIndex:13];
-    if ([damageType compare:@"穿刺"] == NSOrderedSame) {
-        [content setObject:@(1) forKey:@"damage-type"];
-    } else if ([damageType compare:@"挥砍"] == NSOrderedSame) {
-        [content setObject:@(2) forKey:@"damage-type"];
-    } else if ([damageType compare:@"钝击"] == NSOrderedSame) {
-        [content setObject:@(4) forKey:@"damage-type"];
-    } else if ([damageType compare:@"穿刺/挥砍"] == NSOrderedSame) {
-        [content setObject:@(3) forKey:@"damage-type"];
-    } else {
-        NSLog(@"未知伤害类型");
-        exit(1);
-    }
+    [content setObject:@([[data objectAtIndex:kMCDistanceIndex] integerValue]) forKey:kMCDistanceKey];
     /* effect */
-    id effect = [data objectAtIndex:14];
+    id effect = [data objectAtIndex:kMCEffectIndex];
     if ([(NSString *) effect compare:@"-"] != NSOrderedSame) {
-        [content setObject:effect forKey:@"effect"];
+        [content setObject:effect forKey:kMCEffectKey];
         /* effect-check */
-        object = [data objectAtIndex:15];
+        object = [data objectAtIndex:kMCEffectCheckIndex];
         NSDictionary *effectCheck;
         if ([object rangeOfString:@"-"].length == 0) {
             effectCheck = @{
@@ -141,13 +142,13 @@
                             @"dice":@{@"count":@(1),
                                       @"size":@(20)}};
         }
-        [content setObject:effectCheck forKey:@"effect-check"];
+        [content setObject:effectCheck forKey:kMCEffectCheckKey];
     } else {
-        [content setObject:[NSNull null] forKey:@"effect"];
-        [content setObject:[NSNull null] forKey:@"effect-check"];
+        [content setObject:[NSNull null] forKey:kMCEffectKey];
+        [content setObject:[NSNull null] forKey:kMCEffectCheckKey];
     }
     /* dexterity */
-    [content setObject:@([[data objectAtIndex:16] integerValue]) forKey:@"dexterity"];
+    [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     
     [self setObject:content forKey:ID];
 }

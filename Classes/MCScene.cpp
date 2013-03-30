@@ -6,7 +6,7 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
-#include "MCSceneManager.h"
+#include "MCSceneController.h"
 #include "MCScene.h"
 #include "MCEntrance.h"
 #include "MCAStar.h"
@@ -186,9 +186,11 @@ MCScene::uninstallTrigger(MCTrigger *aTrigger)
 void
 MCScene::gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal)
 {
-    MCSceneManager::sharedSceneManager()->changeSceneWithObjectId(aSceneId,
-                                                                  anEntranceName,
-                                                                  isInternal ? MCPushScene : MCReplaceScene);
+    MCSceneController *sceneController = MCSceneController::sharedSceneController();
+    sceneController->pushExpectedScene(aSceneId,
+                                       anEntranceName,
+                                       isInternal ? MCPushScene : MCReplaceScene);
+    sceneController->requestChangingScene();
 }
 
 /**
@@ -198,8 +200,9 @@ void
 MCScene::goOut()
 {
     if (isInternalScene_) {
-        
-        MCSceneManager::sharedSceneManager()->changeScene(NULL, NULL, MCPopScene);
+        MCSceneController *sceneController = MCSceneController::sharedSceneController();
+        sceneController->pushExpectedScene(NULL, NULL, MCPopScene);
+        sceneController->requestChangingScene();
     }
 }
 

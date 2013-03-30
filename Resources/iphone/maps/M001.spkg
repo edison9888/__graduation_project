@@ -26,8 +26,7 @@
     "cave-1": "M002",
     "house3": "M002",
     "house4": "M002",
-    "house5": "M002",
-    "forest-2": "M002"
+    "house5": "M002"
   },
   "description": "比奇村，主角的老家",
   "triggers": {

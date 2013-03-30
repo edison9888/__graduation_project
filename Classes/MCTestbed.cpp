@@ -18,6 +18,7 @@
 #include "MCTestOBB.h"
 #include "MCTestRoleBaseInfo.h"
 #include "MCTestAStar.h"
+#include "MCTestBattleController.h"
 
 const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
@@ -65,6 +66,7 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test OBB", MCTestOBB::scene},
     {"Test Role Base Info", MCTestRoleBaseInfo::scene},
     {"Test A*", MCTestAStar::scene},
+    {"Test Battle Controller", MCTestBattleController::scene},
     {"Enter the Game", MCTestGame::scene},
     {"Quit", __mc_quit::scene}
 };

@@ -7,3 +7,14 @@
 //
 
 #include "MCTaskTarget.h"
+
+CCObject *
+MCTaskTarget::copy()
+{
+    MCTaskTarget *target = new MCTaskTarget;
+    
+    target->objectID = objectID;
+    target->count = count;
+    
+    return target;
+}

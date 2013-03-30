@@ -25,6 +25,8 @@ public:
     ~MCGameState();
     static MCGameState* sharedGameState();
     
+    bool isSaveFileExists();
+    
     /**
      * 保存
      *

@@ -10,5 +10,6 @@
 #define Military_Confrontation_MCLuaCocos2d_h
 
 #include "_T_.h"
+#include "MCSceneController.h"
 
 #endif

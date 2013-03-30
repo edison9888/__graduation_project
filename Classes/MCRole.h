@@ -64,7 +64,6 @@ public:
     CC_SYNTHESIZE(CCString *, spriteSheet_, SpriteSheet); /* 角色精灵表 */
     
     CC_SYNTHESIZE(CCString *, defaultDialogue_, DefaultDialogue); /* 默认对白 */
-    CC_SYNTHESIZE(CCArray *, dialogues_, Dialogues); /* 当前场景可能的对白 */
     CC_SYNTHESIZE(mc_index_t, nextSentenceIndex_, NextSentenceIndex); /* 下一句话的索引号 */
     
     /* 显示相关 */

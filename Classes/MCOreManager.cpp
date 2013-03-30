@@ -11,7 +11,7 @@
 
 static MCOreManager *__shared_ore_manager = NULL;
 
-const char *kMCOresFilepath = "O000.opkg";
+const char *kMCOresFilepath = "O000.jpkg";
 
 
 MCOreManager::MCOreManager()

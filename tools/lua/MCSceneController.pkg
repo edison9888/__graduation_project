@@ -1,0 +1,16 @@
+
+enum {
+    MCPushScene     = 0,
+    MCPopScene      = 1,
+    MCReplaceScene  = 2
+};
+typedef mc_enum_t MCChangeSceneMethod;
+
+class MCSceneController {
+    static MCSceneController *sharedSceneController();
+    void pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene); 
+    void pushExpectedScene(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+    void requestChangingScene();
+    
+    void __changeScene();
+};

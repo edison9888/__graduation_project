@@ -28,8 +28,9 @@ MCTeam::~MCTeam()
 MCTeam *
 MCTeam::sharedTeam()
 {
-    if (__shared_team) {
+    if (__shared_team == NULL) {
         __shared_team = new MCTeam;
+        __shared_team->addRole(MCHero::sharedHero());
     }
     
     return __shared_team;
@@ -56,10 +57,9 @@ MCTeam::hasRole(MCRole *aRole)
 {
     CCObject *obj;
     MCRole *role;
-    mc_object_id_t aRoleId = aRole->getID();
     CCARRAY_FOREACH(teams_, obj) {
         role = (MCRole *)obj;
-        if (MCObjectIdIsEqualsTo(role->getID(), aRoleId)) {
+        if (role == aRole) {
             return true;
         }
     }

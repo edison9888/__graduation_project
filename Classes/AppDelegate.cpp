@@ -69,7 +69,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, kResolutionNoBorder);
 		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
     }
-//    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
+    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     int i = 0;
     int size = sizeof(resources);

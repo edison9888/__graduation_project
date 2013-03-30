@@ -13,7 +13,7 @@
 USING_NS_CC;
 #include "MCGeometry.h"
 
-extern const char *kMCAStarDidFinishAlgorithm;
+extern const char *kMCAStarDidFinishAlgorithmNotification;
 
 class MCRole;
 class MCAStarAlgorithm;

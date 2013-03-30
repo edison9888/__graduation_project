@@ -12,8 +12,8 @@
 MCViewport::~MCViewport()
 {
     /* deprecated */
-//    CC_SAFE_DELETE(line1_);
-//    CC_SAFE_DELETE(line2_);
+//    CC_SAFE_RELEASE(line1_);
+//    CC_SAFE_RELEASE(line2_);
 }
 
 bool

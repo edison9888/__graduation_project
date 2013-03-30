@@ -10,7 +10,7 @@
 //#include "MCOBB.h"
 #include "MCRole.h"
 
-const char *kMCAStarDidFinishAlgorithm = "kMCAStarDidFinishAlgorithm";
+const char *kMCAStarDidFinishAlgorithmNotification = "kMCAStarDidFinishAlgorithmNotification";
 
 struct __mc_offset {
     int x;
@@ -353,7 +353,7 @@ MCAStarAlgorithm::process(CCObject *obj)
     /* 反序 */
     route_->reverseObjects();
     /* 发出算法结束的通知 */
-    notificatinCenter->postNotification(kMCAStarDidFinishAlgorithm);
+    notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification);
 }
 
 #pragma mark *** MCAStar ***
@@ -408,13 +408,13 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
     MCAStarAlgorithm *algo;
     
     startPoint = ccpAdd(startPoint, mapOffset);
-    CCLog("%s::start: (%.2f %.2f)", __FILE__+85, startPoint.x, startPoint.y);
+    CCLog("%s::start: (%.2f %.2f)", __FILE__+76, startPoint.x, startPoint.y);
     startPoint = tileCoordinateAt(startPoint);
-    CCLog("%s::start: (%.2f %.2f)[tileCoordinate]", __FILE__+85, startPoint.x, startPoint.y);
+    CCLog("%s::start: (%.2f %.2f)[tileCoordinate]", __FILE__+76, startPoint.x, startPoint.y);
     endPoint = ccpAdd(aDestinationLocation, mapOffset);
-    CCLog("%s::end: (%.2f %.2f)", __FILE__+85, endPoint.x, endPoint.y);
+    CCLog("%s::end: (%.2f %.2f)", __FILE__+76, endPoint.x, endPoint.y);
     endPoint = tileCoordinateAt(endPoint);
-    CCLog("%s::end: (%.2f %.2f)[tileCoordinate]", __FILE__+85, endPoint.x, endPoint.y);
+    CCLog("%s::end: (%.2f %.2f)[tileCoordinate]", __FILE__+76, endPoint.x, endPoint.y);
     algo = new MCAStarAlgorithm;
     algo->init(metaLayer->getTiles(),
                metaLayer->getLayerSize().width,
@@ -422,14 +422,14 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
                endPoint);
     algo->setMetaLayer(metaLayer);
     algoInstances_->addObject(algo);
-    CCLog("%s::finished: %d",__FILE__+85,algo->retainCount());
+    CCLog("%s::finished: %d",__FILE__+76,algo->retainCount());
     notificatinCenter->addObserver(this,
                                    callfuncO_selector(MCAStar::algorithmDidFinish),
-                                   kMCAStarDidFinishAlgorithm,
+                                   kMCAStarDidFinishAlgorithmNotification,
                                    algo);
     notificatinCenter->addObserver(aRole->getEntity(),
                                    callfuncO_selector(MCRoleEntity::findPathDidFinish),
-                                   kMCAStarDidFinishAlgorithm,
+                                   kMCAStarDidFinishAlgorithmNotification,
                                    algo);
     algo->execute();
     
@@ -457,7 +457,7 @@ MCAStar::algorithmDidFinish(CCObject *obj)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     
-    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithm);
+    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithmNotification);
     algoInstances_->removeObject(obj);
     CCTime c;
     struct cc_timeval tp;

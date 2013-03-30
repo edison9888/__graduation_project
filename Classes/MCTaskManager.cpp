@@ -7,15 +7,16 @@
 //
 
 #include "MCTaskManager.h"
+#include "MCFlagManager.h"
 
-    //warning: delete .json
-const char *__task_package_file_path = "T000.tpkg.json";
+const char *kMCTaskPackageFilepath = "T000.jpkg";
+const char *kMCTaskDidFinishNotification = "kMCTaskDidFinishNotification";
 
 static MCTaskManager *__shared_task_manager = NULL;
 
 MCTaskManager::~MCTaskManager()
 {
-    CC_SAFE_DELETE(taskAccessor_);
+    CC_SAFE_DELETE(taskAccessor_); /* 非CCObject子类 */
 }
 
 MCTaskManager *
@@ -32,7 +33,7 @@ MCTaskManager::sharedTaskManager()
 MCTask *
 MCTaskManager::taskWithObjectId(mc_object_id_t anObjectId)
 {
-    MCTask *task = taskAccessor_->taskWithObjectId(anObjectId);
+    MCTask *task = (MCTask *) taskAccessor_->taskWithObjectId(anObjectId)->copy();
     
     return task;
 }
@@ -74,6 +75,7 @@ MCTaskManager::acceptTask(MCTask *task)
     if (status == MCTaskUncompleted) {
         currentTask_ = task;
         task->setTaskStatus(MCTaskActiviting);
+        MCFlagManager::sharedFlagManager()->setTaskStarted(true);
         return true;
     }
     
@@ -97,6 +99,7 @@ MCTaskManager::abortTask(MCTask *task)
 {
     currentTask_ = NULL;
     task->setTaskStatus(MCTaskUncompleted);
+    MCFlagManager::sharedFlagManager()->setTaskStarted(false);
 }
 
 /**
@@ -106,24 +109,6 @@ void
 MCTaskManager::abortTaskWithObjectId(mc_object_id_t anObjectId)
 {
     abortTask(taskWithObjectId(anObjectId));
-}
-
-/**
- * 完成一个任务，成功完成返回true，否则返回false
- */
-void
-MCTaskManager::taskDidComplete(MCTask *task)
-{
-    task->setTaskStatus(MCTaskDone);
-}
-
-/**
- * 以任务ID完成一个任务，成功完成返回true，否则返回false
- */
-void
-MCTaskManager::taskDidCompleteWithObjectId(mc_object_id_t anObjectId)
-{
-    taskDidComplete(taskWithObjectId(anObjectId));
 }
 
 /**
@@ -139,10 +124,38 @@ MCTaskManager::loadTasks()
         
         /* 加载任务 */
         taskAccessor_ = new MCTaskAccessor;
-        taskAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(__task_package_file_path));
+        taskAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(kMCTaskPackageFilepath));
         
         result = true;
     } while (0);
     
     return result;
+}
+
+void
+MCTaskManager::startCurrentTask()
+{
+    if (currentTask_) {
+        CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
+        notificationCenter->addObserver(currentTask_,
+                                        callfuncO_selector(MCTaskManager::taskDidFinish),
+                                        kMCTaskDidFinishNotification,
+                                        currentTask_);
+        /* 建立任务上下文 */
+        currentTask_->generateTaskContext();
+    }
+}
+
+void
+MCTaskManager::taskDidFinish(CCObject *obj)
+{
+    CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
+    MCTask *task = dynamic_cast<MCTask *>(obj);
+    
+    /* 清点任务 */
+    task->setTaskStatus(MCTaskDone);
+    
+    notificatinCenter->removeObserver(task, kMCTaskDidFinishNotification);
+    delete task; /* 由于是copy出来的，所以要清理下 */
+    MCFlagManager::sharedFlagManager()->setTaskStarted(false);
 }

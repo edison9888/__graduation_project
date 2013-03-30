@@ -28,7 +28,7 @@ MCSceneMake(MCScenePackageType aScenePackageType) {
 };
 
 const char *kMCScenesResourceFilePath = "scenes.spkg";
-static MCSceneManager *__shared_scene_list = NULL;
+static MCSceneManager *__shared_scene_manager = NULL;
 
 MCSceneManager::MCSceneManager()
 {
@@ -36,9 +36,6 @@ MCSceneManager::MCSceneManager()
     scenes_->retain();
     scenePackages_ = CCDictionary::create();
     scenePackages_->retain();
-    
-    lastScene_ = NULL;
-    currentScene_ = NULL;
 }
 
 MCSceneManager::~MCSceneManager()
@@ -50,14 +47,14 @@ MCSceneManager::~MCSceneManager()
 MCSceneManager *
 MCSceneManager::sharedSceneManager()
 {
-    if (__shared_scene_list == NULL) {
-        __shared_scene_list = new MCSceneManager;
-        if (__shared_scene_list) {
-            __shared_scene_list->loadSceneListFile();
+    if (__shared_scene_manager == NULL) {
+        __shared_scene_manager = new MCSceneManager;
+        if (__shared_scene_manager) {
+            __shared_scene_manager->loadSceneListFile();
         }
     }
     
-    return __shared_scene_list;
+    return __shared_scene_manager;
 }
 
 MCScenePackage *
@@ -102,44 +99,6 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
     if (scene) {
         scenes_->removeObjectForKey(key);
     }
-}
-
-/**
- * 切换当前场景为aNewScene
- */
-void
-MCSceneManager::changeScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
-{
-    if ((aNewScene == NULL && method != MCPopScene)
-        || aNewScene == NULL
-        || !aNewScene->hasEntrance(anEntranceName)) {
-        return;
-    }
-    
-    if (MCPushScene == method) {
-        CCDirector::sharedDirector()->pushScene(aNewScene);
-        lastScene_ = currentScene_;
-        currentScene_ = aNewScene;
-    } else if (MCPopScene == method) {
-        CCDirector::sharedDirector()->popScene();
-        MCScene *tmp = lastScene_;
-        lastScene_ = currentScene_;
-        currentScene_ = tmp; /* lastScene_ */
-    } else {
-        CCDirector::sharedDirector()->replaceScene(aNewScene);
-        lastScene_ = currentScene_;
-        currentScene_ = aNewScene;
-    }
-}
-
-/**
- * 切换当前场景为ID为anObjectId的场景
- */
-void
-MCSceneManager::changeSceneWithObjectId(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method)
-{
-    MCScene *newScene = sceneWithObjectId(anObjectId);
-    changeScene(newScene, anEntranceName, method);
 }
 
 void

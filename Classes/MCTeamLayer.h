@@ -42,11 +42,13 @@ public:
         return group_->team_;
     }
     
+    MCRoleBaseInfo *roleBaseInfoForTouch(CCTouch *aTouch);
+    
 private:
     MCRoleBaseInfoGroup *group_;
     bool isMultiSeletionMode_;
     
-    CC_SYNTHESIZE_READONLY(CCArray *, selecredRoles_, SelecredRoles);
+    CC_SYNTHESIZE_READONLY(CCArray *, selectedRoles_, SelectedRoles);
 };
 
 #endif /* defined(__Military_Confrontation__MCTeamLayer__) */

@@ -13,8 +13,11 @@ using namespace std;
 #include "MCBase64.h"
 #include "MCBackpack.h"
 #include "MCMercenaryManager.h"
+#include "MCDice.h"
 
 const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
+const char *kMCMercenariesFilepath = "M000.jpkg";
+const char *kMCSpriteSheetBaseDirectory = "spritesheets";
 
 static MCMercenaryManager *__shared_mercenary_manager = NULL;
 
@@ -35,10 +38,130 @@ MCMercenaryManager::sharedMercenaryManager()
 {
     if (__shared_mercenary_manager == NULL) {
         __shared_mercenary_manager = new MCMercenaryManager;
+        __shared_mercenary_manager->loadMercenaries();
         __shared_mercenary_manager->loadData();
     }
     
     return __shared_mercenary_manager;
+}
+
+void
+MCMercenaryManager::loadMercenaries()
+{
+    JsonBox::Value v;
+    JsonBox::Object mercenaries;
+    JsonBox::Object::iterator mercenariesIterator;
+    MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
+    CCString *ccstring;
+    
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCMercenariesFilepath));
+    mercenaries = v.getObject();
+
+    for (mercenariesIterator = mercenaries.begin();
+         mercenariesIterator != mercenaries.end();
+         ++mercenariesIterator) {
+        const char *c_str_m_id = mercenariesIterator->first.c_str();
+        mc_object_id_t m_id = {
+            c_str_m_id[0],
+            c_str_m_id[1],
+            c_str_m_id[2],
+            c_str_m_id[3]
+        };
+        JsonBox::Object mercenaryObject = mercenariesIterator->second.getObject();
+        MCMercenary *mercenary = new MCMercenary;
+        mercenary->init();
+        mercenary->autorelease();
+        mercenary->setID(m_id);
+        /* name String */
+        ccstring = CCString::create(mercenaryObject["name"].getString().c_str());
+        mercenary->setName(ccstring);
+        ccstring->retain();
+        /* face String */
+        ccstring = CCString::create(mercenaryObject["face"].getString().c_str());
+        mercenary->setFace(ccstring);
+        ccstring->retain();
+        /* build sprite sheet file path */
+        ccstring = CCString::createWithFormat("%s/%c-%s",
+                                              kMCSpriteSheetBaseDirectory,
+                                              c_str_m_id[0] | 32,
+                                              c_str_m_id + 1);
+        mercenary->setSpriteSheet(ccstring);
+        ccstring->retain();
+        /* AI String */
+        const char *c_str_ai_id = mercenariesIterator->first.c_str();
+        mc_object_id_t ai_id = {
+            c_str_ai_id[0],
+            c_str_ai_id[1],
+            c_str_ai_id[2],
+            c_str_ai_id[3]
+        };
+            //todo: set ai
+        /* cost Integer */
+        mercenary->cost_ = mercenaryObject["cost"].getInt();
+        /* HP Integer */
+        mercenary->setHP(mercenaryObject["HP"].getInt());
+        mercenary->setMaxHP(mercenary->getHP());
+        /* PP Integer */
+        mercenary->setPP(mercenaryObject["PP"].getInt());
+        mercenary->setMaxPP(mercenary->getPP());
+        /* AC Integer */
+        mercenary->setAC(mercenaryObject["AC"].getInt());
+        /* armor-check-penalty Integer */
+        mercenary->setArmorCheckPenalty(mercenaryObject["armor-check-penalty"].getInt());
+        /* damage Object */
+        /* damage.count Integer */
+        /* damage.size Integer */
+        JsonBox::Object damage = mercenaryObject["damage"].getObject();
+        mercenary->setDamage(diceMaker->diceWithType(MCMakeDiceType(damage["count"].getInt(),
+                                                                    damage["size"].getInt())));
+        /* damage-bonus Integer */
+        mercenary->setDamageBonus(mercenaryObject["damage-bonus"].getInt());
+        /* critical-hit-visible Object */
+        /* critical-hit-visible.min Integer */
+        /* critical-hit-visible.max Integer */
+        /* critical-hit-visible.dice Object */
+        /* critical-hit-visible.dice.count Integer */
+        /* critical-hit-visible.dice.size Integer */
+        JsonBox::Object diceRange = mercenaryObject["critical-hit-visible"].getObject();
+        JsonBox::Object diceRangeDice = diceRange["dice"].getObject();
+        mercenary->criticalHitVisible_.min = diceRange["min"].getInt();
+        mercenary->criticalHitVisible_.max = diceRange["max"].getInt();
+        mercenary->criticalHitVisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                             diceRangeDice["size"].getInt());
+        /* critical-hit-invisible Object */
+        /* critical-hit-invisible.min Integer */
+        /* critical-hit-invisible.max Integer */
+        /* critical-hit-invisible.dice Object */
+        /* critical-hit-invisible.dice.count Integer */
+        /* critical-hit-invisible.dice.size Integer */
+        diceRange = mercenaryObject["critical-hit-invisible"].getObject();
+        diceRangeDice = diceRange["dice"].getObject();
+        mercenary->criticalHitInvisible_.min = diceRange["min"].getInt();
+        mercenary->criticalHitInvisible_.max = diceRange["max"].getInt();
+        mercenary->criticalHitInvisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                               diceRangeDice["size"].getInt());
+        /* critical-hit Double */
+        mercenary->setCriticalHit(mercenaryObject["critical-hit"].getDouble());
+        /* distance Integer */
+        mercenary->setDistance(mercenaryObject["distance"].getInt());
+#warning 木有配置技能
+        /* effect Integer */
+        mercenary->setEffect(mercenaryObject["effect"].getInt());
+        /* effect-check Object */
+        /* effect-check.min Integer */
+        /* effect-check.max Integer */
+        /* effect-check.dice Object */
+        /* effect-check.dice.count Integer */
+        /* effect-check.dice.size Integer */
+        diceRange = mercenaryObject["effect-check"].getObject();
+        diceRangeDice = diceRange["dice"].getObject();
+        mercenary->effectCheck_.min = diceRange["min"].getInt();
+        mercenary->effectCheck_.max = diceRange["max"].getInt();
+        mercenary->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                      diceRangeDice["size"].getInt());
+        
+        mercenaries_->setObject(mercenary, MCObjectIdToDickKey(m_id));
+    }
 }
 
 MCMercenary *
@@ -70,7 +193,7 @@ mc_ssize_t
 MCMercenaryManager::hire(mc_object_id_t anObjectId)
 {
     MCBackpack *backpack = MCBackpack::sharedBackpack();
-    MCMercenary *mercenary = (MCMercenary *) mercenaries_->objectForKey(MCObjectIdToDickKey(anObjectId));
+    MCMercenary *mercenary = mercenaryForObjectId(anObjectId);
     
     if (mercenary->cost_ > backpack->getMoney()) {
         return kMCNotEnoughMoney;
@@ -79,6 +202,11 @@ MCMercenaryManager::hire(mc_object_id_t anObjectId)
     if (hired_->hasRole(mercenary)) {
         return kMCHired;
     }
+    if (hired_->isFull()) {
+        return kMCFullTeam;
+    }
+    
+    hired_->addRole(mercenary);
 
     return kMCHandleSucceed;
 }

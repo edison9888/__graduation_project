@@ -37,7 +37,7 @@ private:
     MCEnemy *metaEnemyForObjectId(mc_object_id_t anObjectId);
     
     void loadNPCData();
-    void loadMonsterData();
+    void loadEnemyData();
     
 private:
     CCDictionary *npcs_; /* NPC */

@@ -50,8 +50,12 @@ class MCTestTaskManager : public MCTestLayer {
 public:
     bool init() {
         if (MCTestLayer::initWithColor(ccc4(64, 64, 64, 255))) {
-            MCTaskManager::sharedTaskManager()->saveData();
-            MCTaskManager::sharedTaskManager()->loadData();
+            CCDictionary *tasks = MCTaskManager::sharedTaskManager()->tasks();
+            CCDictElement *e;
+            CCDICT_FOREACH(tasks, e) {
+                MCTask *task = (MCTask *) e->getObject();
+                CCLog("task: %s", task->getName()->getCString());
+            }
             return true;
         }
         
