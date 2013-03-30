@@ -212,6 +212,8 @@
 		A3C2C87316F846F600A14FD2 /* MCSkill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87116F846F400A14FD2 /* MCSkill.cpp */; };
 		A3C2C87816F849C200A14FD2 /* MCSkillManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87616F849C200A14FD2 /* MCSkillManager.cpp */; };
 		A3C2C87C16F8515F00A14FD2 /* MCMercenary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */; };
+		A3D1376D1706DBCD003D8F89 /* MCNPCHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3D1376B1706DBCD003D8F89 /* MCNPCHandler.h */; };
+		A3D1376E1706DBCD003D8F89 /* MCNPCHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3D1376C1706DBCD003D8F89 /* MCNPCHandler.m */; };
 		A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */; };
 		A3E87E7B170352B100C2E537 /* MCSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E87E79170352B100C2E537 /* MCSceneController.cpp */; };
 		A3E87E811703596600C2E537 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = A3E87E801703596600C2E537 /* Readme.md */; };
@@ -666,6 +668,8 @@
 		A3C2C87716F849C200A14FD2 /* MCSkillManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCSkillManager.h; path = ../Classes/MCSkillManager.h; sourceTree = "<group>"; };
 		A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMercenary.cpp; path = ../Classes/MCMercenary.cpp; sourceTree = "<group>"; };
 		A3C2C87B16F8515F00A14FD2 /* MCMercenary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCMercenary.h; path = ../Classes/MCMercenary.h; sourceTree = "<group>"; };
+		A3D1376B1706DBCD003D8F89 /* MCNPCHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCNPCHandler.h; sourceTree = "<group>"; };
+		A3D1376C1706DBCD003D8F89 /* MCNPCHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNPCHandler.m; sourceTree = "<group>"; };
 		A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDice.cpp; path = ../Classes/MCDice.cpp; sourceTree = "<group>"; };
 		A3D5AF9516AC3B8B00E74791 /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
 		A3E87E79170352B100C2E537 /* MCSceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSceneController.cpp; path = ../Classes/MCSceneController.cpp; sourceTree = "<group>"; };
@@ -1580,6 +1584,8 @@
 		A3F9EA5D16FB3CEA00150CFB /* Handler */ = {
 			isa = PBXGroup;
 			children = (
+				A3D1376B1706DBCD003D8F89 /* MCNPCHandler.h */,
+				A3D1376C1706DBCD003D8F89 /* MCNPCHandler.m */,
 				A35CB97B16FDE53400A345C6 /* MCMercenaryHandler.h */,
 				A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */,
 				A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */,
@@ -1905,6 +1911,8 @@
 				A35CB98A16FDF17E00A345C6 /* MCWeaponHandler.m in Sources */,
 				A33216311701BF4800CC06A6 /* MCTaskHandler.m in Sources */,
 				A33216351701D5D100CC06A6 /* MCFlagHandler.m in Sources */,
+				A3D1376D1706DBCD003D8F89 /* MCNPCHandler.h in Sources */,
+				A3D1376E1706DBCD003D8F89 /* MCNPCHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

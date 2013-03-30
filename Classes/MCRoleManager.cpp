@@ -11,7 +11,7 @@
 #include "MCNPC.h"
 #include "MCEnemy.h"
 
-const char *kMCNPCResourceFilePath = "npcs.npkg";
+const char *kMCNPCResourceFilePath = "N000.jpkg";
 
 static MCRoleManager *__shared_role_manager = NULL;
 
@@ -134,8 +134,8 @@ void
 MCRoleManager::loadNPCData()
 {
     JsonBox::Value v;
-    JsonBox::Array npcs;
-    JsonBox::Array::iterator npcsIterator;
+    JsonBox::Object npcs;
+    JsonBox::Object::iterator npcsIterator;
     JsonBox::Object npcObject;
     MCNPC *role;
     const char *c_str_object_id;
@@ -143,14 +143,14 @@ MCRoleManager::loadNPCData()
     CCString *ccstring;
     
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCNPCResourceFilePath));
-    npcs = v.getArray();
+    npcs = v.getObject();
     for (npcsIterator = npcs.begin(); npcsIterator != npcs.end(); ++npcsIterator) {
-        npcObject = npcsIterator->getObject();
-        c_str_object_id = npcObject["id"].getString().c_str();
+        c_str_object_id = npcsIterator->first.c_str();
         object_id.class_ = c_str_object_id[0];
         object_id.sub_class_ = c_str_object_id[1];
         object_id.index_ = c_str_object_id[2];
         object_id.sub_index_ = c_str_object_id[3];
+        npcObject = npcsIterator->second.getObject();
         role = new MCNPC;
         CCAssert(role != NULL, "内存不足！");
         ccstring = CCString::create(npcObject["face"].getString().c_str());
@@ -159,7 +159,7 @@ MCRoleManager::loadNPCData()
         ccstring = CCString::create(npcObject["name"].getString().c_str());
         role->setName(ccstring);
         ccstring->retain();
-        ccstring = CCString::create(npcObject["spritesheet"].getString().c_str());
+        ccstring = CCString::create(npcObject["sprite-sheet"].getString().c_str());
         role->setSpriteSheet(ccstring);
         ccstring->retain();
         ccstring = CCString::create(npcObject["description"].getString().c_str());
@@ -171,8 +171,7 @@ MCRoleManager::loadNPCData()
         role->setID(object_id);
         role->init();
         role->autorelease();
-    //warning: 需要retain？
-        role->retain();
+        CCLog("%s(%d): %s",__FILE__+76,__LINE__, role->getSpriteSheet()->getCString());
         npcs_->setObject(role, MCObjectIdToDickKey(object_id));
     }
 }

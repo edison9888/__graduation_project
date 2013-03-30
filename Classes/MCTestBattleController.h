@@ -34,6 +34,7 @@ public:
         m_id.sub_index_ = '1';
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        m_id.sub_index_ = '2';
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
         
         mc_object_id_t t_id = {

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "MCCSVConvertor.h"
+#import "MCNPCHandler.h"
 #import "MCMercenaryHandler.h"
 #import "MCEnemyHandler.h"
 #import "MCWeaponHandler.h"
@@ -26,6 +27,14 @@ int main(int argc, const char * argv[])
         MCCSVHandler *handler;
         
         [convertor setCsvDirectory:root];
+        
+        /* NPC */
+        handler = [[MCNPCHandler alloc] init];
+        handler.startLine = 1;
+        handler.ignoreLine = 0;
+        [convertor setHandler:handler];
+        [convertor convert];
+        [handler release];
         
         /* 佣兵 */
         handler = [[MCMercenaryHandler alloc] init];
