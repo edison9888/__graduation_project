@@ -165,6 +165,11 @@
 		A33BCA20169EA65600196286 /* CCPhysicsDebugNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC9B7169EA65600196286 /* CCPhysicsDebugNode.cpp */; };
 		A33BCA21169EA65600196286 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC9B9169EA65600196286 /* CCPhysicsSprite.cpp */; };
 		A33BCA5F169EA6CE00196286 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCA5E169EA6CE00196286 /* libcurl.dylib */; };
+		A34F706E1707EFAA006C3313 /* MCScenePackageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F706C1707EFAA006C3313 /* MCScenePackageGenerator.m */; };
+		A34F70741707F104006C3313 /* MCTMXGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F70721707F104006C3313 /* MCTMXGenerator.m */; };
+		A34F70781707F644006C3313 /* MCScenes.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F70761707F644006C3313 /* MCScenes.m */; };
+		A34F707C1707F75E006C3313 /* MCScenePackage.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F707A1707F75E006C3313 /* MCScenePackage.m */; };
+		A34F707D1707FF0D006C3313 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 41CD6C9715BF77CE005E6F29 /* libxml2.dylib */; };
 		A3592B3416B9440900E0AD58 /* MCDetailLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */; };
 		A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */; };
 		A35CB97E16FDE53400A345C6 /* MCMercenaryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */; };
@@ -213,7 +218,6 @@
 		A3C2C87316F846F600A14FD2 /* MCSkill.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87116F846F400A14FD2 /* MCSkill.cpp */; };
 		A3C2C87816F849C200A14FD2 /* MCSkillManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87616F849C200A14FD2 /* MCSkillManager.cpp */; };
 		A3C2C87C16F8515F00A14FD2 /* MCMercenary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C87A16F8515F00A14FD2 /* MCMercenary.cpp */; };
-		A3D1376D1706DBCD003D8F89 /* MCNPCHandler.h in Sources */ = {isa = PBXBuildFile; fileRef = A3D1376B1706DBCD003D8F89 /* MCNPCHandler.h */; };
 		A3D1376E1706DBCD003D8F89 /* MCNPCHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3D1376C1706DBCD003D8F89 /* MCNPCHandler.m */; };
 		A3D5AF9816AC3B8B00E74791 /* MCDice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3D5AF9416AC3B8B00E74791 /* MCDice.cpp */; };
 		A3E87E7B170352B100C2E537 /* MCSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3E87E79170352B100C2E537 /* MCSceneController.cpp */; };
@@ -570,6 +574,14 @@
 		A33BC9B9169EA65600196286 /* CCPhysicsSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCPhysicsSprite.cpp; sourceTree = "<group>"; };
 		A33BC9BA169EA65600196286 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		A33BCA5E169EA6CE00196286 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
+		A34F706B1707EFAA006C3313 /* MCScenePackageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCScenePackageGenerator.h; sourceTree = "<group>"; };
+		A34F706C1707EFAA006C3313 /* MCScenePackageGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCScenePackageGenerator.m; sourceTree = "<group>"; };
+		A34F70711707F104006C3313 /* MCTMXGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCTMXGenerator.h; sourceTree = "<group>"; };
+		A34F70721707F104006C3313 /* MCTMXGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTMXGenerator.m; sourceTree = "<group>"; };
+		A34F70751707F644006C3313 /* MCScenes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCScenes.h; sourceTree = "<group>"; };
+		A34F70761707F644006C3313 /* MCScenes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCScenes.m; sourceTree = "<group>"; };
+		A34F70791707F75D006C3313 /* MCScenePackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCScenePackage.h; sourceTree = "<group>"; };
+		A34F707A1707F75E006C3313 /* MCScenePackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCScenePackage.m; sourceTree = "<group>"; };
 		A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDetailLayer.cpp; path = ../Classes/MCDetailLayer.cpp; sourceTree = "<group>"; };
 		A3592B3316B9440800E0AD58 /* MCDetailLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailLayer.h; path = ../Classes/MCDetailLayer.h; sourceTree = "<group>"; };
 		A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCStateLayer.cpp; path = ../Classes/MCStateLayer.cpp; sourceTree = "<group>"; };
@@ -637,7 +649,7 @@
 		A39FAFF216B26325007FECB7 /* MCControllerDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCControllerDelegate.cpp; path = ../Classes/MCControllerDelegate.cpp; sourceTree = "<group>"; };
 		A39FB00716B27441007FECB7 /* MCGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCGeometry.cpp; path = ../Classes/MCGeometry.cpp; sourceTree = "<group>"; };
 		A39FB00816B27441007FECB7 /* MCGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCGeometry.h; path = ../Classes/MCGeometry.h; sourceTree = "<group>"; };
-		A3A042201705892A00CF90C9 /* MCCSVHandlerMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; path = MCCSVHandlerMacros.h; sourceTree = "<group>"; };
+		A3A042201705892A00CF90C9 /* MCCoreMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; path = MCCoreMacros.h; sourceTree = "<group>"; };
 		A3A0F91517070FEE0078DDCF /* MCControllerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCControllerLayer.cpp; path = ../Classes/MCControllerLayer.cpp; sourceTree = "<group>"; };
 		A3A0F91617070FEE0078DDCF /* MCControllerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCControllerLayer.h; path = ../Classes/MCControllerLayer.h; sourceTree = "<group>"; };
 		A3A8FAE416EEC858004EE947 /* MCViewport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCViewport.cpp; path = ../Classes/MCViewport.cpp; sourceTree = "<group>"; };
@@ -683,7 +695,7 @@
 		A3E8C49E16DCF92700060C94 /* MCBarrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBarrier.h; path = ../Classes/MCBarrier.h; sourceTree = "<group>"; };
 		A3F8F9F71701A542003C130C /* MCTestBattleController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestBattleController.cpp; path = ../Classes/MCTestBattleController.cpp; sourceTree = "<group>"; };
 		A3F8F9F81701A542003C130C /* MCTestBattleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestBattleController.h; path = ../Classes/MCTestBattleController.h; sourceTree = "<group>"; };
-		A3F9EA3E16FB305E00150CFB /* CSV Convertor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "CSV Convertor"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F9EA3E16FB305E00150CFB /* Resource Generator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Resource Generator"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F9EA4116FB305F00150CFB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A3F9EA4416FB305F00150CFB /* CSV Convertor-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CSV Convertor-Prefix.pch"; sourceTree = "<group>"; };
 		A3F9EA4516FB305F00150CFB /* CSV_Convertor.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = CSV_Convertor.1; sourceTree = "<group>"; };
@@ -723,6 +735,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A34F707D1707FF0D006C3313 /* libxml2.dylib in Frameworks */,
 				A3F9EA3F16FB305F00150CFB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -744,7 +757,6 @@
 				41CD6C5F15BF7522005E6F29 /* mac */,
 				41EFC1BB15BF7AC30083EA95 /* Products */,
 				41CD6C6115BF7556005E6F29 /* Resources */,
-				A3F9EA3E16FB305E00150CFB /* CSV Convertor */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1204,6 +1216,40 @@
 			path = physics_nodes;
 			sourceTree = "<group>";
 		};
+		A34F706A1707EF6C006C3313 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA3E16FB305E00150CFB /* Resource Generator */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A34F706F1707F0AF006C3313 /* CSV */ = {
+			isa = PBXGroup;
+			children = (
+				A3F9EA4B16FB30AD00150CFB /* MCCSVConvertor.h */,
+				A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */,
+				A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */,
+				A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */,
+			);
+			name = CSV;
+			sourceTree = "<group>";
+		};
+		A34F70701707F0B7006C3313 /* TMX */ = {
+			isa = PBXGroup;
+			children = (
+				A34F706B1707EFAA006C3313 /* MCScenePackageGenerator.h */,
+				A34F706C1707EFAA006C3313 /* MCScenePackageGenerator.m */,
+				A34F70711707F104006C3313 /* MCTMXGenerator.h */,
+				A34F70721707F104006C3313 /* MCTMXGenerator.m */,
+				A34F70751707F644006C3313 /* MCScenes.h */,
+				A34F70761707F644006C3313 /* MCScenes.m */,
+				A34F70791707F75D006C3313 /* MCScenePackage.h */,
+				A34F707A1707F75E006C3313 /* MCScenePackage.m */,
+			);
+			name = TMX;
+			sourceTree = "<group>";
+		};
 		A37C286B16AEBA1000A3D143 /* Roles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1549,9 +1595,10 @@
 			children = (
 				A3F9EA4116FB305F00150CFB /* main.m */,
 				A3F9EA5816FB3CCA00150CFB /* Core */,
-				A3F9EA5D16FB3CEA00150CFB /* Handler */,
+				A3F9EA5D16FB3CEA00150CFB /* Handlers */,
 				A3F9EA5716FB3A0700150CFB /* JSONKit */,
 				A3F9EA4316FB305F00150CFB /* Supporting Files */,
+				A34F706A1707EF6C006C3313 /* Products */,
 			);
 			path = "CSV Convertor";
 			sourceTree = "<group>";
@@ -1577,16 +1624,14 @@
 		A3F9EA5816FB3CCA00150CFB /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				A3F9EA4F16FB33CD00150CFB /* MCCSVHandler.h */,
-				A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */,
-				A3F9EA4B16FB30AD00150CFB /* MCCSVConvertor.h */,
-				A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */,
-				A3A042201705892A00CF90C9 /* MCCSVHandlerMacros.h */,
+				A34F706F1707F0AF006C3313 /* CSV */,
+				A34F70701707F0B7006C3313 /* TMX */,
+				A3A042201705892A00CF90C9 /* MCCoreMacros.h */,
 			);
 			name = Core;
 			sourceTree = "<group>";
 		};
-		A3F9EA5D16FB3CEA00150CFB /* Handler */ = {
+		A3F9EA5D16FB3CEA00150CFB /* Handlers */ = {
 			isa = PBXGroup;
 			children = (
 				A3D1376B1706DBCD003D8F89 /* MCNPCHandler.h */,
@@ -1606,7 +1651,7 @@
 				A332162E1701BF4800CC06A6 /* MCTaskHandler.h */,
 				A332162F1701BF4800CC06A6 /* MCTaskHandler.m */,
 			);
-			name = Handler;
+			name = Handlers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1630,9 +1675,9 @@
 			productReference = 41CD6C5115BF748C005E6F29 /* Military Confrontation.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A3F9EA3D16FB305E00150CFB /* CSV Convertor */ = {
+		A3F9EA3D16FB305E00150CFB /* Resource Generator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "CSV Convertor" */;
+			buildConfigurationList = A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "Resource Generator" */;
 			buildPhases = (
 				A3F9EA3A16FB305E00150CFB /* Sources */,
 				A3F9EA3B16FB305E00150CFB /* Frameworks */,
@@ -1642,9 +1687,9 @@
 			);
 			dependencies = (
 			);
-			name = "CSV Convertor";
+			name = "Resource Generator";
 			productName = "CSV Convertor";
-			productReference = A3F9EA3E16FB305E00150CFB /* CSV Convertor */;
+			productReference = A3F9EA3E16FB305E00150CFB /* Resource Generator */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -1675,7 +1720,7 @@
 			projectRoot = "";
 			targets = (
 				41851B9115B93C32004083E9 /* Military Confrontation */,
-				A3F9EA3D16FB305E00150CFB /* CSV Convertor */,
+				A3F9EA3D16FB305E00150CFB /* Resource Generator */,
 			);
 		};
 /* End PBXProject section */
@@ -1917,8 +1962,11 @@
 				A35CB98A16FDF17E00A345C6 /* MCWeaponHandler.m in Sources */,
 				A33216311701BF4800CC06A6 /* MCTaskHandler.m in Sources */,
 				A33216351701D5D100CC06A6 /* MCFlagHandler.m in Sources */,
-				A3D1376D1706DBCD003D8F89 /* MCNPCHandler.h in Sources */,
 				A3D1376E1706DBCD003D8F89 /* MCNPCHandler.m in Sources */,
+				A34F706E1707EFAA006C3313 /* MCScenePackageGenerator.m in Sources */,
+				A34F70741707F104006C3313 /* MCTMXGenerator.m in Sources */,
+				A34F70781707F644006C3313 /* MCScenes.m in Sources */,
+				A34F707C1707F75E006C3313 /* MCScenePackage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2095,14 +2143,18 @@
 		A3F9EA4816FB305F00150CFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_EMPTY_BODY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSV Convertor/CSV Convertor-Prefix.pch";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_VERSION = "";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = "";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -2110,14 +2162,17 @@
 		A3F9EA4916FB305F00150CFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_WARN_EMPTY_BODY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CSV Convertor/CSV Convertor-Prefix.pch";
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				GCC_VERSION = "";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				MACOSX_DEPLOYMENT_TARGET = "";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -2143,7 +2198,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "CSV Convertor" */ = {
+		A3F9EA4716FB305F00150CFB /* Build configuration list for PBXNativeTarget "Resource Generator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A3F9EA4816FB305F00150CFB /* Debug */,

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="30" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="sound" value="sounds/village.mp3"/>
+  <property name="tmx" value="maps/M004.tmx"/>
+ </properties>
+ <tileset firstgid="1" name="024-FarmVillage02" tilewidth="16" tileheight="16">
+  <image source="024-FarmVillage02.png" width="256" height="736"/>
+ </tileset>
+ <layer name="background" width="25" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA9NkYGDQAmJNGtKWQGxFY5qW7h/1x6g/Rv0x6o9Rf4z6Y9Qfo/4Y9ceoPwbaHwCV+4mquAsAAA==
+  </data>
+ </layer>
+ <layer name="first" width="25" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+2VsQ2AMAwEDRvARmSDZAOyAdm/wIXdUIDfEIrIL52uzUmRTES0MUmMkAzWZaaIEYrBup2pYoRqsO5gmhihGaybmamTdSuzdHJ0REd0RMfVnvuCdnjuC9rhuS9oh+e+oB2j/KvoGKfjaXfv+2pv3vfXTnHIg764CwAA
+  </data>
+ </layer>
+ <layer name="second" width="25" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA+3Ux04CURiG4YEb0TvQO7DcgL1sAUG3SNGdUnRnR3eaUCyJbih2N/aS2OvGXvaKuvZdHJNJZMJAziQs/JMnIfyH78uZAIpSGBNAUMe5abOizJgz72wmRWmBHQ7T3/0IQhq5Fs5bxWcWyV/S6HBxxg0PvAgjgihiGTrV42TfLs7skr+n0RHgTBA96EUcCSSRytLhY+8XZ67JvxEdRbxXrPrsCK9DGMVYlky9U0JOqaQsrSkjv1xnRxgRRBHDJKbEroLnUqnx/KvIr9bZEUcCSaQwjwWxqyG/VqMjl1nHBjaxhW3siJ2FfKuEjlOc4RwXuMSV2DnJb5fQ8YgnPOMFr3gTOx/5fgkd7/hAGp/4wrfYDZE/LKGjjox6NKARTWiWkKseG3ktsMOBVrRJ7nCR54YHXnSgU3JHIcwsv+W5HP6X0nl0rJK/pqOjizPdBv9HDpA/KKljmZwV9KFflSnzHvvkHGAcE6pMmfc45Ht9ZDb2Hrfk35mNvcfvHNNzovqtGvG9uif/QdVhxD3+J7/5Aco5zL64CwAA
+  </data>
+ </layer>
+ <layer name="third" width="25" height="30">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGPygk5GBoYuRtnbMBJo/i8Z2DHdwFBh+x2gchleB5l8bhPHEC3QTH43dJQs0Xw6I+5kYGCYw0dau+UDzF9DYjlEwCkbBKBgFxIOdwPJ/F43rmZNA808Nwjp2FCAAAA45GNq4CwAA
+  </data>
+ </layer>
+ <objectgroup name="entrances" width="25" height="30">
+  <object name="house3" type="entrance" x="144" y="448" width="80" height="16">
+   <properties>
+    <property name="dest" value="village-h3"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="barriers" width="25" height="30">
+  <object type="barrier" x="0" y="0" width="16" height="432"/>
+  <object type="barrier" x="0" y="432" width="144" height="16"/>
+  <object type="barrier" x="224" y="432" width="160" height="16"/>
+  <object type="barrier" x="384" y="0" width="16" height="448"/>
+  <object type="barrier" x="16" y="0" width="368" height="80"/>
+  <object type="barrier" x="352" y="80" width="32" height="48"/>
+  <object type="barrier" x="128" y="128" width="96" height="64"/>
+  <object type="barrier" x="240" y="128" width="32" height="64"/>
+  <object type="barrier" x="128" y="208" width="96" height="32"/>
+  <object type="barrier" x="176" y="304" width="208" height="16"/>
+  <object type="barrier" x="16" y="304" width="32" height="128"/>
+  <object type="barrier" x="352" y="320" width="32" height="96"/>
+  <object type="barrier" x="320" y="320" width="32" height="96"/>
+ </objectgroup>
+ <objectgroup name="semitransparent" width="25" height="30"/>
+ <objectgroup name="objects" width="25" height="30">
+  <object x="72" y="168">
+   <properties>
+    <property name="ID" value="N001"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

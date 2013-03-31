@@ -1,0 +1,1 @@
+{"scene-type":1,"id":"M002","scenes":{"house1":{"id":"M001","destination":"village-h1"}},"objects":{"N014":{"x":72,"y":168}},"background":{"tmx":"scenes/house-1.tmx","sound":"sounds/village.mp3"}}

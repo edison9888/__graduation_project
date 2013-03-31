@@ -7,7 +7,7 @@
 //
 
 #import "MCMercenaryHandler.h"
-#import "MCCSVHandlerMacros.h"
+#import "MCCoreMacros.h"
 
 static const NSUInteger kMCIDIndex = 0;
 
@@ -70,7 +70,7 @@ MCDefineIndexAndKey(EffectCheck, 23, effect-check);
     /* AI */
     [content setObject:[data objectAtIndex:kMCAIIndex] forKey:kMCAIKey];
     /* cost */
-    [content setObject:[data objectAtIndex:kMCCostIndex] forKey:kMCCostKey];
+    [content setObject:@([[data objectAtIndex:kMCCostIndex] integerValue]) forKey:kMCCostKey];
     /* HP */
     [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
     /* PP */

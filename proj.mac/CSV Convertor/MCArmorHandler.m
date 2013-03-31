@@ -7,7 +7,7 @@
 //
 
 #import "MCArmorHandler.h"
-#import "MCCSVHandlerMacros.h"
+#import "MCCoreMacros.h"
 
 static const NSUInteger kMCIDIndex = 0;
 

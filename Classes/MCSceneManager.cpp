@@ -27,7 +27,7 @@ MCSceneMake(MCScenePackageType aScenePackageType) {
     return scene;
 };
 
-const char *kMCScenesResourceFilePath = "scenes.spkg";
+const char *kMCScenesResourceFilePath = "S000.jpkg";
 static MCSceneManager *__shared_scene_manager = NULL;
 
 MCSceneManager::MCSceneManager()

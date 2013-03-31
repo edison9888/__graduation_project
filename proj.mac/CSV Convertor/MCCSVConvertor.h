@@ -19,9 +19,7 @@
 
 @property (nonatomic, copy) NSString *csvDirectory;
 @property (nonatomic, copy) NSString *outputFilepath;
-@property (nonatomic, retain) MCCSVHandler *handler;
-
-- (id)init;
+@property (nonatomic, assign) MCCSVHandler *handler;
 
 - (void)convert;
 

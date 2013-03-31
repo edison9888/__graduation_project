@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="scene-type" value="field"/>
+  <property name="sound" value="sounds/forest.mp3"/>
+  <property name="tmx" value="maps/M103.tmx"/>
+ </properties>
+ <tileset firstgid="1" name="forest" tilewidth="16" tileheight="16">
+  <image source="forest.png" trans="ffffff" width="1024" height="1312"/>
+  <terraintypes>
+   <terrain name="新地形" tile="-1"/>
+  </terraintypes>
+  <tile id="8" terrain=",0,,"/>
+  <tile id="9" terrain="0,0,,0"/>
+  <tile id="73" terrain="0,0,0,0"/>
+ </tileset>
+ <tileset firstgid="5249" name="barrier-mask4" tilewidth="16" tileheight="16">
+  <image source="barrier-mask4.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RMRHAMBDEwKfhMIv5A4lZSPGouFF/u2bmOVs/73u2Lyj9Yx55mEv/mEce5tI/5pGHufSPeeRhLv1jHnmYS/+YRx7m0j/mkYe59I955GEu/WMeeZhL/5hHHubSP+aRh7n0j3nkYe4H5nLEpBAnAAA=
+  </data>
+ </layer>
+ <layer name="first" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC93ax1IbWRQGYIlWRoSdx+FlQOS8c3wZgshpZ09weBUEApHZ2RMcHmU+eaAKIZUK1I0N81d9G90GnVP01eF2qZCIxfroZ4BBhuihl8I9WZ9ljiLzLLDINDP3aH2bHcrsskeFLUr3aD1IxmIJkqRIkyFOW/L+rBfoo58BBhmih957tJ4K9EiGB+lY7Bce8ojHPOE+ZED9gwzxVM3PeM4LXvLqjvWRTcViOdrJ00En8+pfYJHXan7Dr/zG7/xx3sdbe+kd7/mQ+Hl9DKt5hFHGGGeCXfXvUeGjmj/xJ3/xN/+c9/FZ7V/4yrcGfbzmzQ/tqDYpNaXJ8CBjf/CQRzzmSea/697aS+94z4dk/e/5yKcfWnltLs/Ip2p+xnNe8JJX5318VvsXvvKtQR8/O5dn5H3OxYwMc39P20MzzDJHkXkWWGSJZVZYZY11NtiM6PPwYkZe9/5u1O+WWkpss0OZXfaosM8BhxxxzAmnnEXUx+UZeZ006jduD7URkCBJijQZsuRoJ08HnXTRnal/jw02m9TQaD0Z1M70VtKjll4K9NHPAIMMMcwIo4wxzgSTTDXo45SzJu/XaL0/qJ3prWRaLTPMMkeReRZYZIllVlhljXU22GzQRyspBrUzvZVsqaXENjuU2WWPCvsccMgRx5xwyllEfZSD2pneSuJZ+4OABElSpMmQJUc7eTropIvubDR9JBO1M72V9KillwJ99DPAIEMMM8IoY4wzwSRTEfVx9dzbSqbVMsMscxSZZ4FFllhmhVXWWGeDzYj6uHrubSVbaimxzQ5ldtmjwj4HHHLEMSecchZRH1fPva0knrM/CEiQJEWaDFlytJOng0666M5F08fVc28r6VFLLwX66GeAQYYYZoRRxhhngkmmQvRxeR5ePfe2kmm1zDDLHEXmWWCRJZZZYZU11tlgM0Qfl+dh2FlezZZaSmyzQ5ld9qiwzwGHHHHMCaecRXRfhZ3l1cTb7Q8CEiRJseC8ucgSy9UztdfydNBJF93t0fQRdpZX06OWXgr00c8Ae2qvsM9B9UzttTHGmWCSqYj6CDvLq5lWywyzzFFknrT/yTNkyVXPH15bZY11NtiMqI+ws7yaLbWU2GaHMrsMqn2IYUaq5w+vHXHMCaecRdRH2FleTTxvfxCQIEmKNBmy5GgnTweddNGdj6aP/9v5vNVZflcSdpbflYSd5XclUczzu5Ao5vltZI31G1x/03neRXcLdV03F/Ufc3KDn2s0z5vVOslUizVeJzet/yKN5vlt1xo2je65KOb5baZRzY3+ZjeZ57e9NxrluvfZ1Xn+M/dGmFyd53e51mZpNs/jPsPaCEgE9c+0w65f5z2ue02z9R56KdAX1D/TDrteTVTXNFufZoZZ5oL6Z9ph16uJ6ppm61uU2GYnqH+mHXa9mqiuabYe9xnWVv0uDYlE/TPtsOvf7/2Irmm2ftvfBft+70d0zb+f0iIYECcAAA==
+  </data>
+ </layer>
+ <layer name="meta" width="50" height="50">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3XQQqAMAwAwT7CD/tzXyAWQdmWWcg1YY4ZQ9Jd57HPrBRHqxnHys4Zxwq2HR0rx9GKoxVHK45WHK04WnG0+srx99/C8byX4929HeJoxdGKoxVHK45WHK04WnG04mi1i+MCyHxCkRAnAAA=
+  </data>
+ </layer>
+ <objectgroup name="semi-transparents" width="50" height="50">
+  <object type="semi-transparent" x="16" y="80" width="48" height="720"/>
+  <object type="semi-transparent" x="64" y="704" width="720" height="96"/>
+  <object type="semi-transparent" x="272" y="192" width="256" height="224"/>
+  <object type="semi-transparent" x="48" y="80" width="176" height="64"/>
+ </objectgroup>
+ <objectgroup name="barriers" width="50" height="50">
+  <object type="barrier" x="0" y="0" width="800" height="80"/>
+  <object type="barrier" x="704" y="80" width="96" height="48"/>
+  <object type="barrier" x="0" y="80" width="16" height="720"/>
+  <object type="barrier" x="352" y="416" width="96" height="64"/>
+  <object type="barrier" x="48" y="128" width="96" height="48"/>
+  <object type="barrier" x="144" y="144" width="80" height="32"/>
+  <object type="barrier" x="0" y="800" width="800" height="16"/>
+  <object type="barrier" x="800" y="80" width="16" height="720"/>
+ </objectgroup>
+ <objectgroup name="entrances" width="50" height="50">
+  <properties>
+   <property name="sence-type" value="field"/>
+  </properties>
+  <object name="forest-3" type="entrance" x="800" y="128" width="32" height="672">
+   <properties>
+    <property name="ID" value="M101"/>
+    <property name="dest" value="forest-2-west"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="objects" width="50" height="50">
+  <object x="548" y="173">
+   <properties>
+    <property name="ID" value="E191"/>
+    <property name="flags" value="F113"/>
+   </properties>
+  </object>
+  <object x="596" y="186">
+   <properties>
+    <property name="ID" value="E120"/>
+    <property name="flags" value="F113"/>
+   </properties>
+  </object>
+  <object x="608" y="131">
+   <properties>
+    <property name="ID" value="E109"/>
+    <property name="flags" value="F113"/>
+   </properties>
+  </object>
+  <object x="168" y="489">
+   <properties>
+    <property name="ID" value="E192"/>
+    <property name="flags" value="F114"/>
+   </properties>
+  </object>
+  <object x="254" y="514">
+   <properties>
+    <property name="ID" value="E110"/>
+    <property name="flags" value="F114"/>
+   </properties>
+  </object>
+  <object x="159" y="555">
+   <properties>
+    <property name="ID" value="E107"/>
+    <property name="flags" value="F114"/>
+   </properties>
+  </object>
+  <object x="701" y="165">
+   <properties>
+    <property name="ID" value="E109"/>
+    <property name="flags" value="F113"/>
+   </properties>
+  </object>
+  <object x="669" y="217">
+   <properties>
+    <property name="ID" value="E120"/>
+    <property name="flags" value="F113"/>
+   </properties>
+  </object>
+  <object x="224" y="598">
+   <properties>
+    <property name="ID" value="E107"/>
+    <property name="flags" value="F114"/>
+   </properties>
+  </object>
+  <object x="319" y="539">
+   <properties>
+    <property name="ID" value="E110"/>
+    <property name="flags" value="F114"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

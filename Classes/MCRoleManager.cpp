@@ -171,7 +171,6 @@ MCRoleManager::loadNPCData()
         role->setID(object_id);
         role->init();
         role->autorelease();
-        CCLog("%s(%d): %s",__FILE__+76,__LINE__, role->getSpriteSheet()->getCString());
         npcs_->setObject(role, MCObjectIdToDickKey(object_id));
     }
 }

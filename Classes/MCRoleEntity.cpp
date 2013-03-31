@@ -42,13 +42,13 @@ MCRoleEntityMetadata::MCRoleEntityMetadata()
     animationGoRight_ = NULL;
     
     position_ = CCPointZero;
-    requirements_ = CCArray::create();
-    requirements_->retain();
+    flags_ = CCArray::create();
+    flags_->retain();
 }
 
 MCRoleEntityMetadata::~MCRoleEntityMetadata()
 {
-    CC_SAFE_RELEASE(requirements_);
+    CC_SAFE_RELEASE(flags_);
     
     CC_SAFE_RELEASE(spriteSheet_);
     

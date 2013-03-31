@@ -22,9 +22,6 @@ public:
     ~MCRole();
     virtual bool init();
     
-    /* 下一句话。如果没有则返回NULL；如果本来就没话说则返回默认对白 */
-    const char *nextSentence();
-    
     void loadSpriteSheet();
     void loadSpriteSheet(const char *aSpritesheetPath);
     
@@ -64,7 +61,6 @@ public:
     CC_SYNTHESIZE(CCString *, spriteSheet_, SpriteSheet); /* 角色精灵表 */
     
     CC_SYNTHESIZE(CCString *, defaultDialogue_, DefaultDialogue); /* 默认对白 */
-    CC_SYNTHESIZE(mc_index_t, nextSentenceIndex_, NextSentenceIndex); /* 下一句话的索引号 */
     
     /* 显示相关 */
     CC_PROPERTY_READONLY(MCRoleEntity *, entity_, Entity); /* entity_将共用metadata_ */

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="sence-type" value="field"/>
+  <property name="sound" value="sounds/desert.mp3"/>
+  <property name="tmx" value="maps/M201.tmx"/>
+ </properties>
+ <tileset firstgid="1" name="006-Desert01" tilewidth="16" tileheight="16">
+  <image source="006-Desert01.png" width="256" height="608"/>
+ </tileset>
+ <tileset firstgid="609" name="barrier-mask4" tilewidth="16" tileheight="16">
+  <image source="barrier-mask4.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3RsQ2AMBDAwJfCBrD/rKRFDHAuUlg3gNfMXLt1/HjvnuNP/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5S9QVRi79Z4BUAAA==
+  </data>
+ </layer>
+ <layer name="first" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2Yt07DQByHYyQ6CwOdjc5K5w0oL0BZ6WWjFylBIoENFsqT8Ai8QViZkpWJjHyREsmE8zWfY4H4pE9W4vPdLz6f9c8lEsFkvO+fN3AzoG2Stim88oLPV3Id0FaGLIOKJKY0jqYc4bFlJlf4M2zhtsG1d3ivcTQljRmL61ziz3CCpzFkeCk952u4jg/4GEMOP/4MN3iraD+H87iAi44yvJbuywEeOupTNo4O5Tkq8oTPivZLuIwruGqRTcSbxXvRlKxnNk7Uc6QiR9a8w/vyHtCXbJxmbHEX4Qe2a6xgcF8+JG2L/cjOB9GDveaXaSNbY16NmzFc9SOiD/uj615Iq6Pf46ofEWM4Hl33zoh63ZcJ+5yoanARxRo8bflejXrdl5E9J9WaGxFxrGtdqjU3In7Luv7nb5DDfNwhLMiGqGd19kE+sVDxXS3WYT02YCM2WWZQ1atBNbbueRts92LasB07sBO7sNsyg+o/oU2NHRbbvZgBHMQhHMYRHHWYy49JDb6Du7iH+yHGtN2LmcBJnMJpnMHZEDlkmNTgZ3iOF3iJX2ECadzgFQAA
+  </data>
+ </layer>
+ <layer name="meta" width="70" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3XMQoAIAzAwOJP/f8nnAQRBweLQXPgbAldGvGPWvbfT7K6EFoSZuhIO0ba+dv/j0hdSGwhSZIkSblO3aKv3W92WZu7NLukcWLgFQAA
+  </data>
+ </layer>
+ <objectgroup name="entrances" width="70" height="20">
+  <object name="desert-1-east" type="entrance" x="1120" y="0" width="32" height="272">
+   <properties>
+    <property name="ID" value="M101"/>
+    <property name="dest" value="forest-1-west"/>
+   </properties>
+  </object>
+  <object name="desert-1-west" type="entrance" x="-32" y="0" width="32" height="320">
+   <properties>
+    <property name="ID" value="M202"/>
+    <property name="dest" value="desert-2-east"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="barriers" width="70" height="20">
+  <object type="barrier" x="944" y="0" width="160" height="32"/>
+  <object type="barrier" x="1056" y="272" width="64" height="48"/>
+  <object type="barrier" x="704" y="32" width="32" height="64"/>
+  <object type="barrier" x="736" y="48" width="48" height="32"/>
+  <object type="barrier" x="144" y="48" width="32" height="32"/>
+  <object type="barrier" x="176" y="32" width="32" height="32"/>
+  <object type="barrier" x="224" y="288" width="32" height="32"/>
+  <object type="barrier" x="0" y="-16" width="1120" height="16"/>
+  <object type="barrier" x="0" y="320" width="1120" height="16"/>
+  <object type="barrier" x="1120" y="-16" width="16" height="352"/>
+  <object type="barrier" x="-16" y="-16" width="16" height="352"/>
+ </objectgroup>
+ <objectgroup name="semi-transparents" width="70" height="20">
+  <object type="semi-transparent" x="176" y="0" width="32" height="32"/>
+  <object type="semi-transparent" x="224" y="256" width="32" height="32"/>
+  <object type="semi-transparent" x="704" y="0" width="32" height="32"/>
+  <object type="semi-transparent" x="752" y="16" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="objects" width="70" height="20">
+  <object x="568" y="126">
+   <properties>
+    <property name="ID" value="E201"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+  <object x="489" y="216">
+   <properties>
+    <property name="ID" value="E203"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+  <object x="439" y="87">
+   <properties>
+    <property name="ID" value="E202"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+  <object x="578" y="186">
+   <properties>
+    <property name="ID" value="E201"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+  <object x="598" y="76">
+   <properties>
+    <property name="ID" value="E201"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+  <object x="493" y="145">
+   <properties>
+    <property name="ID" value="E203"/>
+    <property name="flags" value="F201"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

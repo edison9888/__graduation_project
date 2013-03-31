@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="35" height="35" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="scene-type" value="field"/>
+  <property name="sound" value="sounds/dungeon.mp3"/>
+  <property name="tmx" value="maps/M301.tmx"/>
+ </properties>
+ <tileset firstgid="1" name="050-DarkSpace01" tilewidth="16" tileheight="16">
+  <image source="050-DarkSpace01.png" width="256" height="640"/>
+ </tileset>
+ <tileset firstgid="641" name="barrier-mask4" tilewidth="16" tileheight="16">
+  <image source="barrier-mask4.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QsQ0AIAwEsYgubAD7D0qWQPrCxel696raUwf8TDfkCR5cuHDhwoVLggcXLly4cOGS4MGFCxcuv/8A81fr3CQTAAA=
+  </data>
+ </layer>
+ <layer name="first" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8XWOUwUURzHcYbCZlHxbBYFzwYT8Www0URj49l7Hw2CiVeD4G2D4G0lXq1ytsrZy2GMnexC1A53wSM2uIvfTf4bHy8zzJtxeU7yyfu/uX5//kOxeXnBjwkkkMSY1CmkMYlCJ8RLQx4RZ2q2WhdzrcRiL1GyjuE4TijrSaxFmcVeSsk6i3M4r6wXsBXbLPZSTtY1XMcNZb35jz30oR8DGAywv0/uAzxU1kfO33tN36nWQ4ghjmGffSyguPKcXrudq8ApVKLKZ58IKCncardz1biIGtT67FMBpYVb7XauDrdQj4b/vA/yjWZ6H+QbzfTedIYVmuzfkutvpL7bq67W9vqqP2fyTrXOZqhz8qrrtL2+6s+ZvFOtsxnqnKar1b2+TnevSZ3RjBa0og3teIlXaPK4PopGfMJnfBGPMWLwvNf1TnShGz3oxWu8QYfH9cxvqff4jh/4KT5g3OB5r+thjm/aTNT6V8h3hj0cZ+pM1HqWxd8umWMeefOxQFkXYhEWW+5lGXnLsUJZV2IVVlvuZR15G7AR65V6EzbnqJcICgzuqySvCjtwGtulPoOdOeoliiKD+2rIqxWXcBlXcBUvXHrZhd3Yg73Yh/0+GaVYY9BLPXkN4jbu4C7uod2llwM4iEM4jCM46pNRji0GvTSS90Q8xTM8l5n0Wv7fbSKvWbSgFW0yk3eWe+kgr1N0oRs9MpMRy728Ja9P9GMAgzKTccu9fCRvSMQQx3B2Jvl2exkl86tIIIkxmUmh5V4myPwtUkhjUmZSYrmXCHkFYjbmYG6+/ZlkjiiZRWIJlqI4BzP5A8j/hj8kEwAA
+  </data>
+ </layer>
+ <layer name="second" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2SyQ3CMBBFnQKgA+gAOoAGIDTA0gFLAywNsDTAcmZNA0BK410iRZHlBOSBA/OkJ0eyM/4ejTHKu5Sw/MWarr0KVj1ncdV07dWw7jmLq6Zrr4FNz1lcNSXu+5QWtnPODHGEY5wIZuliL+fMFGc4x4VgliJ9WeIK17gRzFKkL1vc4R4PglmK9EUC2wwW6YsEthn8VV9sM2jry9OY+IF3lMpim8EQO3jm3hMe8YZXvGCUytMJTBwG7nzJmWSNUu/Krtl/+nwPvL5YURRFURRF+XdeMc/4lCQTAAA=
+  </data>
+ </layer>
+ <layer name="meta" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WywkAIAxEwWDndi5iA+bjovgGcgokiwfVzK+3XL/SK1lm76YsmbmRqp6nPEsAwHLirla9AbtZFMgS36PMwl8EAID/DN/n2oEkEwAA
+  </data>
+ </layer>
+ <objectgroup name="entrances" width="35" height="35">
+  <object name="dungeon-1-east" type="entrance" x="560" y="80" width="16" height="160">
+   <properties>
+    <property name="ID" value="M302"/>
+    <property name="dest" value="dungeon-2-west"/>
+   </properties>
+  </object>
+  <object name="dungeon-1-north" type="entrance" x="224" y="-16" width="112" height="16">
+   <properties>
+    <property name="ID" value="M304"/>
+    <property name="dest" value="dungeon-4-south"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="barriers" width="35" height="35">
+  <object type="barrier" x="0" y="240" width="208" height="16"/>
+  <object type="barrier" x="0" y="64" width="208" height="16"/>
+  <object type="barrier" x="352" y="240" width="208" height="16"/>
+  <object type="barrier" x="320" y="64" width="240" height="16"/>
+  <object type="barrier" x="208" y="0" width="16" height="80"/>
+  <object type="barrier" x="192" y="256" width="16" height="80"/>
+  <object type="barrier" x="208" y="320" width="128" height="16"/>
+  <object type="barrier" x="336" y="240" width="16" height="96"/>
+  <object type="barrier" x="320" y="32" width="16" height="32"/>
+  <object type="barrier" x="336" y="0" width="16" height="48"/>
+  <object type="barrier" x="0" y="80" width="32" height="160"/>
+  <object type="barrier" x="208" y="-16" width="144" height="16"/>
+  <object type="barrier" x="560" y="64" width="16" height="192"/>
+ </objectgroup>
+ <objectgroup name="semi-transparents" width="35" height="35"/>
+ <objectgroup name="objects" width="35" height="35">
+  <object x="214" y="165">
+   <properties>
+    <property name="ID" value="E407"/>
+    <property name="flags" value="F404"/>
+   </properties>
+  </object>
+  <object x="283" y="215">
+   <properties>
+    <property name="ID" value="E408"/>
+    <property name="flags" value="F404"/>
+   </properties>
+  </object>
+  <object x="372" y="184">
+   <properties>
+    <property name="ID" value="E408"/>
+    <property name="flags" value="F404"/>
+   </properties>
+  </object>
+  <object x="304" y="127">
+   <properties>
+    <property name="ID" value="E407"/>
+    <property name="flags" value="F404"/>
+   </properties>
+  </object>
+  <object x="114" y="185">
+   <properties>
+    <property name="ID" value="E407"/>
+    <property name="flags" value="F404"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

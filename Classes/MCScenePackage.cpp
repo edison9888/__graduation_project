@@ -90,6 +90,10 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     name_ = CCString::create(root["name"].getString().c_str());
     name_->retain();
     
+    /* description String */
+    description_ = CCString::create(root["description"].getString().c_str());
+    description_->retain();
+    
     /* objects Object */
     loadObjects(root);
     
@@ -112,8 +116,8 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
     JsonBox::Object objects = aRoot["objects"].getObject();
     JsonBox::Value v;
     JsonBox::Object roles;
-    JsonBox::Array requirements;
-    JsonBox::Array::iterator requirementsIterator;
+    JsonBox::Array flags;
+    JsonBox::Array::iterator flagsIterator;
     JsonBox::Object::iterator objectsIterator;
     JsonBox::Object roleObject;
     const char *c_str_o_id;
@@ -133,19 +137,19 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
         if (role) {
             MCRoleEntityMetadata *metadata = role->getEntityMetadata();
             metadata->setPosition(ccp(roleObject["x"].getInt(), roleObject["y"].getInt()));
-            requirements = roleObject["requirements"].getArray();
-            CCArray *requirementsArray = metadata->getRequirements();
-            for (requirementsIterator = requirements.begin();
-                 requirementsIterator != requirements.end();
-                 ++requirementsIterator) {
-                const char *c_str_flag_id = requirementsIterator->getString().c_str();
+            flags = roleObject["flags"].getArray();
+            CCArray *flagsArray = metadata->getFlags();
+            for (flagsIterator = flags.begin();
+                 flagsIterator != flags.end();
+                 ++flagsIterator) {
+                const char *c_str_flag_id = flagsIterator->getString().c_str();
                 mc_object_id_t flag_id = {
                     c_str_flag_id[0],
                     c_str_flag_id[1],
                     c_str_flag_id[2],
                     c_str_flag_id[3]
                 };
-                requirementsArray->addObject(MCFlagManager::sharedFlagManager()->flagForObjectId(flag_id));
+                flagsArray->addObject(MCFlagManager::sharedFlagManager()->flagForObjectId(flag_id));
             }
             objects_->setObject(role, MCObjectIdToDickKey(o_id));
         }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="35" height="35" tilewidth="16" tileheight="16">
+ <properties>
+  <property name="scene-type" value="field"/>
+  <property name="sound" value="sounds/dungeon.mp3"/>
+  <property name="tmx" value="maps/M302.tmx"/>
+ </properties>
+ <tileset firstgid="1" name="050-DarkSpace01" tilewidth="16" tileheight="16">
+  <image source="050-DarkSpace01.png" width="256" height="640"/>
+ </tileset>
+ <tileset firstgid="641" name="barrier-mask4" tilewidth="16" tileheight="16">
+  <image source="barrier-mask4.png" width="64" height="64"/>
+ </tileset>
+ <layer name="background" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QsQ0AIAwEsYgubAD7D0qWQPrCxel696raUwf8TDfkCR5cuHDhwoVLggcXLly4cOGS4MGFCxcuv/8A81fr3CQTAAA=
+  </data>
+ </layer>
+ <layer name="first" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC8XWuU8UYRjHcYbCBg88sEEFz8ZCPBsLTTT+Hx4NgolXg6B4NcjhWYlXq5ytcvZyGGMnuxC1w13wiA3u4neTZ+PDmxl2ZoTHST55n3dm5/09+2yzRUXRrzmkkMaM1BlkMY9SL8ahMa8Sb2G2rit4VmnYSzlZJ3EKp9V6BntQZdjLbrIu4CIuqfUyjuCoYS+HybqBm7il1tv/2MMIRjGG8Qj7++Q+wEO1PvL+fjbsmbqeQAJJTBbYJyJKqvfc2u9eNc6iBrUF9qmI0sKv9rtXhyuoR0OBfSairPCr/e414Q6a0fKf91F+o+XeR/mNlnsfdobVjvx3WerfSJ8dVNc5e3d13wtzpq7zGXpOQXWTs3dX970wZ+o6n6HntFit9+662GfD1Dmd6EI3etCLl3iFjoDn02jHJ3zGF/EYUyHeD3rejwEMYgjDeI036At4nvsv9R7f8QM/xQfMhng/6Hmc65szE13/inlm3MvzFs5E1ysM/7vkrrXkrcN6tW5AGTYa97KVvG3YrtYd2Ildxr3sJW8/DmCfqg/ikHEvNeTV4jjO4ZjU53HCuJd68hrEVVxDI67jhXEvzeS1iFa04S7uode4l3bynoineIbnMpNh4146yOsUXehGj8zknXEvfeT1iwEMYkhmMmXcy1vyRsQoxjAuM5k17uUjeRMigSQm8zMptu1lmsyvIoU0ZmQmpca9zJH5W2SQxbzMpNK4lxLyVopVWI01xfYzyV3lZG4Sm7EFFUswkz/f9vSsJBMAAA==
+  </data>
+ </layer>
+ <layer name="second" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3QSw7BYBSG4dMVsAMmTJkwZQPspNiAywZcNuAypugG0KV5JZr8MWiiiRyD702eNGn+057WTJWtgqrjfFgNdcf5sBbajvNhPfQd55VPDTS9l3jXQdd5h3/8HzFGGGPiupHZFDPMsfBdxZZYYY1NwbmHWXbHDb/aZYsd9jgE94eRZQnvPeGIKy44Iw32eZ0bRMX75Wfyaxp81+f1m+cqpZRSSilVpiddF5mOJBMAAA==
+  </data>
+ </layer>
+ <layer name="meta" width="35" height="35">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WywkAIAxEwWDndi5iA+bjovgGcgokiwfVzK+3XL/SK1lm76YsmbmRqp6nPEsAwHLirla9AbtZFMgS36PMwl8EAID/DN/n2oEkEwAA
+  </data>
+ </layer>
+ <objectgroup name="entrances" width="35" height="35">
+  <object name="dungeon-2-west" type="entrance" x="-16" y="80" width="16" height="160">
+   <properties>
+    <property name="ID" value="M301"/>
+    <property name="dest" value="dungeon-1-east"/>
+   </properties>
+  </object>
+  <object name="dungeon-2-east" type="entrance" x="560" y="80" width="16" height="160">
+   <properties>
+    <property name="ID" value="M303"/>
+    <property name="dest" value="dungeon-3-west"/>
+   </properties>
+  </object>
+  <object name="dungeon-2-north" type="entrance" x="224" y="-16" width="112" height="16">
+   <properties>
+    <property name="ID" value="M305"/>
+    <property name="dest" value="dungeon-5-south"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="barriers" width="35" height="35">
+  <object type="barrier" x="0" y="240" width="208" height="16"/>
+  <object type="barrier" x="0" y="64" width="208" height="16"/>
+  <object type="barrier" x="352" y="240" width="208" height="16"/>
+  <object type="barrier" x="320" y="64" width="240" height="16"/>
+  <object type="barrier" x="208" y="0" width="16" height="80"/>
+  <object type="barrier" x="192" y="256" width="16" height="80"/>
+  <object type="barrier" x="208" y="320" width="128" height="16"/>
+  <object type="barrier" x="336" y="240" width="16" height="96"/>
+  <object type="barrier" x="320" y="32" width="16" height="32"/>
+  <object type="barrier" x="336" y="0" width="16" height="48"/>
+  <object type="barrier" x="560" y="64" width="16" height="192"/>
+  <object type="barrier" x="-16" y="64" width="16" height="192"/>
+  <object type="barrier" x="208" y="-16" width="144" height="16"/>
+ </objectgroup>
+ <objectgroup name="semi-transparents" width="35" height="35"/>
+ <objectgroup name="objects" width="35" height="35">
+  <object x="167" y="170">
+   <properties>
+    <property name="ID" value="E401"/>
+    <property name="flags" value="F403"/>
+   </properties>
+  </object>
+  <object x="258" y="226">
+   <properties>
+    <property name="ID" value="E406"/>
+    <property name="flags" value="F403"/>
+   </properties>
+  </object>
+  <object x="380" y="180">
+   <properties>
+    <property name="ID" value="E406"/>
+    <property name="flags" value="F403"/>
+   </properties>
+  </object>
+  <object x="257" y="127">
+   <properties>
+    <property name="ID" value="E401"/>
+    <property name="flags" value="F403"/>
+   </properties>
+  </object>
+  <object x="285" y="65">
+   <properties>
+    <property name="ID" value="E401"/>
+    <property name="flags" value="F403"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

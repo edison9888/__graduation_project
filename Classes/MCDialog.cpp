@@ -57,8 +57,7 @@ MCDialog::sharedDialog(MCDialogType aType)
 void
 MCDialog::someoneWannaSaySomething(MCRole *role)
 {
-    dialogue_->setString(role->nextSentence());
-    dialogue_->setString(role->getName()->getCString());
+    dialogue_->setString(role->getDefaultDialogue()->getCString());
 }
 
 bool

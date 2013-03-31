@@ -54,7 +54,7 @@ public:
     }
     
     CC_SYNTHESIZE(CCPoint, position_, Position);
-    CC_SYNTHESIZE(CCArray *, requirements_, Requirements);
+    CC_SYNTHESIZE(CCArray *, flags_, Flags);
 };
 
 class MCRoleEntity : public CCSprite {
