@@ -11,6 +11,8 @@
 
 #include "MCRoleBaseInfo.h"
 
+class MCActionBarItem;
+
 class MCTeamLayer : public CCLayer {
 public:
     ~MCTeamLayer();
@@ -43,6 +45,16 @@ public:
     }
     
     MCRoleBaseInfo *roleBaseInfoForTouch(CCTouch *aTouch);
+    
+    /**
+     * 确实发生碰撞返回碰撞的人物，否则返回NULL
+     */
+    MCRoleBaseInfo *collidesWithActionBarItem(MCActionBarItem *anActionBarItem);
+    
+    /**
+     * 名字有点蛋疼，其实意思是检测item和人物头像的碰撞，若有碰撞则半透明化
+     */
+    void acceptActionBarItem(MCActionBarItem *anActionBarItem);
     
 private:
     MCRoleBaseInfoGroup *group_;

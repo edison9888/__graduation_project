@@ -41,9 +41,9 @@ MCEffectiveItem::copy()
         effectiveItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
         effectiveItem->description_->retain();
     }
-    effectiveItem->description_->retain();
     effectiveItem->itemType_ = itemType_;
-    effectiveItem->icon_ = icon_;
+    effectiveItem->icon_ = CCString::create(icon_->getCString()); /* 会被释放掉，所以要copy一个 */
+    effectiveItem->icon_->retain();
     effectiveItem->effect_ = effect_;
     effectiveItem->radius_ = radius_;
     effectiveItem->path_ = CCString::create(path_->getCString()); /* 会被释放掉，所以要copy一个 */

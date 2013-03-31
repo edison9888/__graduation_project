@@ -26,6 +26,10 @@ public:
     bool collidesWith(const CCRect &aTargetRect);
     bool collidesWith(const MCOBB &anOBB);
     
+    inline void setup(const CCRect &aRect) {
+        obb_.setup(aRect, 0);
+    }
+    
     /**
      * 检测是否与人物碰撞
      *

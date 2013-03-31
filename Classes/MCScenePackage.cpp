@@ -84,7 +84,7 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     setID(o_id);
     
     /* type int */
-    scenePackageType_ = root["type"].getInt();
+    scenePackageType_ = root["scene-type"].getInt();
     
     /* name String */
     name_ = CCString::create(root["name"].getString().c_str());
@@ -156,6 +156,10 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
     }
 }
 
+/**
+ * 从数据包可以读取到除了入口坐标之外的内容。
+ * 所以在读取数据包的时候读取除了坐标之外的内容，坐标在载入TMX地图的时候附上。
+ */
 void
 MCScenePackage::loadScenes(JsonBox::Object &aRoot)
 {
@@ -163,20 +167,26 @@ MCScenePackage::loadScenes(JsonBox::Object &aRoot)
     JsonBox::Object::iterator objectIterator;
     MCEntrance *entrance;
     const char *c_str_o_id;
-    CCString *entranceName;
+    CCString *ccstring;
     
     for (objectIterator = scenes.begin(); objectIterator != scenes.end(); ++objectIterator) {
         entrance = new MCEntrance;
-        entranceName = CCString::create(objectIterator->first.c_str());
-        entrance->setName(entranceName);
-        entranceName->retain();
-        c_str_o_id = objectIterator->second.getString().c_str();
+        entrance->autorelease();
+        ccstring = CCString::create(objectIterator->first.c_str());
+        entrance->setName(ccstring);
+        ccstring->retain();
+        JsonBox::Object destination = objectIterator->second.getObject();
+        /* destination["id"] String */
+        c_str_o_id = destination["id"].getString().c_str();
         mc_object_id_t o_id = {
             c_str_o_id[0],
             c_str_o_id[1],
             c_str_o_id[2],
             c_str_o_id[3]
         };
+        ccstring = CCString::create(destination["destination"].getString().c_str());
+        entrance->setDestination(ccstring);
+        ccstring->retain();
         entrance->setID(o_id);
         scenes_->setObject(entrance, entrance->getName()->getCString());
     }

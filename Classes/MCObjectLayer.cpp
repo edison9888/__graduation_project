@@ -74,10 +74,6 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     
     map_ = aMap;
     
-    //warning: should delete
-    metaLayer_ = map_->layerNamed("meta");
-    metaLayer_->setVisible(false);
-    
     /* 添加障碍物 */
     CCTMXObjectGroup *barrierObejctsObejcts = map_->objectGroupNamed("barriers");
     CCArray *barriers = barrierObejctsObejcts->getObjects(); /* 还是原始数据，先处理一次转换成CCRect先 */
@@ -101,20 +97,22 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     
     /* 添加半透明遮掩物 */
     CCTMXObjectGroup *semiTransparentObejcts = map_->objectGroupNamed("semi-transparents");
-    CCArray *semiTransparents = semiTransparentObejcts->getObjects(); /* 还是原始数据，先处理一次转换成CCRect先 */
-    semiTransparents_ = CCArray::createWithCapacity(barriers->count());
+    semiTransparents_ = CCArray::create();
     semiTransparents_->retain();
-    CCARRAY_FOREACH(semiTransparents, obj) {
-        CCDictionary *dict = (CCDictionary *) obj;
-        CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
-                                 dict->valueForKey("y")->floatValue(),
-                                 dict->valueForKey("width")->floatValue(),
-                                 dict->valueForKey("height")->floatValue());
-        MCSemiTransparent *semiTransparent;
-        
-        if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeSemiTransparent)) {
-            semiTransparent = MCSemiTransparent::create(rect);
-            semiTransparents_->addObject(semiTransparent);
+    if (semiTransparentObejcts) {
+        CCArray *semiTransparents = semiTransparentObejcts->getObjects(); /* 还是原始数据，先处理一次转换成CCRect先 */
+        CCARRAY_FOREACH(semiTransparents, obj) {
+            CCDictionary *dict = (CCDictionary *) obj;
+            CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
+                                     dict->valueForKey("y")->floatValue(),
+                                     dict->valueForKey("width")->floatValue(),
+                                     dict->valueForKey("height")->floatValue());
+            MCSemiTransparent *semiTransparent;
+            
+            if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeSemiTransparent)) {
+                semiTransparent = MCSemiTransparent::create(rect);
+                semiTransparents_->addObject(semiTransparent);
+            }
         }
     }
     
@@ -123,6 +121,8 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     CCArray *entrances = entranceObejcts->getObjects(); /* 还是原始数据，先处理一次转换成CCRect先 */
     entrances_ = CCArray::createWithCapacity(entrances->count());
     entrances_->retain();
+    MCScenePackage *scenePackage = sceneDelegate_->getScenePackage();
+    CCDictionary *scenes = scenePackage->getScenes(); /* 场景包中记录的entrances */
     CCARRAY_FOREACH(entrances, obj) {
         CCDictionary *dict = (CCDictionary *) obj;
         CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
@@ -132,13 +132,11 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
         MCEntrance *entrance;
         
         if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeEntrance)) {
-            entrance = MCEntrance::create(rect);
-            CCString *ccstring = CCString::create(dict->valueForKey("name")->getCString());
-            entrance->setName(ccstring);
-            ccstring->retain();
-            ccstring = CCString::create(dict->valueForKey("dest")->getCString());
-            entrance->setDestination(ccstring);
-            ccstring->retain();
+            /**
+             * 除了坐标之外的内容已经在加载数据包的时候完成，现在加载坐标内容。
+             */
+            entrance = (MCEntrance *) scenes->objectForKey(dict->valueForKey("name")->getCString());
+            entrance->setup(rect);
             entrances_->addObject(entrance);
         }
     }
@@ -183,7 +181,7 @@ MCObjectLayer::onEnter()
     }
     
     /* mercenaries */
-    mercenaries_->removeAllObjects();
+//    mercenaries_->removeAllObjects();
     //warning: initialize here?
     
     /* load initialize position */
@@ -198,9 +196,10 @@ MCObjectLayer::onEnter()
         flag->setState(MCOnState);
         if (spawnPoint && flag->getState() == MCOnState) {
             hero_->setPosition(ccp(spawnPoint->valueForKey("x")->floatValue(),
-                                   spawnPoint->valueForKey("y")->floatValue()));
+                                   tileSize_.height * mapSize_.height - spawnPoint->valueForKey("y")->floatValue()));
         }
     }
+    hero_->setPosition(ccp(200, 200));
     CCPointLog(hero_->getPosition());
 }
 

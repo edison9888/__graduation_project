@@ -589,17 +589,29 @@ MCBackpack::loadEffectiveItems()
     
     /* load items */
     healthPotion_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCHealthPotion]);
+    healthPotion_->item->retain();
     physicalPotion_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCPhysicalPotion]);
+    physicalPotion_->item->retain();
     fireballTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFireballWide]);
+    fireballTrapWide_->item->retain();
     fireballTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFireballDamage]);
+    fireballTrapDamage_->item->retain();
     curseTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCCurseWide]);
+    curseTrapWide_->item->retain();
     curseTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCCurseDamage]);
+    curseTrapDamage_->item->retain();
     paralysisTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCParalysisWide]);
+    paralysisTrapWide_->item->retain();
     paralysisTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCParalysisDamage]);
+    paralysisTrapDamage_->item->retain();
     fogTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFogWide]);
+    fogTrapWide_->item->retain();
     fogTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFogDamage]);
+    fogTrapDamage_->item->retain();
     flashTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFlashWide]);
+    flashTrapWide_->item->retain();
     flashTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFlashDamage]);
+    flashTrapDamage_->item->retain();
 }
 
 void
@@ -611,21 +623,37 @@ MCBackpack::loadEquipmentItems()
     string data = userDefault->getStringForKey(kMCEffectiveItemsKey, "");
 
     dagger_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCDagger]);
+    dagger_->item->retain();
     sword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCSword]);
+    sword_->item->retain();
     greatsword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGreatsword]);
+    greatsword_->item->retain();
     warhammer_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCWarhammer]);
+    warhammer_->item->retain();
     heavyDutyHammer_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHeavyDutyHammer]);
+    heavyDutyHammer_->item->retain();
     handAxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHandAxe]);
+    handAxe_->item->retain();
     warAxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCWarAxe]);
+    warAxe_->item->retain();
     greataxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGreataxe]);
+    greataxe_->item->retain();
     spear_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCSpear]);
+    spear_->item->retain();
     lance_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCLance]);
+    lance_->item->retain();
     giantSickle_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGiantSickle]);
+    giantSickle_->item->retain();
     shortbow_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCShortbow]);
+    shortbow_->item->retain();
     longbow_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCLongbow]);
+    longbow_->item->retain();
     helmet_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHelmet]);
+    helmet_->item->retain();
     armor_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCArmor]);
+    armor_->item->retain();
     shinGuard_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCShinGuard]);
+    shinGuard_->item->retain();
 
     dagger_->count = 1;
     sword_->count = 1;

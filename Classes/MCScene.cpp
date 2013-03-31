@@ -78,8 +78,8 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         addChild(background_);
         
         objects_ = MCObjectLayer::create(aPackage->getScenePackageType());
-        objects_->setTMXTiledMap(background_->getMap());
         objects_->setSceneDelegate(this);
+        objects_->setTMXTiledMap(background_->getMap());
         objects_->loadEntrancesFromScenePackage(aPackage);
         addChild(objects_);
         
@@ -156,6 +156,7 @@ MCScene::onEnter()
     /* 预加载场景 */
     schedule(schedule_selector(MCScene::update));
     //warning: for debug
+    return;
     if (viewport_ == NULL) {
         viewport_ = MCViewportLayer::create();
         addChild(viewport_);

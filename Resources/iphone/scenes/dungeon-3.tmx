@@ -71,31 +71,31 @@
   <object x="205" y="145">
    <properties>
     <property name="ID" value="E403"/>
-    <property name="flags" value="E402"/>
+    <property name="flags" value="F402"/>
    </properties>
   </object>
   <object x="239" y="216">
    <properties>
     <property name="ID" value="E404"/>
-    <property name="flags" value="E402"/>
+    <property name="flags" value="F402"/>
    </properties>
   </object>
   <object x="367" y="189">
    <properties>
     <property name="ID" value="E405"/>
-    <property name="flags" value="E402"/>
+    <property name="flags" value="F402"/>
    </properties>
   </object>
   <object x="95" y="166">
    <properties>
     <property name="ID" value="E403"/>
-    <property name="flags" value="E402"/>
+    <property name="flags" value="F402"/>
    </properties>
   </object>
   <object x="307" y="129">
    <properties>
     <property name="ID" value="E404"/>
-    <property name="flags" value="E402"/>
+    <property name="flags" value="F402"/>
    </properties>
   </object>
  </objectgroup>

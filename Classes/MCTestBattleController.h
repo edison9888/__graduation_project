@@ -44,9 +44,9 @@ public:
         MCTaskManager::sharedTaskManager()->acceptTask(task);
         MCTaskManager::sharedTaskManager()->startCurrentTask();
         
-        m_id.sub_class_ = '0';
+        m_id.sub_class_ = '1';
         m_id.index_ = '0';
-        m_id.sub_index_ = '2';
+        m_id.sub_index_ = '1';
         CCScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
 
         scene->init();

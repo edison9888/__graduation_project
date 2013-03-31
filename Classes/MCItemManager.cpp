@@ -249,6 +249,7 @@ MCItemManager::loadEffectiveItems()
         MCEffectiveItem *item = MCEffectiveItem::create();
         CCString *ccstring;
         
+        item->setID(o_id);
         ccstring = CCString::create(object["name"].getString().c_str());
         item->setName(ccstring);
         ccstring->retain();

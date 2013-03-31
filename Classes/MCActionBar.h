@@ -19,16 +19,31 @@ public:
     
     static MCActionBarItem *create(MCBackpackItem *aBackpackItem);
     
+    void resetPosition();
+    
+    CCPoint touchedPoint;
+    struct cc_timeval timestamp;
+    
 private:
     CC_SYNTHESIZE_READONLY(CCScale9Sprite *, itemBox_, ItemBox);
     CC_SYNTHESIZE_READONLY(CCSprite *, icon_, Icon);
     
+    CC_SYNTHESIZE_READONLY(CCLabelTTF *, count_, Count);
+    
     CC_SYNTHESIZE_READONLY(MCBackpackItem *, backpackItem_, BackpackItem);
+    
+    CC_PROPERTY(CCPoint, itemPosition_, ItemPosition);
 };
 
 class MCActionBar : public CCLayer {
 public:
     ~MCActionBar();
+    
+    bool init();
+    
+    CREATE_FUNC(MCActionBar);
+    
+    MCActionBarItem *itemForTouch(CCTouch *pTouch);
     
 private:
     void align();
@@ -36,7 +51,7 @@ private:
     CC_SYNTHESIZE_READONLY(MCActionBarItem *, trapWide_, TrapWide);
     CC_SYNTHESIZE_READONLY(MCActionBarItem *, trapDamage_, TrapDamage);
     CC_SYNTHESIZE_READONLY(MCActionBarItem *, healthPotion_, HealthPotion);
-    CC_SYNTHESIZE_READONLY(MCActionBarItem *, hysicalPotion_, PhysicalPotion);
+    CC_SYNTHESIZE_READONLY(MCActionBarItem *, physicalPotion_, PhysicalPotion);
 };
 
 #endif /* defined(__Military_Confrontation__MCActionBar__) */

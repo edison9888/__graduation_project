@@ -13,6 +13,8 @@
 #include "MCControllerDelegate.h"
 #include "MCSceneManager.h"
 
+class MCScene;
+
 class MCObjectLayer : public CCLayer, public MCJoypadControllerDelegate, public MCBattleControllerDelegate {
     
 public:

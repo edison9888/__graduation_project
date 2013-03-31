@@ -16,6 +16,8 @@ const char *kHPBoxFilepath = "UI/bi_HP_box.png";
 const char *kPPFilepath = "UI/bi_PP.png";
 const char *kPPBoxFilepath = "UI/bi_PP_box.png";
 
+static const float kMCFontSize = 18;
+
 #pragma mark *** MCRoleBaseInfo ***
 
 bool
@@ -24,7 +26,6 @@ MCRoleBaseInfo::init(MCRole *aRole)
     if (CCLayer::init()) {
         CCPoint anchorPoint = ccp(0, 1);
         CCPoint labelAnchorPoint = ccp(0, .05);
-        float fontSize = 18;
         CCSize labelSize;
         CCPoint labelPosition;
         CCLabelTTF *separatorLabel;
@@ -53,7 +54,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         
         /* PP */
         CCString *ccstring = CCString::createWithFormat("%hu", aRole->getPP());
-        ppLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
+        ppLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(ppLabel_);
         labelSize = ppLabel_->getContentSize();
         ppLabel_->setColor(ccc3(204, 204, 204));
@@ -62,7 +63,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         ppLabel_->setPosition(ccp(96, y));
         ccstring->retain();
         
-        separatorLabel = CCLabelTTF::create("/", "Marker Felt", fontSize);
+        separatorLabel = CCLabelTTF::create("/", "Marker Felt", kMCFontSize);
         addChild(separatorLabel);
         separatorLabel->setColor(ccc3(204, 204, 204));
         separatorLabel->setAnchorPoint(labelAnchorPoint);
@@ -70,7 +71,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         
         labelPosition = separatorLabel->getPosition();
         ccstring = CCString::createWithFormat("%hu", aRole->getMaxPP());
-        maxPPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
+        maxPPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(maxPPLabel_);
         maxPPLabel_->setColor(ccc3(204, 204, 204));
         maxPPLabel_->setAnchorPoint(labelAnchorPoint);
@@ -79,7 +80,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         
         /* HP */
         ccstring = CCString::createWithFormat("%hu", aRole->getHP());
-        hpLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
+        hpLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(hpLabel_);
         labelSize = hpLabel_->getContentSize();
         hpLabel_->setColor(ccc3(51, 153, 51));
@@ -88,7 +89,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         hpLabel_->setPosition(ccp(96, y));
         ccstring->retain();
         
-        separatorLabel = CCLabelTTF::create("/", "Marker Felt", fontSize);
+        separatorLabel = CCLabelTTF::create("/", "Marker Felt", kMCFontSize);
         addChild(separatorLabel);
         separatorLabel->setColor(ccc3(51, 153, 51));
         separatorLabel->setAnchorPoint(labelAnchorPoint);
@@ -96,7 +97,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         
         labelPosition = separatorLabel->getPosition();
         ccstring = CCString::createWithFormat("%hu", aRole->getMaxHP());
-        maxHPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", fontSize);
+        maxHPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(maxHPLabel_);
         maxHPLabel_->setColor(ccc3(51, 153, 51));
         maxHPLabel_->setAnchorPoint(labelAnchorPoint);
@@ -125,6 +126,18 @@ MCRoleBaseInfo::create(MCRole *aRole)
     }
     
     return info;
+}
+
+void
+MCRoleBaseInfo::updateInfo()
+{
+    CCString *ccstring;
+    MCRole *role = role_;
+    
+    ccstring = CCString::createWithFormat("%hu", role->getHP());
+    hpLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
+    ccstring = CCString::createWithFormat("%hu", role->getPP());
+    ppLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
 }
 
 #pragma mark -

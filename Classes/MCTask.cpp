@@ -190,6 +190,10 @@ MCTask::generateTaskContext()
                 CCAssert(trapType_ != MCUnknownTrap, "unknow trap");
                 break;
         }
+        taskContext_->healthPotion_->item = backpack->getHealthPotion()->item;
+        taskContext_->healthPotion_->count = backpack->getHealthPotion()->count;
+        taskContext_->physicalPotion_->item = backpack->getPhysicalPotion()->item;
+        taskContext_->physicalPotion_->count = backpack->getPhysicalPotion()->count;
         /* 限制数量 */
         taskContext_->trapWide_->count += trapWideBonus_;
         taskContext_->trapDamage_->count += trapDamageBonus_;

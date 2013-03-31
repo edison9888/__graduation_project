@@ -78,7 +78,7 @@ MCTestController::init()
     {
         CCSize winSize = CCDirectorGetWindowsSize();
 
-        map_ = CCTMXTiledMap::create("maps/forest.tmx");
+        map_ = CCTMXTiledMap::create("scenes/forest-1.tmx");
         addChild(map_);
         
 //        metaLayer_ = map_->layerNamed("meta");

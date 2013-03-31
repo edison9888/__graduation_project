@@ -19,6 +19,7 @@
 #include "MCTestRoleBaseInfo.h"
 #include "MCTestAStar.h"
 #include "MCTestBattleController.h"
+#include "MCTestParticle.h"
 
 const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
@@ -56,17 +57,18 @@ public:
 
 static struct __mc_test_scene __test_scenes[] = {
     {"Test Controller", MCTestController::scene},
+    {"Test A*", MCTestAStar::scene},
+    {"Test Particle", MCTestParticle::scene},
+    {"Test Game Scene", MCTestGameScene::scene},
+    {"Test Battle Controller", MCTestBattleController::scene},
     {"Test Lua", MCTestLua::scene},
     {"Test Flag Manager", MCTestFlagManager::scene},
     {"Test Task Manager", MCTestTaskManager::scene},
     {"Test Backpack ", MCTestBackpack::scene},
     {"Test Role Manager", MCTestRoleManager::scene},
-    {"Test Game Scene", MCTestGameScene::scene},
     {"Test Viewport", MCTestViewport::scene},
     {"Test OBB", MCTestOBB::scene},
     {"Test Role Base Info", MCTestRoleBaseInfo::scene},
-    {"Test A*", MCTestAStar::scene},
-    {"Test Battle Controller", MCTestBattleController::scene},
     {"Enter the Game", MCTestGame::scene},
     {"Quit", __mc_quit::scene}
 };

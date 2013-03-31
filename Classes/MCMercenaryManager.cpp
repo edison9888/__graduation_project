@@ -15,9 +15,9 @@ using namespace std;
 #include "MCMercenaryManager.h"
 #include "MCDice.h"
 
-const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
-const char *kMCMercenariesFilepath = "M000.jpkg";
-const char *kMCSpriteSheetBaseDirectory = "spritesheets";
+static const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
+static const char *kMCMercenariesFilepath = "M000.jpkg";
+static const char *kMCSpriteSheetBaseDirectory = "spritesheets";
 
 static MCMercenaryManager *__shared_mercenary_manager = NULL;
 

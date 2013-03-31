@@ -11,6 +11,7 @@
 
 #include "MCTeamLayer.h"
 #include "MCControllerDelegate.h"
+#include "MCActionBar.h"
 
 class MCBattleController : public CCLayer {
     
@@ -28,7 +29,10 @@ protected:
     void didSelectAll(CCObject *aSender);
     
 private:
-    MCTeamLayer *teamLayer_;
+    MCTeamLayer *teamLayer_; /* 队伍层 */
+    MCActionBar *actionBar_; /* 道具层 */
+    
+    MCActionBarItem *selectedItem_;
     
     /* 选择按钮 */
     CCMenu *selectAllMenu_;

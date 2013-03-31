@@ -39,7 +39,7 @@ CCObject *
 MCEquipmentItem::copy()
 {
     MCEquipmentItem *equipmentItem = new MCEquipmentItem;
-
+    
     equipmentItem->init(equipment_.type);
     equipmentItem->id_ = id_;
     equipmentItem->tag_ = tag_;

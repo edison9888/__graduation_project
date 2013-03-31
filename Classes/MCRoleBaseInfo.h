@@ -46,6 +46,13 @@ public:
         return faceBox_;
     }
     
+    void updateInfo();
+    
+    inline void setOpacity(GLubyte var) {
+        face_->setOpacity(var);
+        faceBox_->setOpacity(var);
+    }
+    
 private:
     CCSprite *face_;
     CCScale9Sprite *faceBox_;

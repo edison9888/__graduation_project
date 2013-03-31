@@ -7,7 +7,7 @@
 //
 
 #include "MCTeamLayer.h"
-
+#include "MCActionBar.h"
 
 MCTeamLayer::~MCTeamLayer()
 {
@@ -173,4 +173,76 @@ MCTeamLayer::roleBaseInfoForTouch(CCTouch *aTouch)
     }
     
     return NULL;
+}
+
+
+/**
+ * 确实发生碰撞返回碰撞的人物，否则返回NULL
+ */
+MCRoleBaseInfo *
+MCTeamLayer::collidesWithActionBarItem(MCActionBarItem *anActionBarItem)
+{
+    if (anActionBarItem->getBackpackItem()->item->getID().class_ != 'P') { /* 不是药水 */
+        return NULL;
+    }
+    CCPoint p = anActionBarItem->getPosition();
+    CCSize s = anActionBarItem->getContentSize();
+    CCRect actionBarItemAABB = CCRectMake(p.x - s.width / 2, p.y, s.width, s.height); /* 计算锚点 */
+    
+    if (group_->size() > 0) {
+        CCObject *obj = NULL;
+        CCArray *rolesInfo = group_->infoList_;
+        
+        CCARRAY_FOREACH(rolesInfo, obj) {
+            MCRoleBaseInfo *info = dynamic_cast<MCRoleBaseInfo *>(obj);
+            if (info && info->isVisible()) {
+                CCNode *faceBox = info->getFaceBox();
+                CCPoint local = info->getPosition();
+                CCSize s = faceBox->getContentSize();
+                CCRect r = CCRectMake(local.x, local.y - s.height, s.width, s.height); /* local.y-s.width是因为锚点在左上角 */
+                if (r.intersectsRect(actionBarItemAABB)) {
+                    return info;
+                }
+            }
+        }
+    }
+    
+    return NULL;
+}
+
+
+/**
+ * 名字有点蛋疼，其实意思是检测item和人物头像的碰撞，若有碰撞则半透明化
+ */
+void
+MCTeamLayer::acceptActionBarItem(MCActionBarItem *anActionBarItem)
+{
+    if (anActionBarItem->getBackpackItem()->item->getID().class_ != 'P') { /* 不是药水 */
+        return;
+    }
+    CCPoint p = anActionBarItem->getPosition();
+    CCSize s = anActionBarItem->getContentSize();
+    CCRect actionBarItemAABB = CCRectMake(p.x - s.width / 2, p.y, s.width, s.height); /* 计算锚点 */
+    bool found = false;
+    
+    if (group_->size() > 0) {
+        CCObject *obj = NULL;
+        CCArray *rolesInfo = group_->infoList_;
+        
+        CCARRAY_FOREACH(rolesInfo, obj) {
+            MCRoleBaseInfo *info = dynamic_cast<MCRoleBaseInfo *>(obj);
+            if (info && info->isVisible()) {
+                CCScale9Sprite *faceBox = info->getFaceBox();
+                CCPoint local = info->getPosition();
+                CCSize s = faceBox->getContentSize();
+                CCRect r = CCRectMake(local.x, local.y - s.height, s.width, s.height); /* local.y-s.width是因为锚点在左上角 */
+                if (r.intersectsRect(actionBarItemAABB) && !found) {
+                    info->setOpacity(160);
+                    found = true;
+                } else {
+                    info->setOpacity(255);
+                }
+            }
+        }
+    }
 }

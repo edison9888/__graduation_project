@@ -43,8 +43,8 @@
     [scenes_ setObject:aScenePackage forKey:[aScenePackage ID]];
     [scenePackages_ setObject:[[[[aScenePackage objectForKey:@"background"]
                                objectForKey:@"tmx"]
-                               stringByDeletingPathExtension]
-                               stringByAppendingPathExtension:@"jpkg"]
+                               stringByDeletingLastPathComponent]
+                               stringByAppendingFormat:@"/%@.jpkg", [aScenePackage ID]]
                        forKey:[aScenePackage ID]];
 }
 

@@ -211,6 +211,7 @@
 		A3B1637616B01595009F95EE /* MCScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1637416B01595009F95EE /* MCScript.cpp */; };
 		A3B1639316B01D86009F95EE /* MCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1638F16B01D86009F95EE /* MCJoypad.cpp */; };
 		A3B1639416B01D86009F95EE /* MCJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1639116B01D86009F95EE /* MCJoystick.cpp */; };
+		A3B5B08F170847E600B3C588 /* MCTestParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B5B08D170847E600B3C588 /* MCTestParticle.cpp */; };
 		A3B7F9B416F61C5000F3D0C5 /* MCTestAStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */; };
 		A3BB130616F7765500E4F394 /* MCBackpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BB130416F7765400E4F394 /* MCBackpack.cpp */; };
 		A3C2C86B16F829E800A14FD2 /* MCTaskBonus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C2C86916F829E700A14FD2 /* MCTaskBonus.cpp */; };
@@ -669,6 +670,8 @@
 		A3B1639016B01D86009F95EE /* MCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoypad.h; path = ../Classes/MCJoypad.h; sourceTree = "<group>"; };
 		A3B1639116B01D86009F95EE /* MCJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCJoystick.cpp; path = ../Classes/MCJoystick.cpp; sourceTree = "<group>"; };
 		A3B1639216B01D86009F95EE /* MCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoystick.h; path = ../Classes/MCJoystick.h; sourceTree = "<group>"; };
+		A3B5B08D170847E600B3C588 /* MCTestParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestParticle.cpp; path = ../Classes/MCTestParticle.cpp; sourceTree = "<group>"; };
+		A3B5B08E170847E600B3C588 /* MCTestParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestParticle.h; path = ../Classes/MCTestParticle.h; sourceTree = "<group>"; };
 		A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestAStar.cpp; path = ../Classes/MCTestAStar.cpp; sourceTree = "<group>"; };
 		A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestAStar.h; path = ../Classes/MCTestAStar.h; sourceTree = "<group>"; };
 		A3BB130416F7765400E4F394 /* MCBackpack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBackpack.cpp; path = ../Classes/MCBackpack.cpp; sourceTree = "<group>"; };
@@ -1515,6 +1518,8 @@
 				A32D041316F57B1A005AFF90 /* MCTestRoleBaseInfo.h */,
 				A3F8F9F71701A542003C130C /* MCTestBattleController.cpp */,
 				A3F8F9F81701A542003C130C /* MCTestBattleController.h */,
+				A3B5B08D170847E600B3C588 /* MCTestParticle.cpp */,
+				A3B5B08E170847E600B3C588 /* MCTestParticle.h */,
 				A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */,
 				A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */,
 				A35F219E16E875D500D466B9 /* _T_.h */,
@@ -1585,12 +1590,12 @@
 			isa = PBXGroup;
 			children = (
 				A3E87E7D170358F700C2E537 /* lua */,
-				A3F9EA4016FB305F00150CFB /* CSV Convertor */,
+				A3F9EA4016FB305F00150CFB /* Resources Generator */,
 			);
 			name = tools;
 			sourceTree = "<group>";
 		};
-		A3F9EA4016FB305F00150CFB /* CSV Convertor */ = {
+		A3F9EA4016FB305F00150CFB /* Resources Generator */ = {
 			isa = PBXGroup;
 			children = (
 				A3F9EA4116FB305F00150CFB /* main.m */,
@@ -1600,6 +1605,7 @@
 				A3F9EA4316FB305F00150CFB /* Supporting Files */,
 				A34F706A1707EF6C006C3313 /* Products */,
 			);
+			name = "Resources Generator";
 			path = "CSV Convertor";
 			sourceTree = "<group>";
 		};
@@ -1944,6 +1950,7 @@
 				A3F8F9F91701A542003C130C /* MCTestBattleController.cpp in Sources */,
 				A3E87E7B170352B100C2E537 /* MCSceneController.cpp in Sources */,
 				A3A0F91717070FEF0078DDCF /* MCControllerLayer.cpp in Sources */,
+				A3B5B08F170847E600B3C588 /* MCTestParticle.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
