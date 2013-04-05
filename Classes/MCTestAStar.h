@@ -37,8 +37,9 @@ public:
         MCTestLayer::onEnter();
 //        MCSceneContext *c = MCSceneContextManager::sharedSceneContextManager()->currentContext();
         MCRoleEntity *e = MCHero::sharedHero()->getEntity();
-        e->setPosition(ccp(100, 100));
-        e->findPath(ccp(450, 432));
+        e->setPosition(ccp(200, 200));
+//        e->findPath(ccp(858, 432));
+        e->findPath(ccp(200, 220));
     }
     
     void onExit() {

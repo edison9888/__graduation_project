@@ -7,6 +7,7 @@
 //
 
 #include "MCTestbed.h"
+#include "MCRoleManager.h"
 
 #include "MCTestController.h"
 #include "MCTestLua.h"
@@ -20,6 +21,7 @@
 #include "MCTestAStar.h"
 #include "MCTestBattleController.h"
 #include "MCTestParticle.h"
+#include "MCTestDetail.h"
 
 const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
@@ -56,11 +58,12 @@ public:
 };
 
 static struct __mc_test_scene __test_scenes[] = {
-    {"Test Controller", MCTestController::scene},
+    {"Test Detail", MCTestDetail::scene},
     {"Test A*", MCTestAStar::scene},
     {"Test Particle", MCTestParticle::scene},
     {"Test Game Scene", MCTestGameScene::scene},
     {"Test Battle Controller", MCTestBattleController::scene},
+    {"Test Controller", MCTestController::scene},
     {"Test Lua", MCTestLua::scene},
     {"Test Flag Manager", MCTestFlagManager::scene},
     {"Test Task Manager", MCTestTaskManager::scene},
@@ -95,6 +98,9 @@ MCTestbed::init()
         menu->setPosition(curPos);
         
         setTouchEnabled(true);
+        
+        /* 加载资源 */
+        MCRoleManager::sharedRoleManager();
         
         return true;
     }

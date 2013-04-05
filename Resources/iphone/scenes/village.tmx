@@ -140,8 +140,8 @@
   <object type="semitransparent" x="1152" y="208" width="48" height="32"/>
  </objectgroup>
  <objectgroup color="#ffff7f" name="objects" width="128" height="64">
-  <object name="spawn-point" x="944" y="592" width="48" height="48"/>
-  <object x="240" y="944">
+  <object name="spawn-point" x="224" y="832" width="48" height="48"/>
+  <object x="640" y="928">
    <properties>
     <property name="ID" value="N004"/>
    </properties>

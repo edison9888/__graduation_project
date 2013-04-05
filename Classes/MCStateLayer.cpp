@@ -9,6 +9,7 @@
 #include "MCStateLayer.h"
 #include "MCHero.h"
 #include "MCBackpack.h"
+#include "MCEquipmentManager.h"
 
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
@@ -18,18 +19,20 @@ USING_NS_CC_EXT;
 bool
 MCStateLayer::init()
 {
-    if (CCLayer::init()) {
+    if (MCDetailLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *label;
         CCScale9Sprite *line;
-        float fontSize = 36;
-        float valueFontSize = 24;
+        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float fontSize = 36 / contentScaleFactor;
+        float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90;
         float contentHeightWithoutBottom = contentHeight * 2 / 3;
-        float offsetX = 180;
+        float offsetX = 180 / contentScaleFactor;
         float offsetY = contentHeightWithoutBottom / 8 + 4;
-        float offsetYInc = 45;
+        float offsetYInc = 45 / contentScaleFactor;
         float valuePositionX;
+        MCHero *hero = MCHero::sharedHero();
         
         /* HP */
         label = CCLabelTTF::create("生命值", "Marker Felt", fontSize);
@@ -37,7 +40,7 @@ MCStateLayer::init()
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
         offsetYInc += offsetY;
-        valuePositionX = label->getPosition().x + label->getContentSize().width * 4 / 3;
+        valuePositionX = label->getPosition().x + label->getContentSize().width * 8 / 3;
         
         hp_ = CCLabelTTF::create("0/0", "Marker Felt", valueFontSize);
         addChild(hp_);
@@ -65,12 +68,25 @@ MCStateLayer::init()
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
         offsetYInc += offsetY;
         
-        state_ = CCLabelTTF::create("健康", "Marker Felt", valueFontSize);
+        state_ = CCLabelTTF::create(kMCNormalState, "Marker Felt", valueFontSize);
         addChild(state_);
         state_->setAnchorPoint(ccp(0.5, 1));
         state_->setPosition(ccp(valuePositionX,
                                 label->getPosition().y - (label->getContentSize().height - state_->getContentSize().height) / 2));
         offsetYInc += offsetY;
+        
+        /* 当前武器 */
+        label = CCLabelTTF::create("当前武器", "Marker Felt", fontSize);
+        addChild(label);
+        label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
+        label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
+        offsetYInc += offsetY;
+        
+        weapon_ = CCLabelTTF::create("未知武器", "Marker Felt", valueFontSize);
+        addChild(weapon_);
+        weapon_->setAnchorPoint(ccp(0.5, 1));
+        weapon_->setPosition(ccp(valuePositionX,
+                                 label->getPosition().y - (label->getContentSize().height - weapon_->getContentSize().height) / 2));
         
         /* damage */
         label = CCLabelTTF::create("武器伤害", "Marker Felt", fontSize);
@@ -79,7 +95,7 @@ MCStateLayer::init()
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
         offsetYInc += offsetY;
         
-        damage_ = CCLabelTTF::create("0", "Marker Felt", valueFontSize);
+        damage_ = CCLabelTTF::create("0", "", valueFontSize);
         addChild(damage_);
         damage_->setAnchorPoint(ccp(0.5, 1));
         damage_->setPosition(ccp(valuePositionX,
@@ -102,32 +118,34 @@ MCStateLayer::init()
         label = CCLabelTTF::create("马克", "Marker Felt", fontSize);
         addChild(label);
         label->setAnchorPoint(ccp(1, 0)); /* 右下角 */
-        label->setPosition(ccp(winSize.width - 48, 48));
+        label->setPosition(ccp(winSize.width - 48 / contentScaleFactor, 48 / contentScaleFactor));
         
         money_ = CCLabelTTF::create("0", "Marker Felt", valueFontSize);
         addChild(money_);
         money_->setAnchorPoint(ccp(1, 0)); /* 右下角 */
         money_->setPosition(ccp(label->getPosition().x - label->getContentSize().width - MCValueOffsetX,
-                                48));
+                                48 / contentScaleFactor));
         
         /* line */
-        CCSize separatorSize = CCSizeMake(winSize.width - offsetX - 45, 1);
+        CCSize separatorSize = CCSizeMake(winSize.width - offsetX - 45 / contentScaleFactor, 1);
         line = CCScale9Sprite::create("UI/separator.png");
         addChild(line);
         line->setContentSize(separatorSize);
         line->setAnchorPoint(ccp(0, 0)); /* 左下角 */
-        line->setPosition(ccp(offsetX, 45));
+        line->setPosition(ccp(offsetX, 45 / contentScaleFactor));
         
-        icon_ = CCSprite::create("faces/x-000.png");
+        icon_ = CCSprite::create(hero->getFace()->getCString());
         icon_->setAnchorPoint(ccp(1, 1)); /* 右上角 */
-        icon_->setPosition(ccp(winSize.width - 45 - 9, winSize.height - 45 - 9));
+        icon_->setPosition(ccp(winSize.width - 54 / contentScaleFactor,
+                               winSize.height - 54 / contentScaleFactor));
         
-        CCRect iconBoxRect = CCRectMake(0, 0, 114, 114);
+        CCRect iconBoxRect = CCRectMake(0, 0, 114 / contentScaleFactor, 114 / contentScaleFactor);
         CCScale9Sprite *iconBox = CCScale9Sprite::create("UI/face_box.png", iconBoxRect);
         addChild(iconBox);
         addChild(icon_);
         iconBox->setAnchorPoint(ccp(1, 1)); /* 右上角 */
-        iconBox->setPosition(ccp(icon_->getPosition().x + 9, icon_->getPosition().y + 9));
+        iconBox->setPosition(ccp(icon_->getPosition().x + 9 / contentScaleFactor,
+                                 icon_->getPosition().y + 9 / contentScaleFactor));
         
         name_ = CCLabelTTF::create("男猪脚", "Marker Felt", valueFontSize);
         addChild(name_);
@@ -154,6 +172,65 @@ MCStateLayer::loadData()
     /* PP */
     pp_->setString(CCString::createWithFormat("%hi/%hi", hero->getPP(), hero->getMaxPP())->getCString());
     
+    /* state */
+    MCRoleState roleState = hero->getRoleState();
+    if (MCNormalState == roleState) {
+        state_->setString(kMCNormalState);
+    } else {
+        std::string state;
+        if ((roleState & MCCurseState) == MCCurseState) {
+            state.append(kMCCurseState);
+        }
+        if ((roleState & MCParalysisState) == MCParalysisState) {
+            if (state.size() > 0) {
+                state.append("、");
+            }
+            state.append(kMCParalysisState);
+        }
+        if ((roleState & MCVertigoState) == MCVertigoState) {
+            if (state.size() > 0) {
+                state.append("、");
+            }
+            state.append(kMCVertigoState);
+        }
+        if ((roleState & MCPoisonedState) == MCPoisonedState) {
+            if (state.size() > 0) {
+                state.append("、");
+            }
+            state.append(kMCPoisonedState);
+        }
+        if ((roleState & MCBlindingState) == MCBlindingState) {
+            if (state.size() > 0) {
+                state.append("、");
+            }
+            state.append(kMCBlindingState);
+        }
+        if ((roleState & MCChaosState) == MCChaosState) {
+            if (state.size() > 0) {
+                state.append("、");
+            }
+            state.append(kMCChaosState);
+        }
+        state_->setString(state.c_str());
+    }
+    
+    /* 当前武器 */
+    MCEquipmentManager *equipmentManager = MCEquipmentManager::sharedEquipmentManager();
+    MCEquipmentItem *currentWeapon = equipmentManager->getCurrentWeapon();
+    MCOre *ore = currentWeapon->getOre();
+    weapon_->setString(CCString::createWithFormat("%s[%s]",
+                                                  currentWeapon->getName()->getCString(),
+                                                  ore->getName()->getCString())->getCString());
+    /* damage */
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(currentWeapon->getEquipment());
+    damage_->setString(CCString::createWithFormat("%hiD%hi%s",
+                                                  MCDiceCount(weapon->damage),
+                                                  MCDiceSize(weapon->damage),
+                                                  (ore->getDamage() > 0
+                                                   ? CCString::createWithFormat("+%hi", ore->getDamage())->getCString()
+                                                   : ""))->getCString());
+    /* AC */
+    ac_->setString(CCString::createWithFormat("%hi", equipmentManager->getAC())->getCString());
     /* money */
     money_->setString(CCString::createWithFormat("%hi", backpack->getMoney())->getCString());
 }

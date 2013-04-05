@@ -11,12 +11,51 @@
 #include "MCNPC.h"
 #include "MCEnemy.h"
 #include "MCDice.h"
+#include "MCScript.h"
 
 static const char *kMCNPCResourceFilePath = "N000.jpkg";
 static const char *kMCEnemyResourceFilePath = "E400.jpkg";
 static const char *kMCSpriteSheetBaseDirectory = "spritesheets";
 
+/* shadow */
+const char *kMCShadow = "kMCShadow";
+static const char *kMCShadowFilepath = "UI/shadow.png";
+const char *kMCSelectedShadow = "kMCSelectedShadow";
+static const char *kMCSelectedShadowFilepath = "UI/selected_shadow.png";
+
 static MCRoleManager *__shared_role_manager = NULL;
+
+
+//static CCSpriteFrame *
+static CCSprite *
+createMaskedSprite(CCSprite *mask, CCSprite *source)
+{
+    CCSize maskContentSize = mask->getContentSize();
+    CCSize sourceContentSize = source->getContentSize();
+    CCSize contentSizeInPixels = mask->getTexture()->getContentSizeInPixels();
+    CCRenderTexture *rt = CCRenderTexture::create(contentSizeInPixels.width,
+                                                  contentSizeInPixels.height);
+    
+    mask->setPosition(ccp(maskContentSize.width / 2,
+                          maskContentSize.height / 2));
+    source->setPosition(ccp(sourceContentSize.width / 2,
+                            sourceContentSize.height / 2));
+    
+    ccBlendFunc blendFunc1 = { GL_ONE, GL_ZERO };
+    ccBlendFunc blendFunc2 = { GL_DST_ALPHA, GL_ZERO };
+    
+    mask->setBlendFunc(blendFunc1);
+    source->setBlendFunc(blendFunc2);
+    
+    rt->begin();
+    mask->visit();
+    source->visit();
+    rt->end();
+    
+    CCSprite *retval = CCSprite::createWithTexture(rt->getSprite()->getTexture());
+    retval->setFlipY(true);
+    return retval;
+}
 
 MCRoleManager::MCRoleManager()
 {
@@ -50,6 +89,21 @@ MCRoleManager::loadData()
 {
     loadNPCData();
     loadEnemyData();
+    
+    /* tags: #frame #cache */
+    /* 加载进缓存图片 */
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    CCRect kMCShadowFrame = CCRectMake(0,
+                                       0,
+                                       32 / contentScaleFactor,
+                                       12 / contentScaleFactor);
+    
+    CCSpriteFrame *frame = CCSpriteFrame::create(kMCShadowFilepath, kMCShadowFrame);
+    cache->addSpriteFrame(frame, kMCShadow);
+    
+    frame = CCSpriteFrame::create(kMCSelectedShadowFilepath, kMCShadowFrame);
+    cache->addSpriteFrame(frame, kMCSelectedShadow);
 }
 
 MCRole *
@@ -165,6 +219,9 @@ MCRoleManager::loadNPCData()
         ccstring = CCString::create(npcObject["sprite-sheet"].getString().c_str());
         role->setSpriteSheet(ccstring);
         ccstring->retain();
+        MCScript *trigger = MCScriptMaker::createScript(npcObject["trigger"].getString().c_str());
+        role->setTrigger(trigger);
+        trigger->retain();
         ccstring = CCString::create(npcObject["description"].getString().c_str());
         role->setDescription(ccstring);
         ccstring->retain();

@@ -11,6 +11,9 @@
 
 #include "MCRole.h"
 
+extern const char *kMCShadow;
+extern const char *kMCSelectedShadow;
+
 class MCNPC;
 class MCEnemy;
 
@@ -23,18 +26,19 @@ public:
     
     static MCRoleManager *sharedRoleManager();
     
-    void loadData();
-    
     /* copied data */
     MCRole *roleForObjectId(mc_object_id_t anObjectId);
     MCNPC *NPCForObjectId(mc_object_id_t anObjectId);
     MCEnemy *enemyForObjectId(mc_object_id_t anObjectId);
     
-private:
+    /* 以下三个方法尽量不要使用！ */
     /* metadata */
     MCRole *metaRoleForObjectId(mc_object_id_t anObjectId);
     MCNPC *metaNPCForObjectId(mc_object_id_t anObjectId);
     MCEnemy *metaEnemyForObjectId(mc_object_id_t anObjectId);
+    
+private:
+    void loadData();
     
     void loadNPCData();
     void loadEnemyData();

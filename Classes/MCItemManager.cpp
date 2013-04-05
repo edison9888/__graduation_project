@@ -6,15 +6,17 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
+#include "MCType.h"
 #include "MCItemManager.h"
 #include "MCEquipmentItem.h"
 #include "MCEffectiveItem.h"
 #include "JsonBox.h"
+#include "MCBackpack.h"
 #include "MCOreManager.h"
 
-const char *kMCEquipmentItemWeaponFilepath = "E001.jpkg";
-const char *kMCEquipmentItemArmorFilepath = "E002.jpkg";
-const char *kMCEffectiveItemFilepath = "E100.jpkg";
+static const char *kMCEquipmentItemWeaponFilepath = "E001.jpkg";
+static const char *kMCEquipmentItemArmorFilepath = "E002.jpkg";
+static const char *kMCEffectiveItemFilepath = "E100.jpkg";
 
 static MCItemManager *__shared_item_manager = NULL;
 
@@ -62,7 +64,8 @@ MCItemManager::itemForObjectId(mc_object_id_t anObjectId)
 MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEquipmentItem *equipmentItem = (MCEquipmentItem *) metaEquipmentItemForObjectId(anObjectId)->copy();
+    MCEquipmentItem *meta = dynamic_cast<MCEquipmentItem *>(metaEquipmentItemForObjectId(anObjectId));
+    MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(meta->copy());
 
     if (equipmentItem) {
         equipmentItem->autorelease();
@@ -77,7 +80,8 @@ MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 MCEffectiveItem *
 MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEffectiveItem *effectiveItem = (MCEffectiveItem *) metaEffectiveItemForObjectId(anObjectId)->copy();
+    MCEffectiveItem *meta = dynamic_cast<MCEffectiveItem *>(metaEffectiveItemForObjectId(anObjectId));
+    MCEffectiveItem *effectiveItem = dynamic_cast<MCEffectiveItem *>(meta->copy());
     
     if (effectiveItem) {
         effectiveItem->autorelease();
@@ -151,7 +155,7 @@ MCItemManager::loadEquipmentItems()
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCEquipmentItem *item = MCEquipmentItem::create(MCWeapon);
+        MCEquipmentItem *item = MCEquipmentItem::create(MCEquipment::MCWeapon);
         CCString *ccstring;
         
         item->setID(o_id);
@@ -162,32 +166,33 @@ MCItemManager::loadEquipmentItems()
         item->setIcon(ccstring);
         ccstring->retain();
         item->setPrice(object["price"].getInt());
-        item->equipment_.equipment.weapon.damage = MCMakeDiceType(object["count"].getInt(), object["size"].getInt());
+        JsonBox::Object damage = object["damage"].getObject();
+        MCWeapon *equipment = dynamic_cast<MCWeapon *>(item->equipment_);
+        equipment->damage = MCMakeDiceType(damage["count"].getInt(), damage["size"].getInt());
+        equipment->criticalHit = object["critical-hit"].getInt();
         JsonBox::Object diceRange = object["critical-hit-visible"].getObject();
         JsonBox::Object diceRangeDice = diceRange["dice"].getObject();
-        item->equipment_.equipment.weapon.critical_hit_visible.min = diceRange["min"].getInt();
-        item->equipment_.equipment.weapon.critical_hit_visible.max = diceRange["max"].getInt();
-        item->equipment_.equipment.weapon.critical_hit_visible.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                                                     diceRangeDice["size"].getInt());
+        equipment->criticalHitVisible.min = diceRange["min"].getInt();
+        equipment->criticalHitVisible.max = diceRange["max"].getInt();
+        equipment->criticalHitVisible.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                              diceRangeDice["size"].getInt());
         diceRange = object["critical-hit-invisible"].getObject();
         diceRangeDice = diceRange["dice"].getObject();
-        item->equipment_.equipment.weapon.critical_hit_invisible.min = diceRange["min"].getInt();
-        item->equipment_.equipment.weapon.critical_hit_invisible.max = diceRange["max"].getInt();
-        item->equipment_.equipment.weapon.critical_hit_invisible.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                                                       diceRangeDice["size"].getInt());
-        item->equipment_.equipment.weapon.critical_hit = object["critical-hit"].getDouble();
-        item->equipment_.equipment.weapon.distance = object["distance"].getInt();
+        equipment->criticalHitInvisible.min = diceRange["min"].getInt();
+        equipment->criticalHitInvisible.max = diceRange["max"].getInt();
+        equipment->criticalHitInvisible.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                              diceRangeDice["size"].getInt());
+        equipment->distance = object["distance"].getInt();
         if (object["effect"].isInteger()) {
-            item->equipment_.equipment.weapon.effect = object["effect"].getInt();
+            equipment->effect = object["effect"].getInt();
             diceRange = object["effect-check"].getObject();
             diceRangeDice = diceRange["dice"].getObject();
-            item->equipment_.equipment.weapon.effect_check.min = diceRange["min"].getInt();
-            item->equipment_.equipment.weapon.effect_check.max = diceRange["max"].getInt();
-            item->equipment_.equipment.weapon.effect_check.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                                                 diceRangeDice["size"].getInt());
+            equipment->effectCheck.min = diceRange["min"].getInt();
+            equipment->effectCheck.max = diceRange["max"].getInt();
+            equipment->effectCheck.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                          diceRangeDice["size"].getInt());
         }
-        item->equipment_.equipment.weapon.dexterity = object["dexterity"].getInt();
-        item->equipment_.type = MCWeapon;
+        equipment->dexterity = object["dexterity"].getInt();
         /* 读取默认矿石，加载背包的时候更新为正确矿石 */
         item->ore_ = oreManager->defaultOre();
         equipmentItems_->setObject(item, MCObjectIdToDickKey(o_id));
@@ -205,7 +210,7 @@ MCItemManager::loadEquipmentItems()
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCEquipmentItem *item = MCEquipmentItem::create(MCArmor);
+        MCEquipmentItem *item = MCEquipmentItem::create(MCEquipment::MCArmor);
         CCString *ccstring;
         
         item->setID(o_id);
@@ -217,11 +222,12 @@ MCItemManager::loadEquipmentItems()
         ccstring->retain();
         ccstring = CCString::create(object["icon"].getString().c_str());
         item->setIcon(ccstring);
+        ccstring->retain();
         item->setPrice(object["price"].getInt());
-        item->equipment_.equipment.armor.defense = object["defense"].getInt();
-        item->equipment_.equipment.armor.dexterity = object["dexterity"].getInt();
-        item->equipment_.equipment.armor.armor_check_penalty = object["armor-check-penalty"].getInt();
-        item->equipment_.type = MCArmor;
+        MCArmor *equipment = dynamic_cast<MCArmor *>(item->equipment_);
+        equipment->defense = object["defense"].getInt();
+        equipment->dexterity = object["dexterity"].getInt();
+        equipment->armorCheckPenalty = object["armor-check-penalty"].getInt();
         /* 读取默认矿石，加载背包的时候更新为正确矿石 */
         item->ore_ = oreManager->defaultOre();
         equipmentItems_->setObject(item, MCObjectIdToDickKey(o_id));

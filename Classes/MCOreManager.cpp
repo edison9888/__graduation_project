@@ -87,7 +87,8 @@ MCOreManager::loadAllOres()
         ore->setDescription(ccstring);
         ccstring->retain();
         ore->setDamage(oreValueRoot["damage"].getInt());
-        ore->setCriticalHit(oreValueRoot["critical-hit"].getDouble());
+        JsonBox::Value criticalHit = oreValueRoot["critical-hit"];
+        ore->setCriticalHit(criticalHit.isInteger() ? criticalHit.getInt() : criticalHit.getDouble());
         ore->setWeaponDexterity(oreValueRoot["weapon-dexterity"].getInt());
         ore->setArmorDexterity(oreValueRoot["armor-dexterity"].getInt());
         ore->setArmorCheckPenalty(oreValueRoot["armor-check-penalty"].getInt());
@@ -101,9 +102,10 @@ MCOreManager::loadAllOres()
     ore_id.index_ = '0';
     ore_id.sub_index_ = ores_->count() + '0';
     mc_dict_key_t key = MCObjectIdToDickKey(ore_id);
-    MCOre *tail = (MCOre *) ores_->objectForKey(key);
+    MCOre *tail = (MCOre *) ores_->objectForKey(key--);
+    tail->setNextLevel(NULL);
     for (mc_index_t i = 1; i < ores_->count(); ++i) {
-        ore = (MCOre *) ores_->objectForKey(key);
+        ore = (MCOre *) ores_->objectForKey(key--);
         ore->setNextLevel(tail);
         tail = ore;
     }

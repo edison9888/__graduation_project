@@ -26,5 +26,5 @@ MCBattleFieldScene::installController()
 void
 MCBattleFieldScene::dragScene(const CCPoint &anOffset)
 {
-    
 }
+

@@ -22,6 +22,7 @@ enum {
 };
 typedef mc_enum_t MCFacade;
 
+class MCShadow;
 class MCRole;
 
 class MCRoleEntityMetadata : public CCSprite {
@@ -76,7 +77,8 @@ public:
     void walkTo(CCPoint &aDestinationPosition);
     
     /* 坑爹啊！直接moveby居然不行！ */
-    void moveBy(CCPoint &aDelta);
+    void moveBy(const CCPoint &aDelta);
+    void drag(const CCPoint &aDelta);
     
     void walkOnScreen(const CCPoint &aDestinationLocation, const CCPoint &offset);
     bool isWalking();
@@ -95,6 +97,8 @@ public:
     void walkEnded();
     
 protected:
+    void walkWithPathFinding(CCObject *algoObject);
+    void walkPath(CCObject *obj);
     
     void actionEnded(CCObject* anObject);
     void stopAllMoveToActions();
@@ -103,7 +107,11 @@ protected:
     CC_PROPERTY_READONLY(MCFacade, facade_, Facade);
     CC_PROPERTY_READONLY(MCRoleEntityMetadata *, metadata_, Metadata);
     
+    CC_SYNTHESIZE_READONLY(CCSprite *, selectedShadow_, SelectedShadow);
+    
     CC_SYNTHESIZE_READONLY(MCRole *, role_, Prototype); /* 指向MCRole */
+    
+    CC_SYNTHESIZE(MCShadow *, shadow_, Shadow); /* 影子 */
     
 private:
     CCArray *moveToActions_;

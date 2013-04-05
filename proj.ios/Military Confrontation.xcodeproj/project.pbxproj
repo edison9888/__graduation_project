@@ -79,7 +79,6 @@
 		A38D11CF16B81C8C009E1CB8 /* MCBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11CD16B81C8C009E1CB8 /* MCBase64.cpp */; };
 		A38D11D316B81CB9009E1CB8 /* MCDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D116B81CB9009E1CB8 /* MCDialog.cpp */; };
 		A38D11D616B81CD6009E1CB8 /* MCSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */; };
-		A38D11DA16B81CF8009E1CB8 /* MCDetailScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */; };
 		A39C948316AEE11800B92E33 /* MCBattle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947716AEE11800B92E33 /* MCBattle.cpp */; };
 		A39C948416AEE11800B92E33 /* MCDungeonMaster.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947916AEE11800B92E33 /* MCDungeonMaster.cpp */; };
 		A39C948516AEE11800B92E33 /* MCMutiplayerBattleImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39C947B16AEE11800B92E33 /* MCMutiplayerBattleImpl.cpp */; };
@@ -203,6 +202,31 @@
 		A3C386AD170214C400F28B15 /* tolua_map.c in Sources */ = {isa = PBXBuildFile; fileRef = A3C38668170214C400F28B15 /* tolua_map.c */; };
 		A3C386AE170214C400F28B15 /* tolua_push.c in Sources */ = {isa = PBXBuildFile; fileRef = A3C38669170214C400F28B15 /* tolua_push.c */; };
 		A3C386AF170214C400F28B15 /* tolua_to.c in Sources */ = {isa = PBXBuildFile; fileRef = A3C3866A170214C400F28B15 /* tolua_to.c */; };
+		A3F49AB4170D31C8004260FD /* MCTestDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AB2170D31C8004260FD /* MCTestDetail.cpp */; };
+		A3F49AB5170D31C8004260FD /* MCTestDetail.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AB3170D31C8004260FD /* MCTestDetail.h */; };
+		A3F49AB8170D40E2004260FD /* MCDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AB6170D40E2004260FD /* MCDetail.cpp */; };
+		A3F49AB9170D40E2004260FD /* MCDetail.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AB7170D40E2004260FD /* MCDetail.h */; };
+		A3F49ABC170D40F3004260FD /* MCConfirm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ABA170D40F3004260FD /* MCConfirm.cpp */; };
+		A3F49ABD170D40F3004260FD /* MCConfirm.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ABB170D40F3004260FD /* MCConfirm.h */; };
+		A3F49AC2170D4107004260FD /* MCPropsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ABE170D4107004260FD /* MCPropsLayer.cpp */; };
+		A3F49AC3170D4107004260FD /* MCPropsLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ABF170D4107004260FD /* MCPropsLayer.h */; };
+		A3F49AC4170D4107004260FD /* MCTaskLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC0170D4107004260FD /* MCTaskLayer.cpp */; };
+		A3F49AC5170D4107004260FD /* MCTaskLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC1170D4107004260FD /* MCTaskLayer.h */; };
+		A3F49ACA170D4124004260FD /* MCEquipmentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC6170D4124004260FD /* MCEquipmentLayer.cpp */; };
+		A3F49ACB170D4124004260FD /* MCEquipmentLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC7170D4124004260FD /* MCEquipmentLayer.h */; };
+		A3F49ACC170D4124004260FD /* MCWeaponSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC8170D4124004260FD /* MCWeaponSelector.cpp */; };
+		A3F49ACD170D4124004260FD /* MCWeaponSelector.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AC9170D4124004260FD /* MCWeaponSelector.h */; };
+		A3F49AD0170D4141004260FD /* MCControllerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ACE170D4141004260FD /* MCControllerLayer.cpp */; };
+		A3F49AD1170D4141004260FD /* MCControllerLayer.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ACF170D4141004260FD /* MCControllerLayer.h */; };
+		A3F49AD4170D416C004260FD /* MCSceneController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AD2170D416C004260FD /* MCSceneController.cpp */; };
+		A3F49AD5170D416C004260FD /* MCSceneController.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AD3170D416C004260FD /* MCSceneController.h */; };
+		A3F49AD8170D4178004260FD /* MCShadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AD6170D4178004260FD /* MCShadow.cpp */; };
+		A3F49AD9170D4178004260FD /* MCShadow.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AD7170D4178004260FD /* MCShadow.h */; };
+		A3F49ADC170D41A1004260FD /* MCEquipmentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ADA170D41A1004260FD /* MCEquipmentManager.cpp */; };
+		A3F49ADD170D41A1004260FD /* MCEquipmentManager.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ADB170D41A1004260FD /* MCEquipmentManager.h */; };
+		A3F49AE0170D41D3004260FD /* MCVision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ADE170D41D3004260FD /* MCVision.cpp */; };
+		A3F49AE1170D41D3004260FD /* MCVision.h in Sources */ = {isa = PBXBuildFile; fileRef = A3F49ADF170D41D3004260FD /* MCVision.h */; };
+		A3F49AE3170D41F7004260FD /* MCRoleProperty.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3F49AE2170D41F7004260FD /* MCRoleProperty.cpp */; };
 		BF1373EF128A898400D9F789 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492D4B1289302400A09262 /* OpenGLES.framework */; };
 		BF1373F0128A899500D9F789 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492C21128924A800A09262 /* libxml2.dylib */; };
 		BF1373F1128A899E00D9F789 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF492B6912891AC600A09262 /* libz.dylib */; };
@@ -386,8 +410,6 @@
 		A38D11D216B81CB9009E1CB8 /* MCDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCDialog.h; sourceTree = "<group>"; };
 		A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSceneManager.cpp; sourceTree = "<group>"; };
 		A38D11D516B81CD6009E1CB8 /* MCSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSceneManager.h; sourceTree = "<group>"; };
-		A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDetailScene.cpp; sourceTree = "<group>"; };
-		A38D11D916B81CF8009E1CB8 /* MCDetailScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCDetailScene.h; sourceTree = "<group>"; };
 		A39C947716AEE11800B92E33 /* MCBattle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCBattle.cpp; sourceTree = "<group>"; };
 		A39C947816AEE11800B92E33 /* MCBattle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCBattle.h; sourceTree = "<group>"; };
 		A39C947916AEE11800B92E33 /* MCDungeonMaster.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDungeonMaster.cpp; sourceTree = "<group>"; };
@@ -635,6 +657,31 @@
 		A3C38668170214C400F28B15 /* tolua_map.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_map.c; sourceTree = "<group>"; };
 		A3C38669170214C400F28B15 /* tolua_push.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_push.c; sourceTree = "<group>"; };
 		A3C3866A170214C400F28B15 /* tolua_to.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tolua_to.c; sourceTree = "<group>"; };
+		A3F49AB2170D31C8004260FD /* MCTestDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCTestDetail.cpp; sourceTree = "<group>"; };
+		A3F49AB3170D31C8004260FD /* MCTestDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCTestDetail.h; sourceTree = "<group>"; };
+		A3F49AB6170D40E2004260FD /* MCDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCDetail.cpp; sourceTree = "<group>"; };
+		A3F49AB7170D40E2004260FD /* MCDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCDetail.h; sourceTree = "<group>"; };
+		A3F49ABA170D40F3004260FD /* MCConfirm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCConfirm.cpp; sourceTree = "<group>"; };
+		A3F49ABB170D40F3004260FD /* MCConfirm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCConfirm.h; sourceTree = "<group>"; };
+		A3F49ABE170D4107004260FD /* MCPropsLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCPropsLayer.cpp; sourceTree = "<group>"; };
+		A3F49ABF170D4107004260FD /* MCPropsLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCPropsLayer.h; sourceTree = "<group>"; };
+		A3F49AC0170D4107004260FD /* MCTaskLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCTaskLayer.cpp; sourceTree = "<group>"; };
+		A3F49AC1170D4107004260FD /* MCTaskLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCTaskLayer.h; sourceTree = "<group>"; };
+		A3F49AC6170D4124004260FD /* MCEquipmentLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCEquipmentLayer.cpp; sourceTree = "<group>"; };
+		A3F49AC7170D4124004260FD /* MCEquipmentLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCEquipmentLayer.h; sourceTree = "<group>"; };
+		A3F49AC8170D4124004260FD /* MCWeaponSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCWeaponSelector.cpp; sourceTree = "<group>"; };
+		A3F49AC9170D4124004260FD /* MCWeaponSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCWeaponSelector.h; sourceTree = "<group>"; };
+		A3F49ACE170D4141004260FD /* MCControllerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCControllerLayer.cpp; sourceTree = "<group>"; };
+		A3F49ACF170D4141004260FD /* MCControllerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCControllerLayer.h; sourceTree = "<group>"; };
+		A3F49AD2170D416C004260FD /* MCSceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSceneController.cpp; sourceTree = "<group>"; };
+		A3F49AD3170D416C004260FD /* MCSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCSceneController.h; sourceTree = "<group>"; };
+		A3F49AD6170D4178004260FD /* MCShadow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCShadow.cpp; sourceTree = "<group>"; };
+		A3F49AD7170D4178004260FD /* MCShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCShadow.h; sourceTree = "<group>"; };
+		A3F49ADA170D41A1004260FD /* MCEquipmentManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCEquipmentManager.cpp; sourceTree = "<group>"; };
+		A3F49ADB170D41A1004260FD /* MCEquipmentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCEquipmentManager.h; sourceTree = "<group>"; };
+		A3F49ADE170D41D3004260FD /* MCVision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCVision.cpp; sourceTree = "<group>"; };
+		A3F49ADF170D41D3004260FD /* MCVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCVision.h; sourceTree = "<group>"; };
+		A3F49AE2170D41F7004260FD /* MCRoleProperty.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCRoleProperty.cpp; sourceTree = "<group>"; };
 		BF137426128A8E4600D9F789 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		BF23D4E3143315EB00657E08 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AppDelegate.cpp; sourceTree = "<group>"; };
 		BF23D4E4143315EB00657E08 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -971,12 +1018,20 @@
 		A38D11D716B81CE3009E1CB8 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				A38D11D816B81CF8009E1CB8 /* MCDetailScene.cpp */,
-				A38D11D916B81CF8009E1CB8 /* MCDetailScene.h */,
+				A3F49AB6170D40E2004260FD /* MCDetail.cpp */,
+				A3F49AB7170D40E2004260FD /* MCDetail.h */,
 				A38535DC16D7DA4900636887 /* MCDetailLayer.cpp */,
 				A38535DD16D7DA4900636887 /* MCDetailLayer.h */,
 				A38535DE16D7DA4900636887 /* MCStateLayer.cpp */,
 				A38535DF16D7DA4900636887 /* MCStateLayer.h */,
+				A3F49ABE170D4107004260FD /* MCPropsLayer.cpp */,
+				A3F49ABF170D4107004260FD /* MCPropsLayer.h */,
+				A3F49AC0170D4107004260FD /* MCTaskLayer.cpp */,
+				A3F49AC1170D4107004260FD /* MCTaskLayer.h */,
+				A3F49AC6170D4124004260FD /* MCEquipmentLayer.cpp */,
+				A3F49AC7170D4124004260FD /* MCEquipmentLayer.h */,
+				A3F49AC8170D4124004260FD /* MCWeaponSelector.cpp */,
+				A3F49AC9170D4124004260FD /* MCWeaponSelector.h */,
 			);
 			name = Detail;
 			sourceTree = "<group>";
@@ -1014,6 +1069,8 @@
 				A3C3853F170211C400F28B15 /* MCTestRoleBaseInfo.h */,
 				A3C3852E170211C400F28B15 /* MCTestBattleController.cpp */,
 				A3C3852F170211C400F28B15 /* MCTestBattleController.h */,
+				A3F49AB2170D31C8004260FD /* MCTestDetail.cpp */,
+				A3F49AB3170D31C8004260FD /* MCTestDetail.h */,
 				A3C3852C170211C400F28B15 /* MCTestAStar.cpp */,
 				A3C3852D170211C400F28B15 /* MCTestAStar.h */,
 				A3C3855C170211D300F28B15 /* _T_.h */,
@@ -1061,6 +1118,11 @@
 		A39C947416AEE0B200B92E33 /* Role */ = {
 			isa = PBXGroup;
 			children = (
+				A3C3861E1702148900F28B15 /* MCAI.cpp */,
+				A3C3861F1702148900F28B15 /* MCAI.h */,
+				A3F49ADE170D41D3004260FD /* MCVision.cpp */,
+				A3F49ADF170D41D3004260FD /* MCVision.h */,
+				A3F49AE2170D41F7004260FD /* MCRoleProperty.cpp */,
 				A3C385F91702144200F28B15 /* MCRoleProperty.h */,
 				A3C385F71702144200F28B15 /* MCRoleEntity.cpp */,
 				A3C385F81702144200F28B15 /* MCRoleEntity.h */,
@@ -1078,8 +1140,6 @@
 		A39C947516AEE0B700B92E33 /* Battle Subsystem */ = {
 			isa = PBXGroup;
 			children = (
-				A3C3861E1702148900F28B15 /* MCAI.cpp */,
-				A3C3861F1702148900F28B15 /* MCAI.h */,
 				A39C947716AEE11800B92E33 /* MCBattle.cpp */,
 				A39C947816AEE11800B92E33 /* MCBattle.h */,
 				A39C947B16AEE11800B92E33 /* MCMutiplayerBattleImpl.cpp */,
@@ -1127,8 +1187,12 @@
 				A3C3856B1702126300F28B15 /* MCBattleFieldScene.h */,
 				A38D11D416B81CD6009E1CB8 /* MCSceneManager.cpp */,
 				A38D11D516B81CD6009E1CB8 /* MCSceneManager.h */,
+				A3F49AD2170D416C004260FD /* MCSceneController.cpp */,
+				A3F49AD3170D416C004260FD /* MCSceneController.h */,
 				A39FB03D16B27593007FECB7 /* MCScenePackage.cpp */,
 				A39FB03E16B27593007FECB7 /* MCScenePackage.h */,
+				A3F49ACE170D4141004260FD /* MCControllerLayer.cpp */,
+				A3F49ACF170D4141004260FD /* MCControllerLayer.h */,
 				A3C385721702127600F28B15 /* MCJoypadControllerLayer.cpp */,
 				A3C385731702127600F28B15 /* MCJoypadControllerLayer.h */,
 				A3C385761702128000F28B15 /* MCBattleControllerLayer.cpp */,
@@ -1137,9 +1201,10 @@
 				A3C3857B1702129100F28B15 /* MCObjectLayer.h */,
 				A3C3857E1702129A00F28B15 /* MCBackgroundLayer.cpp */,
 				A3C3857F1702129A00F28B15 /* MCBackgroundLayer.h */,
+				A3F49AD6170D4178004260FD /* MCShadow.cpp */,
+				A3F49AD7170D4178004260FD /* MCShadow.h */,
 				A3C38582170212A300F28B15 /* MCViewportLayer.cpp */,
 				A3C38583170212A300F28B15 /* MCViewportLayer.h */,
-				A38D11D716B81CE3009E1CB8 /* Detail */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -1203,6 +1268,8 @@
 				A3C385B51702137000F28B15 /* MCEquipment.cpp */,
 				A3C385B61702137000F28B15 /* MCEquipment.h */,
 				A3C385B71702137000F28B15 /* MCEquipmentProperty.h */,
+				A3F49ADA170D41A1004260FD /* MCEquipmentManager.cpp */,
+				A3F49ADB170D41A1004260FD /* MCEquipmentManager.h */,
 			);
 			name = Equipment;
 			sourceTree = "<group>";
@@ -1454,6 +1521,9 @@
 				A3C385631702123100F28B15 /* MCTeamLayer.h */,
 				A3C3855E1702123100F28B15 /* MCActionBar.cpp */,
 				A3C3855F1702123100F28B15 /* MCActionBar.h */,
+				A3F49ABA170D40F3004260FD /* MCConfirm.cpp */,
+				A3F49ABB170D40F3004260FD /* MCConfirm.h */,
+				A38D11D716B81CE3009E1CB8 /* Detail */,
 				A39FB01616B27477007FECB7 /* Scene */,
 				A39FB01716B2748B007FECB7 /* Script */,
 				A3C3858E170212C900F28B15 /* Algorithm */,
@@ -1651,7 +1721,6 @@
 				A38D11CF16B81C8C009E1CB8 /* MCBase64.cpp in Sources */,
 				A38D11D316B81CB9009E1CB8 /* MCDialog.cpp in Sources */,
 				A38D11D616B81CD6009E1CB8 /* MCSceneManager.cpp in Sources */,
-				A38D11DA16B81CF8009E1CB8 /* MCDetailScene.cpp in Sources */,
 				A38535D016D7D9D900636887 /* MCDialogue.cpp in Sources */,
 				A38535D216D7D9D900636887 /* MCHero.cpp in Sources */,
 				A38535D616D7D9D900636887 /* MCNPC.cpp in Sources */,
@@ -1756,6 +1825,31 @@
 				A3C386AD170214C400F28B15 /* tolua_map.c in Sources */,
 				A3C386AE170214C400F28B15 /* tolua_push.c in Sources */,
 				A3C386AF170214C400F28B15 /* tolua_to.c in Sources */,
+				A3F49AB4170D31C8004260FD /* MCTestDetail.cpp in Sources */,
+				A3F49AB5170D31C8004260FD /* MCTestDetail.h in Sources */,
+				A3F49AB8170D40E2004260FD /* MCDetail.cpp in Sources */,
+				A3F49AB9170D40E2004260FD /* MCDetail.h in Sources */,
+				A3F49ABC170D40F3004260FD /* MCConfirm.cpp in Sources */,
+				A3F49ABD170D40F3004260FD /* MCConfirm.h in Sources */,
+				A3F49AC2170D4107004260FD /* MCPropsLayer.cpp in Sources */,
+				A3F49AC3170D4107004260FD /* MCPropsLayer.h in Sources */,
+				A3F49AC4170D4107004260FD /* MCTaskLayer.cpp in Sources */,
+				A3F49AC5170D4107004260FD /* MCTaskLayer.h in Sources */,
+				A3F49ACA170D4124004260FD /* MCEquipmentLayer.cpp in Sources */,
+				A3F49ACB170D4124004260FD /* MCEquipmentLayer.h in Sources */,
+				A3F49ACC170D4124004260FD /* MCWeaponSelector.cpp in Sources */,
+				A3F49ACD170D4124004260FD /* MCWeaponSelector.h in Sources */,
+				A3F49AD0170D4141004260FD /* MCControllerLayer.cpp in Sources */,
+				A3F49AD1170D4141004260FD /* MCControllerLayer.h in Sources */,
+				A3F49AD4170D416C004260FD /* MCSceneController.cpp in Sources */,
+				A3F49AD5170D416C004260FD /* MCSceneController.h in Sources */,
+				A3F49AD8170D4178004260FD /* MCShadow.cpp in Sources */,
+				A3F49AD9170D4178004260FD /* MCShadow.h in Sources */,
+				A3F49ADC170D41A1004260FD /* MCEquipmentManager.cpp in Sources */,
+				A3F49ADD170D41A1004260FD /* MCEquipmentManager.h in Sources */,
+				A3F49AE0170D41D3004260FD /* MCVision.cpp in Sources */,
+				A3F49AE1170D41D3004260FD /* MCVision.h in Sources */,
+				A3F49AE3170D41F7004260FD /* MCRoleProperty.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

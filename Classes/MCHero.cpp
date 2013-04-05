@@ -15,7 +15,7 @@ const char *kMCHeroSpriteSheetPath = "spritesheets/x-000";
 
 MCHero::~MCHero()
 {
-    CC_SAFE_DELETE(viewport_); /* 非CCObject子类 */
+//    CC_SAFE_DELETE(viewport_); /* 非CCObject子类 */
 }
 
 bool
@@ -35,7 +35,9 @@ MCHero::init()
     setPP(100);
     setMaxPP(100);
     
-    viewport_ = MCViewport::create(getEntity());
+    roleState_ = 0;
+    
+//    viewport_ = MCViewport::create(getEntity());
     
     return true;
 }

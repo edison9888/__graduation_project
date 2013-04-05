@@ -65,9 +65,8 @@ public:
     MCRoleEntity *hero_;
     CCArray *mercenaries_;
     CCTMXTiledMap *map_;
-    CCTMXLayer *metaLayer_;
     
-    CCArray *barriers_;          /* 障碍物 */
+    CC_SYNTHESIZE_READONLY(CCArray *, barriers_, barriers); /* 障碍物 */
     CCArray *semiTransparents_;  /* 半透明 */
     CCArray *entrances_;         /* 入口 */
     CCArray *objects_;
@@ -149,6 +148,11 @@ public:
      * 选择了anItem。按下和放开手指都在anItem的范围内时执行。
      */
     virtual void controllerDidSelectItem(MCBattleControllerDelegate *aSender, MCItem *anItem);
+    
+    /**
+     * 拖动地图
+     */
+    void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset);
     
 protected:
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);

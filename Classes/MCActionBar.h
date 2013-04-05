@@ -13,6 +13,10 @@
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
 
+extern const GLubyte kMCInvalidActionBarItemOpacity;
+extern const GLubyte kMCDraggingActionBarItemOpacity;
+extern const GLubyte kMCNormalActionBarItemOpacity;
+
 class MCActionBarItem : public CCSprite {
 public:
     bool init(MCBackpackItem *aBackpackItem);
@@ -23,6 +27,8 @@ public:
     
     CCPoint touchedPoint;
     struct cc_timeval timestamp;
+    
+    void updateCount();
     
 private:
     CC_SYNTHESIZE_READONLY(CCScale9Sprite *, itemBox_, ItemBox);
@@ -43,10 +49,14 @@ public:
     
     CREATE_FUNC(MCActionBar);
     
+    void toggle();
+    
     MCActionBarItem *itemForTouch(CCTouch *pTouch);
     
 private:
     void align();
+    
+    CCMenu *toggleButton_;
     
     CC_SYNTHESIZE_READONLY(MCActionBarItem *, trapWide_, TrapWide);
     CC_SYNTHESIZE_READONLY(MCActionBarItem *, trapDamage_, TrapDamage);

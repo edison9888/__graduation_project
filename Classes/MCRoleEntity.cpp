@@ -10,6 +10,7 @@
 #include "MCMicsUtil.h"
 #include "MCScene.h"
 #include "MCAStar.h"
+#include "MCRoleManager.h"
 
 #define kMCDurationHero  0.025f
 
@@ -65,6 +66,8 @@ MCRoleEntity::MCRoleEntity()
     
     moveToDestinations_ = CCArray::create();
     moveToDestinations_->retain();
+    
+    shadow_ = NULL;
 }
 
 MCRoleEntity::~MCRoleEntity()
@@ -201,7 +204,7 @@ MCRoleEntity::walkTo(CCPoint &aDestinationPosition)
 
 /* 坑爹啊！直接moveby居然不行！ */
 void
-MCRoleEntity::moveBy(CCPoint &aDelta)
+MCRoleEntity::moveBy(const CCPoint &aDelta)
 {
     CCAction *action = CCSequence::create(CCMoveBy::create(kMCDurationHero, aDelta),
                                           __mc_dumy::create(),
@@ -211,11 +214,16 @@ MCRoleEntity::moveBy(CCPoint &aDelta)
 }
 
 void
+MCRoleEntity::drag(const CCPoint &aDelta)
+{
+    setPosition(ccpAdd(m_obPosition, aDelta));
+}
+
+void
 MCRoleEntity::walkOnScreen(const CCPoint &aDestinationLocation, const CCPoint &offset)
 {
     CCFiniteTimeAction *action = NULL;
     float angle;
-    
     
     //每个方向分配60度角的空间
     MCGetAngleForPoint(offset, angle);
@@ -314,10 +322,6 @@ MCRoleEntity::findPath(const CCPoint &aDestinationLocation)
 {
     MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
     MCAStar *aStar = sceneContext->getScene()->getAStar();
-    CCTime c;
-    struct cc_timeval tp;
-    c.gettimeofdayCocos2d(&tp, NULL);
-    CCLog("start: %ld.%ld",tp.tv_sec,tp.tv_usec);
     aStar->findPath(getPrototype(), aDestinationLocation);
 }
 
@@ -327,30 +331,32 @@ MCRoleEntity::findPath(const CCPoint &aDestinationLocation)
 void
 MCRoleEntity::findPathDidFinish(CCObject *obj)
 {
-    MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
-    CCLog("%s::finished: %p",__FILE__+76,algo);
-    CCArray *route = algo->getRoute();
-    CCPoint *position;
+//    CCArray *route = algo->getRoute();
+//    CCPoint *position;
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     
     notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithmNotification);
-    CCLog("%s::nodes: %d", __FILE__+76,route->count());
-    CCARRAY_FOREACH(route, obj) {
-        position = (CCPoint *) obj;
-        moveToDestinations_->addObject(position);
-    }
-    CC_SAFE_RELEASE(route);
+//    CCLog("%s::nodes: %d", __FILE__+76,route->count());
+//    CCARRAY_FOREACH(route, obj) {
+//        position = (CCPoint *) obj;
+//        moveToDestinations_->addObject(position);
+//    }
+//    CC_SAFE_RELEASE(route);
+    walkWithPathFinding(obj);
     
     //warning: goto destination
     if (moveToDestinations_->count() > 0) {
+        CCArray *actions = CCArray::createWithCapacity(moveToDestinations_->count());
         CCPoint *destination = (CCPoint *) moveToDestinations_->lastObject();
         CCLog("%s::destination is: (%.0f %.0f)", __FILE__+76, destination->x, destination->y);
         CCARRAY_FOREACH(moveToDestinations_, obj) {
-            destination = (CCPoint *) obj;
-            CCLog("%s::Point(%.0f %.0f)", __FILE__+76, destination->x, destination->y);
+            destination = dynamic_cast<CCPoint *>(obj);
+            actions->addObject(CCMoveTo::create(0.1, *destination));
+//            CCLog("%s::Point(%.0f %.0f)", __FILE__+76, destination->x, destination->y);
         }
+        runAction(CCSequence::create(actions));
     }
-    runAction(CCMoveTo::create(1, *((CCPoint *)moveToDestinations_->lastObject())));
+//    runAction(CCMoveTo::create(1, *((CCPoint *)moveToDestinations_->lastObject())));
 }
 
 void
@@ -359,6 +365,55 @@ MCRoleEntity::walkEnded()
     if (((CCAction *) moveToActions_->lastObject())->isDone() && isWalking()) {
         stopWalking();
     }
+}
+
+void
+MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
+{
+    MCAStarAlgorithm *algo = dynamic_cast<MCAStarAlgorithm *>(algoObject);
+    std::stack<CCPoint> &route = algo->route;
+    if (route.size() > 0) {
+        CCPoint target = route.top();
+        CCFiniteTimeAction *action = NULL;
+        float angle;
+        CCPoint offset = ccpSub(target, m_obPosition);
+        
+            //每个方向分配60度角的空间
+        MCGetAngleForPoint(offset, angle);
+        if (angle < 22.5f) {
+            if (offset.x > 0) {
+                walk(MCFacingRight);
+            } else {
+                walk(MCFacingLeft);
+            }
+        } else if (angle < 67.5f) {
+            if (offset.y > 0) {
+                walk(MCFacingUp);
+            } else {
+                walk(MCFacingDown);
+            }
+        } else {
+            if (offset.y > 0) {
+                walk(MCFacingUp);
+            } else {
+                walk(MCFacingDown);
+            }
+        }
+        CCPointLog(target);
+        action = CCSequence::create(CCMoveTo::create(kMCDurationHero, target),
+                                    CCCallFunc::create(this, callfunc_selector(MCRoleEntity::walkEnded)),
+                                    CCCallFuncO::create(this, callfuncO_selector(MCRoleEntity::walkWithPathFinding), algoObject),
+                                    NULL);
+        moveToActions_->addObject(action);
+        runAction(action);
+    } else {
+        CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCAStarAlgorithmWillRemoveNotification);
+    }
+}
+
+void
+MCRoleEntity::walkPath(CCObject *obj)
+{
 }
 
 CCSpriteBatchNode *

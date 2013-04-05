@@ -27,6 +27,10 @@ public:
     void removeRole(MCRole *aRole);
     mc_size_t size();
     
+    inline MCRole *lastRole() {
+        return dynamic_cast<MCRole *>(teams_->lastObject());
+    }
+    
     inline bool isFull() {
         return teams_->count() >= maxSize_;
     }

@@ -15,6 +15,7 @@ MCTaskTarget::copy()
     
     target->objectID = objectID;
     target->count = count;
+    target->remaining = remaining;
     
     return target;
 }

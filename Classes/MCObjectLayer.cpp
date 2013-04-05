@@ -16,7 +16,8 @@
 #include "MCHero.h"
 #include "MCBarrier.h"
 #include "MCMicsUtil.h"
-
+#include "MCMercenary.h"
+#include "MCTeam.h"
 #include "MCScene.h"
 
 MCObjectLayer *
@@ -71,6 +72,7 @@ void
 MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
 {
     CCSize winSize = CCDirectorGetWindowsSize();
+    float contentScaleFactor = CCDirectorGetContentScaleFactor();
     
     map_ = aMap;
     
@@ -82,15 +84,17 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     barriers_->retain();
     CCARRAY_FOREACH(barriers, obj) {
         CCDictionary *dict = (CCDictionary *) obj;
-        CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
-                                 dict->valueForKey("y")->floatValue(),
-                                 dict->valueForKey("width")->floatValue(),
-                                 dict->valueForKey("height")->floatValue());
+        CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("y")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("width")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("height")->floatValue() / contentScaleFactor);
         MCBarrier *barrier;
         
         if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeBarrier)) {
-#warning if barrier-type not set, barrier is equal to what?
-            barrier = MCBarrier::create(rect, dict->valueForKey("barrier-type")->uintValue());
+            unsigned int barrierType = dict->valueForKey("barrier-type")->uintValue();
+            barrier = MCBarrier::create(rect, barrierType == 0
+                                                ? MCNormalBarrier | MCAdvancedBarrier
+                                                : barrierType);
             barriers_->addObject(barrier);
         }
     }
@@ -103,10 +107,10 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
         CCArray *semiTransparents = semiTransparentObejcts->getObjects(); /* 还是原始数据，先处理一次转换成CCRect先 */
         CCARRAY_FOREACH(semiTransparents, obj) {
             CCDictionary *dict = (CCDictionary *) obj;
-            CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
-                                     dict->valueForKey("y")->floatValue(),
-                                     dict->valueForKey("width")->floatValue(),
-                                     dict->valueForKey("height")->floatValue());
+            CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue() / contentScaleFactor,
+                                     dict->valueForKey("y")->floatValue() / contentScaleFactor,
+                                     dict->valueForKey("width")->floatValue() / contentScaleFactor,
+                                     dict->valueForKey("height")->floatValue() / contentScaleFactor);
             MCSemiTransparent *semiTransparent;
             
             if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeSemiTransparent)) {
@@ -125,10 +129,10 @@ MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
     CCDictionary *scenes = scenePackage->getScenes(); /* 场景包中记录的entrances */
     CCARRAY_FOREACH(entrances, obj) {
         CCDictionary *dict = (CCDictionary *) obj;
-        CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue(),
-                                 dict->valueForKey("y")->floatValue(),
-                                 dict->valueForKey("width")->floatValue(),
-                                 dict->valueForKey("height")->floatValue());
+        CCRect rect = CCRectMake(dict->valueForKey("x")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("y")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("width")->floatValue() / contentScaleFactor,
+                                 dict->valueForKey("height")->floatValue() / contentScaleFactor);
         MCEntrance *entrance;
         
         if (0 == dict->valueForKey("type")->m_sString.compare(kMCTypeEntrance)) {
@@ -162,6 +166,7 @@ MCObjectLayer::onEnter()
     CCDictElement *elem;
     MCRole *role;
     
+    /* tags: #objects #insert */
     /* load all roles */
     /* hero */
     MCHero *hero = MCHero::sharedHero();
@@ -176,14 +181,26 @@ MCObjectLayer::onEnter()
         role = (MCRole *) elem->getObject();
         /* 初始化NPC数据 */
         addChild(role->getEntity()->getSpriteSheet());
-        role->getEntity()->setPosition(role->getEntityMetadata()->getPosition());
+        CCPoint positionAtTMX = role->getEntityMetadata()->getPosition();
+        role->getEntity()->setPosition(ccp(positionAtTMX.x,
+                                           mapHeight_ - positionAtTMX.y));
         objects_->addObject(role);
     }
     
     /* mercenaries */
-//    mercenaries_->removeAllObjects();
+    mercenaries_->removeAllObjects();
+    CCArray *team = MCTeam::sharedTeam()->getRoles();
+    CCObject *obj;
+    CCARRAY_FOREACH(team, obj) {
+        MCRole *role = dynamic_cast<MCRole *>(obj);
+        if (role != hero) {
+            addChild(role->getEntity()->getSpriteSheet());
+            mercenaries_->addObject(role);
+        }
+    }
     //warning: initialize here?
     
+    /* tags: #spawn-point */
     /* load initialize position */
     CCTMXObjectGroup *objects = map_->objectGroupNamed("objects");
     if (objects) {
@@ -196,10 +213,10 @@ MCObjectLayer::onEnter()
         flag->setState(MCOnState);
         if (spawnPoint && flag->getState() == MCOnState) {
             hero_->setPosition(ccp(spawnPoint->valueForKey("x")->floatValue(),
-                                   tileSize_.height * mapSize_.height - spawnPoint->valueForKey("y")->floatValue()));
+                                   spawnPoint->valueForKey("y")->floatValue()));
         }
     }
-    hero_->setPosition(ccp(200, 200));
+    hero_->setPosition(ccp(200,200));
     CCPointLog(hero_->getPosition());
 }
 
@@ -212,7 +229,7 @@ MCObjectLayer::onExit()
     /* hero */
     hero_->getSpriteSheet()->removeFromParent();
     hero_->face(MCFacingDown);
-    /* npcs */
+    /* objects */
     CCARRAY_FOREACH(objects_, obj) {
         entity = ((MCRole *) obj)->getEntity();
         entity->getSpriteSheet()->removeFromParentAndCleanup(true);
@@ -327,6 +344,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     heroMaybeMoveToPosition = ccpAdd(heroCurrentPosition, deltaForHero);
     mapMaybeMoveToPosition = ccpAdd(mapCurrentPosition, deltaForMap);
     
+    /* tags: #map #offset */
     /* 检测地图的越界偏移 */
     if (mapMaybeMoveToPosition.x < -(mapWidth_ - winWidth_)) { /* 过左 */
         deltaForMap.x -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).x;
@@ -338,7 +356,8 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     } else if (mapMaybeMoveToPosition.y > 0) { /* 过高 */
         deltaForMap.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
     }
-
+    
+    /* tags: #collision */
     /* 矩形框检测方案 */
     /* 场景切换检测 */
     MCOBB heroOBB = hero_->getOBB();
@@ -696,4 +715,40 @@ void
 MCBattleFieldSceneObjectLayer::controllerDidSelectItem(MCBattleControllerDelegate *aSender, MCItem *anItem)
 {
     
+}
+
+void
+MCBattleFieldSceneObjectLayer::controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset)
+{
+    CCPoint mapCurrentPosition = map_->getPosition();
+    CCPoint mapMaybeMoveToPosition = ccpAdd(mapCurrentPosition, anOffset);
+    CCObject *obj;
+    CCPoint delta(anOffset);
+
+    /* 检测越界 */
+    if (mapMaybeMoveToPosition.x < -(mapWidth_ - winWidth_)) { /* 过左 */
+        delta.x -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).x;
+    } else if (mapMaybeMoveToPosition.x > 0) { /* 过右 */
+        delta.x -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).x;
+    }
+    if (mapMaybeMoveToPosition.y < -(mapHeight_ - winHeight_)) { /* 过低 */
+        delta.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
+    } else if (mapMaybeMoveToPosition.y > 0) { /* 过高 */
+        delta.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
+    }
+    
+    /* 不做无用功 */
+    if (delta.x == 0 && delta.y == 0) {
+        return;
+    }
+    
+    map_->setPosition(ccpAdd(mapCurrentPosition, delta));
+    MCRole *role;
+    if (objects_) {
+        CCARRAY_FOREACH(objects_, obj) {
+            role = (MCRole *) obj;
+            role->getEntity()->drag(delta);
+        }
+    }
+    hero_->drag(delta);
 }

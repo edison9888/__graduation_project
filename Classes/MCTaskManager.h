@@ -49,16 +49,25 @@ public:
     bool acceptTaskWithObjectId(mc_object_id_t anObjectId);
     
     /**
-     * 放弃一个任务，成功放弃返回true，否则返回false
+     * 放弃当前任务，成功放弃返回true，否则返回false
      */
-    void abortTask(MCTask *task);
+    void abortCurrentTask();
     
-    /**
-     * 以任务ID放弃一个任务，成功放弃返回true，否则返回false
-     */
-    void abortTaskWithObjectId(mc_object_id_t anObjectId);
+//    /**
+//     * 放弃一个任务，成功放弃返回true，否则返回false
+//     */
+//    void abortTask(MCTask *task);
+//    
+//    /**
+//     * 以任务ID放弃一个任务，成功放弃返回true，否则返回false
+//     */
+//    void abortTaskWithObjectId(mc_object_id_t anObjectId);
     
     void startCurrentTask();
+    
+    inline bool isTaskActiviting() {
+        return currentTask_ && (currentTask_->getTaskStatus() == MCTaskActiviting);
+    }
     
 private:
     /**

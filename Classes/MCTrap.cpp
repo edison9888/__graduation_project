@@ -8,6 +8,33 @@
 
 #include "MCTrap.h"
 
+const char *kMCUnknownTrap = "未知陷阱";
+const char *kMCFireballTrap = "火球陷阱";
+const char *kMCCurseTrap = "诅咒陷阱";
+const char *kMCParalysisTrap = "麻痹陷阱";
+const char *kMCFogTrap = "迷雾陷阱";
+const char *kMCFlashTrap = "闪光陷阱";
+
+const char *
+MCTrapGetNameWithTrapType(MCTrapType aTrapType)
+{
+    switch (aTrapType) {
+        case MCFireballTrap:
+            return kMCFireballTrap;
+        case MCCurseTrap:
+            return kMCCurseTrap;
+        case MCParalysisTrap:
+            return kMCParalysisTrap;
+        case MCFogTrap:
+            return kMCFogTrap;
+        case MCFlashTrap:
+            return kMCFlashTrap;
+            
+        default:
+            return kMCUnknownTrap;
+    }
+}
+
 bool
 MCTrap::init(mc_object_id_t anObjectId)
 {

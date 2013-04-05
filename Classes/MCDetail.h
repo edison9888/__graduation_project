@@ -12,9 +12,13 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
-#include "MCStateLayer.h"
-
 extern const char *kMCDetailDidHideNotification;
+
+class MCDetailLayer;
+class MCStateLayer;
+class MCPropsLayer;
+class MCTaskLayer;
+class MCEquipmentLayer;
 
 class MCDetail : public CCLayer {
 public:
@@ -29,7 +33,7 @@ public:
     
     void showState(); /* 显示状态选项卡 */
     void showProps(); /* 显示道具选项卡 */
-    void showTasks(); /* 显示任务选项卡 */
+    void showTask(); /* 显示任务选项卡 */
     void showEquipment(); /* 显示装备选项卡 */
     void showSkills(); /* 显示技能选项卡 */
     void showMercenary(); /* 显示佣兵选项卡 */
@@ -40,7 +44,10 @@ private:
     CCMenuItem *lastSelectedMenuItem_;
     MCDetailLayer *lastShownLayer_;
     
-    MCStateLayer *stateLayer_;
+    MCStateLayer     *stateLayer_;
+    MCPropsLayer     *propsLayer_;
+    MCTaskLayer      *taskLayer_;
+    MCEquipmentLayer *equipmentLayer_;
     
     CCLayer *viewSelector_;
 };

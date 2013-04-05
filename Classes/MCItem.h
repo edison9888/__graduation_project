@@ -26,7 +26,7 @@ public:
     bool init();
     
     CC_SYNTHESIZE(MCItemType, itemType_, ItemType); /* 物品类型 */
-    CC_SYNTHESIZE(mc_price_t, price_, Price); /* 价格 */
+    CC_SYNTHESIZE(mc_price_t, price_, Price); /* 价格或升级基础价格 */
     CC_SYNTHESIZE(CCString *, icon_, Icon); /* 图标 */
 };
 

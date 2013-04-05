@@ -25,7 +25,7 @@ static NSString *root = @"/Users/DF/Desktop/游戏策划";
 static NSString *kMCScenesRoot = @"/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/Resources/iphone/scenes";
 
 const BOOL do_csv_convert = NO;
-const BOOL do_scenes_generation = YES;
+const BOOL do_scenes_generation = NO;
 
 int main(int argc, const char * argv[])
 {

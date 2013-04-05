@@ -9,6 +9,8 @@ proj.win32/ipch/*
 *.sdf
 
 proj.android/assets/*
+proj.android/bin/*
+proj.android/gen/*
 
 proj.linux/*
 

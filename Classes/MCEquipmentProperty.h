@@ -15,12 +15,12 @@ typedef mc_ushort_t mc_damage_t;
 typedef float mc_critical_hit_t;
 typedef mc_short_t mc_dexterity_t;
 typedef mc_short_t mc_armor_check_penalty_t;
-typedef mc_ushort_t mc_price_t;
+typedef int mc_price_t;
 typedef mc_ushort_t mc_bonus_t;
 typedef mc_ushort_t mc_damage_t;
 typedef mc_ushort_t mc_distance_t; /* 攻击距离 */
 
-typedef mc_ushort_t mc_ac_t;
+typedef mc_short_t mc_ac_t;
 
 enum {
     MCPuncture  = MCMakeEnum(0), /* 穿刺 */

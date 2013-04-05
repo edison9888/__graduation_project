@@ -25,6 +25,7 @@ private:
     CCLabelTTF *pp_;
     CCLabelTTF *state_;
     
+    CCLabelTTF *weapon_;
     CCLabelTTF *damage_;
     CCLabelTTF *ac_;
     
@@ -33,4 +34,5 @@ private:
     CCLabelTTF *name_;
     CCSprite *icon_;
 };
+
 #endif /* defined(__Military_Confrontation__MCStatusLayer__) */

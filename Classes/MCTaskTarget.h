@@ -17,6 +17,7 @@ public:
     
     mc_object_id_t objectID;
     mc_size_t      count;
+    mc_size_t      remaining;
 };
 
 #endif /* defined(__Military_Confrontation__MCTaskTarget__) */

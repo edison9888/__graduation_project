@@ -11,9 +11,13 @@
 
 #include <cocos2d.h>
 USING_NS_CC;
+#include "MCType.h"
 #include "MCGeometry.h"
+#include "MCBarrier.h"
+#include <stack>
 
 extern const char *kMCAStarDidFinishAlgorithmNotification;
+extern const char *kMCAStarAlgorithmWillRemoveNotification;
 
 class MCRole;
 class MCAStarAlgorithm;
@@ -49,6 +53,10 @@ public:
         position_.y = y;
     }
     
+    inline bool equals(const CCPoint &aPoint) {
+        return position_.equals(aPoint);
+    }
+    
 private:
     CCPoint position_;
     
@@ -58,23 +66,22 @@ private:
     CC_PROPERTY(MCAStarNode *, parent_, Parent);
 };
 
-#define MCPositionToDictKey(x, y) \
-    (0 | ((mc_dict_key_t)(x)) * 0x1000000 \
-       | ((mc_dict_key_t)(y)) * 0x100) \
-
 class MCAStarAlgorithm : public CCObject {
     friend class MCAStar;
 public:
     ~MCAStarAlgorithm();
     
-    bool init(unsigned int *tiles, float layerWidth, const CCPoint &aStartPoint, const CCPoint &anEndPoint);
+    bool init(const CCPoint &aStartPoint, const CCPoint &anEndPoint);
     
-    static MCAStarAlgorithm *create(unsigned int *tiles, float layerWidth, const CCPoint &aStartPoint, const CCPoint &anEndPoint);
+    static MCAStarAlgorithm *create(const CCPoint &aStartPoint, const CCPoint &anEndPoint);
     
     void execute();
     
 protected:
-    MCAStarNode *minFItemAtList(CCDictionary *aList);
+    /**
+     * 生成对象适用的变形地图
+     */
+    void generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArray *barriers);
     
     /**
      * 坐标(x,y)是否为障碍 
@@ -104,19 +111,20 @@ protected:
      */
     void process(CCObject *obj);
     
-    inline void setMetaLayer(CCTMXLayer *metaLayer) {
-        metaLayer_ = metaLayer;
-    }
-    
 private:
-    unsigned int *tiles_;
-    float layerWidth_;
+    mc_byte_t *mapAltas_; /* 根据图块生成的变形地图 */
+    mc_size_t mapWidth_;
+    mc_size_t mapHeight_;
+    mc_size_t edge_; /* 一个块的边长 */
     MCAStarNode *startPoint_;
-    MCAStarNode *endPoint_;
     
-    CCTMXLayer *metaLayer_;
+    CC_SYNTHESIZE_READONLY(MCAStarNode *, endPoint_, EndPoint);
+	CC_SYNTHESIZE_READONLY(CCPoint, mapOffset_, MapOffset);
     
-    CC_SYNTHESIZE(CCArray *, route_, Route); /* 寻路结果 */
+//    CC_SYNTHESIZE_READONLY(CCArray *, route_, Route); /* 寻路结果 */
+
+public:
+    std::stack<CCPoint> route;/* 寻路结果 */
 };
 
 class MCAStar : public CCObject {
@@ -131,17 +139,16 @@ public:
     void findPath(MCRole *aRole, const CCPoint &aDestinationLocation);
     
 protected:
-    CCPoint tileCoordinateAt(const CCPoint &aMapLocation) const;
-    
     /**
      * 算法结束
      */
-    void algorithmDidFinish(CCObject *obj);
+    void algorithmWillRemove(CCObject *obj);
     
     
 private:
     CCArray *algoInstances_; /* 算法实例，算法执行完毕后会自动删除 */
-
+    
+    CC_SYNTHESIZE(CCArray *, barriers_, Barriers);
     CC_SYNTHESIZE(CCTMXTiledMap *, map_, Map);
 };
 

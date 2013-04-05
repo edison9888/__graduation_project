@@ -74,7 +74,7 @@ MCTaskManager::acceptTask(MCTask *task)
     MCTaskStatus status = task->getTaskStatus();
     if (status == MCTaskUncompleted) {
         currentTask_ = task;
-        task->setTaskStatus(MCTaskActiviting);
+        task->setTaskStatus(MCTaskAccepted);
         MCFlagManager::sharedFlagManager()->setTaskStarted(true);
         return true;
     }
@@ -92,24 +92,36 @@ MCTaskManager::acceptTaskWithObjectId(mc_object_id_t anObjectId)
 }
 
 /**
- * 放弃一个任务，成功放弃返回true，否则返回false
+ * 放弃当前任务，成功放弃返回true，否则返回false
  */
 void
-MCTaskManager::abortTask(MCTask *task)
+MCTaskManager::abortCurrentTask()
 {
-    currentTask_ = NULL;
-    task->setTaskStatus(MCTaskUncompleted);
-    MCFlagManager::sharedFlagManager()->setTaskStarted(false);
+    if (currentTask_) {
+        currentTask_->setTaskStatus(MCTaskUncompleted);
+        MCFlagManager::sharedFlagManager()->setTaskStarted(false);
+        currentTask_ = NULL;
+    }
 }
 
-/**
- * 以任务ID放弃一个任务，成功放弃返回true，否则返回false
- */
-void
-MCTaskManager::abortTaskWithObjectId(mc_object_id_t anObjectId)
-{
-    abortTask(taskWithObjectId(anObjectId));
-}
+///**
+// * 放弃一个任务，成功放弃返回true，否则返回false
+// */
+//void
+//MCTaskManager::abortTask(MCTask *task)
+//{
+//    task->setTaskStatus(MCTaskUncompleted);
+//    MCFlagManager::sharedFlagManager()->setTaskStarted(false);
+//}
+//
+///**
+// * 以任务ID放弃一个任务，成功放弃返回true，否则返回false
+// */
+//void
+//MCTaskManager::abortTaskWithObjectId(mc_object_id_t anObjectId)
+//{
+//    abortTask(taskWithObjectId(anObjectId));
+//}
 
 /**
  * 从数据包加载任务

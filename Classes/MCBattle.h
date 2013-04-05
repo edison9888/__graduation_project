@@ -15,7 +15,6 @@ USING_NS_CC;
 #include "MCType.h"
 #include "MCEquipment.h"
 
-typedef mc_ushort_t mc_ac_t;
 typedef mc_ushort_t mc_offensive_t;
 
 enum {

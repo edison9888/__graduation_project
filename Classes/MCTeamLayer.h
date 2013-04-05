@@ -26,7 +26,9 @@ public:
     void removeRole(MCRole *aRole);
     mc_size_t size();
     
+    
     /* 选择控制 */
+    void selectFirstRole();
     void selectAll();
     void unselectAll();
     void selectRole(MCRole *aRole);
@@ -55,6 +57,9 @@ public:
      * 名字有点蛋疼，其实意思是检测item和人物头像的碰撞，若有碰撞则半透明化
      */
     void acceptActionBarItem(MCActionBarItem *anActionBarItem);
+    
+    
+    void selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem);
     
 private:
     MCRoleBaseInfoGroup *group_;

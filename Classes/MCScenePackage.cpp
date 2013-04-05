@@ -135,6 +135,7 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
         };
         MCRole *role = roleManager->roleForObjectId(o_id);
         if (role) {
+            /* tags: #role #metadata #init-position */
             MCRoleEntityMetadata *metadata = role->getEntityMetadata();
             metadata->setPosition(ccp(roleObject["x"].getInt(), roleObject["y"].getInt()));
             flags = roleObject["flags"].getArray();

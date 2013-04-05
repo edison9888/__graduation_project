@@ -11,6 +11,8 @@
 
 #include "MCRole.h"
 
+class MCScript;
+
 /* NPC */
 class MCNPC : public MCRole {
 public:
@@ -19,6 +21,8 @@ public:
     static MCNPC *create(mc_object_id_t anObjectId);
     
     CCObject *copy();
+    
+    CC_SYNTHESIZE(MCScript *, trigger_, Trigger);
 };
 
 #endif /* defined(__Military_Confrontation__MCNPC__) */

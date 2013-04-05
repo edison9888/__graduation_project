@@ -7,39 +7,26 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "../Classes/MCAStar.cpp"
-         timestampString = "385446310.277122"
+         filePath = "../Classes/MCItemManager.cpp"
+         timestampString = "386690762.987333"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "289"
-         endingLineNumber = "289"
-         landmarkName = "MCAStarAlgorithm::process(CCObject *obj)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../Classes/MCAStar.cpp"
-         timestampString = "385483604.048644"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "248"
-         endingLineNumber = "248"
-         landmarkName = "MCAStarAlgorithm::process(CCObject *obj)"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
+         landmarkName = "MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "../Classes/MCItemManager.cpp"
-         timestampString = "386442237.643949"
+         filePath = "../Classes/MCAStar.cpp"
+         timestampString = "386781974.112801"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "80"
-         endingLineNumber = "80"
-         landmarkName = "MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)"
+         startingLineNumber = "352"
+         endingLineNumber = "352"
+         landmarkName = "MCAStarAlgorithm::process(CCObject *obj)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

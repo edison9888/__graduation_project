@@ -8,11 +8,15 @@
 
 #include "SimpleAudioEngine.h"
 #include "MCBackgroundLayer.h"
+#include "MCShadow.h"
+#include "MCTeam.h"
 
 using namespace CocosDenshion;
 
 MCBackgroundLayer::~MCBackgroundLayer()
 {
+    CC_SAFE_RELEASE(shadows_);
+    CC_SAFE_RELEASE(enemyShadows_);
     CC_SAFE_RELEASE(backgroundMusic_);
     CC_SAFE_RELEASE(map_);
 }
@@ -29,6 +33,11 @@ MCBackgroundLayer::init(const char *aMapFilePath, const char *aBackgroundMusicFi
 
         backgroundMusic_ = CCString::create(aBackgroundMusicFilePath);
         backgroundMusic_->retain();
+        
+        enemyShadows_ = CCArray::create();
+        enemyShadows_->retain();
+        shadows_ = CCArray::create();
+        shadows_->retain();
         
         return true;
     }
@@ -55,6 +64,7 @@ void
 MCBackgroundLayer::onEnter()
 {
     CCLayer::onEnter();
+    schedule(schedule_selector(MCBackgroundLayer::update));
     if (isPlayBackgroundMusicImmediately_) {
         playMusic();
     }
@@ -63,8 +73,24 @@ MCBackgroundLayer::onEnter()
 void
 MCBackgroundLayer::onExit()
 {
+    unschedule(schedule_selector(MCBackgroundLayer::update));
     stopMusic();
     CCLayer::onExit();
+}
+
+void
+MCBackgroundLayer::update(float dt)
+{
+    CCLayer::update(dt);
+    CCObject *obj;
+    CCARRAY_FOREACH(enemyShadows_, obj) {
+        MCShadow *shadow = dynamic_cast<MCShadow *>(obj);
+        shadow->updatePosition();
+    }
+    CCARRAY_FOREACH(shadows_, obj) {
+        MCShadow *shadow = dynamic_cast<MCShadow *>(obj);
+        shadow->updatePosition();
+    }
 }
 
 void
@@ -84,5 +110,32 @@ MCBackgroundLayer::stopMusic()
     SimpleAudioEngine *audioEngine = SimpleAudioEngine::sharedEngine();
     if (audioEngine->isBackgroundMusicPlaying()) {
         audioEngine->stopBackgroundMusic(true);
+    }
+}
+
+void
+MCBackgroundLayer::loadEnemies(CCArray *objects)
+{
+    CCObject *obj;
+    enemyShadows_->removeAllObjects();
+    CCARRAY_FOREACH(objects, obj) {
+        MCShadow *shadow = MCShadow::create();
+        shadow->bind(dynamic_cast<MCRole *>(obj));
+        addChild(shadow);
+        enemyShadows_->addObject(shadow);
+    }
+}
+
+void
+MCBackgroundLayer::loadTeam(MCTeam *aTeam)
+{
+    CCArray *objects = aTeam->getRoles();
+    CCObject *obj;
+    shadows_->removeAllObjects();
+    CCARRAY_FOREACH(objects, obj) {
+        MCShadow *shadow = MCShadow::create();
+        shadow->bind(dynamic_cast<MCRole *>(obj));
+        addChild(shadow);
+        shadows_->addObject(shadow);
     }
 }

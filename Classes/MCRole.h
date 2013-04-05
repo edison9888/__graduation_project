@@ -50,6 +50,28 @@ public:
     
     virtual CCObject *copy() = 0;
     
+    inline mc_hp_t updateHP(mc_hp_t var) {
+        hp_ += var;
+        if (hp_ > maxHP_) {
+            hp_ = maxHP_;
+        } else if (hp_ < 0) {
+            hp_ = 0;
+        }
+        
+        return hp_;
+    }
+
+    inline mc_pp_t updatePP(mc_pp_t var) {
+        pp_ += var;
+        if (pp_ > maxPP_) {
+            pp_ = maxPP_;
+        } else if (pp_ < 0) {
+            pp_ = 0;
+        }
+        
+        return pp_;
+    }
+    
     /* 角色属性 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
@@ -66,9 +88,6 @@ public:
     CC_PROPERTY_READONLY(MCRoleEntity *, entity_, Entity); /* entity_将共用metadata_ */
     
     CC_SYNTHESIZE_READONLY(MCRoleEntityMetadata *, entityMetadata_, EntityMetadata); /* entity_将共用这个metadata */
-    
-    /* 视觉 */
-    CC_SYNTHESIZE_READONLY(MCViewport *, viewport_, Viewport);
     
     /* AI */
     CC_SYNTHESIZE_READONLY(MCAI *, ai_, AI);

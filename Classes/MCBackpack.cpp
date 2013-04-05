@@ -16,19 +16,30 @@ using namespace std;
 #include "MCItemManager.h"
 #include "MCEffectiveItem.h"
 
+MCDefineConstantString(kMCHealthPotionIcon);
+MCDefineConstantString(kMCPhysicalPotionIcon);
+MCDefineConstantString(kMCFireballWideIcon);
+MCDefineConstantString(kMCFireballDamageIcon);
+MCDefineConstantString(kMCCurseWideIcon);
+MCDefineConstantString(kMCCurseDamageIcon);
+MCDefineConstantString(kMCParalysisWideIcon);
+MCDefineConstantString(kMCParalysisDamageIcon);
+MCDefineConstantString(kMCFogWideIcon);
+MCDefineConstantString(kMCFogDamageIcon);
+MCDefineConstantString(kMCFlashWideIcon);
+MCDefineConstantString(kMCFlashDamageIcon);
+
     //warning: 木有测试过
 
 const mc_size_t kMCItemMax = 99;
-const char *kMCMoneyKey = "bW9uZXk"; /* money的BASE64编码没有最后的= */
-const char *kMCCurrentWeaponKey = "Y3VycmVudC13ZWFwb24"; /* current-weapon的BASE64编码没有最后的= */
-const char *kMCBackpackKey = "YmFja3BhY2s"; /* backpack的BASE64编码没有最后的= */
-const char *kMCEffectiveItemsKey = "ZWZmZWN0aXZlLWl0ZW1z"; /* effective-items的BASE64编码 */
-const char *kMCEquipmentItemsKey = "ZXF1aXBtZW50LWl0ZW1z"; /* equipment-items的BASE64编码 */
+static const char *kMCMoneyKey = "bW9uZXk"; /* money的BASE64编码没有最后的= */
+static const char *kMCBackpackKey = "YmFja3BhY2s"; /* backpack的BASE64编码没有最后的= */
+static const char *kMCEffectiveItemsKey = "ZWZmZWN0aXZlLWl0ZW1z"; /* effective-items的BASE64编码 */
 
 static MCBackpack *__shared_backpack = NULL;
 
-mc_object_id_t itemsOID[] = {
-    /* 道具 */
+/* 道具 */
+mc_object_id_t effectiveItemsOID[] = {
     {'P', '0', '0', '1'},
     {'P', '0', '0', '2'},
     {'T', '0', '1', '1'},
@@ -40,62 +51,20 @@ mc_object_id_t itemsOID[] = {
     {'T', '0', '4', '1'},
     {'T', '0', '4', '2'},
     {'T', '0', '5', '1'},
-    {'T', '0', '5', '2'},
-    
-    /* 装备 */
-    {'W', '1', '1', '0'},
-    {'W', '1', '2', '0'},
-    {'W', '1', '3', '0'},
-    {'W', '2', '1', '0'},
-    {'W', '2', '2', '0'},
-    {'W', '3', '1', '0'},
-    {'W', '3', '2', '0'},
-    {'W', '3', '3', '0'},
-    {'W', '4', '1', '0'},
-    {'W', '4', '2', '0'},
-    {'W', '4', '3', '0'},
-    {'W', '5', '1', '0'},
-    {'W', '5', '2', '0'},
-    
-    {'H', '0', '0', '1'},
-    {'A', '0', '0', '1'},
-    {'B', '0', '0', '1'}
+    {'T', '0', '5', '2'}
 };
 
-static vector<int>
-split(string& str,const char* c)
-{
-    char *cstr;
-    char *p;
-    string stdString;
-    vector<int> result;
-    
-    cstr = new char[str.size()+1];
-    strcpy(cstr,str.c_str());
-    p = strtok(cstr,c);
-    while (p != NULL) {
-        stdString = p;
-        result.push_back(atoi(stdString.c_str()));
-        p = strtok(NULL,c);
-    }
-    
-    delete cstr;
-    
-    return result;
-}
-
 mc_object_id_t
-itemObjectItem(MCItemIndex anIndex)
+MCEffectiveItemObjectItem(MCEffectiveItemIndex anIndex)
 {
-    CCAssert(anIndex >= 0 && anIndex <= kMCShinGuard, "out of index!");
+    CCAssert(anIndex >= 0 && anIndex <= kMCFlashDamage, "out of index!");
     
-    return itemsOID[anIndex];
+    return effectiveItemsOID[anIndex];
 }
 
 MCBackpack::MCBackpack()
 {
     money_ = 0;
-    currentWeapon_ = NULL;
     
     /* 道具 */
     /* 数据就按这个顺序储存 */
@@ -113,33 +82,6 @@ MCBackpack::MCBackpack()
     fogTrapDamage_ = new MCBackpackItem;
     flashTrapWide_ = new MCBackpackItem;
     flashTrapDamage_ = new MCBackpackItem;
-    
-    /* 装备 */
-    /* 数据就按这个顺序储存 */
-    /* 武器 */
-    /* 剑类 */
-    dagger_ = new MCBackpackItem; /* 短剑 */
-    sword_ = new MCBackpackItem; /* 长剑 */
-    greatsword_ = new MCBackpackItem; /* 巨剑 */
-    /* 锤类 */
-    warhammer_ = new MCBackpackItem; /* 轻型战锤 */
-    heavyDutyHammer_ = new MCBackpackItem; /* 重型战锤 */
-    /* 斧类 */
-    handAxe_ = new MCBackpackItem; /* 手斧 */
-    warAxe_ = new MCBackpackItem; /* 战斧 */
-    greataxe_ = new MCBackpackItem; /* 巨斧 */
-    /* 枪矛类 */
-    spear_ = new MCBackpackItem; /* 长枪 */
-    lance_ = new MCBackpackItem; /* 长矛 */
-    giantSickle_ = new MCBackpackItem; /* 巨镰 */
-    /* 弓弩类 */
-    shortbow_ = new MCBackpackItem; /* 短弓 */
-    longbow_ = new MCBackpackItem; /* 长弓 */
-    
-    /* 防具 */
-    helmet_ = new MCBackpackItem; /* 头盔 */
-    armor_ = new MCBackpackItem; /* 铠甲 */
-    shinGuard_ = new MCBackpackItem; /* 护胫 */
 }
 
 MCBackpack::~MCBackpack()
@@ -161,33 +103,6 @@ MCBackpack::~MCBackpack()
     delete fogTrapDamage_;
     delete flashTrapWide_;
     delete flashTrapDamage_;
-    
-    /* 装备 */
-    /* 数据就按这个顺序储存 */
-    /* 武器 */
-    /* 剑类 */
-    delete dagger_; /* 短剑 */
-    delete sword_; /* 长剑 */
-    delete greatsword_; /* 巨剑 */
-    /* 锤类 */
-    delete warhammer_; /* 轻型战锤 */
-    delete heavyDutyHammer_; /* 重型战锤 */
-    /* 斧类 */
-    delete handAxe_; /* 手斧 */
-    delete warAxe_; /* 战斧 */
-    delete greataxe_; /* 巨斧 */
-    /* 枪矛类 */
-    delete spear_; /* 长枪 */
-    delete lance_; /* 长矛 */
-    delete giantSickle_; /* 巨镰 */
-    /* 弓弩类 */
-    delete shortbow_; /* 短弓 */
-    delete longbow_; /* 长弓 */
-    
-    /* 防具 */
-    delete helmet_; /* 头盔 */
-    delete armor_; /* 铠甲 */
-    delete shinGuard_; /* 护胫 */
 }
 
 MCBackpack *
@@ -221,22 +136,13 @@ MCBackpack::saveData()
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
     
     saveEffectiveItems();
-    saveEquipmentItems();
     
     JsonBox::Object backpack;
     
     /* 储存金钱 */
     backpack[kMCMoneyKey] = JsonBox::Value(money_);
-    /* 储存当前使用的武器 */
-    char o_id_buffer[5] = {0};
-    char *c_str_o_id = o_id_buffer;
-    mc_object_id_t o_id = currentWeapon_->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    backpack[kMCCurrentWeaponKey] = JsonBox::Value(c_str_o_id);
     
+    /* 储存当前使用的武器 */
     JsonBox::Value backpackValue(backpack);
     ostringstream outputStream;
     backpackValue.writeToStream(outputStream);
@@ -255,7 +161,7 @@ MCBackpack::loadData()
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
 
     loadEffectiveItems();
-    loadEquipmentItems();
+    loadIcons();
     
     string data = userDefault->getStringForKey(kMCBackpackKey, "");
     if (data.size() > 0) {
@@ -266,44 +172,9 @@ MCBackpack::loadData()
         JsonBox::Value v;
         v.loadFromString(output);
         
-        JsonBox::Object backpack;
+        JsonBox::Object backpack = v.getObject();
         /* 加载金钱 */
         money_ = backpack[kMCMoneyKey].getInt();
-        /* 加载当前使用的武器 */
-        const char *c_str_o_id = backpack[kMCCurrentWeaponKey].getString().c_str();
-        mc_object_id_t o_id = {
-            c_str_o_id[0],
-            c_str_o_id[1],
-            c_str_o_id[2],
-            c_str_o_id[3]
-        };
-        if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCDagger])) {
-            currentWeapon_ = (MCEquipmentItem *) dagger_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCSword])) {
-            currentWeapon_ = (MCEquipmentItem *) sword_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGreatsword])) {
-            currentWeapon_ = (MCEquipmentItem *) greatsword_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCWarhammer])) {
-            currentWeapon_ = (MCEquipmentItem *) warhammer_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCHeavyDutyHammer])) {
-            currentWeapon_ = (MCEquipmentItem *) heavyDutyHammer_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCHandAxe])) {
-            currentWeapon_ = (MCEquipmentItem *) handAxe_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCWarAxe])) {
-            currentWeapon_ = (MCEquipmentItem *) warAxe_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGreataxe])) {
-            currentWeapon_ = (MCEquipmentItem *) greataxe_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCSpear])) {
-            currentWeapon_ = (MCEquipmentItem *) spear_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCLance])) {
-            currentWeapon_ = (MCEquipmentItem *) lance_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCGiantSickle])) {
-            currentWeapon_ = (MCEquipmentItem *) giantSickle_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCShortbow])) {
-            currentWeapon_ = (MCEquipmentItem *) shortbow_->item;
-        } else if (MCObjectIdIsEqualsTo(o_id, itemsOID[kMCLongbow])) {
-            currentWeapon_ = (MCEquipmentItem *) longbow_->item;
-        }
     }
 }
 
@@ -328,222 +199,6 @@ MCBackpack::saveEffectiveItems()
     effectiveItems.push_back(JsonBox::Value((int) flashTrapWide_->count));
     effectiveItems.push_back(JsonBox::Value((int) flashTrapDamage_->count));
     JsonBox::Value effectiveItemsValue(effectiveItems);
-    ostringstream outputStream;
-    effectiveItemsValue.writeToStream(outputStream);
-    string data = outputStream.str();
-    const char *input = data.c_str();
-    char  *output;
-    mc_size_t len = strlen(input);
-    MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
-    userDefault->setStringForKey(kMCEffectiveItemsKey, output);
-    delete []output;
-}
-
-void
-MCBackpack::saveEquipmentItems()
-{
-    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-    JsonBox::Object equipmentItems;
-    
-    /* 装备 */
-    char o_id_buffer[5] = {0};
-    char ore_id_buffer[5] = {0};
-    char *c_str_o_id = o_id_buffer;
-    char *c_str_ore_id = ore_id_buffer;
-    /* dagger_ */
-    mc_object_id_t o_id = dagger_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    mc_object_id_t ore_id = ((MCEquipmentItem *) dagger_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* sword_ */
-    o_id = sword_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) sword_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* greatsword_ */
-    o_id = greatsword_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) greatsword_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* warhammer_ */
-    o_id = warhammer_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) warhammer_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* heavyDutyHammer_ */
-    o_id = heavyDutyHammer_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) heavyDutyHammer_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* handAxe_ */
-    o_id = handAxe_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) handAxe_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* warAxe_ */
-    o_id = warAxe_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) warAxe_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* greataxe_ */
-    o_id = greataxe_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) greataxe_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* spear_ */
-    o_id = spear_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) spear_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* lance_ */
-    o_id = lance_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) lance_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* giantSickle_ */
-    o_id = giantSickle_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) giantSickle_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* shortbow_ */
-    o_id = shortbow_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) shortbow_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* longbow_ */
-    o_id = longbow_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) longbow_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* helmet_ */
-    o_id = helmet_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) helmet_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* armor_ */
-    o_id = armor_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) armor_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    /* shinGuard_ */
-    o_id =shinGuard_->item->getID();
-    o_id_buffer[0] = o_id.class_;
-    o_id_buffer[1] = o_id.sub_class_;
-    o_id_buffer[2] = o_id.index_;
-    o_id_buffer[3] = o_id.sub_index_;
-    ore_id = ((MCEquipmentItem *) shinGuard_->item)->getOre()->getID();
-    ore_id_buffer[0] = ore_id.class_;
-    ore_id_buffer[1] = ore_id.sub_class_;
-    ore_id_buffer[2] = ore_id.index_;
-    ore_id_buffer[3] = ore_id.sub_index_;
-    equipmentItems[c_str_o_id] = JsonBox::Value(c_str_ore_id);
-    
-    JsonBox::Value effectiveItemsValue(equipmentItems);
     ostringstream outputStream;
     effectiveItemsValue.writeToStream(outputStream);
     string data = outputStream.str();
@@ -585,122 +240,97 @@ MCBackpack::loadEffectiveItems()
         flashTrapWide_->count = effectiveItems.at(10).getInt();
         flashTrapDamage_->count = effectiveItems.at(11).getInt();
         delete []output;
+    } else {
+        healthPotion_->count = 0;
+        physicalPotion_->count = 0;
+        fireballTrapWide_->count = 0;
+        fireballTrapDamage_->count = 0;
+        curseTrapWide_->count = 0;
+        curseTrapDamage_->count = 0;
+        paralysisTrapWide_->count = 0;
+        paralysisTrapDamage_->count = 0;
+        fogTrapWide_->count = 0;
+        fogTrapDamage_->count = 0;
+        flashTrapWide_->count = 0;
+        flashTrapDamage_->count = 0;
     }
     
     /* load items */
-    healthPotion_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCHealthPotion]);
+    healthPotion_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCHealthPotion]);
     healthPotion_->item->retain();
-    physicalPotion_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCPhysicalPotion]);
+    physicalPotion_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCPhysicalPotion]);
     physicalPotion_->item->retain();
-    fireballTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFireballWide]);
+    fireballTrapWide_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFireballWide]);
     fireballTrapWide_->item->retain();
-    fireballTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFireballDamage]);
+    fireballTrapDamage_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFireballDamage]);
     fireballTrapDamage_->item->retain();
-    curseTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCCurseWide]);
+    curseTrapWide_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCCurseWide]);
     curseTrapWide_->item->retain();
-    curseTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCCurseDamage]);
+    curseTrapDamage_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCCurseDamage]);
     curseTrapDamage_->item->retain();
-    paralysisTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCParalysisWide]);
+    paralysisTrapWide_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCParalysisWide]);
     paralysisTrapWide_->item->retain();
-    paralysisTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCParalysisDamage]);
+    paralysisTrapDamage_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCParalysisDamage]);
     paralysisTrapDamage_->item->retain();
-    fogTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFogWide]);
+    fogTrapWide_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFogWide]);
     fogTrapWide_->item->retain();
-    fogTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFogDamage]);
+    fogTrapDamage_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFogDamage]);
     fogTrapDamage_->item->retain();
-    flashTrapWide_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFlashWide]);
+    flashTrapWide_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFlashWide]);
     flashTrapWide_->item->retain();
-    flashTrapDamage_->item = itemManager->effectiveItemForObjectId(itemsOID[kMCFlashDamage]);
+    flashTrapDamage_->item = itemManager->effectiveItemForObjectId(effectiveItemsOID[kMCFlashDamage]);
     flashTrapDamage_->item->retain();
 }
 
 void
-MCBackpack::loadEquipmentItems()
+MCBackpack::loadIcons()
 {
-    MCItemManager *itemManager = MCItemManager::sharedItemManager();
-    MCOreManager *oreManager = MCOreManager::sharedOreManager();
-    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-    string data = userDefault->getStringForKey(kMCEffectiveItemsKey, "");
-
-    dagger_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCDagger]);
-    dagger_->item->retain();
-    sword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCSword]);
-    sword_->item->retain();
-    greatsword_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGreatsword]);
-    greatsword_->item->retain();
-    warhammer_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCWarhammer]);
-    warhammer_->item->retain();
-    heavyDutyHammer_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHeavyDutyHammer]);
-    heavyDutyHammer_->item->retain();
-    handAxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHandAxe]);
-    handAxe_->item->retain();
-    warAxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCWarAxe]);
-    warAxe_->item->retain();
-    greataxe_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGreataxe]);
-    greataxe_->item->retain();
-    spear_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCSpear]);
-    spear_->item->retain();
-    lance_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCLance]);
-    lance_->item->retain();
-    giantSickle_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCGiantSickle]);
-    giantSickle_->item->retain();
-    shortbow_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCShortbow]);
-    shortbow_->item->retain();
-    longbow_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCLongbow]);
-    longbow_->item->retain();
-    helmet_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCHelmet]);
-    helmet_->item->retain();
-    armor_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCArmor]);
-    armor_->item->retain();
-    shinGuard_->item = itemManager->equipmentItemForObjectId(itemsOID[kMCShinGuard]);
-    shinGuard_->item->retain();
-
-    dagger_->count = 1;
-    sword_->count = 1;
-    greatsword_->count = 1;
-    warhammer_->count = 1;
-    heavyDutyHammer_->count = 1;
-    handAxe_->count = 1;
-    warAxe_->count = 1;
-    greataxe_->count = 1;
-    spear_->count = 1;
-    lance_->count = 1;
-    giantSickle_->count = 1;
-    shortbow_->count = 1;
-    longbow_->count = 1;
-    helmet_->count = 1;
-    armor_->count = 1;
-    shinGuard_->count = 1;
+    /* 道具图片加进缓存 */
+    CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    CCSpriteFrame *pobFrame;
+    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    CCRect iconRect = CCRectMake(0, 0, 64 / contentScaleFactor, 64 / contentScaleFactor);
     
-    if (data.size() > 0) {
-        const char *input = data.c_str();
-        char *output;
-        mc_size_t len = strlen(input);
-        MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
-        JsonBox::Value v;
-        v.loadFromString(output);
-        
-        JsonBox::Object equipmentItems;
-        JsonBox::Object::iterator equipmentItemsIterator;
-        for (equipmentItemsIterator = equipmentItems.begin();
-             equipmentItemsIterator != equipmentItems.end();
-             ++equipmentItemsIterator) {
-            const char *c_str_o_id = equipmentItemsIterator->first.c_str();
-            mc_object_id_t o_id = {
-                c_str_o_id[0],
-                c_str_o_id[1],
-                c_str_o_id[2],
-                c_str_o_id[3]
-            };
-            const char *c_str_ore_id = equipmentItemsIterator->second.getString().c_str();
-            mc_object_id_t ore_id = {
-                c_str_ore_id[0],
-                c_str_ore_id[1],
-                c_str_ore_id[2],
-                c_str_ore_id[3]
-            };
-            itemManager->equipmentItemForObjectId(o_id)->setOre(oreManager->oreForObjectId(ore_id));
-        }
-        delete []output;
-    }
+    pobFrame = CCSpriteFrame::create(healthPotion_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCHealthPotionIcon);
+    pobFrame = CCSpriteFrame::create(physicalPotion_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCPhysicalPotionIcon);
+    
+    /* fireball */
+    pobFrame = CCSpriteFrame::create(fireballTrapWide_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFireballWideIcon);
+    pobFrame = CCSpriteFrame::create(fireballTrapDamage_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFireballDamageIcon);
+    /* curse */
+    pobFrame = CCSpriteFrame::create(curseTrapWide_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCCurseWideIcon);
+    pobFrame = CCSpriteFrame::create(curseTrapDamage_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCCurseDamageIcon);
+    /* paralysis */
+    pobFrame = CCSpriteFrame::create(paralysisTrapWide_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCParalysisWideIcon);
+    pobFrame = CCSpriteFrame::create(paralysisTrapDamage_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCParalysisDamageIcon);
+    /* fog */
+    pobFrame = CCSpriteFrame::create(fogTrapWide_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFogWideIcon);
+    pobFrame = CCSpriteFrame::create(fogTrapDamage_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFogDamageIcon);
+    /* flash */
+    pobFrame = CCSpriteFrame::create(flashTrapWide_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFlashWideIcon);
+    pobFrame = CCSpriteFrame::create(flashTrapDamage_->item->getIcon()->getCString(),
+                                     iconRect);
+    cache->addSpriteFrame(pobFrame, kMCFlashDamageIcon);
 }

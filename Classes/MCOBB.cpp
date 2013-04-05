@@ -120,3 +120,12 @@ MCOBB::getOrigin() const
 {
     return ccp(center.x - extents.width, center.y - extents.height);
 }
+
+CCRect
+MCOBB::getAABB() const
+{
+    return CCRectMake(center.x - extents.width,
+                      center.y - extents.height,
+                      width,
+                      height);
+}

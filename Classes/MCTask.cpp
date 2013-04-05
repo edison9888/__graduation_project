@@ -51,7 +51,7 @@ MCTask::loadTaskContent(JsonBox::Object &aTaskContent)
     ccstring->retain();
     
     /* task["targets"] Object */
-    JsonBox::Object targets = aTaskContent["description"].getObject();
+    JsonBox::Object targets = aTaskContent["targets"].getObject();
     JsonBox::Object::iterator targetsIterator;
     for (targetsIterator = targets.begin();
          targetsIterator != targets.end();
@@ -67,6 +67,7 @@ MCTask::loadTaskContent(JsonBox::Object &aTaskContent)
         target->autorelease();
         target->objectID = t_id;
         target->count = targetsIterator->second.getInt();
+        target->remaining = target->count;
         targets_->addObject(target);
     }
     
@@ -138,7 +139,7 @@ MCTask::copy()
     task->bonus_ = bonus_;
     CCObject *obj;
     CCARRAY_FOREACH(targets_, obj) {
-        task->targets_->addObject(((MCTask *) obj)->copy());
+        task->targets_->addObject(dynamic_cast<MCTaskTarget *>(obj)->copy());
     }
     task->taskStatus_ = taskStatus_;
     task->flag_ = flag_;

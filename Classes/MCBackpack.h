@@ -15,6 +15,19 @@
 #include "MCEquipmentItem.h"
 #include "MCInterfaceMacros.h"
 
+extern const char *kMCHealthPotionIcon;
+extern const char *kMCPhysicalPotionIcon;
+extern const char *kMCFireballWideIcon;
+extern const char *kMCFireballDamageIcon;
+extern const char *kMCCurseWideIcon;
+extern const char *kMCCurseDamageIcon;
+extern const char *kMCParalysisWideIcon;
+extern const char *kMCParalysisDamageIcon;
+extern const char *kMCFogWideIcon;
+extern const char *kMCFogDamageIcon;
+extern const char *kMCFlashWideIcon;
+extern const char *kMCFlashDamageIcon;
+
 extern const mc_size_t kMCItemMax;
 enum {
     /* 道具 */
@@ -29,32 +42,29 @@ enum {
     kMCFogWide,
     kMCFogDamage,
     kMCFlashWide,
-    kMCFlashDamage,
-    
-    /* 装备 */
-    kMCDagger,
-    kMCSword,
-    kMCGreatsword,
-    kMCWarhammer,
-    kMCHeavyDutyHammer,
-    kMCHandAxe,
-    kMCWarAxe,
-    kMCGreataxe,
-    kMCSpear,
-    kMCLance,
-    kMCGiantSickle,
-    kMCShortbow,
-    kMCLongbow,
-    kMCHelmet,
-    kMCArmor,
-    kMCShinGuard
+    kMCFlashDamage
 };
-typedef mc_enum_t MCItemIndex;
+typedef mc_enum_t MCEffectiveItemIndex;
 
-mc_object_id_t itemObjectItem(MCItemIndex anIndex);
+mc_object_id_t MCEffectiveItemObjectItem(MCEffectiveItemIndex anIndex);
 
 class MCBackpackItem {
 public:
+    MCBackpackItem()
+    : item(NULL)
+    , count(0) {}
+    
+    /**
+     * 只有物品执行此方法才有效
+     */
+    inline bool use() {
+        if (count > 0) {
+            count -= 1;
+            return true;
+        }
+        return false;
+    }
+    
     MCItem    *item;
     mc_size_t count;
 };
@@ -88,61 +98,15 @@ public:
     MCDefineInterface(flashTrapWide_, FlashTrapWide);
     MCDefineInterface(flashTrapDamage_, FlashTrapDamage);
     
-    inline mc_ssize_t levelUp(const MCBackpackItem &anItem) {
-        MCEquipmentItem *item = (MCEquipmentItem *) anItem.item;
-        MCOre *currentOre = item->getOre();
-        MCOre *nextLevelOre = currentOre->getNextLevel();
-        
-        if (nextLevelOre) {
-            if (nextLevelOre->getPrice() > money_) {
-                return kMCNotEnoughMoney;
-            }
-            money_ -= nextLevelOre->getPrice();
-            
-            return kMCHandleSucceed;
-        }
-        
-        return kMCFullLevel;
-    }
-    
-    inline void changeWeapon(const MCBackpackItem &anItem) {
-        currentWeapon_ = (MCEquipmentItem *) anItem.item;
-    }
-    
-    /* 装备 */
-    /* 武器 */
-    MCDefineLevelUpInterface(dagger_, Dagger); /* 短剑 */
-    MCDefineLevelUpInterface(sword_, Sword); /* 长剑 */
-    MCDefineLevelUpInterface(greatsword_, Greatsword); /* 巨剑 */
-    /* 锤类 */
-    MCDefineLevelUpInterface(warhammer_, Warhammer); /* 轻型战锤 */
-    MCDefineLevelUpInterface(heavyDutyHammer_, HeavyDutyHammer); /* 重型战锤 */
-    /* 斧类 */
-    MCDefineLevelUpInterface(handAxe_, HandAxe); /* 手斧 */
-    MCDefineLevelUpInterface(warAxe_, WarAxe); /* 战斧 */
-    MCDefineLevelUpInterface(greataxe_, Greataxe); /* 巨斧 */
-    /* 枪矛类 */
-    MCDefineLevelUpInterface(spear_, Spear); /* 长枪 */
-    MCDefineLevelUpInterface(lance_, Lance); /* 长矛 */
-    MCDefineLevelUpInterface(giantSickle_, GiantSickle); /* 巨镰 */
-    /* 弓弩类 */
-    MCDefineLevelUpInterface(shortbow_, Shortbow); /* 短弓 */
-    MCDefineLevelUpInterface(longbow_, Longbow); /* 长弓 */
-    
-    /* 防具 */
-    MCDefineLevelUpInterface(helmet_, Helmet); /* 头盔 */
-    MCDefineLevelUpInterface(armor_, Armor); /* 铠甲 */
-    MCDefineLevelUpInterface(shinGuard_, ShinGuard); /* 护胫 */
-    
     void saveData();
     
-protected:
+private:
     void loadData();
     
     void saveEffectiveItems();
-    void saveEquipmentItems();
     void loadEffectiveItems();
-    void loadEquipmentItems();
+    
+    void loadIcons();
 
 private:
     CC_SYNTHESIZE(mc_price_t, money_, Money); /* 身上的金钱 */
@@ -163,35 +127,6 @@ private:
     CC_SYNTHESIZE_READONLY(MCBackpackItem *, fogTrapDamage_, FogTrapDamage);
     CC_SYNTHESIZE_READONLY(MCBackpackItem *, flashTrapWide_, FlashTrapWide);
     CC_SYNTHESIZE_READONLY(MCBackpackItem *, flashTrapDamage_, FlashTrapDamage);
-    
-    /* 装备 */
-    /* 数据就按这个顺序储存 */
-    /* 武器 */
-    /* 剑类 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, dagger_, Dagger); /* 短剑 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, sword_, Sword); /* 长剑 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, greatsword_, Greatsword); /* 巨剑 */
-    /* 锤类 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, warhammer_, Warhammer); /* 轻型战锤 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, heavyDutyHammer_, HeavyDutyHammer); /* 重型战锤 */
-    /* 斧类 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, handAxe_, HandAxe); /* 手斧 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, warAxe_, WarAxe); /* 战斧 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, greataxe_, Greataxe); /* 巨斧 */
-    /* 枪矛类 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, spear_, Spear); /* 长枪 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, lance_, Lance); /* 长矛 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, giantSickle_, GiantSickle); /* 巨镰 */
-    /* 弓弩类 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, shortbow_, Shortbow); /* 短弓 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, longbow_, Longbow); /* 长弓 */
-    
-    CC_SYNTHESIZE(MCEquipmentItem *, currentWeapon_, CurrentWeapon); /* 装备的武器 */
-    
-    /* 防具 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, helmet_, Helmet); /* 头盔 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, armor_, Armor); /* 铠甲 */
-    CC_SYNTHESIZE_READONLY(MCBackpackItem *, shinGuard_, ShinGuard); /* 护胫 */
 };
 
 #endif /* defined(__Military_Confrontation__MCBackpack__) */

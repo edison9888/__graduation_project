@@ -7,10 +7,13 @@
 //
 
 #include "MCAStar.h"
-//#include "MCOBB.h"
 #include "MCRole.h"
 
 const char *kMCAStarDidFinishAlgorithmNotification = "kMCAStarDidFinishAlgorithmNotification";
+const char *kMCAStarAlgorithmWillRemoveNotification = "kMCAStarAlgorithmWillRemoveNotification";
+static const mc_byte_t kMCBarrier = 1;
+static const mc_byte_t kMCStartPoint = 5;
+static const mc_byte_t kMCEndPoint = 8;
 
 struct __mc_offset {
     int x;
@@ -29,6 +32,57 @@ static struct __mc_offset __delta[] = {
     {0, 1},
     {1, 1}
 };
+
+/**
+ * Used for sort
+ */
+//static int
+//less(const CCObject *p1, const CCObject *p2)
+//{
+//    return dynamic_cast<const MCAStarNode *>(p1)->getF() > dynamic_cast<const MCAStarNode *>(p2)->getF();
+//}
+static int
+less(const void *p1, const void *p2)
+{
+    return ((MCAStarNode *) p1)->getF() < ((MCAStarNode *) p2)->getF();
+}
+
+static void
+ccArraySortByF(ccArray *anArray)
+{
+    std::sort(anArray->arr, anArray->arr + anArray->num, less);
+}
+
+static inline MCAStarNode *
+ccArrayGetAStarNodeWithMinF(ccArray *anArray)
+{
+    ccArraySortByF(anArray);
+    
+    return dynamic_cast<MCAStarNode *>(anArray->arr[0]);
+}
+
+static inline void
+CCArrayRemoveAStarNodeByPoint(CCArray *anArray, const CCPoint &aPoint)
+{
+    CCObject *obj;
+    CCARRAY_FOREACH(anArray, obj) {
+        if (dynamic_cast<MCAStarNode *>(obj)->equals(aPoint)) {
+            anArray->removeObject(obj);
+        }
+    }
+}
+
+static inline MCAStarNode *
+CCArrayGetAStarNodeByPoint(CCArray *anArray, const CCPoint &aPoint)
+{
+    CCObject *obj;
+    CCARRAY_FOREACH(anArray, obj) {
+        if (dynamic_cast<MCAStarNode *>(obj)->equals(aPoint)) {
+            return dynamic_cast<MCAStarNode *>(obj);
+        }
+    }
+    return NULL;
+}
 
 /**
  * 根据父位置创建新的MCAStarItem。
@@ -92,29 +146,19 @@ MCAStarNode::setParent(MCAStarNode *var)
 
 MCAStarAlgorithm::~MCAStarAlgorithm()
 {
-    CC_SAFE_RELEASE(route_);
-//    CC_SAFE_RELEASE(openList_);
-//    CC_SAFE_RELEASE(closedList_);
+    CC_SAFE_DELETE_ARRAY(mapAltas_);
+//    CC_SAFE_RELEASE(route_);
 }
 
 bool
-MCAStarAlgorithm::init(unsigned int *tiles, float layerWidth, const CCPoint &aStartPoint, const CCPoint &anEndPoint)
+MCAStarAlgorithm::init(const CCPoint &aStartPoint, const CCPoint &anEndPoint)
 {
     do {
-        tiles_ = tiles;
-        layerWidth_ = layerWidth;
+        mapAltas_ = NULL;
         
-//        openList_ = CCDictionary::create();
-//        CC_BREAK_IF(!openList_);
-//        openList_->retain();
-//        
-//        closedList_ = CCDictionary::create();
-//        CC_BREAK_IF(!closedList_);
-//        closedList_->retain();
-        
-        route_ = CCArray::create();
-        CC_BREAK_IF(!route_);
-        route_->retain();
+//        route_ = CCArray::create();
+//        CC_BREAK_IF(!route_);
+//        route_->retain();
         
         startPoint_ = MCAStarNode::createWithParent(NULL, aStartPoint.x, aStartPoint.y);
         endPoint_ = MCAStarNode::createWithParent(NULL, anEndPoint.x, anEndPoint.y);
@@ -126,11 +170,11 @@ MCAStarAlgorithm::init(unsigned int *tiles, float layerWidth, const CCPoint &aSt
 }
 
 MCAStarAlgorithm *
-MCAStarAlgorithm::create(unsigned int *tiles, float layerWidth, const CCPoint &aStartPoint, const CCPoint &anEndPoint)
+MCAStarAlgorithm::create(const CCPoint &aStartPoint, const CCPoint &anEndPoint)
 {
     MCAStarAlgorithm *algo = new MCAStarAlgorithm;
     
-    if (algo && algo->init(tiles, layerWidth, aStartPoint, anEndPoint)) {
+    if (algo && algo->init(aStartPoint, anEndPoint)) {
         algo->autorelease();
     } else {
         CC_SAFE_DELETE(algo);
@@ -154,57 +198,76 @@ MCAStarAlgorithm::execute()
 bool
 MCAStarAlgorithm::isBarrier(int x, int y)
 {
-    int gid = tiles_[(int) (x + y * layerWidth_)] & kCCFlippedMask;
-    
-    return gid != 0;
+    return mapAltas_[x + y * mapWidth_] == kMCBarrier;
 }
 
 bool
 MCAStarAlgorithm::isBarrier(const CCPoint &aPoint)
 {
-    int gid = tiles_[(int) (aPoint.x + aPoint.y * layerWidth_)] & kCCFlippedMask;
-    
-    return gid != 0;
+    return mapAltas_[(mc_ssize_t) aPoint.x + (mc_ssize_t) aPoint.y * mapWidth_] == kMCBarrier;
 }
 
-//MCAStarItem *
-//MCAStarAlgorithm::minFItemAtOpenList()
-//{
-//    MCAStarItem *item;
-//    MCAStarItem *minFItem = NULL;
-//    CCDictElement *elem;
-//
-//    CCDICT_FOREACH(openList_, elem) {
-//        item = (MCAStarItem *) elem->getObject();
-//        if (minFItem == NULL) {
-//            minFItem = item;
-//        }
-//        if (item->f_ < minFItem->f_) {
-//            minFItem = item;
-//        }
-//    }
-//    
-//    return minFItem;
-//}
-
-MCAStarNode *
-MCAStarAlgorithm::minFItemAtList(CCDictionary *aList)
+/**
+ * 生成对象适用的变形地图
+ */
+void
+MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArray *barriers)
 {
-    MCAStarNode *item;
-    MCAStarNode *minFItem = NULL;
-    CCDictElement *elem;
+    MCOBB obb = aRole->getEntity()->getOBB();
+    CCPoint origin = obb.getOrigin(); /* OBB的左下角 */
+    mc_ssize_t obbEdge = obb.width > obb.height ? obb.width : obb.height;
+    mc_ssize_t offsetX = (mc_ssize_t) origin.x % (mc_ssize_t) obbEdge;
+    mc_ssize_t offsetY = (mc_ssize_t) origin.y % (mc_ssize_t) obbEdge;
+    CCPoint checkFrameOrigin = ccp(offsetX > 0 ? offsetX - (mc_ssize_t) obbEdge : 0,
+                             offsetY > 0 ? offsetY - (mc_ssize_t) obbEdge : 0);
+    CCRect checkFrame = CCRectMake(checkFrameOrigin.x,
+                                   checkFrameOrigin.y,
+                                   obbEdge,
+                                   obbEdge); /* 第一个检测矩形 */
+    CCRectLog(checkFrame);
+    mc_ssize_t width = (mc_ssize_t) (aMapSize.width / obbEdge) + 1;
+    mc_ssize_t height = (mc_ssize_t) (aMapSize.height / obbEdge) + 1;
+    mapAltas_ = new mc_byte_t[width * height];
+    CCObject *obj;
+    MCBarrier *barrier;
+    mc_ssize_t collided;
     
-    CCDICT_FOREACH(aList, elem) {
-        item = (MCAStarNode *) elem->getObject();
-        if (minFItem == NULL) {
-            minFItem = item;
+    /* 生成 */
+    mapWidth_ = width;
+    mapHeight_ = height;
+    edge_ = obbEdge;
+    startPoint_->position_.x = (float) ((mc_ssize_t) startPoint_->position_.x / (mc_ssize_t) obbEdge);
+    startPoint_->position_.y = (float) ((mc_ssize_t) startPoint_->position_.y / (mc_ssize_t) obbEdge);
+    endPoint_->position_.x = (float) ((mc_ssize_t) endPoint_->position_.x / (mc_ssize_t) obbEdge);
+    endPoint_->position_.y = (float) ((mc_ssize_t) endPoint_->position_.y / (mc_ssize_t) obbEdge);
+    for (mc_ssize_t y = 0; y < height; ++y) {
+        for (mc_ssize_t x = 0; x < width; ++x) {
+            collided = 0;
+            CCARRAY_FOREACH(barriers, obj) {
+                barrier = dynamic_cast<MCBarrier *>(obj);
+                CCRect aabb = barrier->getOBB().getAABB();
+                if (barrier->getOBB().getAABB().intersectsRect(checkFrame)) {
+                    collided = kMCBarrier;
+                    break;
+                }
+            }
+            mapAltas_[x + y * width] = collided;
+//            printf("%ld ", collided);
+            checkFrame.origin.x += obbEdge;
         }
-        if (item->f_ < minFItem->f_) {
-            minFItem = item;
-        }
+//        printf("\n");
+        checkFrame.origin.x = checkFrameOrigin.x;
+        checkFrame.origin.y += obbEdge;
     }
     
-    return minFItem;
+    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * width] += kMCStartPoint;
+    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * width] += kMCEndPoint;
+    for (mc_ssize_t y = height - 1; y >= 0; --y) {
+        for (mc_ssize_t x = 0; x < width; ++x) {
+            printf("%d ", mapAltas_[x + y * width]);
+        }
+        printf("\n");
+    }
 }
 
 /**
@@ -235,80 +298,77 @@ MCAStarAlgorithm::process(CCObject *obj)
     MCAStarNode *side;
     MCAStarNode tempNode;
     CCObject *tempObject;
-    mc_dict_key_t key;
-    CCDictionary *openList = CCDictionary::create();   /* 开放列表，待检验位置的列表 */
-    CCDictionary *closedList = CCDictionary::create(); /* 关闭列表，已经检验过的位置的列表 */
+    CCArray *openList = CCArray::create();   /* 开放列表，待检验位置的列表 */
+    CCArray *closedList = CCArray::create(); /* 关闭列表，已经检验过的位置的列表 */
     mc_index_t c = 0;
     
     /* 初始化开放列表 */
-    key = MCPositionToDictKey(startPoint_->position_.x,
-                              startPoint_->position_.y);
-    openList->setObject(startPoint_, key);
+    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
+          startPoint_->position_.x, startPoint_->position_.y,
+          endPoint_->position_.x, endPoint_->position_.y);
+    openList->addObject(startPoint_);
     for (;;) {
         ++c;
+        if (c > 100000) {
+            break;
+        }
         /* 开放列表为空,表明已无可以添加的新节点,而已检验的节点中没有终点节点则意味着没有找到路径 */
         if (openList->count() == 0) {
+            CCLog("虾米都没有！");
             break;
         }
-        CCLog("openlist size: %d",openList->count());
         /* 选取开放列表中有最小的F值的位置为当前位置，并加入到关闭列表中 */
-        currentPosition = minFItemAtList(openList);
+        currentPosition = ccArrayGetAStarNodeWithMinF(openList->data);
+        printf("(%.0f %.0f)[%d] => ", currentPosition->position_.x,currentPosition->position_.y, currentPosition->getF());
         /* 当前节点为目标节点，找到目标 */
-        if (currentPosition->position_.equals(endPoint_->position_)) {
+        if (mapAltas_[(mc_ssize_t) currentPosition->position_.x
+                        + (mc_ssize_t) currentPosition->position_.y * mapWidth_] == kMCEndPoint) {
+            endPoint_ = currentPosition;
+            CCLog("有了");
             break;
         }
-        key = MCPositionToDictKey(currentPosition->position_.x,
-                                  currentPosition->position_.y);
-        closedList->setObject(currentPosition, key);
-        openList->removeObjectForKey(key);
+        closedList->addObject(currentPosition);
+        openList->removeObject(currentPosition);
         
         /**
          * 检查格仔四周的位置，全部加入到开放列表。
          * 对于每一个相邻位置，将当前位置保存为它们的“父位置”。
          */
-        for (mc_index_t i = 0; i < sizeof(__delta) / sizeof(struct __mc_offset); ++i) {
+        for (mc_index_t i = 0; i < 8; ++i) {
             /* 先检查关闭列表中有没此位置 */
             CCPoint checkPoint = ccp(currentPosition->position_.x + __delta[i].x,
                                      currentPosition->position_.y + __delta[i].y);
-    //warning: 检查越界
-            key = MCPositionToDictKey(checkPoint.x,
-                                      checkPoint.y);
-            tempObject = closedList->objectForKey(key);
+            if (checkPoint.x < 0 || checkPoint.x > mapWidth_
+                || checkPoint.y < 0 || checkPoint.y > mapHeight_) {
+                continue;
+            }
+            tempObject = CCArrayGetAStarNodeByPoint(closedList, checkPoint);
             
             /* 如果它不可通过或者已经在关闭列表中，略过它。反之如下。 */
-            if (tempObject
-                || isBarrier(checkPoint)) {
+            if (tempObject || isBarrier(checkPoint)) {
                 continue;
             }
             
-            tempObject = openList->objectForKey(key);
+            tempObject = CCArrayGetAStarNodeByPoint(openList, checkPoint);
             /**
              * 如果它已经在开启列表中。
              */
             if (tempObject) {
-                side = (MCAStarNode *) tempObject;
+                side = dynamic_cast<MCAStarNode *>(tempObject);
                 /**
                  * 用G值为参考检查新的路径是否更好。更低的G值意味着更好的路径。
                  * 如果是这样，就把这一格的父节点改成当前格，并且重新计算这一格的G和F值。
                  */
                 tempNode.position_ = side->position_;
                 tempNode.setParent(currentPosition);
-//                CCLog("already at open list %d: old: (%.2f %.2f)[%d] - new: (%.2f %.2f)[%d]",
-//                      i + 1,
-//                      side->position_.x,side->position_.y,side->f_,
-//                      tempNode.position_.x,tempNode.position_.y,tempNode.f_);
-                
-//                int g = currentPosition->g_
-//                        + ((abs(side->position_.x - currentPosition->position_.x) == 1
-//                            && abs(side->position_.y - currentPosition->position_.y) == 1) ? 14 : 10);
-//                CCLog("already at open list %d: (%.2f %.2f)[old: %d][new: %d][%p]",
-//                      i + 1,
-//                      side->position_.x,side->position_.y,side->g_,g,side->parent_);
-//                if (g < side->g_) {
-//                    side->setParent(currentPosition);
-//                    side->setG(g);
-//                    side->manhattanMethod(endPoint_);
-//                }
+                int g = currentPosition->g_
+                        + ((abs(side->position_.x - currentPosition->position_.x) == 1
+                            && abs(side->position_.y - currentPosition->position_.y) == 1) ? 14 : 10);
+                if (g < side->g_) {
+                    side->setParent(currentPosition);
+                    side->setG(g);
+                    side->manhattanMethod(endPoint_);
+                }
                 if (tempNode.g_ < side->g_) {
                     side->g_ = tempNode.g_;
                     side->setParent(currentPosition);
@@ -322,36 +382,23 @@ MCAStarAlgorithm::process(CCObject *obj)
                                                      __delta[i].x,
                                                      __delta[i].y);
                 side->manhattanMethod(endPoint_);
-//                CCLog("add to open %d: (%.2f %.2f)[%d][%p]",
-//                      i + 1,
-//                      side->position_.x,side->position_.y,side->g_,side->parent_);
-                
-                key = MCPositionToDictKey(side->position_.x,
-                                          side->position_.y);
-                openList->setObject(side, key);
+                openList->addObject(side);
             }
         }
-        openList->removeObjectForKey(key);
-        closedList->setObject(side, key);
     }
     
-    CCLog("end->parent: %p(%u)", endPoint_->parent_, c);
-    key = MCPositionToDictKey(endPoint_->position_.x,
-                              endPoint_->position_.y);
-    side = (MCAStarNode *) openList->objectForKey(key);
+    CCLog("end at %dth", c);
+    side = CCArrayGetAStarNodeByPoint(openList, endPoint_->position_);
     for (;;) {
-        CCPoint positionAtTileCoordinate = metaLayer_->positionAt(side->position_);
-        CCPoint *position = new CCPoint(positionAtTileCoordinate.x, positionAtTileCoordinate.y);
-        position->autorelease();
-        route_->addObject(position);
-        if (side->parent_ == NULL) {
+        CCPoint target = ccp(side->position_.x * edge_, side->position_.y * edge_);
+        route.push(ccpSub(target, mapOffset_));
+        if (side->parent_ != NULL && side->parent_->parent_ == NULL) {
             break;
         }
         side = side->parent_;
     }
     
-    /* 反序 */
-    route_->reverseObjects();
+    /* 不需要反序了，直接当做栈处理 */
     /* 发出算法结束的通知 */
     notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification);
 }
@@ -403,29 +450,26 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
     MCOBB obb = aRole->getEntity()->getOBB();
     CCPoint startPoint = obb.getOrigin();
     CCPoint endPoint;
-    CCTMXLayer *metaLayer = map_->layerNamed("meta");
     CCPoint mapOffset = map_->getPosition();
     MCAStarAlgorithm *algo;
+    CCSize mapSize = map_->getMapSize();
+    CCSize tileSize = map_->getTileSize();
+    CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width,
+                                    mapSize.height * tileSize.height);
     
     startPoint = ccpAdd(startPoint, mapOffset);
-    CCLog("%s::start: (%.2f %.2f)", __FILE__+76, startPoint.x, startPoint.y);
-    startPoint = tileCoordinateAt(startPoint);
-    CCLog("%s::start: (%.2f %.2f)[tileCoordinate]", __FILE__+76, startPoint.x, startPoint.y);
     endPoint = ccpAdd(aDestinationLocation, mapOffset);
-    CCLog("%s::end: (%.2f %.2f)", __FILE__+76, endPoint.x, endPoint.y);
-    endPoint = tileCoordinateAt(endPoint);
-    CCLog("%s::end: (%.2f %.2f)[tileCoordinate]", __FILE__+76, endPoint.x, endPoint.y);
+    CCLog("start(%.0f %.0f) end(%.0f %.0f)",
+          startPoint.x, startPoint.y,
+          endPoint.x, endPoint.y);
     algo = new MCAStarAlgorithm;
-    algo->init(metaLayer->getTiles(),
-               metaLayer->getLayerSize().width,
-               startPoint,
-               endPoint);
-    algo->setMetaLayer(metaLayer);
+    algo->init(startPoint, endPoint);
+    algo->generateMapAltas(aRole, mapRealSize, barriers_);
+    algo->mapOffset_ = mapOffset;
     algoInstances_->addObject(algo);
-    CCLog("%s::finished: %d",__FILE__+76,algo->retainCount());
     notificatinCenter->addObserver(this,
-                                   callfuncO_selector(MCAStar::algorithmDidFinish),
-                                   kMCAStarDidFinishAlgorithmNotification,
+                                   callfuncO_selector(MCAStar::algorithmWillRemove),
+                                   kMCAStarAlgorithmWillRemoveNotification,
                                    algo);
     notificatinCenter->addObserver(aRole->getEntity(),
                                    callfuncO_selector(MCRoleEntity::findPathDidFinish),
@@ -435,32 +479,14 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
     
 }
 
-CCPoint
-MCAStar::tileCoordinateAt(const CCPoint &aMapLocation) const
-{
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
-    CCSize tileSize = map_->getTileSize();
-    CCSize scaledTileSize = CCSizeMake(tileSize.width / contentScaleFactor,
-                                       tileSize.height / contentScaleFactor);
-    
-    int x = (int) (aMapLocation.x / scaledTileSize.width);
-    int y = map_->getMapSize().height - (int) (aMapLocation.y / scaledTileSize.height) - 1;
-    
-    return CCPointMake(x, y);
-}
-
 /**
  * 算法结束
  */
 void
-MCAStar::algorithmDidFinish(CCObject *obj)
+MCAStar::algorithmWillRemove(CCObject *obj)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     
     notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithmNotification);
     algoInstances_->removeObject(obj);
-    CCTime c;
-    struct cc_timeval tp;
-    c.gettimeofdayCocos2d(&tp, NULL);
-    CCLog("end: %ld.%ld",tp.tv_sec,tp.tv_usec);
 }

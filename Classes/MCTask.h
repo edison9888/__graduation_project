@@ -20,8 +20,9 @@ class MCTaskContext;
 enum {
     MCTaskUnknownStatus = 0,
     MCTaskDone          = MCMakeEnum(0),
-    MCTaskActiviting    = MCMakeEnum(1),
-    MCTaskUncompleted   = MCMakeEnum(2)
+    MCTaskAccepted      = MCMakeEnum(1),
+    MCTaskActiviting    = MCMakeEnum(2),
+    MCTaskUncompleted   = MCMakeEnum(3)
 };
 typedef mc_enum_t MCTaskStatus;
 

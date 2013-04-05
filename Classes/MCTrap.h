@@ -21,6 +21,15 @@ enum {
 };
 typedef mc_enum_t MCTrapType;
 
+extern const char *kMCUnknownTrap;
+extern const char *kMCFireballTrap;
+extern const char *kMCCurseTrap;
+extern const char *kMCParalysisTrap;
+extern const char *kMCFogTrap;
+extern const char *kMCFlashTrap;
+
+const char *MCTrapGetNameWithTrapType(MCTrapType aTrapType);
+
 class MCTrap : public MCEffectiveItem {
 public:
     bool init(mc_object_id_t anObjectId);

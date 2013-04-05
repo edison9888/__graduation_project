@@ -113,10 +113,11 @@ public:
      */
     void goOut();
     
+    void showDetail();
+    
 protected:
     bool hasEntrance(const char *anEntranceName);
     
-    void showDetail();
     void detailDidHide();
     
     MCControllerLayer *controller_; /* 控制层 */

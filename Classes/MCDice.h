@@ -15,7 +15,7 @@
 USING_NS_CC;
 
 #define MCMakeDiceType(count, size) (0x100 * (count) + (size))
-#define MCDiceSize(type)  ((mc_dice_unit_t) ((type) & 0x00FF))
+#define MCDiceSize(type)  ((mc_dice_unit_t) ((type) & 0xFF))
 #define MCDiceCount(type) ((mc_dice_unit_t) ((type) / 0x100))
 
 enum {
@@ -28,10 +28,6 @@ enum {
     MC2D4Dice   = MCMakeDiceType(2, 4),  /* 2个4面骰子 */
     MC2D6Dice   = MCMakeDiceType(2, 6),  /* 2个6面骰子 */
     MC2D8Dice   = MCMakeDiceType(2, 8),  /* 2个8面骰子 */
-    MC2D20Dice  = MCMakeDiceType(2, 20), /* 2个20面骰子 */
-    
-    /* 特殊骰子 */
-    MC3D4Dice   = MCMakeDiceType(3, 4)   /* 3个4面骰子 */
 };
 typedef mc_ushort_t MCDiceType;
 typedef mc_ushort_t mc_dice_unit_t;
@@ -75,7 +71,7 @@ class MCDiceMaker : public CCObject {
 public:
     ~MCDiceMaker();
     /* 初始化 */
-    bool init();
+    void init();
     
     /* 返回单实例 */
     static MCDiceMaker *sharedDiceMaker();
@@ -83,8 +79,13 @@ public:
     /* 根据骰子类型获取骰子 */
     MCDice *diceWithType(MCDiceType type);
     
+    /* 攻击判定D20 */
+    mc_dice_unit_t attackCheck();
+    
 private:
     CCDictionary *dices_;
+    
+    MCDice *D20_;
 };
 
 #endif /* defined(__Military_Confrontation__MCDice__) */

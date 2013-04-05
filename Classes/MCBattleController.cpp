@@ -6,9 +6,24 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 #include "AppMacros.h"
+#include "MCTask.h"
+#include "MCTaskContext.h"
+#include "MCTaskManager.h"
 #include "MCBattleController.h"
 
 const char *kMCMultiSelectionFilepath = "UI/bc_multi_selection.png";
+
+static bool
+MCActionBarItemIsPotion(MCActionBarItem *anActionBarItem)
+{
+    MCTask *task = MCTaskManager::sharedTaskManager()->getCurrentTask();
+    CCAssert(task != NULL, "代码逻辑错误");
+    MCTaskContext *taskContext = task->getTaskContext();
+    MCBackpackItem *backpackItem = anActionBarItem->getBackpackItem();
+    
+    return backpackItem == taskContext->getHealthPotion()
+            || backpackItem == taskContext->getPhysicalPotion();
+}
 
 bool
 MCBattleController::init()
@@ -53,33 +68,19 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
     CCTouch *touch = (CCTouch *) pTouches->anyObject();
     
-    /* 队伍选择 */
-    MCRoleBaseInfo *roleBaseInfo = teamLayer_->roleBaseInfoForTouch(touch);
-    if (roleBaseInfo) {
-        if (! teamLayer_->isMultiSeletionMode()) {
-            teamLayer_->unselectAll();
-        }
-        if (roleBaseInfo->isSelected()) {
-            teamLayer_->unselectRole(roleBaseInfo->getRole());
-            delegate_->controllerDidUnselectRole(delegate_, roleBaseInfo->getRole());
-        } else {
-            teamLayer_->selectRole(roleBaseInfo->getRole());
-            delegate_->controllerDidSelectRole(delegate_, roleBaseInfo->getRole());
-        }
-        if (teamLayer_->getSelectedRoles()->count() == teamLayer_->size()) { /* 全部选中了 */
-            CCMenuItemLabel *menuItem = (CCMenuItemLabel *)selectAllMenu_->getChildren()->objectAtIndex(0);
-            CCLabelTTF *label = (CCLabelTTF *) menuItem->getLabel();
-            label->setString("取消");
-        }
+    MCRoleBaseInfo *info = teamLayer_->roleBaseInfoForTouch(touch);
+    if (info) {
+        info->setTouched(true);
     }
     
     /* item操作 */
     selectedItem_ = actionBar_->itemForTouch(touch);
-    if (selectedItem_) {
+    if (selectedItem_ && selectedItem_->getBackpackItem()->count > 0) {
         selectedItem_->touchedPoint = touch->getLocation();
-        selectedItem_->setOpacity(160);
+        selectedItem_->setOpacity(kMCDraggingActionBarItemOpacity);
     }
     
+    /* tag: #multi #selection */
     /* 检测多选模式 */
     CCPoint origin = multiSelection_->getPosition();
     CCSize size = multiSelection_->getContentSize();
@@ -92,6 +93,7 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
             teamLayer_->setMultiSeletionMode(true);
             multiSelection_->setScale(1.2f);
             multiSelectionTouch_ = touch;
+            delegate_->controllerDidEnterMultiSelectionMode(delegate_);
         }
 
     }
@@ -102,6 +104,7 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 void
 MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
+    /* tags: #multi #selection #enter */
     /* 检测多选模式 */
     if (multiSelectionTouch_) {
         CCPoint origin = multiSelection_->getPosition();
@@ -114,13 +117,12 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
         }
     }
     
-#warning 太快移动的话，会失控，用队列记录位置？
     if (selectedItem_) {
         for (CCSetIterator iterator = pTouches->begin();
              iterator != pTouches->end();
              ++iterator) {
             CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
-            if (selectedItem_ == actionBar_->itemForTouch(touch)) {
+            if (selectedItem_->touchedPoint.equals(touch->getPreviousLocation())) {
                 CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
                 selectedItem_->setPosition(ccpAdd(selectedItem_->getPosition(), offset));
                 selectedItem_->touchedPoint = touch->getLocation();
@@ -128,6 +130,10 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
             }
         }
         teamLayer_->acceptActionBarItem(selectedItem_);
+    } else if (teamLayer_->getSelectedRoles()->count() == 0) { /* 拖动地图模式 */
+        CCTouch *touch = (CCTouch *) pTouches->anyObject();
+        CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
+        delegate_->controllerDidDragMap(delegate_, offset);
     }
     
     CCLayer::ccTouchesMoved(pTouches, pEvent);
@@ -136,6 +142,46 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 void
 MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
+    CCTouch *touch = (CCTouch *) pTouches->anyObject();
+    bool findPath = true;
+    
+    /* 队伍选择 */
+    /* tags: #select,#team */
+    /* 镜头将移到选中对象身上，若有多个选中对象，则移到队伍第一个角色(在选中的人中序号第一)身上 */
+    MCRoleBaseInfo *roleBaseInfo = teamLayer_->roleBaseInfoForTouch(touch);
+    if (roleBaseInfo && roleBaseInfo->getTouched()) {
+        bool isSelected = roleBaseInfo->isSelected();
+        findPath = false;
+        if (! teamLayer_->isMultiSeletionMode()) {
+            teamLayer_->unselectAll();
+        }
+        if (isSelected) {
+            teamLayer_->unselectRole(roleBaseInfo->getRole());
+            delegate_->controllerDidUnselectRole(delegate_, roleBaseInfo->getRole());
+        } else {
+            teamLayer_->selectRole(roleBaseInfo->getRole());
+            delegate_->controllerDidSelectRole(delegate_, roleBaseInfo->getRole());
+        }
+        if (teamLayer_->getSelectedRoles()->count() == teamLayer_->size()) { /* 全部选中了 */
+            CCMenuItemLabel *menuItem = (CCMenuItemLabel *)selectAllMenu_->getChildren()->objectAtIndex(0);
+            CCLabelTTF *label = (CCLabelTTF *) menuItem->getLabel();
+            label->setString("取消");
+        }
+        roleBaseInfo->setTouched(false);
+    }
+    
+    /* 行动 */
+    /* 行走 */
+    CCArray *selectedRoles = teamLayer_->getSelectedRoles();
+    CCObject *obj;
+    if (findPath && selectedRoles->count() > 0) {
+        CCARRAY_FOREACH(selectedRoles, obj) {
+            MCRole *role = dynamic_cast<MCRole *>(obj);
+            role->getEntity()->findPath(touch->getLocation());
+        }
+    }
+    
+    /* tags: #item,#use */
     for (CCSetIterator iterator = pTouches->begin();
          iterator != pTouches->end();
          ++iterator) {
@@ -144,26 +190,47 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         if (selectedItem_ != NULL
             && selectedItem_ == actionBar_->itemForTouch(touch)) {
             if (selectedItem_->getItemPosition().equals(selectedItem_->getPosition())) {
-                /* todo: 直接点击使用道具 */
-                CCLog("直接点击使用道具");
+                /* 直接点击使用道具 */
+                if (MCActionBarItemIsPotion(selectedItem_)) { /* 是药品才能使用 */
+                    teamLayer_->selectedRolesUseActionBarItem(selectedItem_);
+                    selectedItem_->updateCount();
+                }
             } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedItem_))) {
-                /* todo: 检测是否移动到图标上 */
+                /* 拖动使用道具 */
                 selectedRoleBaseInfo->setOpacity(255);
-            } else {
-                /* todo: 删除这段，木有使用成功输出 */
-                CCLog("木有使用成功");
+                selectedRoleBaseInfo->useActionBarItem(selectedItem_);
+                selectedItem_->updateCount();
             }
         }
     }
     if (selectedItem_) {
         selectedItem_->resetPosition();
-        selectedItem_->setOpacity(255);
+        if (selectedItem_->getBackpackItem()->count > 0) {
+            selectedItem_->setOpacity(kMCNormalActionBarItemOpacity);
+        } else {
+            selectedItem_->setOpacity(kMCInvalidActionBarItemOpacity);
+        }
         selectedItem_ = NULL;
     }
     
-    teamLayer_->setMultiSeletionMode(false);
-    multiSelection_->setScale(1.f);
-    multiSelectionTouch_ = NULL;
+    /* todo: 木有测试 */
+    /* tags: #multi #selection #exit */
+    /* 退出多选模式检测 */
+    CCPoint origin = multiSelection_->getPosition();
+    CCSize size = multiSelection_->getContentSize();
+    CCRect r = CCRectMake(origin.x - size.width / 2, origin.y - size.height / 2, size.width, size.height);
+    for (CCSetIterator iterator = pTouches->begin();
+         iterator != pTouches->end();
+         ++iterator) {
+        CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
+        if (r.containsPoint(touch->getLocation())) {
+            teamLayer_->setMultiSeletionMode(false);
+            multiSelection_->setScale(1.f);
+            multiSelectionTouch_ = NULL;
+            delegate_->controllerDidExitMultiSelectionMode(delegate_);
+        }
+        
+    }
     
     CCLayer::ccTouchesEnded(pTouches, pEvent);
 }
@@ -191,6 +258,8 @@ MCBattleController::didSelectAll(CCObject *aSender)
     CCArray *roles = teamLayer_->getSelectedRoles();
     CCObject *obj;
     if (roles->count() == teamLayer_->size()) {
+        /* tags: #select,#all */
+        /* 全选的话，镜头将移到主角身上 */
         /* 已经选择全部了，则全部取消选择 */
         CCARRAY_FOREACH(roles, obj) {
             delegate_->controllerDidUnselectRole(delegate_, dynamic_cast<MCRole *>(obj));

@@ -13,6 +13,7 @@
 #include "MCDetail.h"
 #include "MCEntrance.h"
 #include "MCAStar.h"
+#include "MCTeam.h"
 
 #pragma mark *** MCSceneContextManager ***
 
@@ -85,6 +86,7 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         
         aStar_ = new MCAStar;
         aStar_->init(background_->getMap());
+        aStar_->setBarriers(objects_->getbarriers());
         
         installController();
         
@@ -153,18 +155,11 @@ MCScene::onEnter()
     context->scene_ = this;
     MCSceneContextManager::sharedSceneContextManager()->pushContext(context);
     CCScene::onEnter();
+    /* 已加载玩对象了现在 */
+    background_->loadEnemies(objects_->objects());
+    background_->loadTeam(MCTeam::sharedTeam());
     /* 预加载场景 */
     schedule(schedule_selector(MCScene::update));
-    //warning: for debug
-    return;
-    if (viewport_ == NULL) {
-        viewport_ = MCViewportLayer::create();
-        addChild(viewport_);
-        viewport_->loadObjects(objects_->objects_);
-        viewport_->loadSemis(objects_->semiTransparents_);
-        viewport_->loadBarriers(objects_->barriers_);
-        viewport_->map = background_->getMap();
-    }
 }
 
 void
@@ -182,6 +177,7 @@ MCScene::onExit()
 void
 MCScene::update(float dt)
 {
+    CCScene::update(dt);
 }
 
 /**

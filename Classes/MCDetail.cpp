@@ -7,6 +7,10 @@
 //
 #include "AppMacros.h"
 #include "MCDetail.h"
+#include "MCStateLayer.h"
+#include "MCPropsLayer.h"
+#include "MCTaskLayer.h"
+#include "MCEquipmentLayer.h"
 
 enum __detail_scene_Tags {
     Tag_State,
@@ -121,6 +125,15 @@ MCDetail::init()
         lastShownLayer_ = stateLayer_;
         addChild(stateLayer_);
         
+        propsLayer_ = MCPropsLayer::create();
+        addChild(propsLayer_);
+        
+        taskLayer_ = MCTaskLayer::create();
+        addChild(taskLayer_);
+        
+        equipmentLayer_ = MCEquipmentLayer::create();
+        addChild(equipmentLayer_);
+        
         return true;
     }
     
@@ -138,9 +151,6 @@ MCDetail::initPosition()
 void
 MCDetail::show()
 {
-    /* 方案一，显示上次点击的视图 */
-//    lastShownLayer_->show();
-    /* 方案二，显示第一个视图，即人物状态视图 */
     menuItem_clicked(((__MCViewSelectorLayer *) viewSelector_)->getDefaultMenuItem());
     runAction(CCMoveTo::create(kMCActionDuration, ccp(0, 0)));
 }
@@ -162,16 +172,23 @@ MCDetail::showState() /* 显示状态选项卡 */
 void
 MCDetail::showProps() /* 显示道具选项卡 */
 {
+    propsLayer_->clickFirstItem();
+    propsLayer_->show();
+    lastShownLayer_ = propsLayer_;
 }
 
 void
-MCDetail::showTasks() /* 显示任务选项卡 */
+MCDetail::showTask() /* 显示任务选项卡 */
 {
+    taskLayer_->show();
+    lastShownLayer_ = taskLayer_;
 }
 
 void
 MCDetail::showEquipment() /* 显示装备选项卡 */
 {
+    equipmentLayer_->show();
+    lastShownLayer_ = equipmentLayer_;
 }
 
 void
@@ -202,6 +219,7 @@ MCDetail::menuItem_clicked(CCObject* aSender)
 {
     CCMenuItemImage *menuItem = (CCMenuItemImage *)aSender;
     
+    menuItem->selected(); /* 点击过后menu那边就把menuitem设置为unselected */
     if (menuItem == lastSelectedMenuItem_) {
         return;
     }
@@ -209,7 +227,6 @@ MCDetail::menuItem_clicked(CCObject* aSender)
         lastSelectedMenuItem_->unselected();
     }
     lastSelectedMenuItem_ = menuItem;
-    menuItem->selected();
     
     if (lastShownLayer_ != NULL) {
         lastShownLayer_->hide();
@@ -225,7 +242,7 @@ MCDetail::menuItem_clicked(CCObject* aSender)
             showEquipment();
             break;
         case Tag_Task:
-            showTasks();
+            showTask();
             break;
         case Tag_Skills:
             showSkills();

@@ -17,6 +17,8 @@ USING_NS_CC_EXT;
 #include "MCRole.h"
 #include "MCTeam.h"
 
+class MCActionBarItem;
+
 /**
  * BaseInfo指的是HP和PP值
  */
@@ -28,10 +30,6 @@ public:
     
     inline bool isSelected() {
         return faceBoxSelected_->isVisible();
-    }
-    
-    inline void setSelected(bool var) {
-        faceBoxSelected_->setVisible(var);
     }
     
     inline void selected() {
@@ -48,6 +46,11 @@ public:
     
     void updateInfo();
     
+    /**
+     * 使用成功返回true，否则false
+     */
+    bool useActionBarItem(MCActionBarItem *anActionBarItem);
+    
     inline void setOpacity(GLubyte var) {
         face_->setOpacity(var);
         faceBox_->setOpacity(var);
@@ -63,6 +66,8 @@ private:
     CCLabelTTF *maxPPLabel_;
     
     CC_SYNTHESIZE_READONLY(MCRole *, role_, Role);
+    
+    CC_SYNTHESIZE(bool, touched_, Touched);
 };
 
 class MCTeamLayer;

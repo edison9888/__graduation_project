@@ -11,8 +11,17 @@
 #include "MCTaskManager.h"
 #include "MCTaskContext.h"
 
-const char *kItemBackgroundFilepath = "UI/abi_item_background.png";
-const char *kItemBoxFilepath = "UI/abi_item_box.png";
+/* extern */
+const GLubyte kMCInvalidActionBarItemOpacity  = 140;
+const GLubyte kMCDraggingActionBarItemOpacity = 180;
+const GLubyte kMCNormalActionBarItemOpacity   = 255;
+
+static const char *kMCActionBarItemOpenedFilepath = "UI/abi_opened.png";
+static const char *kMCActionBarItemOpenedSelectedFilepath = "UI/abi_opened_selected.png";
+static const char *kMCActionBarItemClosedFilepath = "UI/abi_closed.png";
+static const char *kMCActionBarItemClosedSelectedFilepath = "UI/abi_closed_selected.png";
+
+static const float kMCActionDuration = 0.2f;
 
 #pragma mark *** MCActionBarItem ***
 
@@ -22,23 +31,17 @@ MCActionBarItem::init(MCBackpackItem *aBackpackItem)
     if (CCSprite::initWithFile(aBackpackItem->item->getIcon()->getCString())) {
         CCPoint anchorPoint = ccp(0.5f, 0.0f);
         
-//        CCSize itemBoxSize = CCSizeMake(72, 72);
-//        CCRect itemBoxSourceRect = CCRectMake(0, 0, 32, 32);
-//        CCRect itemBoxInseRect = CCRectMake(11, 11, 20, 20);
-        
-//        itemBox_ = CCScale9Sprite::create(kItemBoxFilepath, itemBoxSourceRect, itemBoxInseRect);
-//        addChild(itemBox_);
-//        itemBox_->setContentSize(itemBoxSize);
-//        itemBox_->setAnchorPoint(anchorPoint);
-//        itemBox_->setPosition(ccp(0, 0));
-        
         count_ = CCLabelTTF::create(CCString::createWithFormat("%hi", aBackpackItem->count)->getCString(),
                                     "",
                                     24);
         addChild(count_);
         count_->setAnchorPoint(anchorPoint);
-        count_->setColor(ccc3(96, 96, 96));
+        count_->setColor(ccc3(32, 32, 32));
         count_->setPosition(ccp(this->getContentSize().width / 2, 2));
+        
+        if (aBackpackItem->count == 0) {
+            setOpacity(kMCInvalidActionBarItemOpacity);
+        }
         
         backpackItem_ = aBackpackItem;
         
@@ -82,6 +85,12 @@ MCActionBarItem::setItemPosition(CCPoint var)
     itemPosition_ = var;
 }
 
+void
+MCActionBarItem::updateCount()
+{
+    count_->setString(CCString::createWithFormat("%hu", backpackItem_->count)->getCString());
+}
+
 #pragma mark -
 #pragma mark *** MCActionBar ***
 
@@ -113,12 +122,38 @@ MCActionBar::init()
         addChild(physicalPotion_);
         physicalPotion_->setAnchorPoint(anchorPoint);
         
+        CCMenuItemImage *opened = CCMenuItemImage::create(kMCActionBarItemOpenedFilepath,
+                                                          kMCActionBarItemOpenedSelectedFilepath);
+        CCMenuItemImage *closed = CCMenuItemImage::create(kMCActionBarItemClosedFilepath,
+                                                          kMCActionBarItemClosedSelectedFilepath);
+        CCMenuItemToggle *toggleButton = CCMenuItemToggle::createWithTarget(this,
+                                                                             menu_selector(MCActionBar::toggle),
+                                                                             opened, closed, NULL);
+        toggleButton_ = CCMenu::createWithItem(toggleButton);
+        addChild(toggleButton_);
+        toggleButton->setAnchorPoint(anchorPoint);
+        toggleButton_->setAnchorPoint(anchorPoint);
+        
         align();
         
         return true;
     }
     
     return false;
+}
+
+void
+MCActionBar::toggle()
+{
+    CCSize size = trapWide_->getContentSize();
+    CCPoint offset = ccp(0, size.height * 2);
+    if (trapWide_->getPositionY() >= 0) { /* 将要隐藏 */
+        offset.y = -offset.y;
+    }
+    trapWide_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    trapDamage_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    healthPotion_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    physicalPotion_->runAction(CCMoveBy::create(kMCActionDuration, offset));
 }
 
 MCActionBarItem *
@@ -173,4 +208,6 @@ MCActionBar::align()
     healthPotion_->setItemPosition(itemPosition);
     itemPosition = ccp(centerPoint.x + itemSize.width * 1.5, centerPoint.y);
     physicalPotion_->setItemPosition(itemPosition);
+    itemPosition = ccp(centerPoint.x + itemSize.width * 2.5, centerPoint.y - 13);
+    toggleButton_->setPosition(itemPosition);
 }

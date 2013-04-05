@@ -33,9 +33,22 @@ public:
         m_id.sub_class_ = '9';
         m_id.sub_index_ = '1';
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        MCRole *role = MCTeam::sharedTeam()->lastRole();
+        role->setHP(40);
+        role->setPP(40);
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        role = MCTeam::sharedTeam()->lastRole();
+        role->setHP(60);
+        role->setPP(60);
         m_id.sub_index_ = '2';
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        role = MCTeam::sharedTeam()->lastRole();
+        role->setHP(80);
+        role->setPP(40);
+        
+        MCBackpack::sharedBackpack()->buyFireballTrapWide(2);
+        MCBackpack::sharedBackpack()->buyHealthPotion(20);
+        MCBackpack::sharedBackpack()->buyPhysicalPotion(5);
         
         mc_object_id_t t_id = {
             'T', '1', '0', '1'

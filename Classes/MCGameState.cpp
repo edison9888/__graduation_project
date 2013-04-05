@@ -9,6 +9,7 @@
 #include "MCGameState.h"
 
 #include "MCBackpack.h"
+#include "MCEquipmentManager.h"
 #include "MCFlagManager.h"
 #include "MCTaskManager.h"
 #include "MCSkillManager.h"
@@ -66,6 +67,7 @@ MCGameState::save()
     
     userDefault->setBoolForKey(kMCSaveFileExistsKey, true);
     MCBackpack::sharedBackpack()->saveData();
+    MCEquipmentManager::sharedEquipmentManager()->saveData();
     MCMercenaryManager::sharedMercenaryManager()->saveData();
     MCFlagManager::sharedFlagManager()->saveAllFlags();
     MCTaskManager::sharedTaskManager()->saveData();
@@ -83,6 +85,7 @@ void
 MCGameState::load()
 {
     MCBackpack::sharedBackpack();
+    MCEquipmentManager::sharedEquipmentManager();
     MCMercenaryManager::sharedMercenaryManager();
     MCFlagManager::sharedFlagManager();
     MCTaskManager::sharedTaskManager();

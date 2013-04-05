@@ -50,6 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCFileUtils::sharedFileUtils()->setResourceDirectory(PCResource.directory);
 //    pDirector->setContentScaleFactor(MIN(32 * 25 / PCResource.size.width, 32 * 15 / PCResource.size.height));
 //    pDirector->setContentScaleFactor(0.75f);
+    pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height == smallResource.size.height)

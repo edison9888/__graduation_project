@@ -12,10 +12,15 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
+class MCTeam;
+
 class MCBackgroundLayer : public CCLayer {
     
 public:
-    MCBackgroundLayer() : isPlayBackgroundMusicImmediately_(true) {}
+    MCBackgroundLayer()
+    : isPlayBackgroundMusicImmediately_(true)
+    , enemyShadows_(NULL)
+    , shadows_(NULL) {}
     
     ~MCBackgroundLayer();
     bool init(const char *aMapFilePath, const char *aBackgroundMusicFilePath);
@@ -25,8 +30,13 @@ public:
     void onEnter();
     void onExit();
     
+    void update(float dt);
+    
     void playMusic();
     void stopMusic();
+    
+    void loadEnemies(CCArray *objects);
+    void loadTeam(MCTeam *aTeam);
     
     inline bool isPlayBackgroundMusicImmediately() {
         return isPlayBackgroundMusicImmediately_;
@@ -41,6 +51,9 @@ public:
     
 private:
     bool isPlayBackgroundMusicImmediately_;
+    
+    CCArray *enemyShadows_; /* 敌人影子 */
+    CCArray *shadows_; /* 主角和佣兵的影子 */
 };
 
 #endif /* defined(__Military_Confrontation__MCBackgroundLayer__) */

@@ -9,13 +9,15 @@
 #ifndef __Military_Confrontation__MCBattleFieldScene__
 #define __Military_Confrontation__MCBattleFieldScene__
 
-#include "MCGameScene.h"
+#include "MCScene.h"
 
-class MCBattleFieldScene : public MCGameScene {
+class MCBattleFieldScene : public MCScene {
 public:
     void installController();
     
     void dragScene(const CCPoint &anOffset);
+    
+    /* 代理方法 */
 };
 
 #endif /* defined(__Military_Confrontation__MCBattleFieldScene__) */

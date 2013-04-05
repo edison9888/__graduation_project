@@ -61,10 +61,10 @@ public:
      */
     virtual void controllerDidPointTo(MCBattleControllerDelegate *aSender, const CCPoint &locationAtMap) {}
     
-    /**
-     * 是否允许拖动anItem。按下图标的时候执行。
-     */
-    virtual bool controllerShouldDragItem(MCBattleControllerDelegate *aSender, MCItem *anItem) { return false; }
+//    /**
+//     * 是否允许拖动anItem。按下图标的时候执行。
+//     */
+//    virtual bool controllerShouldDragItem(MCBattleControllerDelegate *aSender, MCItem *anItem) { return false; }
     
     /**
      * 将要开始拖动anItem。按下图标后，首次移动anItem的时候执行。
@@ -80,6 +80,11 @@ public:
      * 选择了anItem。按下和放开手指都在anItem的范围内时执行。
      */
     virtual void controllerDidSelectItem(MCBattleControllerDelegate *aSender, MCItem *anItem) {}
+    
+    /**
+     * 拖动地图
+     */
+    virtual void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset) {}
     
     virtual void controllerDid(MCBattleControllerDelegate *aSender) {}
 };

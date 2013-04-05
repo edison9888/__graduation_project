@@ -92,8 +92,8 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     /* 纹理文件 */
     sprintf(str, "%s.st", aSpritesheetPath);
     textureFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
-    spriteSheet = new CCSpriteBatchNode;
-    spriteSheet->initWithFile(textureFilepath, kDefaultSpriteBatchCapacity);
+    spriteSheet = CCSpriteBatchNode::create(textureFilepath, kDefaultSpriteBatchCapacity);
+    spriteSheet->retain();
 
     /* 添加帧 */
     for (int i = 0; i < sizeof(__mc_directions) / sizeof(const char *); ++i) {
@@ -116,10 +116,10 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     
     entityMetadata_->spriteSheet_ = spriteSheet;
     entityMetadata_->spriteSheetPath_ = CCString::create(aSpritesheetPath);
+    entityMetadata_->spriteSheetPath_->retain();
     entityMetadata_->facade_ = MCFacingUnknown;
     
-    /* 创建可视范围 */
-    viewport_ = MCViewport::create(getEntity());
+    /* 创建AI */
 }
 
 MCRoleEntity *

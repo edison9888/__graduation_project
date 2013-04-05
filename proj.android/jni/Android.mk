@@ -59,8 +59,9 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCBattleControllerLayer.cpp \
 					../../Classes/MCBattleFieldScene.cpp \
 					../../Classes/MCControllerDelegate.cpp \
+					../../Classes/MCControllerLayer.cpp \
+					../../Classes/MCDetail.cpp \
 					../../Classes/MCDetailLayer.cpp \
-					../../Classes/MCDetailScene.cpp \
 					../../Classes/MCDialog.cpp \
 					../../Classes/MCDialogue.cpp \
 					../../Classes/MCDice.cpp \
@@ -127,6 +128,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestLua.cpp \
 					../../Classes/MCTestManagers.cpp \
 					../../Classes/MCTestOBB.cpp \
+					../../Classes/MCTestParticle.cpp \
 					../../Classes/MCTestRoleBaseInfo.cpp \
 					../../Classes/MCTestRoleManager.cpp \
 					../../Classes/MCTestViewport.cpp \

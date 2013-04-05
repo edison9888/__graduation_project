@@ -74,7 +74,7 @@ MCDefineIndexAndKey(Dexterity, 15, dexterity);
                         : object)
                 forKey:kMCIconKey];
     /* price */
-    [content setObject:[data objectAtIndex:kMCPriceIndex] forKey:kMCPriceKey];
+    [content setObject:@([[data objectAtIndex:kMCPriceIndex] integerValue]) forKey:kMCPriceKey];
     /* damage */
     tempComponents = [[data objectAtIndex:kMCDamageIndex] componentsSeparatedByString:@"d"];
     NSDictionary *damage = @{

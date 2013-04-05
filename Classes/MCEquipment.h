@@ -14,39 +14,46 @@
 #include "MCEquipmentProperty.h"
 #include "MCEffect.h"
 
-enum {
-	MCUnknownEquipment = 0,				/* 未知装备类型 */
-	MCWeapon           = MCMakeEnum(0),	/* 武器 */
-	MCArmor            = MCMakeEnum(1)	/* 防具 */
-};
 typedef mc_enum_t MCEquipmentType;
 
-typedef struct {
-    mc_dexterity_t price; /* 升级基础价格 */
+class MCEquipment : public CCObject {
+public:
+    enum {
+        MCUnknownEquipment = 0,				/* 未知装备类型 */
+        MCWeapon           = MCMakeEnum(0),	/* 武器 */
+        MCArmor            = MCMakeEnum(1)	/* 防具 */
+    };
+public:
+    MCEquipment();
+    
+	MCEquipmentType type;     /* 装备类型 */
+    mc_dexterity_t dexterity; /* 敏捷调整值 */
+};
+
+class MCWeapon : public MCEquipment {
+public:
+    MCWeapon();
+    
+    CCObject *copy();
+    
     mc_dice_unit_t damage; /* 伤害值 */
-    mc_bonus_t damage_bonus; /* 伤害值加成 */
-    MCDiceRange critical_hit_visible; /* 可视区域内重击范围 */
-    MCDiceRange critical_hit_invisible; /* 非可视区域内重击范围 */
-    mc_critical_hit_t critical_hit; /* 重击倍数 */
+    mc_critical_hit_t criticalHit; /* 重击倍数 */
+    MCDiceRange criticalHitVisible; /* 可视区域内重击范围 */
+    MCDiceRange criticalHitInvisible; /* 非可视区域内重击范围 */
     mc_distance_t distance; /* 攻击距离，单位为资源缩放值*32像素 */
     MCRoleState effect; /* 附带效果 */
-    MCDiceRange effect_check; /* 效果判定 */
-    mc_dexterity_t dexterity; /* 敏捷调整值 */
-} mc_weapon_t;
+    MCDiceRange effectCheck; /* 效果判定 */
+};
 
-typedef struct {
+
+class MCArmor : public MCEquipment {
+public:
+    MCArmor();
+    
+    CCObject *copy();
+    
     mc_dexterity_t defense; /* 防御加值 */
-    mc_dexterity_t dexterity; /* 敏捷调整值 */
-    mc_armor_check_penalty_t armor_check_penalty; /* 防具检定减值 */
-    mc_dexterity_t price; /* 升级基础价格 */
-} mc_armor_t;
-
-struct MCEquipment {
-	union {
-		mc_weapon_t weapon;
-		mc_armor_t armor;
-	} equipment;
-	MCEquipmentType type;
+    mc_armor_check_penalty_t armorCheckPenalty; /* 防具检定减值 */
 };
 
 #endif /* defined(__Military_Confrontation__MCEquipment__) */

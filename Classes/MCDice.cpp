@@ -38,13 +38,13 @@ MCDiceMaker::~MCDiceMaker()
 }
 
 /* 初始化 */
-bool
+void
 MCDiceMaker::init()
 {
     dices_ = CCDictionary::create();
     dices_->retain();
     
-    return true;
+    D20_ = diceWithType(MCMakeDiceType(1, 20));
 }
 
 /* 返回单实例 */
@@ -53,12 +53,12 @@ MCDiceMaker::sharedDiceMaker()
 {
     if (__shared_dice_maker == NULL) {
         __shared_dice_maker = new MCDiceMaker;
-        if (__shared_dice_maker && __shared_dice_maker->init()) {
+        if (__shared_dice_maker) {
             struct timeval tv;
             
             gettimeofday(&tv, NULL);
             srand(tv.tv_usec);
-            __shared_dice_maker->autorelease();
+            __shared_dice_maker->init();
         } else {
             delete __shared_dice_maker;
             __shared_dice_maker = NULL;
@@ -82,3 +82,9 @@ MCDiceMaker::diceWithType(MCDiceType type)
     return dice;
 }
 
+/* 攻击判定D20 */
+mc_dice_unit_t
+MCDiceMaker::attackCheck()
+{
+    return D20_->roll();
+}

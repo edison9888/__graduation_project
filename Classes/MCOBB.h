@@ -29,6 +29,7 @@ public:
     float getProjectionRadius(const CCPoint &anAxis) const;
     
     CCPoint getOrigin() const;
+    CCRect getAABB() const;
     
 public:
     CCPoint center;

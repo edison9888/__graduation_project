@@ -64,9 +64,9 @@ MCDefineIndexAndKey(ArmorCheckPenalty, 7, armor-check-penalty);
                         : object)
                 forKey:kMCIconKey];
     /* price */
-    [content setObject:[data objectAtIndex:kMCPriceIndex] forKey:kMCPriceKey];
+    [content setObject:@([[data objectAtIndex:kMCPriceIndex] integerValue]) forKey:kMCPriceKey];
     /* defense */
-    [content setObject:[data objectAtIndex:kMCDefenseIndex] forKey:kMCDefenseKey];
+    [content setObject:@([[data objectAtIndex:kMCDefenseIndex] integerValue]) forKey:kMCDefenseKey];
     /* dexterity */
     [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     /* armor-check-penalty */

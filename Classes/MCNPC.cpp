@@ -13,7 +13,7 @@ MCNPC::~MCNPC()
     CC_SAFE_RELEASE(face_);
     CC_SAFE_RELEASE(spriteSheet_);
     CC_SAFE_RELEASE(defaultDialogue_);
-    CC_SAFE_DELETE(viewport_); /* 非CCObject子类 */
+//    CC_SAFE_DELETE(viewport_); /* 非CCObject子类 */
 }
 
 MCNPC *

@@ -15,7 +15,8 @@ MCDefineIndexAndKey(Name, 1, name);
 MCDefineIndexAndKey(Face, 2, face);
 MCDefineIndexAndKey(SpriteSheet, 3, sprite-sheet);
 MCDefineIndexAndKey(DefaultDialogue, 4, default-dialogue);
-MCDefineIndexAndKey(Description, 5, description);
+MCDefineIndexAndKey(Trigger, 5, trigger);
+MCDefineIndexAndKey(Description, 6, description);
 
 @implementation MCNPCHandler
 
@@ -49,6 +50,13 @@ MCDefineIndexAndKey(Description, 5, description);
     [content setObject:[data objectAtIndex:kMCSpriteSheetIndex] forKey:kMCSpriteSheetKey];
     /* default-dialogue */
     [content setObject:[data objectAtIndex:kMCDefaultDialogueIndex] forKey:kMCDefaultDialogueKey];
+    /* trigger */
+    NSString *trigger = [data objectAtIndex:kMCTriggerIndex];
+    if ([trigger compare:@"-"] == NSOrderedSame) {
+        [content setObject:[NSNull null] forKey:kMCTriggerKey];
+    } else {
+        [content setObject:trigger forKey:kMCTriggerKey];
+    }
     /* description */
     [content setObject:[data objectAtIndex:kMCDescriptionIndex] forKey:kMCDescriptionKey];
     

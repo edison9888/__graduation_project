@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 typedef unsigned char mc_byte_t;
 typedef unsigned int mc_uint_t;
 typedef unsigned short int mc_ushort_t;
@@ -50,5 +54,11 @@ struct MCObjectID {
 };
 
 const mc_object_id_t NULLObjectId = {0, 0, 0, 0};
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
+#define MCDefineConstantString(v) const char *v = #v;
 
 #endif

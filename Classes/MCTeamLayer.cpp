@@ -8,6 +8,7 @@
 
 #include "MCTeamLayer.h"
 #include "MCActionBar.h"
+#include "MCShadow.h"
 
 MCTeamLayer::~MCTeamLayer()
 {
@@ -30,6 +31,12 @@ MCTeamLayer::init()
 }
 
 void
+MCTeamLayer::selectFirstRole()
+{
+    selectRole(dynamic_cast<MCRoleBaseInfo *>(group_->infoList_->objectAtIndex(0))->getRole());
+}
+
+void
 MCTeamLayer::selectAll()
 {
     CCObject *obj;
@@ -37,7 +44,8 @@ MCTeamLayer::selectAll()
     selectedRoles_->removeAllObjects();
     CCARRAY_FOREACH(group_->infoList_, obj) {
         info = (MCRoleBaseInfo *)obj;
-        info->setSelected(true);
+        info->selected();
+        info->getRole()->getEntity()->getShadow()->selected();
         selectedRoles_->addObject(info->getRole());
     }
 }
@@ -50,7 +58,8 @@ MCTeamLayer::unselectAll()
     selectedRoles_->removeAllObjects();
     CCARRAY_FOREACH(group_->infoList_, obj) {
         info = (MCRoleBaseInfo *)obj;
-        info->setSelected(false);
+        info->unselected();
+        info->getRole()->getEntity()->getShadow()->unselected();
     }
 }
 
@@ -65,6 +74,7 @@ MCTeamLayer::selectRole(MCRole *aRole)
         role = info->getRole();
         if (role == aRole) {
             info->selected();
+            role->getEntity()->getShadow()->selected();
             selectedRoles_->addObject(role);
             break;
         }
@@ -82,6 +92,7 @@ MCTeamLayer::unselectRole(MCRole *aRole)
         role = info->getRole();
         if (role == aRole) {
             info->unselected();
+            role->getEntity()->getShadow()->unselected();
             selectedRoles_->removeObject(role);
             break;
         }
@@ -242,6 +253,23 @@ MCTeamLayer::acceptActionBarItem(MCActionBarItem *anActionBarItem)
                 } else {
                     info->setOpacity(255);
                 }
+            }
+        }
+    }
+}
+
+
+void
+MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
+{
+    CCObject *obj = NULL;
+    CCArray *rolesInfo = group_->infoList_;
+    
+    CCARRAY_FOREACH(rolesInfo, obj) {
+        MCRoleBaseInfo *info = dynamic_cast<MCRoleBaseInfo *>(obj);
+        if (info && info->isSelected()) {
+            if (! info->useActionBarItem(anActionBarItem)) {
+                break; /* 已经不够了，不必继续下去 */
             }
         }
     }
