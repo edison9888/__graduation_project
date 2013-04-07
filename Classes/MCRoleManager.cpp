@@ -199,7 +199,15 @@ MCRoleManager::loadNPCData()
     mc_object_id_t object_id;
     CCString *ccstring;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCNPCResourceFilePath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCNPCResourceFilePath));
+#endif
+
     npcs = v.getObject();
     for (npcsIterator = npcs.begin(); npcsIterator != npcs.end(); ++npcsIterator) {
         c_str_object_id = npcsIterator->first.c_str();
@@ -286,7 +294,15 @@ MCRoleManager::loadEnemyData()
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEnemyResourceFilePath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEnemyResourceFilePath));
+#endif
+    
     enemies = v.getObject();
     
     for (enemiesIterator = enemies.begin();

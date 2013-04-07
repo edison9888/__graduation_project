@@ -1,0 +1,9 @@
+class MCLoading {
+public:
+    bool init();
+    
+    static MCLoading *sharedLoading();
+    
+    void show();
+    void hide();
+};

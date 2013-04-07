@@ -27,6 +27,11 @@ private:
     bool init(const mc_object_id_t &anObjectId, JsonBox::Object &aRoot);
     
     static MCFlag *create(const mc_object_id_t &anObjectId, JsonBox::Object &aRoot);
+    
+public:
+    inline bool isOnState() {
+        return state_ == MCOnState;
+    }
 
     CC_PROPERTY(MCFlagState, state_, State);
 };

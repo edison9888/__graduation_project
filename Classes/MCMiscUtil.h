@@ -1,5 +1,5 @@
 //
-//  MCMicsUtil.h
+//  MCMiscUtil.h
 //  Military Confrontation
 //
 //  Created by 江宇英 on 13-2-25.

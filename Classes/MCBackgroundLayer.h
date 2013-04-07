@@ -18,7 +18,7 @@ class MCBackgroundLayer : public CCLayer {
     
 public:
     MCBackgroundLayer()
-    : isPlayBackgroundMusicImmediately_(true)
+    : isPlayBackgroundMusicImmediately_(false)
     , enemyShadows_(NULL)
     , shadows_(NULL) {}
     
@@ -46,14 +46,15 @@ public:
         isPlayBackgroundMusicImmediately_ = var;
     }
     
-    CC_SYNTHESIZE_READONLY(CCTMXTiledMap *, map_, Map);
-    CC_SYNTHESIZE_READONLY(CCString *, backgroundMusic_, BackgroundMusic);
-    
 private:
     bool isPlayBackgroundMusicImmediately_;
     
     CCArray *enemyShadows_; /* 敌人影子 */
     CCArray *shadows_; /* 主角和佣兵的影子 */
+    
+    CC_SYNTHESIZE_READONLY(CCSize, sceneSize_, SceneSize);
+    CC_SYNTHESIZE_READONLY(CCTMXTiledMap *, map_, Map);
+    CC_SYNTHESIZE_READONLY(CCString *, backgroundMusic_, BackgroundMusic);
 };
 
 #endif /* defined(__Military_Confrontation__MCBackgroundLayer__) */

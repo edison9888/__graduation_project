@@ -64,7 +64,7 @@ MCItemManager::itemForObjectId(mc_object_id_t anObjectId)
 MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEquipmentItem *meta = dynamic_cast<MCEquipmentItem *>(metaEquipmentItemForObjectId(anObjectId));
+    MCEquipmentItem *meta = metaEquipmentItemForObjectId(anObjectId);
     MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(meta->copy());
 
     if (equipmentItem) {
@@ -80,7 +80,7 @@ MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 MCEffectiveItem *
 MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEffectiveItem *meta = dynamic_cast<MCEffectiveItem *>(metaEffectiveItemForObjectId(anObjectId));
+    MCEffectiveItem *meta = metaEffectiveItemForObjectId(anObjectId);
     MCEffectiveItem *effectiveItem = dynamic_cast<MCEffectiveItem *>(meta->copy());
     
     if (effectiveItem) {
@@ -144,7 +144,15 @@ MCItemManager::loadEquipmentItems()
     MCOreManager *oreManager = MCOreManager::sharedOreManager();
     
     /* 读取武器 */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEquipmentItemWeaponFilepath);
+    if (pstrFileContent) {
+        weapon.loadFromString(pstrFileContent->getCString());
+    }
+#else
     weapon.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEquipmentItemWeaponFilepath));
+#endif
+    
     root = weapon.getObject();
     for (rootIterator = root.begin(); rootIterator != root.end(); ++rootIterator) {
         const char *c_str_o_id = rootIterator->first.c_str();
@@ -199,7 +207,15 @@ MCItemManager::loadEquipmentItems()
     }
     
     /* 读取防具 */
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    pstrFileContent = CCString::createWithContentsOfFile(kMCEquipmentItemArmorFilepath);
+    if (pstrFileContent) {
+        armor.loadFromString(pstrFileContent->getCString());
+    }
+#else
     armor.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEquipmentItemArmorFilepath));
+#endif
+    
     root = armor.getObject();
     for (rootIterator = root.begin(); rootIterator != root.end(); ++rootIterator) {
         const char *c_str_o_id = rootIterator->first.c_str();
@@ -241,7 +257,15 @@ MCItemManager::loadEffectiveItems()
     JsonBox::Object root;
     JsonBox::Object::iterator rootIterator;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEffectiveItemFilepath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEffectiveItemFilepath));
+#endif
+    
     root = v.getObject();
     for (rootIterator = root.begin(); rootIterator != root.end(); ++rootIterator) {
         const char *c_str_o_id = rootIterator->first.c_str();

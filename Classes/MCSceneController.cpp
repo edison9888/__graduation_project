@@ -38,14 +38,21 @@ MCSceneController::sharedSceneController()
 /**
  * 提交期待转换的场景信息
  */
-void
-MCSceneController::pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
-{
-    expectedScene_ = aNewScene;
-    entranceName_ = new CCString;
-    entranceName_->initWithFormat("%s", anEntranceName);
-    method_ = method;
-}
+//void
+//MCSceneController::pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
+//{
+//    expectedScene_ = aNewScene;
+//    entranceName_ = new CCString;
+//    entranceName_->initWithFormat("%s", anEntranceName);
+//    CCString *entranceName = aNewScene->getEntranceName();
+//    if (entranceName) {
+//        entranceName->release();
+//    }
+//    entranceName = CCString::create(entranceName_->getCString());
+//    aNewScene->setEntranceName(entranceName);
+//    entranceName->retain();
+//    method_ = method;
+//}
 
 /**
  * 提交期待转换的场景信息
@@ -53,8 +60,10 @@ MCSceneController::pushExpectedScene(MCScene *aNewScene, const char *anEntranceN
 void
 MCSceneController::pushExpectedScene(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method)
 {
-    MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(anObjectId);
-    pushExpectedScene(newScene, anEntranceName, method);
+    expectedSceneId_ = anObjectId;
+    entranceName_ = new CCString;
+    entranceName_->initWithFormat("%s", anEntranceName);
+    method_ = method;
 }
 
 /**
@@ -67,31 +76,54 @@ MCSceneController::requestChangingScene()
 }
 
 /**
+ * so-called private method!
+ * 不该自己来执行这个方法，转交给lua来运行！
+ * 加载场景包
+ */
+void
+MCSceneController::__loadScene()
+{
+    MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(expectedSceneId_);
+    expectedScene_ = newScene;
+    CCString *entranceName = newScene->getEntranceName();
+#warning not null
+//    if (entranceName) {
+//        entranceName->release();
+//    }
+    entranceName = CCString::create(entranceName_->getCString());
+    newScene->setEntranceName(entranceName);
+    entranceName->retain();
+}
+
+/**
+ * so-called private method!
+ * 不该自己来执行这个方法，转交给lua来运行！
  * 切换当前场景为aNewScene
  */
 void
 MCSceneController::__changeScene()
 {
     if ((expectedScene_ == NULL && method_ != MCPopScene)
-        || expectedScene_ == NULL
-        || !expectedScene_->hasEntrance(entranceName_->getCString())) {
+        || (!expectedScene_->hasEntrance(entranceName_->getCString()) && method_ != MCPopScene)) {
+        expectedScene_ = NULL;
+        CC_SAFE_RELEASE_NULL(entranceName_);
         return;
     }
     
-    if (MCPushScene == method_) {
-        CCDirector::sharedDirector()->pushScene(expectedScene_);
-        lastScene_ = currentScene_;
-        currentScene_ = expectedScene_;
-    } else if (MCPopScene == method_) {
-        CCDirector::sharedDirector()->popScene();
-        MCScene *tmp = lastScene_;
-        lastScene_ = currentScene_;
-        currentScene_ = tmp; /* lastScene_ */
-    } else {
+//    if (MCPushScene == method_) {
+//        CCDirector::sharedDirector()->pushScene(expectedScene_);
+//        lastScene_ = currentScene_;
+//        currentScene_ = expectedScene_;
+//    } else if (MCPopScene == method_) {
+//        CCDirector::sharedDirector()->popScene();
+//        MCScene *tmp = lastScene_;
+//        lastScene_ = currentScene_;
+//        currentScene_ = tmp; /* lastScene_ */
+//    } else {
         CCDirector::sharedDirector()->replaceScene(expectedScene_);
         lastScene_ = currentScene_;
         currentScene_ = expectedScene_;
-    }
+//    }
     expectedScene_ = NULL;
     CC_SAFE_RELEASE_NULL(entranceName_);
 }

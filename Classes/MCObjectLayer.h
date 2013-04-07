@@ -16,7 +16,7 @@
 class MCScene;
 
 class MCObjectLayer : public CCLayer, public MCJoypadControllerDelegate, public MCBattleControllerDelegate {
-    
+    friend class MCScene;
 public:
     ~MCObjectLayer();
     bool init();
@@ -34,11 +34,13 @@ public:
     
     void loadEntrancesFromScenePackage(MCScenePackage *aScenePackage);
     
-    /* joypad */
-    void controllerDidMove(MCJoypadControllerDelegate *aSender, const CCPoint &delta);
-    
 protected:
-    CCPoint viewLocationToTiledMapLocation(const CCPoint &aViewLocation);
+    /**
+     * 拖动地图
+     */
+    void setSceneOffset(const CCPoint &anOffset);
+//    CCPoint setSceneOffset(const CCPoint &anOffset, bool adjusted);
+    
     virtual void moveTo(const CCPoint &delta);
     
     virtual void detectsCollidesWithEntrances(const MCOBB &anOBB);
@@ -53,15 +55,16 @@ protected:
     virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB);
     virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB, const CCPoint &anOffset);
     
-    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
-    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB, const CCPoint &anOffset);
+    /* 人物间不在相撞~~~~ */
+//    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
+//    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB, const CCPoint &anOffset);
     
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB) { return false; }
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
     
-//protected:
-    //warning: debug
-public:
+protected:
+//    //warning: debug
+//public:
     MCRoleEntity *hero_;
     CCArray *mercenaries_;
     CCTMXTiledMap *map_;
@@ -73,9 +76,9 @@ public:
     
     CC_SYNTHESIZE(MCSceneDelegate *, sceneDelegate_, SceneDelegate);
     
+    MCScenePackageType scenePackageType_; /* 有可能和场景包获取的不同，原因看代码 */
+    
     CCSize mapSize_;
-    CCSize tileSize_;
-    CCSize scaledTileSize_;
     float contentScaleFactor_;
     int mapWidth_;
     int mapHeight_;
@@ -88,7 +91,7 @@ public:
     /**
      * 控制器回调
      */
-    void controllerMove(MCJoypadControllerDelegate *sender, const CCPoint &delta);
+    void controllerDidMove(MCJoypadControllerDelegate *sender, const CCPoint &delta);
     
 protected:
 };
@@ -152,7 +155,7 @@ public:
     /**
      * 拖动地图
      */
-    void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset);
+    virtual void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset);
     
 protected:
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);

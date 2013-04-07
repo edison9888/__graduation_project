@@ -67,7 +67,14 @@ MCOreManager::loadAllOres()
     MCOre *ore;
     CCString *ccstring;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCOresFilepath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCOresFilepath));
+#endif
     root = v.getObject();
     
     for (oresIterator = root.begin(); oresIterator != root.end(); ++oresIterator) {

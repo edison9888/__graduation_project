@@ -20,8 +20,7 @@ public:
     
     CREATE_FUNC(MCSplash);
     
-    static CCScene *scene()
-    {
+    static CCScene *scene() {
         CCScene *scene = CCScene::create();
         
         scene->addChild(MCSplash::create());

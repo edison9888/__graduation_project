@@ -29,7 +29,7 @@ public:
     /**
      * 提交期待转换的场景信息
      */
-    void pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+//    void pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
     
     /**
      * 提交期待转换的场景信息
@@ -44,6 +44,13 @@ public:
     /**
      * so-called private method!
      * 不该自己来执行这个方法，转交给lua来运行！
+     * 加载场景包
+     */
+    void __loadScene();
+    
+    /**
+     * so-called private method!
+     * 不该自己来执行这个方法，转交给lua来运行！
      * 切换当前场景为aNewScene
      */
     void __changeScene();
@@ -52,6 +59,7 @@ private:
     MCScene *lastScene_;
     MCScene *currentScene_;
     
+    mc_object_id_t expectedSceneId_;
     MCScene *expectedScene_;
     CCString *entranceName_;
     MCChangeSceneMethod method_;

@@ -13,7 +13,7 @@
 
 #include "MCHero.h"
 #include "MCBarrier.h"
-#include "MCMicsUtil.h"
+#include "MCMiscUtil.h"
 
 static MCFacade
 __facadeForOffset(const CCPoint &offset)

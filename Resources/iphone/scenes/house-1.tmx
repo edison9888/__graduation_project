@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="25" height="30" tilewidth="16" tileheight="16">
  <properties>
+  <property name="internal" value="1"/>
   <property name="sound" value="sounds/village.mp3"/>
   <property name="tmx" value="maps/M002.tmx"/>
  </properties>
@@ -9,22 +10,22 @@
  </tileset>
  <layer name="background" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9NkYGDQAmJNGtKWQGxFY5qW7h/1x6g/Rv0x6o9Rf4z6Y9Qfo/4Y9ceoPwbaHwCV+4mquAsAAA==
+   H4sIAAAAAAAAA9NkYGDQAmJNGtKWQGxFY5qW7h/1x6g/Rv0x6o9Rf4z6Y9Qfo/4Y9ceoPwbaHwCV+4mquAsAAA==
   </data>
  </layer>
  <layer name="first" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2TgQmAMAwEWzewK+gGupRuoBvoBjqtFfIgoRqLRqH04QiUkObEGmNMR/QKIAMxKoBMxKwAshCrAkjhsUoVcZ5SqWaP7JE90vTA/DrCg5+dYVl/jEfoPsewrBc9MR7HGSG4k2PfSvKQCPm1xF0PqeKufXZF+2v+Vw3tn8L7SOWd/+Uh5Wq/t/Jkv6+yAaf7Yue4CwAA
+   H4sIAAAAAAAAA+2TgQmAMAwEWzewK+gGupRuoBvoBjqtFfIgoRqLRqH04QiUkObEGmNMR/QKIAMxKoBMxKwAshCrAkjhsUoVcZ5SqWaP7JE90vTA/DrCg5+dYVl/jEfoPsewrBc9MR7HGSG4k2PfSvKQCPm1xF0PqeKufXZF+2v+Vw3tn8L7SOWd/+Uh5Wq/t/Jkv6+yAaf7Yue4CwAA
   </data>
  </layer>
  <layer name="second" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2USUoDQRSGq+oiegNnt5o4bDVx2DvuHfeaOIKCJo4QIdGdbhw2DhdIHC/gcAc9gB8mQtOhJR3eQxc++KCri/r+ek11GfN7teSMWXbF5wQkffMrzK26yn0j1phRGINxW3y3w/rdkiMFad+aPeb2fRnHjE8CcqfwTsMMzEIWcnAIR7byvV7jvwnISOBJwgIswimcwTlchMi4xX9XyqhhXa1nbYrnNGzBdgjnT1WHp17IFVRt+NsFMiJ8l2jA9+/B3yuQEcMfD3F+q6kh/MPKGRP4J5Uz5vDPC2d8+MYb+DeV+/hr1cA5boQmaIYWaBX+RyP4otABndAF3cIZMXxx6IN+GIBBpbvmXUf7VWvseV35jszgPxDKuMRzZcv3LdlHHk/Blu9bso97/vsHp9vHM/4Xp9vHdz2S8+S5yzTO1Sv+N0+GRh//VV19AlE17v24CwAA
+   H4sIAAAAAAAAA+2USUoDQRSGq+oiegNnt5o4bDVx2DvuHfeaOIKCJo4QIdGdbhw2DhdIHC/gcAc9gB8mQtOhJR3eQxc++KCri/r+ek11GfN7teSMWXbF5wQkffMrzK26yn0j1phRGINxW3y3w/rdkiMFad+aPeb2fRnHjE8CcqfwTsMMzEIWcnAIR7byvV7jvwnISOBJwgIswimcwTlchMi4xX9XyqhhXa1nbYrnNGzBdgjnT1WHp17IFVRt+NsFMiJ8l2jA9+/B3yuQEcMfD3F+q6kh/MPKGRP4J5Uz5vDPC2d8+MYb+DeV+/hr1cA5boQmaIYWaBX+RyP4otABndAF3cIZMXxx6IN+GIBBpbvmXUf7VWvseV35jszgPxDKuMRzZcv3LdlHHk/Blu9bso97/vsHp9vHM/4Xp9vHdz2S8+S5yzTO1Sv+N0+GRh//VV19AlE17v24CwAA
   </data>
  </layer>
  <layer name="third" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGBqgi3GgXTAKCIGjwDg6RuN4ugo0/9oITQuyI9Tfo2AUjIJRMAoYGHYC64BdNK4HTgLNPzVa1wxqAAADdUs8uAsAAA==
+   H4sIAAAAAAAAA2NgGBqgi3GgXTAKCIGjwDg6RuN4ugo0/9oITQuyI9Tfo2AUjIJRMAoYGHYC64BdNK4HTgLNPzVa1wxqAAADdUs8uAsAAA==
   </data>
  </layer>
  <objectgroup name="entrances" width="25" height="30">
@@ -37,8 +38,8 @@
  </objectgroup>
  <objectgroup name="barriers" width="25" height="30">
   <object type="barrier" x="0" y="0" width="16" height="432"/>
-  <object type="barrier" x="0" y="432" width="144" height="16"/>
-  <object type="barrier" x="224" y="432" width="160" height="16"/>
+  <object type="barrier" x="0" y="432" width="144" height="48"/>
+  <object type="barrier" x="224" y="432" width="160" height="48"/>
   <object type="barrier" x="384" y="0" width="16" height="448"/>
   <object type="barrier" x="16" y="0" width="368" height="80"/>
   <object type="barrier" x="352" y="80" width="32" height="48"/>
@@ -47,6 +48,7 @@
   <object type="barrier" x="16" y="304" width="32" height="128"/>
   <object type="barrier" x="352" y="320" width="32" height="96"/>
   <object type="barrier" x="320" y="320" width="32" height="96"/>
+  <object type="barrier" x="144" y="464" width="80" height="16"/>
  </objectgroup>
  <objectgroup name="semitransparent" width="25" height="30"/>
  <objectgroup name="objects" width="25" height="30">

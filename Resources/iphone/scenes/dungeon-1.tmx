@@ -13,32 +13,27 @@
  </tileset>
  <layer name="background" width="35" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3QsQ0AIAwEsYgubAD7D0qWQPrCxel696raUwf8TDfkCR5cuHDhwoVLggcXLly4cOGS4MGFCxcuv/8A81fr3CQTAAA=
+   H4sIAAAAAAAAA+3QsQ0AIAwEsYgubAD7D0qWQPrCxel696raUwf8TDfkCR5cuHDhwoVLggcXLly4cOGS4MGFCxcuv/8A81fr3CQTAAA=
   </data>
  </layer>
  <layer name="first" width="35" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC8XWOUwUURzHcYbCZlHxbBYFzwYT8Www0URj49l7Hw2CiVeD4G2D4G0lXq1ytsrZy2GMnexC1A53wSM2uIvfTf4bHy8zzJtxeU7yyfu/uX5//kOxeXnBjwkkkMSY1CmkMYlCJ8RLQx4RZ2q2WhdzrcRiL1GyjuE4TijrSaxFmcVeSsk6i3M4r6wXsBXbLPZSTtY1XMcNZb35jz30oR8DGAywv0/uAzxU1kfO33tN36nWQ4ghjmGffSyguPKcXrudq8ApVKLKZ58IKCncardz1biIGtT67FMBpYVb7XauDrdQj4b/vA/yjWZ6H+QbzfTedIYVmuzfkutvpL7bq67W9vqqP2fyTrXOZqhz8qrrtL2+6s+ZvFOtsxnqnKar1b2+TnevSZ3RjBa0og3teIlXaPK4PopGfMJnfBGPMWLwvNf1TnShGz3oxWu8QYfH9cxvqff4jh/4KT5g3OB5r+thjm/aTNT6V8h3hj0cZ+pM1HqWxd8umWMeefOxQFkXYhEWW+5lGXnLsUJZV2IVVlvuZR15G7AR65V6EzbnqJcICgzuqySvCjtwGtulPoOdOeoliiKD+2rIqxWXcBlXcBUvXHrZhd3Yg73Yh/0+GaVYY9BLPXkN4jbu4C7uod2llwM4iEM4jCM46pNRji0GvTSS90Q8xTM8l5n0Wv7fbSKvWbSgFW0yk3eWe+kgr1N0oRs9MpMRy728Ja9P9GMAgzKTccu9fCRvSMQQx3B2Jvl2exkl86tIIIkxmUmh5V4myPwtUkhjUmZSYrmXCHkFYjbmYG6+/ZlkjiiZRWIJlqI4BzP5A8j/hj8kEwAA
+   H4sIAAAAAAAAA8XWOUwUURzHcYbCZlHxbBYFzwYT8Www0URj49l7Hw2CiVeD4G2D4G0lXq1ytsrZy2GMnexC1A53wSM2uIvfTf4bHy8zzJtxeU7yyfu/uX5//kOxeXnBjwkkkMSY1CmkMYlCJ8RLQx4RZ2q2WhdzrcRiL1GyjuE4TijrSaxFmcVeSsk6i3M4r6wXsBXbLPZSTtY1XMcNZb35jz30oR8DGAywv0/uAzxU1kfO33tN36nWQ4ghjmGffSyguPKcXrudq8ApVKLKZ58IKCncardz1biIGtT67FMBpYVb7XauDrdQj4b/vA/yjWZ6H+QbzfTedIYVmuzfkutvpL7bq67W9vqqP2fyTrXOZqhz8qrrtL2+6s+ZvFOtsxnqnKar1b2+TnevSZ3RjBa0og3teIlXaPK4PopGfMJnfBGPMWLwvNf1TnShGz3oxWu8QYfH9cxvqff4jh/4KT5g3OB5r+thjm/aTNT6V8h3hj0cZ+pM1HqWxd8umWMeefOxQFkXYhEWW+5lGXnLsUJZV2IVVlvuZR15G7AR65V6EzbnqJcICgzuqySvCjtwGtulPoOdOeoliiKD+2rIqxWXcBlXcBUvXHrZhd3Yg73Yh/0+GaVYY9BLPXkN4jbu4C7uod2llwM4iEM4jCM46pNRji0GvTSS90Q8xTM8l5n0Wv7fbSKvWbSgFW0yk3eWe+kgr1N0oRs9MpMRy728Ja9P9GMAgzKTccu9fCRvSMQQx3B2Jvl2exkl86tIIIkxmUmh5V4myPwtUkhjUmZSYrmXCHkFYjbmYG6+/ZlkjiiZRWIJlqI4BzP5A8j/hj8kEwAA
   </data>
  </layer>
  <layer name="second" width="35" height="35">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2SyQ3CMBBFnQKgA+gAOoAGIDTA0gFLAywNsDTAcmZNA0BK410iRZHlBOSBA/OkJ0eyM/4ejTHKu5Sw/MWarr0KVj1ncdV07dWw7jmLq6Zrr4FNz1lcNSXu+5QWtnPODHGEY5wIZuliL+fMFGc4x4VgliJ9WeIK17gRzFKkL1vc4R4PglmK9EUC2wwW6YsEthn8VV9sM2jry9OY+IF3lMpim8EQO3jm3hMe8YZXvGCUytMJTBwG7nzJmWSNUu/Krtl/+nwPvL5YURRFURRF+XdeMc/4lCQTAAA=
-  </data>
- </layer>
- <layer name="meta" width="35" height="35">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WywkAIAxEwWDndi5iA+bjovgGcgokiwfVzK+3XL/SK1lm76YsmbmRqp6nPEsAwHLirla9AbtZFMgS36PMwl8EAID/DN/n2oEkEwAA
+   H4sIAAAAAAAAA+2SyQ3CMBBFnQKgA+gAOoAGIDTA0gFLAywNsDTAcmZNA0BK410iRZHlBOSBA/OkJ0eyM/4ejTHKu5Sw/MWarr0KVj1ncdV07dWw7jmLq6Zrr4FNz1lcNSXu+5QWtnPODHGEY5wIZuliL+fMFGc4x4VgliJ9WeIK17gRzFKkL1vc4R4PglmK9EUC2wwW6YsEthn8VV9sM2jry9OY+IF3lMpim8EQO3jm3hMe8YZXvGCUytMJTBwG7nzJmWSNUu/Krtl/+nwPvL5YURRFURRF+XdeMc/4lCQTAAA=
   </data>
  </layer>
  <objectgroup name="entrances" width="35" height="35">
-  <object name="dungeon-1-east" type="entrance" x="560" y="80" width="16" height="160">
+  <object name="dungeon-1-east" type="entrance" x="528" y="80" width="32" height="160">
    <properties>
     <property name="ID" value="M302"/>
     <property name="dest" value="dungeon-2-west"/>
    </properties>
   </object>
-  <object name="dungeon-1-north" type="entrance" x="224" y="-16" width="112" height="16">
+  <object name="dungeon-1-north" type="entrance" x="224" y="0" width="112" height="16">
    <properties>
     <property name="ID" value="M304"/>
     <property name="dest" value="dungeon-4-south"/>

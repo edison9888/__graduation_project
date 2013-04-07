@@ -9,7 +9,8 @@
 #ifndef Military_Confrontation_MCLuaCocos2d_h
 #define Military_Confrontation_MCLuaCocos2d_h
 
-#include "_T_.h"
+#include "MCLoadingScene.h"
 #include "MCSceneController.h"
+#include "MCToast.h"
 
 #endif

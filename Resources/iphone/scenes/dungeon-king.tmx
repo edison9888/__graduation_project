@@ -63,33 +63,33 @@
  </tileset>
  <layer name="background" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3QMQ0AMAzEwKQMUv5gGxbvSh4s79dVdbaGfrYLftpHP/0ITvrpR3zaRz/9CE766Ud82kc//QhO+ulHfNpHP/0ITvrpR3za53e/B6KRMDoAGQAA
+   H4sIAAAAAAAAA+3QMQ0AMAzEwKQMUv5gGxbvSh4s79dVdbaGfrYLftpHP/0ITvrpR3zaRz/9CE766Ud82kc//QhO+ulHfNpHP/0ITvrpR3za53e/B6KRMDoAGQAA
   </data>
  </layer>
  <layer name="forth" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2WyQ3CMBBFJ75DB9ABdABVQQdQBHQArbDeWe9hu7N+DlakhEns2BKWMk96ymEU52s0HoXInVlENIcLuIQruI48HOyJDbJs4Q7u4QEeA8oXI8sJnuEFXuEtoHx3ZHnAJ3zB9zeb+neqBJk/N6o+fz2c1c85j6vXYJ34+dN1Vwb49jAnH1dvwCbx86frphT1yZYWbBM/f7pumqWoT7Z0YJf4+dP1X/jOIghCAreLyu4ok/dszubuf9m9YPKe7BxBMCN9l33/27iSvstytwVBCJURdtNYZZ+hMEGWqco+Q0H654b0z42q9u8D8EccgQAZAAA=
+   H4sIAAAAAAAAA+2WyQ3CMBBFJ75DB9ABdABVQQdQBHQArbDeWe9hu7N+DlakhEns2BKWMk96ymEU52s0HoXInVlENIcLuIQruI48HOyJDbJs4Q7u4QEeA8oXI8sJnuEFXuEtoHx3ZHnAJ3zB9zeb+neqBJk/N6o+fz2c1c85j6vXYJ34+dN1Vwb49jAnH1dvwCbx86frphT1yZYWbBM/f7pumqWoT7Z0YJf4+dP1X/jOIghCAreLyu4ok/dszubuf9m9YPKe7BxBMCN9l33/27iSvstytwVBCJURdtNYZZ+hMEGWqco+Q0H654b0z42q9u8D8EccgQAZAAA=
   </data>
  </layer>
  <layer name="second" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2XOQoCQRBFp+cGzg2cGzj3T1xBM1fQzBU0cwWNfAdorLacwOA/eHyogk+lFUKW5Rg+pHeXJ3Rb2cDCSO+uSOi2somlkd5dmdBtZQsrI727KqHbSiGEEEIIIYQQog7a/Jgd7GIP+zgI38+HOIrkr71jnOAUZzjHhWO+jPzSqxp617jBLe5wjwfH/Bi571RD7xkveMUb3vHhmD8j971q6BVCCPGfvAE/p704ABkAAA==
+   H4sIAAAAAAAAA+2XOQoCQRBFp+cGzg2cGzj3T1xBM1fQzBU0cwWNfAdorLacwOA/eHyogk+lFUKW5Rg+pHeXJ3Rb2cDCSO+uSOi2somlkd5dmdBtZQsrI727KqHbSiGEEEIIIYQQog7a/Jgd7GIP+zgI38+HOIrkr71jnOAUZzjHhWO+jPzSqxp617jBLe5wjwfH/Bi571RD7xkveMUb3vHhmD8j971q6BVCCPGfvAE/p704ABkAAA==
   </data>
  </layer>
  <layer name="third" width="40" height="40">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Opw5CQRBG4WUTMFQDhmro1dCroXrq+8MbgOa4i7nsTXDkP8mnZnYzxnzvjodjJ2qNiSGOBJJIWcejj8ohYyqoooY6GqFgb594+d2FGLLckkMeBRRRst7cVZ9bBhhihDEmAe8Lsxfx2c0ihya3tNBGB130rDd3teb/DbbYYY9DwPvS7GV8dptoYcotM8yxwBIr681dHfn/hDMuuOIW8L5vTTH7Ya6UUkoppZRSSimllFLqf3sDAprjEQAZAAA=
+   H4sIAAAAAAAAA+3Opw5CQRBG4WUTMFQDhmro1dCroXrq+8MbgOa4i7nsTXDkP8mnZnYzxnzvjodjJ2qNiSGOBJJIWcejj8ohYyqoooY6GqFgb594+d2FGLLckkMeBRRRst7cVZ9bBhhihDEmAe8Lsxfx2c0ihya3tNBGB130rDd3teb/DbbYYY9DwPvS7GV8dptoYcotM8yxwBIr681dHfn/hDMuuOIW8L5vTTH7Ya6UUkoppZRSSimllFLqf3sDAprjEQAZAAA=
   </data>
  </layer>
  <objectgroup name="entrances" width="40" height="40">
-  <object name="dungeon-king" type="entrance" x="288" y="640" width="96" height="16">
+  <object name="dungeon-king" type="entrance" x="288" y="624" width="96" height="16">
    <properties>
     <property name="ID" value="M303"/>
     <property name="dest" value="dungeon-3-east"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="barriers" width="40" height="40" visible="0">
+ <objectgroup name="barriers" width="40" height="40">
   <object type="barrier" x="0" y="0" width="640" height="64"/>
   <object type="barrier" x="640" y="0" width="16" height="640"/>
   <object type="barrier" x="-16" y="0" width="16" height="640"/>

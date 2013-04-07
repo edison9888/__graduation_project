@@ -13,17 +13,12 @@
  </tileset>
  <layer name="background" width="70" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3bO27CQABF0ZGgTUBK2gQ2AGQD+bRJYAH89r8NXotNgWMz9yqieDqdC1+DG8+olDLORnfPfMqe77aku1ilu1ilu1ilu1ilu1ilu1ilu1ilu/T1IXvMJtl0wOvSXfr6kr1ms2w+4HXp3n1dZMtslb0NeF26d1/fs4/sM/sa8Lp0b6t0b6t0F6t/vZ/N9yPd1/K8NN+PdF/iefnOfrLfbJ1tSvv9SPclnpdttsv22SE7lvb7ke5r+X/579JdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrF57/251zsfqtfev+R3zpW96DZ1rPy/N75gvfdNr6Fz7ebnVOZ+u1jqXQHfpaq1zCfTvuKu1ziXQ/bta61wC3d8q3d8q3cUq3cUq3cUq3cXqCaiAlFSQTAAA
+   H4sIAAAAAAAAA+3bO27CQABF0ZGgTUBK2gQ2AGQD+bRJYAH89r8NXotNgWMz9yqieDqdC1+DG8+olDLORnfPfMqe77aku1ilu1ilu1ilu1ilu1ilu1ilu1ilu/T1IXvMJtl0wOvSXfr6kr1ms2w+4HXp3n1dZMtslb0NeF26d1/fs4/sM/sa8Lp0b6t0b6t0F6t/vZ/N9yPd1/K8NN+PdF/iefnOfrLfbJ1tSvv9SPclnpdttsv22SE7lvb7ke5r+X/579JdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrNJdrF57/251zsfqtfev+R3zpW96DZ1rPy/N75gvfdNr6Fz7ebnVOZ+u1jqXQHfpaq1zCfTvuKu1ziXQ/bta61wC3d8q3d8q3cUq3cUq3cUq3cXqCaiAlFSQTAAA
   </data>
  </layer>
  <layer name="first" width="70" height="70">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2ZN4/UQBSAZ4EOOGJ3ZOjIx3XEDv4BtOTQkTm6O+AIHTl0xB446AmiJ4ieIBE6gkSo+JDWOrM3xhueZ55975M+jcfrfTP7dmzLz86Vl624zdPvx4EO2zKzHw94+mfxXIftetwQ4kcUwDE8/p9+J2zETUKxQrAZt9S3z+MFN7z+k74EScyysBf31beTuSfrX5IiYhZNkfnIGqsMhMxHyHWzHXcEGqtdYpxHB/FQ4DFbJeb5sxAXRRo7j5jX3ZW4KtLYeZTpehuS9HqxHP1LjHtSGbB8jMTOHT+2VgzDkOI63sCbeCvyXDphN+4RjHcX7+F9HBKMG5o+PCoY7xE+xif4VDBuaE7jGcF4z/EFvsRXgnFDcxWvObln8jf4Ft/he4F4sZF6Jv+CX/EbfheIVxVqNefG4FgcV4s9G+d24q7Yk4Ap5GIqTsPpCvJyGI/EngTMJRfzcD4uUJCXk3gq9iRgObnowRXYqyAvl/FK7EkoIn1/1Vz/Dk36/qq5/h0DWyd+bJ0YxujErol+Rvs18QQOevZrXi8TsQsn4WTP510CY1zES6l+kg/N62UmzsLZOMfzWTvk1b015yNhMS7BpbhMKGYV6t6rcQ2uxXVCMatS95amKnXvdq8jWVSt7i2F1b39aKt7a0Fb3VsL2ureWtBW9zYMwzAMwzAMwzAMw6g6je/ZGlvfvmbb23gnY9zxOCFnbr5jmvmeBH/fs33Aj274XdtQxnar7QN8mDFuN85I9X2/t/GYrH1F8QN/upHv2j7hZ8/xWft9vK63ef9zM3nSwi/83cJ+H8/qbav/c8h14eMPMccr0ZBMAAA=
-  </data>
- </layer>
- <layer name="meta" width="70" height="70">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3cyw2EMAxFUTSd0n8TFDBvxcexo3Mk1lg3EgQWOY79nL/n147e6LJznyemdala4526fHGfSSqeAROfMxWzrugyYQ1WzKjLXLpkumT2vpkumS6ZFpkuAHCf92imCyv5Fsp0ybp16TZHt3kAAOAL9puZLgDQR7f/dV3okumS6QIAAABQ642zYyrOHalWcf4D/3TJpna5AO5hh5mQTAAA
+   H4sIAAAAAAAAA+2ZN4/UQBSAZ4EOOGJ3ZOjIx3XEDv4BtOTQkTm6O+AIHTl0xB446AmiJ4ieIBE6gkSo+JDWOrM3xhueZ55975M+jcfrfTP7dmzLz86Vl624zdPvx4EO2zKzHw94+mfxXIftetwQ4kcUwDE8/p9+J2zETUKxQrAZt9S3z+MFN7z+k74EScyysBf31beTuSfrX5IiYhZNkfnIGqsMhMxHyHWzHXcEGqtdYpxHB/FQ4DFbJeb5sxAXRRo7j5jX3ZW4KtLYeZTpehuS9HqxHP1LjHtSGbB8jMTOHT+2VgzDkOI63sCbeCvyXDphN+4RjHcX7+F9HBKMG5o+PCoY7xE+xif4VDBuaE7jGcF4z/EFvsRXgnFDcxWvObln8jf4Ft/he4F4sZF6Jv+CX/EbfheIVxVqNefG4FgcV4s9G+d24q7Yk4Ap5GIqTsPpCvJyGI/EngTMJRfzcD4uUJCXk3gq9iRgObnowRXYqyAvl/FK7EkoIn1/1Vz/Dk36/qq5/h0DWyd+bJ0YxujErol+Rvs18QQOevZrXi8TsQsn4WTP510CY1zES6l+kg/N62UmzsLZOMfzWTvk1b015yNhMS7BpbhMKGYV6t6rcQ2uxXVCMatS95amKnXvdq8jWVSt7i2F1b39aKt7a0Fb3VsL2ureWtBW9zYMwzAMwzAMwzAMw6g6je/ZGlvfvmbb23gnY9zxOCFnbr5jmvmeBH/fs33Aj274XdtQxnar7QN8mDFuN85I9X2/t/GYrH1F8QN/upHv2j7hZ8/xWft9vK63ef9zM3nSwi/83cJ+H8/qbav/c8h14eMPMccr0ZBMAAA=
   </data>
  </layer>
  <objectgroup name="barriers" width="70" height="70">
@@ -56,55 +51,55 @@
   <object type="semi-transparent" x="1056" y="640" width="64" height="96"/>
  </objectgroup>
  <objectgroup name="entrances" width="70" height="70">
-  <object name="desert-2-east" type="entrance" x="1120" y="464" width="32" height="176">
+  <object name="desert-2-east" type="entrance" x="1088" y="464" width="32" height="176">
    <properties>
     <property name="ID" value="M201"/>
     <property name="dest" value="desert-1-west"/>
    </properties>
   </object>
-  <object name="desert-2-south-1" type="entrance" x="400" y="1120" width="256" height="32">
+  <object name="desert-2-south-1" type="entrance" x="400" y="1088" width="256" height="32">
    <properties>
     <property name="ID" value="M203"/>
     <property name="dest" value="desert-3-north-1"/>
    </properties>
   </object>
-  <object name="desert-2-south-2" type="entrance" x="656" y="1120" width="256" height="32">
+  <object name="desert-2-south-2" type="entrance" x="656" y="1088" width="256" height="32">
    <properties>
     <property name="ID" value="M203"/>
     <property name="dest" value="desert-3-north-2"/>
    </properties>
   </object>
-  <object name="desert-2-south-3" type="entrance" x="912" y="1120" width="208" height="32">
+  <object name="desert-2-south-3" type="entrance" x="912" y="1088" width="208" height="32">
    <properties>
     <property name="ID" value="M203"/>
     <property name="dest" value="desert-3-north-3"/>
    </properties>
   </object>
-  <object name="desert-2-north-1" type="entrance" x="0" y="-32" width="272" height="32">
+  <object name="desert-2-north-1" type="entrance" x="0" y="0" width="272" height="32">
    <properties>
     <property name="ID" value="M204"/>
     <property name="dest" value="desert-4-south-1"/>
    </properties>
   </object>
-  <object name="desert-2-north-2" type="entrance" x="272" y="-32" width="272" height="32">
+  <object name="desert-2-north-2" type="entrance" x="272" y="0" width="272" height="32">
    <properties>
     <property name="ID" value="M204"/>
     <property name="dest" value="desert-4-south-2"/>
    </properties>
   </object>
-  <object name="desert-2-north-3" type="entrance" x="544" y="-32" width="288" height="32">
+  <object name="desert-2-north-3" type="entrance" x="544" y="0" width="288" height="32">
    <properties>
     <property name="ID" value="M204"/>
     <property name="dest" value="desert-4-south-3"/>
    </properties>
   </object>
-  <object name="desert-2-west-2" type="entrance" x="-32" y="272" width="32" height="368">
+  <object name="desert-2-west-2" type="entrance" x="0" y="272" width="32" height="352">
    <properties>
     <property name="ID" value="M205"/>
     <property name="dest" value="pyramid-east-4"/>
    </properties>
   </object>
-  <object name="desert-2-west-1" type="entrance" x="-32" y="656" width="32" height="400">
+  <object name="desert-2-west-1" type="entrance" x="0" y="656" width="32" height="400">
    <properties>
     <property name="ID" value="pyramid-east-3"/>
     <property name="dest" value="M205"/>

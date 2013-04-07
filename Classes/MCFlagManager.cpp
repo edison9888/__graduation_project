@@ -24,6 +24,8 @@ const char *kMCFlagsFilepath = "F000.jpkg";
 static mc_object_id_t kMCTaskFlagId = {'F', '0', '0', '1'};
 /* 高级区域封锁 */
 static mc_object_id_t kMCAreaBlockedFlagId = {'F', '0', '0', '2'};
+/* 是否在重生点出现 */
+static mc_object_id_t kMCSpawnFlagId = {'F', '0', '0', '3'};
 
 static vector<string>
 split(string& str,const char* c)
@@ -116,7 +118,15 @@ MCFlagManager::loadAllFlags()
     mc_object_id_t flag_id;
     MCFlag *flag;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCFlagsFilepath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCFlagsFilepath));
+#endif
+    
     root = v.getObject();
     
     for (flagsIterator = root.begin(); flagsIterator != root.end(); ++flagsIterator) {
@@ -162,6 +172,7 @@ MCFlagManager::loadAllFlags()
     /* 初始化特殊flag */
     taskFlag_ = flagForObjectId(kMCTaskFlagId);
     areaBlockedFlag_ = flagForObjectId(kMCAreaBlockedFlagId);
+    spawnFlag_ = flagForObjectId(kMCSpawnFlagId);
 }
 
 /**

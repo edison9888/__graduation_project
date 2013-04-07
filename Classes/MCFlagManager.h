@@ -30,12 +30,28 @@ public:
      */
     void saveAllFlags();
     
+    inline bool isTaskStarted() {
+        return taskFlag_->getState() == MCOnState;
+    }
+    
     inline void setTaskStarted(bool flag) {
         taskFlag_->setState(flag ? MCOnState : MCOffState);
     }
     
     inline void unblockArea() {
         areaBlockedFlag_->setState(MCOffState);
+    }
+    
+    inline bool isSpawnFlagOn() {
+        return spawnFlag_->getState() == MCOnState;
+    }
+    
+    inline void setSpawnFlagOff() {
+        spawnFlag_->setState(MCOffState);
+    }
+    
+    inline void spawn() {
+        spawnFlag_->setState(MCOnState);
     }
     
 private:
@@ -51,6 +67,7 @@ private:
     /* 特殊flag */
     MCFlag *taskFlag_; /* 任务状态 */
     MCFlag *areaBlockedFlag_; /* 高级区域封锁 */
+    MCFlag *spawnFlag_; /* 是否在重生点出现 */
 };
 
 #endif /* defined(__Military_Confrontation__MCFlagManager__) */

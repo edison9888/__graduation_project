@@ -8,6 +8,7 @@
 
 #include "MCAStar.h"
 #include "MCRole.h"
+#include <bits/stl_algo.h>
 
 const char *kMCAStarDidFinishAlgorithmNotification = "kMCAStarDidFinishAlgorithmNotification";
 const char *kMCAStarAlgorithmWillRemoveNotification = "kMCAStarAlgorithmWillRemoveNotification";

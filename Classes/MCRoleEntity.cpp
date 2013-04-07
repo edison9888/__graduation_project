@@ -7,7 +7,7 @@
 //
 
 #include "MCRoleEntity.h"
-#include "MCMicsUtil.h"
+#include "MCMiscUtil.h"
 #include "MCScene.h"
 #include "MCAStar.h"
 #include "MCRoleManager.h"

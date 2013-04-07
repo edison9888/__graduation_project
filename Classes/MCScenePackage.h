@@ -30,12 +30,17 @@ public:
     
     MCRole *objectForObjectId(mc_object_id_t anObjectId);
     
+    inline bool isInternalScene() {
+        return isInternalScene_;
+    }
+    
 private:
     void loadFromFile(const char *aPackagePath); /* 从场景包文件加载元数据 */
     void loadObjects(JsonBox::Object &aRoot); /* 加载对象元数据 */
     void loadScenes(JsonBox::Object &aRoot); /* 加载地图元数据 */
     
-    CC_SYNTHESIZE_READONLY(MCScenePackageType, scenePackageType_, ScenePackageType);
+    bool isInternalScene_;
+    CC_SYNTHESIZE_READONLY(MCScenePackageType, scenePackageType_, ScenePackageType); /* 场景类型 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, objects_, Objects) /* object，根据地图类型不同而不同 */
     
     CC_SYNTHESIZE_READONLY(CCString *, tmxTiledMapPath_, TMXTiledMapPath); /* 贴图地图路径 */

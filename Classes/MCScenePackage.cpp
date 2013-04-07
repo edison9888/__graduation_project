@@ -46,7 +46,7 @@ MCScenePackage::create(const char *aPackagePath)
     MCScenePackage *package = new MCScenePackage;
     
     if (package && package->init()) {
-        package->loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aPackagePath));
+        package->loadFromFile(aPackagePath);
         package->autorelease();
         return package;
     } else {
@@ -70,7 +70,16 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     JsonBox::Object object;
     const char *c_str_o_id;
     
-    in.loadFromFile(aPackagePath);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(aPackagePath);
+    if (pstrFileContent) {
+        in.loadFromString(pstrFileContent->getCString());
+    }
+#else
+    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aPackagePath));
+#endif
+
     root = in.getObject();
     
     /* ID String */
@@ -85,6 +94,9 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     
     /* type int */
     scenePackageType_ = root["scene-type"].getInt();
+    
+    /* internal int */
+    isInternalScene_ = root["internal"].getInt() == 1 ? true : false;
     
     /* name String */
     name_ = CCString::create(root["name"].getString().c_str());

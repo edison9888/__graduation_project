@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *kMCScenePackageID;
+extern NSString *kMCScenePackageInternal;
 extern NSString *kMCScenePackageSceneType;
 extern NSString *kMCScenePackageBackground;
 extern NSString *kMCScenePackageTMXMap;

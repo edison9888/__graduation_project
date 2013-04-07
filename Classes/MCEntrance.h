@@ -40,6 +40,7 @@ public:
      */
     bool collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
     
+protected:
     CC_SYNTHESIZE(CCString *, destinaion_, Destination);
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
 };

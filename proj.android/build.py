@@ -27,7 +27,7 @@ def main():
             if arg == kMCCommandOptionClean:
                 sign_package = False
     if len(sys.argv) < 2:
-        print './build.py [--debug|--release|--clean] [--re-generate]'
+        print './build.py [--debug|--release|--clean] [--re-generate] [--re-build]'
         sys.exit(0)
     elif cmd is None:
         print '不支持的命令！'

@@ -58,6 +58,8 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCBattleController.cpp \
 					../../Classes/MCBattleControllerLayer.cpp \
 					../../Classes/MCBattleFieldScene.cpp \
+					../../Classes/MCCamera.cpp \
+					../../Classes/MCConfirm.cpp \
 					../../Classes/MCControllerDelegate.cpp \
 					../../Classes/MCControllerLayer.cpp \
 					../../Classes/MCDetail.cpp \
@@ -72,6 +74,8 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCEntrance.cpp \
 					../../Classes/MCEquipment.cpp \
 					../../Classes/MCEquipmentItem.cpp \
+					../../Classes/MCEquipmentLayer.cpp \
+					../../Classes/MCEquipmentManager.cpp \
 					../../Classes/MCFaceBox.cpp \
 					../../Classes/MCFlag.cpp \
 					../../Classes/MCFlagManager.cpp \
@@ -84,7 +88,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCJoypad.cpp \
 					../../Classes/MCJoypadControllerLayer.cpp \
 					../../Classes/MCJoystick.cpp \
-					../../Classes/MCJSONModifier.cpp \
+					../../Classes/MCLoadingScene.cpp \
 					../../Classes/MCLuaCocos2d.cpp \
 					../../Classes/MCMainMenuScene.cpp \
 					../../Classes/MCMercenary.cpp \
@@ -98,16 +102,19 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCOre.cpp \
 					../../Classes/MCOreManager.cpp \
 					../../Classes/MCPotion.cpp \
+					../../Classes/MCPropsLayer.cpp \
 					../../Classes/MCRole.cpp \
 					../../Classes/MCRoleBaseInfo.cpp \
 					../../Classes/MCRoleEntity.cpp \
 					../../Classes/MCRoleManager.cpp \
+					../../Classes/MCRoleProperty.cpp \
 					../../Classes/MCScene.cpp \
 					../../Classes/MCSceneController.cpp \
 					../../Classes/MCSceneManager.cpp \
 					../../Classes/MCScenePackage.cpp \
 					../../Classes/MCScript.cpp \
 					../../Classes/MCSemiTransparent.cpp \
+					../../Classes/MCShadow.cpp \
 					../../Classes/MCSkill.cpp \
 					../../Classes/MCSkillManager.cpp \
 					../../Classes/MCSplashScene.cpp \
@@ -116,6 +123,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTaskAccessor.cpp \
 					../../Classes/MCTaskBonus.cpp \
 					../../Classes/MCTaskContext.cpp \
+					../../Classes/MCTaskLayer.cpp \
 					../../Classes/MCTaskManager.cpp \
 					../../Classes/MCTaskTarget.cpp \
 					../../Classes/MCTeam.cpp \
@@ -124,6 +132,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestBattleController.cpp \
 					../../Classes/MCTestbed.cpp \
 					../../Classes/MCTestController.cpp \
+					../../Classes/MCTestDetail.cpp \
 					../../Classes/MCTestGameScene.cpp \
 					../../Classes/MCTestLua.cpp \
 					../../Classes/MCTestManagers.cpp \
@@ -132,10 +141,13 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestRoleBaseInfo.cpp \
 					../../Classes/MCTestRoleManager.cpp \
 					../../Classes/MCTestViewport.cpp \
+					../../Classes/MCToast.cpp \
 					../../Classes/MCTrap.cpp \
 					../../Classes/MCTrigger.cpp \
 					../../Classes/MCViewport.cpp \
 					../../Classes/MCViewportLayer.cpp \
+					../../Classes/MCVision.cpp \
+					../../Classes/MCWeaponSelector.cpp \
 					../../Classes/JSON/src/Array.cpp \
 					../../Classes/JSON/src/Convert.cpp \
 					../../Classes/JSON/src/Escaper.cpp \

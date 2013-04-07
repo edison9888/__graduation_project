@@ -19,6 +19,10 @@ local function main()
 
     local sceneController = MCSceneController:sharedSceneController()
     CCLuaLog("暂时直接跳转")
+    local loading = MCLoading:sharedLoading()
+    loading:show()
+    sceneController:__loadScene()
+    loading:hide()
     sceneController:__changeScene()
 
 end

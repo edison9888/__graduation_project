@@ -20,8 +20,7 @@ public:
     
     CREATE_FUNC(MCMainMenu);
     
-    static CCScene *scene()
-    {
+    static CCScene *scene() {
         CCScene *scene = CCScene::create();
         
         scene->addChild(MCMainMenu::create());

@@ -9,44 +9,54 @@
 #include "AppMacros.h"
 #include "MCDialog.h"
 
-class __mc_other_dialog : public MCDialog {
+class __mc_npc_dialog : public MCDialog {
+    friend class MCDialog;
 public:
     bool init();
 };
 
-class __mc_hero_dialog : public MCDialog {
+class __mc_dm_dialog : public MCDialog {
+    friend class MCDialog;
 public:
     bool init();
 };
 
-static __mc_other_dialog *__shared_other_dialog = NULL;
-static __mc_hero_dialog *__shared_hero_dialog = NULL;
+static __mc_npc_dialog *__shared_npc_dialog = NULL;
+static __mc_dm_dialog *__shared_dm_dialog = NULL;
+
+MCDialog::~MCDialog()
+{
+    CC_SAFE_DELETE(edge_);
+    CC_SAFE_DELETE(skin_);
+    CC_SAFE_DELETE(dialogue_);
+    CC_SAFE_DELETE(speakerName_);
+    CC_SAFE_DELETE(speakerFace_);
+    CC_SAFE_DELETE(speakerFaceBox_);
+}
 
 MCDialog *
 MCDialog::sharedDialog(MCDialogType aType)
 {
     MCDialog *dialog = NULL;
-    if (aType == MCOtherDialog) {
-        if (__shared_other_dialog == NULL) {
-            __shared_other_dialog = new __mc_other_dialog;
-            if (__shared_other_dialog && __shared_other_dialog->init()) {
-                __shared_other_dialog->autorelease();
+    if (aType == MCNPCDialog) {
+        if (__shared_npc_dialog == NULL) {
+            __shared_npc_dialog = new __mc_npc_dialog;
+            if (__shared_npc_dialog && __shared_npc_dialog->init()) {
             } else {
-                delete __shared_other_dialog;
-                __shared_other_dialog = NULL;
+                delete __shared_npc_dialog;
+                __shared_npc_dialog = NULL;
             }
-            dialog = __shared_other_dialog;
+            dialog = __shared_npc_dialog;
         }
-    } else if (aType == MCHeroDialog) {
-        if (__shared_hero_dialog == NULL) {
-            __shared_hero_dialog = new __mc_hero_dialog;
-            if (__shared_hero_dialog && __shared_hero_dialog->init()) {
-                __shared_hero_dialog->autorelease();
+    } else if (aType == MCDMDialog) {
+        if (__shared_dm_dialog == NULL) {
+            __shared_dm_dialog = new __mc_dm_dialog;
+            if (__shared_dm_dialog && __shared_dm_dialog->init()) {
             } else {
-                delete __shared_hero_dialog;
-                __shared_hero_dialog = NULL;
+                delete __shared_dm_dialog;
+                __shared_dm_dialog = NULL;
             }
-            dialog = __shared_hero_dialog;
+            dialog = __shared_dm_dialog;
         }
     }
     
@@ -55,24 +65,30 @@ MCDialog::sharedDialog(MCDialogType aType)
 
 /* 某人想说几句话 */
 void
-MCDialog::someoneWannaSaySomething(MCRole *role)
+MCDialog::setMessage(MCRole *aRole)
 {
-    dialogue_->setString(role->getDefaultDialogue()->getCString());
+    dialogue_->setString(aRole->getDefaultDialogue()->getCString());
 }
 
+#pragma mark -
+#pragma mark *** __mc_npc_dialog ***
+
 bool
-__mc_other_dialog::init()
+__mc_npc_dialog::init()
 {
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
+        float contentScaleFactor = CCDirectorGetContentScaleFactor();
         
         CCRect skinRect = CCRectMake(0, 0, 128, 128);
-        CCRect skinCapInsets = CCRectMake(0, 0, 128, 128); /* 对半分 left,right,width,height */
+        CCRect skinCapInsets = CCRectMake(0, 0, 128, 128);
         
         skin_ = CCScale9Sprite::create("dialog/wskin.png", skinRect, skinCapInsets);
         addChild(skin_);
-        skin_->setContentSize(CCSizeMake(winSize.width - 4, winSize.height / 3));
-        skin_->setPosition(ccp(winSize.width / 2 - 2, winSize.height / 6));
+        skin_->setContentSize(CCSizeMake(winSize.width - 4 / contentScaleFactor,
+                                         winSize.height / 3));
+        skin_->setPosition(ccp(winSize.width / 2 - 2 / contentScaleFactor,
+                               winSize.height / 6));
         
         CCRect edgeRect = CCRectMake(0, 0, 64, 64);
         
@@ -85,49 +101,57 @@ __mc_other_dialog::init()
         dialogue_->setFontName("Marker Felt");
         dialogue_->setFontSize(24);
         addChild(dialogue_);
-        dialogue_->setDimensions(CCSizeMake(edge_->getContentSize().width - 32, 0));
+        dialogue_->setDimensions(CCSizeMake(edge_->getContentSize().width - 32 / contentScaleFactor,
+                                            0));
         dialogue_->setHorizontalAlignment(kCCTextAlignmentLeft);
         dialogue_->setAnchorPoint(ccp(0, 1)); /* 左上角为锚点 */
-        dialogue_->setPosition(ccp(16, edge_->getContentSize().height - 16));
+        dialogue_->setPosition(ccp(16 / contentScaleFactor,
+                                   edge_->getContentSize().height - 16 / contentScaleFactor));
         
         speakerName_ = CCLabelTTF::create();
         speakerName_->setFontName("Marker Felt");
-        speakerName_->setFontSize(18);
+        speakerName_->setFontSize(18 / contentScaleFactor);
         speakerName_->setColor(ccc3(204, 204, 204));
         addChild(speakerName_);
         speakerName_->setAnchorPoint(ccp(0, 0)); /* 左下角 */
-        speakerName_->setPosition(ccp(26,
-                                      edge_->getContentSize().height + 4));
+        speakerName_->setPosition(ccp(26 / contentScaleFactor,
+                                      edge_->getContentSize().height + 4 / contentScaleFactor));
         
         
         faceBox_ = MCFaceBox::create("faces/other.png", "UI/face_box.png");
         faceBox_->setAnchorPoint(ccp(0, 0)); /* 左下角 */
         addChild(faceBox_);
-        faceBox_->setPosition(ccp(4,
-                                  skin_->getContentSize().height + speakerName_->getFontSize() * 1.5 - 4));
+        faceBox_->setPosition(ccp(4 / contentScaleFactor,
+                                  skin_->getContentSize().height + speakerName_->getFontSize() * 1.5 - 4 / contentScaleFactor));
         
         speakerName_->setAnchorPoint(ccp(0.5, 0.5));
         speakerName_->setPosition(ccp(faceBox_->getContentSize().width / 2,
-                                      (faceBox_->getPosition().y + edge_->getContentSize().height) / 2 + 4));
+                                      (faceBox_->getPosition().y + edge_->getContentSize().height) / 2 + 4 / contentScaleFactor));
         
         return true;
     }
     return false;
 }
 
+#pragma mark -
+#pragma mark *** __mc_dm_dialog ***
+
 bool
-__mc_hero_dialog::init()
+__mc_dm_dialog::init()
 {
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
+        float contentScaleFactor = CCDirectorGetContentScaleFactor();
         
         CCRect skinRect = CCRectMake(0, 0, 128, 128);
-        CCRect skinCapInsets = CCRectMake(0, 0, 128, 128); /* 对半分 left,right,width,height */
+        CCRect skinCapInsets = CCRectMake(0, 0, 128, 128);
         
         skin_ = CCScale9Sprite::create("dialog/wskin.png", skinRect, skinCapInsets);
         addChild(skin_);
-        skin_->setContentSize(CCSizeMake(winSize.width - 4, winSize.height / 3));
-        skin_->setPosition(ccp(winSize.width / 2 - 2, winSize.height / 6));
+        skin_->setContentSize(CCSizeMake(winSize.width - 4 / contentScaleFactor,
+                                         winSize.height / 3));
+        skin_->setPosition(ccp(winSize.width / 2 - 2 / contentScaleFactor,
+                               winSize.height / 6));
         
         CCRect edgeRect = CCRectMake(0, 0, 64, 64);
         
@@ -140,26 +164,16 @@ __mc_hero_dialog::init()
         dialogue_->setFontName("Marker Felt");
         dialogue_->setFontSize(24);
         addChild(dialogue_);
-        dialogue_->setDimensions(CCSizeMake(edge_->getContentSize().width - 32, 0));
+        dialogue_->setDimensions(CCSizeMake(edge_->getContentSize().width - 32 / contentScaleFactor,
+                                            0));
         dialogue_->setHorizontalAlignment(kCCTextAlignmentLeft);
         dialogue_->setAnchorPoint(ccp(0, 1)); /* 左上角为锚点 */
-        dialogue_->setPosition(ccp(16, edge_->getContentSize().height - 16));
+        dialogue_->setPosition(ccp(16 / contentScaleFactor,
+                                   edge_->getContentSize().height - 16 / contentScaleFactor));
         
-        speakerName_ = CCLabelTTF::create();
-        speakerName_->setFontName("Marker Felt");
-        speakerName_->setFontSize(18);
-        speakerName_->setColor(ccc3(204, 204, 204));
-        addChild(speakerName_);
+        speakerName_ = NULL;
+        faceBox_ = NULL;
         
-        faceBox_ = MCFaceBox::create("faces/hero.png", "UI/face_box.png");
-        faceBox_->setAnchorPoint(ccp(1, 0)); /* 右下角 */
-        addChild(faceBox_);
-        faceBox_->setPosition(ccp(winSize.width - 4,
-                                  skin_->getContentSize().height + speakerName_->getFontSize() * 1.5 - 4));
-        
-        speakerName_->setAnchorPoint(ccp(0.5, 0.5));
-        speakerName_->setPosition(ccp(winSize.width - faceBox_->getContentSize().width / 2,
-                                      (faceBox_->getPosition().y + edge_->getContentSize().height) / 2 + 4));
         return true;
     }
     return false;

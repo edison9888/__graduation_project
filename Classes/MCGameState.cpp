@@ -87,7 +87,7 @@ MCGameState::load()
     MCBackpack::sharedBackpack();
     MCEquipmentManager::sharedEquipmentManager();
     MCMercenaryManager::sharedMercenaryManager();
-    MCFlagManager::sharedFlagManager();
+    MCFlagManager::sharedFlagManager()->spawn(); /* 加载游戏的时候直接出现在重生点 */
     MCTaskManager::sharedTaskManager();
     MCSkillManager::sharedSkillManager();
     MCDungeonMaster::sharedDungeonMaster();

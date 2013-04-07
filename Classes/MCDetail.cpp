@@ -11,6 +11,8 @@
 #include "MCPropsLayer.h"
 #include "MCTaskLayer.h"
 #include "MCEquipmentLayer.h"
+#include <cocos-ext.h>
+USING_NS_CC_EXT;
 
 enum __detail_scene_Tags {
     Tag_State,
@@ -24,6 +26,8 @@ enum __detail_scene_Tags {
 
 const char *kMCDetailDidHideNotification = "kMCDetailDidHideNotification";
 static const float kMCActionDuration = 0.1f;
+
+static const char *kMCBackgroundFilepath = "bg.png";
 
 class __MCViewSelectorLayer : public CCLayer {
 public:
@@ -109,7 +113,7 @@ bool
 MCDetail::init()
 {
     if (CCLayer::init()) {
-        CCSprite *bg = CCSprite::create("bg.jpg");
+        CCSprite *bg = CCSprite::create(kMCBackgroundFilepath);
         addChild(bg);
         bg->setAnchorPoint(CCPointZero);
         bg->setPosition(CCPointZero);

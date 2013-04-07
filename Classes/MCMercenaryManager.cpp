@@ -54,7 +54,15 @@ MCMercenaryManager::loadMercenaries()
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCMercenariesFilepath);
+    if (pstrFileContent) {
+        v.loadFromString(pstrFileContent->getCString());
+    }
+#else
     v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCMercenariesFilepath));
+#endif
+
     mercenaries = v.getObject();
 
     for (mercenariesIterator = mercenaries.begin();

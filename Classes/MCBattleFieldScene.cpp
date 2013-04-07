@@ -7,6 +7,8 @@
 //
 
 #include "MCBattleFieldScene.h"
+#include "MCFlagManager.h"
+#include "MCJoypadControllerLayer.h"
 #include "MCBattleControllerLayer.h"
 
 void
@@ -16,15 +18,16 @@ MCBattleFieldScene::installController()
     
     CCAssert(scenePackageType != MCUnknownPackage, "unknown scene package type!");
     if (MCBattleFieldScenePackage == scenePackageType) {
-        MCBattleControllerLayer *battleController = MCBattleControllerLayer::create();
-        battleController->setDelegate(objects_);
-        addChild(battleController);
-        controller_ = battleController;
+        if (MCFlagManager::sharedFlagManager()->isTaskStarted()) {
+            MCBattleControllerLayer *battleController = MCBattleControllerLayer::create();
+            battleController->setDelegate(objects_);
+            addChild(battleController);
+            controller_ = battleController;
+        } else {
+            MCJoypadControllerLayer *joypadController = MCJoypadControllerLayer::create();
+            joypadController->setDelegate(objects_);
+            addChild(joypadController);
+            controller_ = joypadController;
+        }
     }
 }
-
-void
-MCBattleFieldScene::dragScene(const CCPoint &anOffset)
-{
-}
-

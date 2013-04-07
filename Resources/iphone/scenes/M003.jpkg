@@ -1,1 +1,1 @@
-{"scene-type":1,"id":"M003","scenes":{"house2":{"id":"M001","destination":"village-h2"}},"objects":{"N002":{"x":72,"y":168}},"background":{"tmx":"scenes/house-2.tmx","sound":"sounds/village.mp3"}}
+{"scene-type":1,"id":"M003","internal":1,"scenes":{"house2":{"id":"M001","destination":"village-h2"}},"objects":{"N002":{"x":72,"y":168}},"background":{"tmx":"scenes/house-2.tmx","sound":"sounds/village.mp3"}}

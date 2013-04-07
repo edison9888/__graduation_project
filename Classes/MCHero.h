@@ -19,7 +19,17 @@ public:
     
     static MCHero *sharedHero();
     
+    inline bool atEntrance() {
+        return atEntrance_;
+    }
+    
+    inline void setAtEntrance(bool var) {
+        atEntrance_ = var;
+    }
+    
     CCObject *copy() { return copyWithZone(0); }
+private:
+    bool atEntrance_;
 };
 
 #endif /* defined(__Military_Confrontation__MCHero__) */

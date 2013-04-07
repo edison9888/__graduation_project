@@ -106,7 +106,7 @@ MCStateLayer::init()
         addChild(label);
         label->setAnchorPoint(ccp(0, 1)); /* 左上角 */
         label->setPosition(ccp(offsetX, winSize.height - offsetYInc));
-        offsetYInc += offsetY;
+//        offsetYInc += offsetY;
         
         ac_ = CCLabelTTF::create("0", "Marker Felt", valueFontSize);
         addChild(ac_);

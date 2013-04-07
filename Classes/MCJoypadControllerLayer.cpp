@@ -41,7 +41,7 @@ MCJoypadControllerLayer::getDelegate()
 }
 
 void
-MCJoypadControllerLayer::setDelegate(MCJoypadControllerDelegate* aDelegate)
+MCJoypadControllerLayer::setDelegate(MCJoypadControllerDelegate *aDelegate)
 {
     if (aDelegate) {
         joypad_->setVisible(true);

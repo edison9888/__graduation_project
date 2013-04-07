@@ -17,20 +17,26 @@
 USING_NS_CC_EXT;
 
 enum {
-    MCOtherDialog = MCMakeEnum(1), /* NPC说话时的对话框 */
-    MCHeroDialog  = MCMakeEnum(2), /* 主角说话时的对话框 */
-    MCDMDialog    = MCMakeEnum(3)  /* DM说话时的对话框 */
+    MCNPCDialog = MCMakeEnum(0), /* NPC说话时的对话框 */
+    MCDMDialog  = MCMakeEnum(1)  /* DM说话时的对话框 */
 };
 typedef mc_enum_t MCDialogType;
 
 class MCDialog : public CCLayer {
+protected:
+    MCDialog()
+    : edge_(NULL)
+    , skin_(NULL)
+    , dialogue_(NULL)
+    , speakerName_(NULL)
+    , speakerFace_(NULL)
+    , speakerFaceBox_(NULL) {}
 public:
-    virtual bool init()=0;
-    
+    ~MCDialog();
     static MCDialog *sharedDialog(MCDialogType aType);
     
     /* 某人想说几句话 */
-    void someoneWannaSaySomething(MCRole *role);
+    void setMessage(MCRole *aRole);
     
 protected:
     CCScale9Sprite *edge_;

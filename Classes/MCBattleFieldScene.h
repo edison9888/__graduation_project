@@ -14,10 +14,6 @@
 class MCBattleFieldScene : public MCScene {
 public:
     void installController();
-    
-    void dragScene(const CCPoint &anOffset);
-    
-    /* 代理方法 */
 };
 
 #endif /* defined(__Military_Confrontation__MCBattleFieldScene__) */

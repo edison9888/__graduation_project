@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
  <properties>
+  <property name="internal" value="1"/>
   <property name="scene-type" value="field"/>
   <property name="sound" value="sounds/dungeon.mp3"/>
   <property name="tmx" value="maps/M104.tmx"/>
@@ -13,21 +14,21 @@
  </tileset>
  <layer name="background" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TsQ3AIBAEwYcO7P4Tl0AJ7sxILoHgFrTBa/MbfauqPq9t3mvefUAfyJ6rHZA9V/tC9vQ//qZ31EMPctM76qEHuekd9dCD3PSOeuhBbnpHPfQgN72jHnqQm95RDz3ITe+ohx7kpnfUQw9y0zvqoQe56R310IPcD2/X2wAQJwAA
+   H4sIAAAAAAAAA+3TsQ3AIBAEwYcO7P4Tl0AJ7sxILoHgFrTBa/MbfauqPq9t3mvefUAfyJ6rHZA9V/tC9vQ//qZ31EMPctM76qEHuekd9dCD3PSOeuhBbnpHPfQgN72jHnqQm95RDz3ITe+ohx7kpnfUQw9y0zvqoQe56R310IPcD2/X2wAQJwAA
   </data>
  </layer>
  <layer name="first" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2ZN2wVQRCG73FAg4kGGkw00GCigQYTHchIIGwyEgib0IHIHbEn9sSe2BN7Yk9yY5NDgwlfcSMdp7dz+2B9vJVupE9zO29vZlbaf9/dex1BEHRCRxH/Ft5F4/fwQZnbaYhJDtM9aV7qpsW/Q5fB/4Cf0fgXBAXz3C5DTHJodTQvddPifbiuKBT3faFfNO4PA5S5FYaY5NDqaF7qpsWHQZXBD4cR0XgkjFLmVhlikkOro3mpmxafADUGPxEmRePJMEWZW2OISQ6tjualblp8FtQZ/GyYE43nwjxlbp0hJjm0OpqXumnxpbDMwsv1clihzJHPbfOW6k35N8BGCy/Xm2CzMkc+t81bqjflnxEGwcww8NZG0/sYaIQmj9cxld6nQTO0eLyO+fS+AFqhzeN1rKT3VaH/+thC71s90kcDNEJTIr6b3vd4pI/V0Awtibhv+tgGrdCWiNvo4wgchWNwHE7Aye5rVbW9sA/2J+I2+jgFp+EMnIVzcL77Wv0rk32l6eMCXIRLcBmuwNXMOrQz2VeaPq7BdbgBN+EW3M6sQ/MZFTfZV5o+7sBduAf34QE8dNuqaqYzKm6yrzR9PILH8ASewjN47rZV1UxnVNxkX2n6eAEv4RW8hjfQ7rZV1UxnVNxkX2n6+Aif4DN8ga/wzW2r/2yyrzR9FHg/6QEh9IRe0LuQbZ9pJvtK08dAeh4ElTAYhsDQMluH7Ctfnq9MJu9Rvjxfmcy350ST5e9R5WX57wzlZbk+ystyfZRuC2ERLIYljnNnqY81sBbWwXrHubPUx3bYATthl+PcWerjAByEQ3DYce78+6O8LP/++L+WPMN91UfyDPdVH8kz3Fd9JM/wuD7kv9tqGGvpq4uMbe914cfB+PBPfciaamG6pa8tMra914UXPcT1IWuqhwZLX19kbHuvCy96EH38BgBpoAMQJwAA
+   H4sIAAAAAAAAA+2ZN2wVQRCG73FAg4kGGkw00GCigQYTHchIIGwyEgib0IHIHbEn9sSe2BN7Yk9yY5NDgwlfcSMdp7dz+2B9vJVupE9zO29vZlbaf9/dex1BEHRCRxH/Ft5F4/fwQZnbaYhJDtM9aV7qpsW/Q5fB/4Cf0fgXBAXz3C5DTHJodTQvddPifbiuKBT3faFfNO4PA5S5FYaY5NDqaF7qpsWHQZXBD4cR0XgkjFLmVhlikkOro3mpmxafADUGPxEmRePJMEWZW2OISQ6tjualblp8FtQZ/GyYE43nwjxlbp0hJjm0OpqXumnxpbDMwsv1clihzJHPbfOW6k35N8BGCy/Xm2CzMkc+t81bqjflnxEGwcww8NZG0/sYaIQmj9cxld6nQTO0eLyO+fS+AFqhzeN1rKT3VaH/+thC71s90kcDNEJTIr6b3vd4pI/V0Awtibhv+tgGrdCWiNvo4wgchWNwHE7Aye5rVbW9sA/2J+I2+jgFp+EMnIVzcL77Wv0rk32l6eMCXIRLcBmuwNXMOrQz2VeaPq7BdbgBN+EW3M6sQ/MZFTfZV5o+7sBduAf34QE8dNuqaqYzKm6yrzR9PILH8ASewjN47rZV1UxnVNxkX2n6eAEv4RW8hjfQ7rZV1UxnVNxkX2n6+Aif4DN8ga/wzW2r/2yyrzR9FHg/6QEh9IRe0LuQbZ9pJvtK08dAeh4ElTAYhsDQMluH7Ctfnq9MJu9Rvjxfmcy350ST5e9R5WX57wzlZbk+ystyfZRuC2ERLIYljnNnqY81sBbWwXrHubPUx3bYATthl+PcWerjAByEQ3DYce78+6O8LP/++L+WPMN91UfyDPdVH8kz3Fd9JM/wuD7kv9tqGGvpq4uMbe914cfB+PBPfciaamG6pa8tMra914UXPcT1IWuqhwZLX19kbHuvCy96EH38BgBpoAMQJwAA
   </data>
  </layer>
  <layer name="second" width="50" height="50">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XwU0CURRG4TdgB9gEdoAtIOJeQXeSoMJOE0TYQQdQBGgDIA2ANoDaCqeAyWQSri+5k/9LTjKre+fN6k0IUgT3SQidxGbWgjlLeqcPo5l5PbPvxWjnijlr+qRN5HNM2Dc12rllzo6+6DvyOWbsmxvt3DPnh37pz2hmlc5sRuVSL4VwQQ26pCZdlY6fW6Pz48fkds0731CL2nRLdwbniK3LOz/QIz1Rj/oOzzHgnV9pSG80orHDc4iIiIiIeBH7X/K/xP6XFBERkWLKuht5ujdl3Y283Zs8ffcs3r67iIhImjKdpDx7U6HTlOciOwAJptVfECcAAA==
+   H4sIAAAAAAAAA+3XwU0CURRG4TdgB9gEdoAtIOJeQXeSoMJOE0TYQQdQBGgDIA2ANoDaCqeAyWQSri+5k/9LTjKre+fN6k0IUgT3SQidxGbWgjlLeqcPo5l5PbPvxWjnijlr+qRN5HNM2Dc12rllzo6+6DvyOWbsmxvt3DPnh37pz2hmlc5sRuVSL4VwQQ26pCZdlY6fW6Pz48fkds0731CL2nRLdwbniK3LOz/QIz1Rj/oOzzHgnV9pSG80orHDc4iIiIiIeBH7X/K/xP6XFBERkWLKuht5ujdl3Y283Zs8ffcs3r67iIhImjKdpDx7U6HTlOciOwAJptVfECcAAA==
   </data>
  </layer>
  <objectgroup name="entrances" width="50" height="50">
-  <object name="cave-1" type="entrance" x="528" y="48" width="64" height="32">
+  <object name="cave-1" type="entrance" x="528" y="64" width="64" height="32">
    <properties>
     <property name="ID" value="M101"/>
     <property name="dest" value="forest-1-centre"/>
@@ -77,17 +78,17 @@
     <property name="barrier-type" value="3"/>
    </properties>
   </object>
-  <object type="barrier" x="16" y="80" width="512" height="16">
+  <object type="barrier" x="16" y="48" width="512" height="48">
    <properties>
     <property name="barrier-type" value="3"/>
    </properties>
   </object>
-  <object type="barrier" x="592" y="80" width="192" height="16">
+  <object type="barrier" x="592" y="48" width="192" height="48">
    <properties>
     <property name="barrier-type" value="3"/>
    </properties>
   </object>
-  <object type="barrier" x="528" y="80" width="64" height="16">
+  <object type="barrier" x="528" y="48" width="64" height="16">
    <properties>
     <property name="barrier-type" value="2"/>
    </properties>
@@ -98,11 +99,6 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="meta" width="50" height="50">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XQQqAIAAFURdepLr/HVuEEJKkEjjaPPjbcDaSIUha3RHHb8/W+53Z2cFiB4sdLHaw/KUj/19IG2WL13KzdZTYwWIHy1sH4b1SuqPuZuioYQcL9Vyt7GCxg8UOFjtY7GCxo016Q9S8JXrYwWIHix0sM3Y83X2rdTj39U56yjFoECcAAA==
-  </data>
- </layer>
  <objectgroup name="objects" width="50" height="50">
   <object x="457" y="402">
    <properties>

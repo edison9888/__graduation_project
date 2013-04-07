@@ -18,6 +18,7 @@
 #include "MCControllerLayer.h"
 
 class MCScene;
+class MCCamera;
 class MCTrigger;
 class MCRoleEntity;
 class MCAStar;
@@ -50,11 +51,12 @@ class MCScene : public CCScene, public MCSceneDelegate {
     friend class MCSceneController;
 public:
     MCScene()
-    : controller_(NULL),
-    objects_(NULL),
-    viewport_(NULL),
-    background_(NULL),
-    isInternalScene_(false) { }
+    : controller_(NULL)
+    , objects_(NULL)
+    , viewport_(NULL)
+    , background_(NULL)
+    , entranceName_(NULL)
+    , isInternalScene_(false) { }
     
     ~MCScene();
     
@@ -77,6 +79,11 @@ public:
      * 获取地图
      */
     CCTMXTiledMap *getMap() const;
+    
+    /**
+     * 获取场景大小
+     */
+    CCSize &getSceneSize() const;
     
     void onEnter();
     void onExit();
@@ -113,6 +120,10 @@ public:
      */
     void goOut();
     
+    void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false);
+    
+    MCScene *getScene();
+    
     void showDetail();
     
 protected:
@@ -133,6 +144,14 @@ protected:
     
     MCDetail *detail_; /* 状态界面 */
     
+    /**
+     * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。
+     * 若为空，
+     */
+    CC_SYNTHESIZE(CCString *, entranceName_, EntranceName);
+    
+    CC_SYNTHESIZE_READONLY(MCCamera *, sceneCamera_, SceneCamera);
+    CC_SYNTHESIZE_READONLY(CCPoint, defaultLocation_, DefaultLocation);
     CC_SYNTHESIZE_READONLY(MCAStar *, aStar_, AStar); /* A*算法实现 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, entrances_, Entrances);
     CC_SYNTHESIZE_READONLY(MCSceneContext *, context, Context);

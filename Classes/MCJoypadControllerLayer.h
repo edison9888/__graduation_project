@@ -29,13 +29,14 @@ public:
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
+    MCJoypadControllerDelegate *getDelegate();
+    void setDelegate(MCJoypadControllerDelegate *aDelegate);
+    
 protected:
     void didSelectAll(CCObject *aSender);
     
 private:
     MCJoypad *joypad_;
-    
-    CC_PROPERTY(MCJoypadControllerDelegate *, delegate_, Delegate);
 };
 
 #endif /* defined(__Military_Confrontation__MCJoypadControllerLayer__) */

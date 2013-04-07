@@ -75,7 +75,6 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     };
     CCSpriteFrame *spriteFrame;
     const char *basename = __basename(aSpritesheetPath);
-    CCDictionary *plist;
     
     /* 生成路径 */
     /* plist */
@@ -83,7 +82,6 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     plistFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
     /* 把精灵表加载到cache里 */
     spriteFrameCache->addSpriteFramesWithFile(plistFilepath);
-    plist = CCDictionary::createWithContentsOfFileThreadSafe(plistFilepath);
     if (entityMetadata_) {
         CC_SAFE_RELEASE(entityMetadata_);
     }

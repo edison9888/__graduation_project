@@ -57,7 +57,6 @@
 		A31455C216B11A4F00EE6194 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455BA16B11A4F00EE6194 /* Object.cpp */; };
 		A31455C316B11A4F00EE6194 /* SolidusEscaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455BB16B11A4F00EE6194 /* SolidusEscaper.cpp */; };
 		A31455C416B11A4F00EE6194 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455BC16B11A4F00EE6194 /* Value.cpp */; };
-		A31455D416B12AD600EE6194 /* MCJSONModifier.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455D016B12AD600EE6194 /* MCJSONModifier.cpp */; };
 		A31455D516B12AD600EE6194 /* MCSceneManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A31455D216B12AD600EE6194 /* MCSceneManager.cpp */; };
 		A314B8BC170A9CB700D1EC1B /* MCEquipmentManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A314B8BA170A9CB700D1EC1B /* MCEquipmentManager.cpp */; };
 		A314B8C0170AAFEF00D1EC1B /* MCPropsLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A314B8BE170AAFEF00D1EC1B /* MCPropsLayer.cpp */; };
@@ -169,6 +168,7 @@
 		A33BCA21169EA65600196286 /* CCPhysicsSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A33BC9B9169EA65600196286 /* CCPhysicsSprite.cpp */; };
 		A33BCA5F169EA6CE00196286 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCA5E169EA6CE00196286 /* libcurl.dylib */; };
 		A3413363170C8DB800AABB5B /* MCVision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3413361170C8DB800AABB5B /* MCVision.cpp */; };
+		A345DB5F170E8A91007142CA /* MCCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A345DB5D170E8A91007142CA /* MCCamera.cpp */; };
 		A34F706E1707EFAA006C3313 /* MCScenePackageGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F706C1707EFAA006C3313 /* MCScenePackageGenerator.m */; };
 		A34F70741707F104006C3313 /* MCTMXGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F70721707F104006C3313 /* MCTMXGenerator.m */; };
 		A34F70781707F644006C3313 /* MCScenes.m in Sources */ = {isa = PBXBuildFile; fileRef = A34F70761707F644006C3313 /* MCScenes.m */; };
@@ -177,6 +177,8 @@
 		A352DA93170ACB10004D4742 /* MCTaskLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A352DA91170ACB10004D4742 /* MCTaskLayer.cpp */; };
 		A352DA97170AE8E8004D4742 /* MCConfirm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A352DA95170AE8E7004D4742 /* MCConfirm.cpp */; };
 		A352DA9B170B063A004D4742 /* MCEquipmentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A352DA99170B063A004D4742 /* MCEquipmentLayer.cpp */; };
+		A353BBFE170FD9A1005A4058 /* MCToast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353BBFC170FD9A1005A4058 /* MCToast.cpp */; };
+		A353BC03170FE63D005A4058 /* MCLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */; };
 		A3592B3416B9440900E0AD58 /* MCDetailLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */; };
 		A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */; };
 		A35CB97E16FDE53400A345C6 /* MCMercenaryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */; };
@@ -193,7 +195,7 @@
 		A37E617D16EF03D10027A56A /* MCOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37E617B16EF03D10027A56A /* MCOBB.cpp */; };
 		A37E618116EF11F10027A56A /* MCTestOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37E617F16EF11F10027A56A /* MCTestOBB.cpp */; };
 		A37FEDDD16DBAA3D0014885A /* MCRoleEntity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37FEDDB16DBAA3D0014885A /* MCRoleEntity.cpp */; };
-		A37FEDE116DBBCA90014885A /* MCMicsUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */; };
+		A37FEDE116DBBCA90014885A /* MCMiscUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A37FEDDF16DBBCA90014885A /* MCMiscUtil.cpp */; };
 		A388EE5E16BD09F800D6124D /* MCFaceBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A388EE5C16BD09F800D6124D /* MCFaceBox.cpp */; };
 		A38D11BE16B81C42009E1CB8 /* MCDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11BC16B81C42009E1CB8 /* MCDetail.cpp */; };
 		A38D11C116B81C4D009E1CB8 /* MCBase64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A38D11BF16B81C4D009E1CB8 /* MCBase64.cpp */; };
@@ -368,8 +370,6 @@
 		A31455BA16B11A4F00EE6194 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		A31455BB16B11A4F00EE6194 /* SolidusEscaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolidusEscaper.cpp; sourceTree = "<group>"; };
 		A31455BC16B11A4F00EE6194 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Value.cpp; sourceTree = "<group>"; };
-		A31455D016B12AD600EE6194 /* MCJSONModifier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCJSONModifier.cpp; path = ../Classes/MCJSONModifier.cpp; sourceTree = "<group>"; };
-		A31455D116B12AD600EE6194 /* MCJSONModifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJSONModifier.h; path = ../Classes/MCJSONModifier.h; sourceTree = "<group>"; };
 		A31455D216B12AD600EE6194 /* MCSceneManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSceneManager.cpp; path = ../Classes/MCSceneManager.cpp; sourceTree = "<group>"; };
 		A31455D316B12AD600EE6194 /* MCSceneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCSceneManager.h; path = ../Classes/MCSceneManager.h; sourceTree = "<group>"; };
 		A314B8BA170A9CB700D1EC1B /* MCEquipmentManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCEquipmentManager.cpp; path = ../Classes/MCEquipmentManager.cpp; sourceTree = "<group>"; };
@@ -593,6 +593,8 @@
 		A33BCA5E169EA6CE00196286 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = usr/lib/libcurl.dylib; sourceTree = SDKROOT; };
 		A3413361170C8DB800AABB5B /* MCVision.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCVision.cpp; path = ../Classes/MCVision.cpp; sourceTree = "<group>"; };
 		A3413362170C8DB800AABB5B /* MCVision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCVision.h; path = ../Classes/MCVision.h; sourceTree = "<group>"; };
+		A345DB5D170E8A91007142CA /* MCCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCCamera.cpp; path = ../Classes/MCCamera.cpp; sourceTree = "<group>"; };
+		A345DB5E170E8A91007142CA /* MCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCCamera.h; path = ../Classes/MCCamera.h; sourceTree = "<group>"; };
 		A34F706B1707EFAA006C3313 /* MCScenePackageGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCScenePackageGenerator.h; sourceTree = "<group>"; };
 		A34F706C1707EFAA006C3313 /* MCScenePackageGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCScenePackageGenerator.m; sourceTree = "<group>"; };
 		A34F70711707F104006C3313 /* MCTMXGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCTMXGenerator.h; sourceTree = "<group>"; };
@@ -607,6 +609,11 @@
 		A352DA96170AE8E7004D4742 /* MCConfirm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCConfirm.h; path = ../Classes/MCConfirm.h; sourceTree = "<group>"; };
 		A352DA99170B063A004D4742 /* MCEquipmentLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCEquipmentLayer.cpp; path = ../Classes/MCEquipmentLayer.cpp; sourceTree = "<group>"; };
 		A352DA9A170B063A004D4742 /* MCEquipmentLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCEquipmentLayer.h; path = ../Classes/MCEquipmentLayer.h; sourceTree = "<group>"; };
+		A353BBFC170FD9A1005A4058 /* MCToast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCToast.cpp; path = ../Classes/MCToast.cpp; sourceTree = "<group>"; };
+		A353BBFD170FD9A1005A4058 /* MCToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCToast.h; path = ../Classes/MCToast.h; sourceTree = "<group>"; };
+		A353BC00170FE5D1005A4058 /* MCToast.pkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCToast.pkg; path = ../tools/lua/MCToast.pkg; sourceTree = "<group>"; };
+		A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCLoadingScene.cpp; path = ../Classes/MCLoadingScene.cpp; sourceTree = "<group>"; };
+		A353BC02170FE63D005A4058 /* MCLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCLoadingScene.h; path = ../Classes/MCLoadingScene.h; sourceTree = "<group>"; };
 		A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDetailLayer.cpp; path = ../Classes/MCDetailLayer.cpp; sourceTree = "<group>"; };
 		A3592B3316B9440800E0AD58 /* MCDetailLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailLayer.h; path = ../Classes/MCDetailLayer.h; sourceTree = "<group>"; };
 		A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCStateLayer.cpp; path = ../Classes/MCStateLayer.cpp; sourceTree = "<group>"; };
@@ -619,7 +626,6 @@
 		A35CB98416FDEF2500A345C6 /* MCArmorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCArmorHandler.m; sourceTree = "<group>"; };
 		A35CB98716FDF17E00A345C6 /* MCWeaponHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCWeaponHandler.h; sourceTree = "<group>"; };
 		A35CB98816FDF17E00A345C6 /* MCWeaponHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCWeaponHandler.m; sourceTree = "<group>"; };
-		A35F219E16E875D500D466B9 /* _T_.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; name = _T_.h; path = ../Classes/_T_.h; sourceTree = "<group>"; };
 		A35F219F16E8805500D466B9 /* MCLuaCocos2d.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCLuaCocos2d.cpp; path = ../Classes/MCLuaCocos2d.cpp; sourceTree = "<group>"; };
 		A35F21A216E8808400D466B9 /* MCLuaCocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCLuaCocos2d.h; path = ../Classes/MCLuaCocos2d.h; sourceTree = "<group>"; };
 		A365552516F373C30062DDF8 /* MCBattleFieldScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBattleFieldScene.cpp; path = ../Classes/MCBattleFieldScene.cpp; sourceTree = "<group>"; };
@@ -640,8 +646,8 @@
 		A37E618016EF11F10027A56A /* MCTestOBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestOBB.h; path = ../Classes/MCTestOBB.h; sourceTree = "<group>"; };
 		A37FEDDB16DBAA3D0014885A /* MCRoleEntity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRoleEntity.cpp; path = ../Classes/MCRoleEntity.cpp; sourceTree = "<group>"; };
 		A37FEDDC16DBAA3D0014885A /* MCRoleEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRoleEntity.h; path = ../Classes/MCRoleEntity.h; sourceTree = "<group>"; };
-		A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMicsUtil.cpp; path = ../Classes/MCMicsUtil.cpp; sourceTree = "<group>"; };
-		A37FEDE016DBBCA90014885A /* MCMicsUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCMicsUtil.h; path = ../Classes/MCMicsUtil.h; sourceTree = "<group>"; };
+		A37FEDDF16DBBCA90014885A /* MCMiscUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMiscUtil.cpp; path = ../Classes/MCMiscUtil.cpp; sourceTree = "<group>"; };
+		A37FEDE016DBBCA90014885A /* MCMiscUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCMiscUtil.h; path = ../Classes/MCMiscUtil.h; sourceTree = "<group>"; };
 		A388EE5C16BD09F800D6124D /* MCFaceBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCFaceBox.cpp; path = ../Classes/MCFaceBox.cpp; sourceTree = "<group>"; };
 		A388EE5D16BD09F800D6124D /* MCFaceBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCFaceBox.h; path = ../Classes/MCFaceBox.h; sourceTree = "<group>"; };
 		A38D11BC16B81C42009E1CB8 /* MCDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDetail.cpp; path = ../Classes/MCDetail.cpp; sourceTree = "<group>"; };
@@ -872,8 +878,6 @@
 			children = (
 				A31455A716B11A4F00EE6194 /* include */,
 				A31455B416B11A4F00EE6194 /* src */,
-				A31455D016B12AD600EE6194 /* MCJSONModifier.cpp */,
-				A31455D116B12AD600EE6194 /* MCJSONModifier.h */,
 			);
 			name = JSON;
 			sourceTree = "<group>";
@@ -1321,6 +1325,8 @@
 				A398E3AB17016C1200B86850 /* MCActionBar.h */,
 				A352DA95170AE8E7004D4742 /* MCConfirm.cpp */,
 				A352DA96170AE8E7004D4742 /* MCConfirm.h */,
+				A353BBFC170FD9A1005A4058 /* MCToast.cpp */,
+				A353BBFD170FD9A1005A4058 /* MCToast.h */,
 				A38D11B816B815D7009E1CB8 /* Detail */,
 			);
 			name = UI;
@@ -1352,8 +1358,8 @@
 			children = (
 				A39FB00716B27441007FECB7 /* MCGeometry.cpp */,
 				A39FB00816B27441007FECB7 /* MCGeometry.h */,
-				A37FEDDF16DBBCA90014885A /* MCMicsUtil.cpp */,
-				A37FEDE016DBBCA90014885A /* MCMicsUtil.h */,
+				A37FEDDF16DBBCA90014885A /* MCMiscUtil.cpp */,
+				A37FEDE016DBBCA90014885A /* MCMiscUtil.h */,
 				A37E617B16EF03D10027A56A /* MCOBB.cpp */,
 				A37E617C16EF03D10027A56A /* MCOBB.h */,
 			);
@@ -1410,8 +1416,12 @@
 				A3B1636A16B00E84009F95EE /* MCMainMenuScene.h */,
 				A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */,
 				A3B1636C16B00E84009F95EE /* MCSplashScene.h */,
+				A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */,
+				A353BC02170FE63D005A4058 /* MCLoadingScene.h */,
 				A365552916F376B40062DDF8 /* MCScene.cpp */,
 				A365552A16F376B50062DDF8 /* MCScene.h */,
+				A345DB5D170E8A91007142CA /* MCCamera.cpp */,
+				A345DB5E170E8A91007142CA /* MCCamera.h */,
 				A314559E16B11A3400EE6194 /* MCGameScene.cpp */,
 				A314559F16B11A3400EE6194 /* MCGameScene.h */,
 				A365552516F373C30062DDF8 /* MCBattleFieldScene.cpp */,
@@ -1570,7 +1580,6 @@
 				A3B5B08E170847E600B3C588 /* MCTestParticle.h */,
 				A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */,
 				A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */,
-				A35F219E16E875D500D466B9 /* _T_.h */,
 				A32CFC4D16E63FD50062F47F /* MCTestGame.h */,
 				A32CFC4E16E63FD50062F47F /* MCTestLayer.h */,
 				A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */,
@@ -1629,6 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				A3E87E7E1703590700C2E537 /* MCSceneController.pkg */,
+				A353BC00170FE5D1005A4058 /* MCToast.pkg */,
 				A3E87E801703596600C2E537 /* Readme.md */,
 			);
 			name = lua;
@@ -1886,7 +1896,6 @@
 				A31455C216B11A4F00EE6194 /* Object.cpp in Sources */,
 				A31455C316B11A4F00EE6194 /* SolidusEscaper.cpp in Sources */,
 				A31455C416B11A4F00EE6194 /* Value.cpp in Sources */,
-				A31455D416B12AD600EE6194 /* MCJSONModifier.cpp in Sources */,
 				A31455D516B12AD600EE6194 /* MCSceneManager.cpp in Sources */,
 				A39FAFF316B26325007FECB7 /* MCControllerDelegate.cpp in Sources */,
 				A39FB00B16B27441007FECB7 /* MCGeometry.cpp in Sources */,
@@ -1903,7 +1912,7 @@
 				A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */,
 				A388EE5E16BD09F800D6124D /* MCFaceBox.cpp in Sources */,
 				A37FEDDD16DBAA3D0014885A /* MCRoleEntity.cpp in Sources */,
-				A37FEDE116DBBCA90014885A /* MCMicsUtil.cpp in Sources */,
+				A37FEDE116DBBCA90014885A /* MCMiscUtil.cpp in Sources */,
 				A3E8C49F16DCF92700060C94 /* MCBarrier.cpp in Sources */,
 				A36D12AF16DF9E8500A940ED /* MCTestbed.cpp in Sources */,
 				A32CFBFB16E635D70062F47F /* CCLuaEngine.cpp in Sources */,
@@ -2009,6 +2018,9 @@
 				A352DA9B170B063A004D4742 /* MCEquipmentLayer.cpp in Sources */,
 				A3179119170C6621002124F7 /* MCWeaponSelector.cpp in Sources */,
 				A3413363170C8DB800AABB5B /* MCVision.cpp in Sources */,
+				A345DB5F170E8A91007142CA /* MCCamera.cpp in Sources */,
+				A353BBFE170FD9A1005A4058 /* MCToast.cpp in Sources */,
+				A353BC03170FE63D005A4058 /* MCLoadingScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

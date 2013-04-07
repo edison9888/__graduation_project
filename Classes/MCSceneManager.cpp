@@ -9,19 +9,20 @@
 #include "MCSceneManager.h"
 
 #include "JsonBox.h"
-#include "MCJSONModifier.h"
 #include "MCGameScene.h"
 #include "MCBattleFieldScene.h"
+#include "MCFlagManager.h"
 
 static MCScene *
 MCSceneMake(MCScenePackageType aScenePackageType) {
     CCAssert(MCUnknownPackage != aScenePackageType, "unknown scene package type");
     MCScene *scene;
     
-    if (MCGameScenePackage == aScenePackageType) {
-        scene = new MCGameScene;
-    } else {
+    if (MCFlagManager::sharedFlagManager()->isTaskStarted()
+        && MCBattleFieldScenePackage == aScenePackageType) {
         scene = new MCBattleFieldScene;
+    } else {
+        scene = new MCGameScene;
     }
     
     return scene;
@@ -111,7 +112,15 @@ MCSceneManager::loadSceneListFile()
     const char *c_str_o_id;
     MCScenePackage *scenaPackage;
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+    CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCScenesResourceFilePath);
+    if (pstrFileContent) {
+        in.loadFromString(pstrFileContent->getCString());
+    }
+#else
     in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
+#endif
+    
     packages = in.getObject();
     
     for (iter = packages.begin(); iter != packages.end(); ++iter) {

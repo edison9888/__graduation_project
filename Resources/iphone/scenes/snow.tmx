@@ -24,20 +24,20 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="70" height="60">
-  <object name="snow-west" type="entrance" x="-16" y="352" width="16" height="160">
+  <object name="snow-west" type="entrance" x="0" y="400" width="32" height="64">
    <properties>
     <property name="ID" value="M006"/>
     <property name="dest" value="city-east-1"/>
    </properties>
   </object>
-  <object name="snow-east" type="entrance" x="832" y="-16" width="160" height="16">
+  <object name="snow-east" type="entrance" x="880" y="0" width="64" height="32">
    <properties>
     <property name="ID" value="M401"/>
     <property name="dest" value="freeze-1-south"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="barriers" width="70" height="60">
+ <objectgroup name="barriers" width="70" height="60" visible="0">
   <object type="barrier" x="0" y="0" width="720" height="256"/>
   <object type="barrier" x="176" y="256" width="544" height="80"/>
   <object type="barrier" x="160" y="592" width="96" height="48"/>

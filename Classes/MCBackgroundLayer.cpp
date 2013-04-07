@@ -25,11 +25,17 @@ bool
 MCBackgroundLayer::init(const char *aMapFilePath, const char *aBackgroundMusicFilePath)
 {
     if (CCLayer::init()) {
+        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
         map_ = CCTMXTiledMap::create(aMapFilePath);
         if (!map_) {
             return false;
         }
         addChild(map_);
+        
+        CCSize mapSize = map_->getMapSize();
+        CCSize tileSize = map_->getTileSize();
+        sceneSize_ = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
+                                mapSize.height * tileSize.height / contentScaleFactor);
 
         backgroundMusic_ = CCString::create(aBackgroundMusicFilePath);
         backgroundMusic_->retain();
@@ -75,6 +81,16 @@ MCBackgroundLayer::onExit()
 {
     unschedule(schedule_selector(MCBackgroundLayer::update));
     stopMusic();
+    
+    CCObject *obj;
+    CCARRAY_FOREACH(enemyShadows_, obj) {
+        dynamic_cast<MCShadow *>(obj)->unbind();
+    }
+    enemyShadows_->removeAllObjects();
+    CCARRAY_FOREACH(shadows_, obj) {
+        dynamic_cast<MCShadow *>(obj)->unbind();
+    }
+    shadows_->removeAllObjects();
     CCLayer::onExit();
 }
 

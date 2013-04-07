@@ -43,6 +43,17 @@
         [package setObject:@(MCGameScenePackage) forKey:kMCScenePackageSceneType];
     }
     
+    properties = [mapDocument nodesForXPath:@"map/properties/property[@name='internal']" error:nil];
+    BOOL isInternal = NO;
+    if ([properties count] > 0) {
+        property = [properties objectAtIndex:0];
+        NSString *internal = [[property attributeForName:@"value"] objectValue];
+        if ([internal intValue] == 1) {
+            isInternal = YES;
+        }
+    }
+    [package setObject:@(isInternal == YES ? 1 : 0) forKey:kMCScenePackageInternal];
+    
     /* background */
     NSMutableDictionary *background = [[NSMutableDictionary alloc] init];
     /* tmx */

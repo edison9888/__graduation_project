@@ -56,6 +56,20 @@ public:
      */
     virtual void goOut() = 0;
     
+    /**
+     * 移动场景
+     */
+    virtual void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false) = 0;
+    
+    /**
+     * 地图的默认偏移位置
+     */
+    virtual CCPoint getDefaultLocation() const = 0;
+    
+    virtual bool isInternalScene() = 0;
+    
+    virtual MCScene *getScene() = 0;
+    
     virtual MCScenePackage *getScenePackage() const = 0;
 };
 

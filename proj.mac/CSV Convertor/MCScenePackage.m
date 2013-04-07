@@ -9,6 +9,7 @@
 #import "MCScenePackage.h"
 
 NSString *kMCScenePackageID = @"id";
+NSString *kMCScenePackageInternal = @"internal";
 NSString *kMCScenePackageSceneType = @"scene-type";
 
 NSString *kMCScenePackageBackground = @"background";
