@@ -28,7 +28,6 @@ class MCRole;
 class MCRoleEntityMetadata : public CCSprite {
     friend class MCRole;
     friend class MCRoleEntity;
-    
 public:
     MCRoleEntityMetadata();
     ~MCRoleEntityMetadata();
@@ -60,7 +59,7 @@ public:
 
 class MCRoleEntity : public CCSprite {
     friend class MCRole;
-    
+    friend class MCAI;
 public:
     MCRoleEntity();
     ~MCRoleEntity();
@@ -102,6 +101,12 @@ protected:
     
     void actionEnded(CCObject* anObject);
     void stopAllMoveToActions();
+    
+    /* AI */
+    void startThinking();
+    void stopThinking();
+    void thinking(float dt);
+    void checkObjects(float dt); /* 调用AI的checkObjects */
     
     CC_PROPERTY_READONLY(CCSpriteBatchNode *, spriteSheet_, SpriteSheet);
     CC_PROPERTY_READONLY(MCFacade, facade_, Facade);

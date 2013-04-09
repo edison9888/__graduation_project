@@ -31,6 +31,7 @@ public:
      * 返回值你懂的
      */
     bool collideWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
+    bool collideWith(MCRoleEntity *aRoleEntity);
     
 private:
     MCRoleEntity *roleEntity_;

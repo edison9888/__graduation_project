@@ -22,6 +22,10 @@ enum {
 };
 typedef mc_enum_t MCDialogType;
 
+typedef int (CCObject::*SEL_Dismiss)(void *);
+
+#define dismiss_selector(_SELECTOR) (SEL_Dismiss)(&_SELECTOR)
+
 class MCDialog : public CCLayer {
 protected:
     MCDialog()
@@ -33,10 +37,24 @@ protected:
     , speakerFaceBox_(NULL) {}
 public:
     ~MCDialog();
+    bool init();
+    
     static MCDialog *sharedDialog(MCDialogType aType);
     
     /* 某人想说几句话 */
-    void setMessage(MCRole *aRole);
+    void setMessage(const char *aMessage);
+    
+    void attach(CCNode *aParent);
+    void detach();
+    
+    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    void ccTouchEnded(CCTouch *pTouch, CCEvent *pEvent);
+    
+    inline void setDismissSelector(CCObject *aTarget, SEL_Dismiss aSelector, void *anUserdata) {
+        target_ = aTarget;
+        dismissSelector_ = aSelector;
+        userdata_ = anUserdata;
+    }
     
 protected:
     CCScale9Sprite *edge_;
@@ -45,6 +63,10 @@ protected:
     CCLabelTTF *speakerName_; /* 说话人名字 */
     CCSprite *speakerFace_; /* 说话人头像 */
     CCScale9Sprite *speakerFaceBox_; /* 说话人头像框 */
+    
+    CCObject *target_;
+    SEL_Dismiss dismissSelector_;
+    void *userdata_;
     
     CC_SYNTHESIZE_READONLY(MCFaceBox *, faceBox_, FaceBox); /* 说话人+相框 */
 };

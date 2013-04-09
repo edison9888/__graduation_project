@@ -24,19 +24,15 @@ public:
     bool isEnable();
     void setEnable(bool var);
     
-    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
-    
     MCJoypadControllerDelegate *getDelegate();
     void setDelegate(MCJoypadControllerDelegate *aDelegate);
     
 protected:
-    void didSelectAll(CCObject *aSender);
+    void activate(CCObject *aSender); /* 行动 */
     
 private:
     MCJoypad *joypad_;
+    CCMenu *actionButton_;
 };
 
 #endif /* defined(__Military_Confrontation__MCJoypadControllerLayer__) */

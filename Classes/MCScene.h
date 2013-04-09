@@ -11,23 +11,31 @@
 
 #include "MCScenePackage.h"
 
-#include "MCObjectLayer.h"
+//#include "MCObjectLayer.h"
 #include "MCBackgroundLayer.h"
 
 #include "MCViewportLayer.h"
 #include "MCControllerLayer.h"
+#include "MCSceneManager.h"
+#include "MCDetail.h"
 
 class MCScene;
 class MCCamera;
 class MCTrigger;
 class MCRoleEntity;
 class MCAStar;
-class MCDetail;
+class MCObjectLayer;
 
 class MCSceneContext : public CCObject {
     friend class MCScene;
+    friend class MCObjectLayer;
 public:
+    MCSceneContext();
+    ~MCSceneContext();
+    
+    CC_SYNTHESIZE_READONLY(CCArray *, objects_, Objects); /* 场景对象 */
     CC_SYNTHESIZE_READONLY(MCScene *, scene_, Scene);
+    CC_SYNTHESIZE_READONLY(bool, inited_, Inited); /* 是否初始化过场景对象 */
 };
 
 class MCSceneContextManager {
@@ -124,6 +132,18 @@ public:
     
     MCScene *getScene();
     
+    inline void pauseScene() {
+        pauseSchedulerAndActions();
+        controller_->setEnable(false);
+        detailMenu_->setVisible(false);
+    }
+    
+    inline void resumeScene() {
+        detailMenu_->setVisible(true);
+        controller_->setEnable(true);
+        resumeSchedulerAndActions();
+    }
+    
     void showDetail();
     
 protected:
@@ -133,7 +153,7 @@ protected:
     
     MCControllerLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */
-        //warning: todo：记得删除调试用视角层
+#warning: todo：记得删除调试用视角层
     MCViewportLayer *viewport_; /* 调试用的视角层 */
     MCBackgroundLayer *background_; /* 背景层 */
     
@@ -143,6 +163,7 @@ protected:
     bool isInternalScene_;
     
     MCDetail *detail_; /* 状态界面 */
+    CCMenu *detailMenu_;
     
     /**
      * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。

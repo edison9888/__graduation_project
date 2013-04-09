@@ -13,21 +13,21 @@
  </tileset>
  <layer name="background" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3QsQ3AIADAMMRGP6D/H1pe6GakDFF2rznGc1oXfZ/eyy645WxecMvZvOCWs3nBLWfzglvO5gW3nM0LbjmbF9xyNi+45WxecMvZvOCWs3nBLWfzglvO5gW3nM0Lbn//AWR+HeikHwAA
+   H4sIAAAAAAAAA+3QsQ3AIADAMMRGP6D/H1pe6GakDFF2rznGc1oXfZ/eyy645WxecMvZvOCWs3nBLWfzglvO5gW3nM0LbjmbF9xyNi+45WxecMvZvOCWs3nBLWfzglvO5gW3nM0Lbn//AWR+HeikHwAA
   </data>
  </layer>
  <layer name="first" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2SSw6CQBQE56p+LqB4AQTcg589KpyTvkDPbF6ImKqk0quXTCqT0v9ykMcVNpJKXlbYSOhMZwed6eygM50ddKazYyf3aVudT/KcttWZ/0xnB53p7KAznR10prODznR20JnODjrT2UFnOjtqeZWNbDNbwt118hb85l4O8i4fmS3h7p7yFfzmUb7lR34zW8LdTXIOfvMvsQA+HuDMpB8AAA==
+   H4sIAAAAAAAAA+2SSw6CQBQE56p+LqB4AQTcg589KpyTvkDPbF6ImKqk0quXTCqT0v9ykMcVNpJKXlbYSOhMZwed6eygM50ddKazYyf3aVudT/KcttWZ/0xnB53p7KAznR10prODznR20JnODjrT2UFnOjtqeZWNbDNbwt118hb85l4O8i4fmS3h7p7yFfzmUb7lR34zW8LdTXIOfvMvsQA+HuDMpB8AAA==
   </data>
  </layer>
  <layer name="second" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2VxwrCQBCGl9wtL2AvN3u52cvderfevfj8/kICo4QQyexmJPvBz0SQnS+B2VFKDykkrelsXeSQfNwSP9JAmnFL/MgIGcctYbEYYhq3gHC4d4Wu3ZNBsu4z966g59E+USkgRfeZe1fQ82ifqLSQtvvMvSvoebRPVCbKzJyb6mNJBpx3DSdBXpx3DSdBXpx3DSdBXlLvGqleFovlP5G2B8P4SNuDYXyk7cEwPtL2jTQfnZieS45+pueSo5/pueToZ3oOkjR3FpmUHKXKSIXUKlJzPv/3/l13/M8wTQceXaRHat+nDpChEOcZPObIgtSlT10hayHOG3hskR2pe596QI5CnE/wOCMX5BpQb8hdiPPj6/t6jt570Pd5Mji/AIuvusqkHwAA
+   H4sIAAAAAAAAA+2VxwrCQBCGl9wtL2AvN3u52cvderfevfj8/kICo4QQyexmJPvBz0SQnS+B2VFKDykkrelsXeSQfNwSP9JAmnFL/MgIGcctYbEYYhq3gHC4d4Wu3ZNBsu4z966g59E+USkgRfeZe1fQ82ifqLSQtvvMvSvoebRPVCbKzJyb6mNJBpx3DSdBXpx3DSdBXpx3DSdBXlLvGqleFovlP5G2B8P4SNuDYXyk7cEwPtL2jTQfnZieS45+pueSo5/pueToZ3oOkjR3FpmUHKXKSIXUKlJzPv/3/l13/M8wTQceXaRHat+nDpChEOcZPObIgtSlT10hayHOG3hskR2pe596QI5CnE/wOCMX5BpQb8hdiPPj6/t6jt570Pd5Mji/AIuvusqkHwAA
   </data>
  </layer>
  <objectgroup name="entrances" width="45" height="45">
-  <object name="crystal" type="entrance" x="288" y="720" width="160" height="32">
+  <object name="crystal" type="entrance" x="288" y="688" width="160" height="32">
    <properties>
     <property name="ID" value="M305"/>
     <property name="dest" value="dungeon-5-north"/>
@@ -55,11 +55,6 @@
   <object type="semi-transparent" x="512" y="144" width="32" height="48"/>
   <object type="semi-transparent" x="352" y="0" width="32" height="48"/>
  </objectgroup>
- <layer name="meta" width="45" height="45">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2SwQqAMAzFhn/un+808DK7YolME+j1JYe2JiIiIiJ/4Tz2c9nMuGxmXDYzLpsZl82My2bGZTPjsplx2cy4bGZcNjMumxnXF5sznsqtaOduq6o58mQYW7O9iubIkeW6N7s3tp5Q+c8rdFBejCakHwAA
-  </data>
- </layer>
  <objectgroup name="objects" width="45" height="45">
   <object x="219" y="278">
    <properties>

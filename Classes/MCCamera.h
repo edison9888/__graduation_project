@@ -27,7 +27,7 @@ public:
     /**
      * 设置位置，必须先设置场景代理
      */
-    void locate(bool adjusted = false);
+    void locate();
     
     /**
      * 聚焦到某人身上，必须先设置场景代理

@@ -10,6 +10,7 @@
 #include "MCFlagManager.h"
 #include "MCJoypadControllerLayer.h"
 #include "MCBattleControllerLayer.h"
+#include "MCObjectLayer.h"
 
 void
 MCBattleFieldScene::installController()

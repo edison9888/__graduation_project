@@ -37,16 +37,18 @@
   <object type="barrier" x="160" y="128" width="96" height="128"/>
   <object type="barrier" x="64" y="256" width="32" height="48"/>
   <object type="barrier" x="160" y="256" width="32" height="48"/>
-  <object type="barrier" x="192" y="0" width="64" height="128"/>
+  <object type="barrier" x="0" y="64" width="256" height="64"/>
   <object type="barrier" x="192" y="800" width="448" height="224"/>
   <object type="barrier" x="640" y="0" width="32" height="1984"/>
   <object type="barrier" x="-32" y="0" width="32" height="1984"/>
   <object type="barrier" x="-32" y="-32" width="704" height="32"/>
   <object type="barrier" x="-32" y="1968" width="704" height="32"/>
  </objectgroup>
- <objectgroup name="semi-transparents" width="40" height="123"/>
+ <objectgroup name="semi-transparents" width="40" height="123">
+  <object type="semi-transparent" x="0" y="0" width="256" height="64"/>
+ </objectgroup>
  <objectgroup name="entrances" width="40" height="123">
-  <object name="pyramid-east-4" type="entrance" x="608" y="0" width="32" height="368">
+  <object name="pyramid-east-5" type="entrance" x="608" y="0" width="32" height="368">
    <properties>
     <property name="ID" value="M202"/>
     <property name="dest" value="desert-2-west-2"/>
@@ -76,7 +78,7 @@
     <property name="dest" value="desert-3-west-3"/>
    </properties>
   </object>
-  <object name="pyramid-east-3" type="entrance" x="608" y="400" width="32" height="400">
+  <object name="pyramid-east-4" type="entrance" x="608" y="400" width="32" height="400">
    <properties>
     <property name="ID" value="M202"/>
     <property name="dest" value="desert-2-west-1"/>

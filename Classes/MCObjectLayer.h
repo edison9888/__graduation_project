@@ -12,8 +12,7 @@
 #include "MCRoleEntity.h"
 #include "MCControllerDelegate.h"
 #include "MCSceneManager.h"
-
-class MCScene;
+#include "MCScene.h"
 
 class MCObjectLayer : public CCLayer, public MCJoypadControllerDelegate, public MCBattleControllerDelegate {
     friend class MCScene;
@@ -28,9 +27,7 @@ public:
     void onEnter();
     void onExit();
     
-    inline CCArray *objects() {
-        return objects_;
-    }
+    CCArray *objects() const;
     
     void loadEntrancesFromScenePackage(MCScenePackage *aScenePackage);
     
@@ -39,7 +36,6 @@ protected:
      * 拖动地图
      */
     void setSceneOffset(const CCPoint &anOffset);
-//    CCPoint setSceneOffset(const CCPoint &anOffset, bool adjusted);
     
     virtual void moveTo(const CCPoint &delta);
     
@@ -63,8 +59,6 @@ protected:
     virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
     
 protected:
-//    //warning: debug
-//public:
     MCRoleEntity *hero_;
     CCArray *mercenaries_;
     CCTMXTiledMap *map_;
@@ -72,7 +66,7 @@ protected:
     CC_SYNTHESIZE_READONLY(CCArray *, barriers_, barriers); /* 障碍物 */
     CCArray *semiTransparents_;  /* 半透明 */
     CCArray *entrances_;         /* 入口 */
-    CCArray *objects_;
+//    CCArray *objects_;
     
     CC_SYNTHESIZE(MCSceneDelegate *, sceneDelegate_, SceneDelegate);
     
@@ -93,7 +87,13 @@ public:
      */
     void controllerDidMove(MCJoypadControllerDelegate *sender, const CCPoint &delta);
     
+     /**
+      * 行动
+      */
+    void controllerDidActivate();
+    
 protected:
+    void dialogDidDismiss(void *anUserdata);
 };
 
 class MCBattleFieldSceneObjectLayer : public MCObjectLayer {

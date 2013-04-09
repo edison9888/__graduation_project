@@ -8,6 +8,11 @@
 
 #include "MCNPC.h"
 
+MCNPC::MCNPC()
+{
+    roleType_ = MCRole::MCNPC;
+}
+
 MCNPC::~MCNPC()
 {
     CC_SAFE_RELEASE(face_);
@@ -45,6 +50,7 @@ MCNPC::copy()
     npc->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
     npc->description_->retain();
     
+    npc->roleType_ = roleType_;
     npc->roleRace_ = roleRace_;
     npc->hp_ = hp_;
     npc->pp_ = pp_;
@@ -56,7 +62,7 @@ MCNPC::copy()
     npc->defaultDialogue_ = CCString::create(defaultDialogue_->getCString()); /* 会被释放掉，所以要copy一个 */
     npc->defaultDialogue_->retain();
     npc->ai_ = ai_;
-    //warning: should design dialogue system
+    npc->trigger_ = trigger_;
     
     return npc;
 }

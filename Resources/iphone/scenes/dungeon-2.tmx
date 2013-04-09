@@ -27,7 +27,7 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="35" height="35">
-  <object name="dungeon-2-west" type="entrance" x="0" y="80" width="16" height="160">
+  <object name="dungeon-2-west" type="entrance" x="0" y="80" width="32" height="160">
    <properties>
     <property name="ID" value="M301"/>
     <property name="dest" value="dungeon-1-east"/>
@@ -39,7 +39,7 @@
     <property name="dest" value="dungeon-3-west"/>
    </properties>
   </object>
-  <object name="dungeon-2-north" type="entrance" x="224" y="0" width="112" height="16">
+  <object name="dungeon-2-north" type="entrance" x="224" y="0" width="112" height="32">
    <properties>
     <property name="ID" value="M305"/>
     <property name="dest" value="dungeon-5-south"/>

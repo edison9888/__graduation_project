@@ -52,4 +52,6 @@ extern const char *kMCChaosState;
 
 const char *MCRoleStateGetName(MCRoleState aRoleState);
 
+
+
 #endif

@@ -36,7 +36,6 @@ public:
         MCHero::sharedHero()->getEntity()->setPosition(ccp(160, 160));
         
         MCNPC *role = new MCNPC;
-        role->init();
         addChild(role->getEntity()->getSpriteSheet());
         role->getEntity()->setPosition(ccp(200, 200));
     }

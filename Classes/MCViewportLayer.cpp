@@ -49,10 +49,16 @@ MCViewportLayer::loadSemis(CCArray *semis)
 }
 
 void
+MCViewportLayer::loadEntrances(CCArray *entrances)
+{
+    this->entrances->addObjectsFromArray(entrances);
+}
+
+void
 MCViewportLayer::draw(void)
 {
     CCLayer::draw();
-    if (!1) {
+    if (1) {
     CCObject *obj;
     MCRoleEntity *roleEntity;
     MCRole *role;
@@ -61,23 +67,10 @@ MCViewportLayer::draw(void)
         role = (MCRole *) obj;
         roleEntity = role->getEntity();
         MCOBB obb = roleEntity->getOBB();
-        
-//        /* draw viewport */
-//        MCOBB vpOBB = role->getViewport()->getOBB();
-//        CCRect aabb = CCRectMake(obb.center.x - obb.extents.width,
-//                                 obb.center.y - obb.extents.height,
-//                                 obb.width,
-//                                 obb.height);
-//        aabb.origin = ccpAdd(aabb.origin, mapOffset);
-//        CCPoint dp = ccp(aabb.origin.x + obb.width,
-//                         aabb.origin.y + obb.height);
-//        CCPointLog(dp);
-//        ccDrawSolidRect(aabb.origin,
-//                        dp,
-//                        ccc4f(0.9, 0.2, 0.1, 0.4));
-        /* AABB */
         CCRect aabb;
         CCPoint dp;
+        
+        /* AABB */
         aabb = CCRectMake(obb.center.x - obb.extents.width,
                           obb.center.y - obb.extents.height,
                           obb.width,
@@ -88,6 +81,17 @@ MCViewportLayer::draw(void)
         ccDrawSolidRect(aabb.origin,
                         dp,
                         ccc4f(0.6, 0.6, 0.6, 0.4));
+        /* draw viewport */
+        if (role->getAI()) {
+            MCOBB vpOBB = role->getAI()->getVision()->getOBB();
+            CCRect aabb = vpOBB.getAABB();
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + vpOBB.width,
+                             aabb.origin.y + vpOBB.height);
+            ccDrawSolidRect(aabb.origin,
+                            dp,
+                            ccc4f(0.9, 0.2, 0.1, 0.4));
+        }
     }
     
     /* entrances */
@@ -101,7 +105,6 @@ MCViewportLayer::draw(void)
                                  obb.width,
                                  obb.height);
         aabb.origin = ccpAdd(aabb.origin, mapOffset);
-        CCRectLog(aabb);
         CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
                          aabb.origin.y + aabb.size.height);
         ccDrawSolidRect(aabb.origin,

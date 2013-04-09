@@ -24,6 +24,7 @@ public:
     void loadObjects(CCArray *objects);
     void loadBarriers(CCArray *barriers);
     void loadSemis(CCArray *semis);
+    void loadEntrances(CCArray *entrances);
     
 public:
     CCArray *objects;

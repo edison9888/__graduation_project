@@ -10,21 +10,21 @@
  </tileset>
  <layer name="background" width="60" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3WtU5EQRiG4d3FpcG1wWVpcG1wbXBtcG1wbXBtcG1wbXC9ON5N2Atg8heb7EzyZLrzJfM2x2gyGEww2sFtOV7c3ib7uC3HFt5d99V9dV/dV/fVfW3h3XVf3Vf3/f9tFng36/cc4AgnOMMFrnCDOzzgKdhLZdcs8G7WfR/4wg/+CEAgghCMEIQK9lLZlegbhnBEIBJRiEYMYhGH+L+tBMG+KrsSfRORhGSkIBVpSEcGMpGFbOQI9lXZleibizzkowCFKEIxSlCKMpSjQrCvyq5E30pUoRo1qEUd6tGARjShGS2CfVV2Jfq2og3t6EAnutCNHvSiD/0YEOyrsivRdxBDGMYIRjGGcUxgElOYxoxgX5Vdif+rWcxhHgtYxBKWsYJVrGEdG4J9VXYl/q82sYVt7GAXe9jHAQ5xhGOcCPZV2ZXoe4oznOMCl7jCNW5wizvc40Gwr8quRN9HPOEZL3jFG97xgU984Rs/gn1Vdi3nF+Mc9D1wFwAA
+   H4sIAAAAAAAAC+3WtU5EQRiG4d3FpcG1wWVpcG1wbXBtcG1wbXBtcG1wbXC9ON5N2Atg8heb7EzyZLrzJfM2x2gyGEww2sFtOV7c3ib7uC3HFt5d99V9dV/dV/fVfW3h3XVf3Vf3/f9tFng36/cc4AgnOMMFrnCDOzzgKdhLZdcs8G7WfR/4wg/+CEAgghCMEIQK9lLZlegbhnBEIBJRiEYMYhGH+L+tBMG+KrsSfRORhGSkIBVpSEcGMpGFbOQI9lXZleibizzkowCFKEIxSlCKMpSjQrCvyq5E30pUoRo1qEUd6tGARjShGS2CfVV2Jfq2og3t6EAnutCNHvSiD/0YEOyrsivRdxBDGMYIRjGGcUxgElOYxoxgX5Vdif+rWcxhHgtYxBKWsYJVrGEdG4J9VXYl/q82sYVt7GAXe9jHAQ5xhGOcCPZV2ZXoe4oznOMCl7jCNW5wizvc40Gwr8quRN9HPOEZL3jFG97xgU984Rs/gn1Vdi3nF+Mc9D1wFwAA
   </data>
  </layer>
  <layer name="first" width="60" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3WSUwTURzH8Rk2vWJBvBYocJGE3YskblxYEkQQEUjYQW0TF1ARSABB9AYIqDdBuCPLHRTsTQRUbqIgeBPB7YbfSdpkpGn6ZjIYpvJPPvkf3r9578fMa2mVJKkN7biLDnRq7EcRLzgvIwCBCNK4jw0xOs7n7kp1owe9eIg+9Gvsx5EuOB+KQ7AgTOM+KUjVcT53V+opBjGEZxjGiPIMeBCBsljPZj5HEpu3MheJKERr3OcM8xmC+7i7Oo9So3iOMYxjApPKM2DdIov1EuZLJbH5BOYSkYRkjfvkM1+g2kfkM+48FlfeKUzjBV5iBrN4Badgt8MhOH8CJ3EKp73MveZsc7Jnr2KtWjWn5YxO1/v8BvNYwCLe4h3eY0mwN6NFcD4XZ5GHc17mPpBtWfbs9aw1qOa0nHHJlfcjPmEFq/iMNazji2R8laEcFaj0MvOVbBuyZzeivmETW/iOH/iJX/htzBZ/1VVcw3Xc8DKz7frR2tmNKFn1XRaEYITgAA4a9DfdSxWq+j4LQzgOIwJH/DCvlUyRiEI0bIhBLOL8MG8CmRKRhGSkIBVpOOaHeffr31Ym71AWspHzH7xPF8lYrPxPilKT5c3nvAU4j0JcQJGPDJdZvwI7HCbLW8V5q1GDWtThko8Md1hvQjNaTJa3nvM24CZu4TYafWQw8/3t4LyduIcu3McDHxnMfH/7OG8/BvAIj/HEj++vnjLz/dVTZr6/esrM91dP7d/f3a0/Jlapn3AXAAA=
+   H4sIAAAAAAAAC+3WSUwTURzH8Rk2vWJBvBYocJGE3YskblxYEkQQEUjYQW0TF1ARSABB9AYIqDdBuCPLHRTsTQRUbqIgeBPB7YbfSdpkpGn6ZjIYpvJPPvkf3r9578fMa2mVJKkN7biLDnRq7EcRLzgvIwCBCNK4jw0xOs7n7kp1owe9eIg+9Gvsx5EuOB+KQ7AgTOM+KUjVcT53V+opBjGEZxjGiPIMeBCBsljPZj5HEpu3MheJKERr3OcM8xmC+7i7Oo9So3iOMYxjApPKM2DdIov1EuZLJbH5BOYSkYRkjfvkM1+g2kfkM+48FlfeKUzjBV5iBrN4Badgt8MhOH8CJ3EKp73MveZsc7Jnr2KtWjWn5YxO1/v8BvNYwCLe4h3eY0mwN6NFcD4XZ5GHc17mPpBtWfbs9aw1qOa0nHHJlfcjPmEFq/iMNazji2R8laEcFaj0MvOVbBuyZzeivmETW/iOH/iJX/htzBZ/1VVcw3Xc8DKz7frR2tmNKFn1XRaEYITgAA4a9DfdSxWq+j4LQzgOIwJH/DCvlUyRiEI0bIhBLOL8MG8CmRKRhGSkIBVpOOaHeffr31Ym71AWspHzH7xPF8lYrPxPilKT5c3nvAU4j0JcQJGPDJdZvwI7HCbLW8V5q1GDWtThko8Md1hvQjNaTJa3nvM24CZu4TYafWQw8/3t4LyduIcu3McDHxnMfH/7OG8/BvAIj/HEj++vnjLz/dVTZr6/esrM91dP7d/f3a0/Jlapn3AXAAA=
   </data>
  </layer>
  <layer name="second" width="60" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2UMW5CMRBEvTVI0IMELWmghQYIXADCBRK4AJALJKEB0gBpAlyB3CCcLa9JhS3/Alv2l580smZl7Wosa5VK3IM12uRwlolvdMzhrKyURKmyZK/HTo1MdU0uUz12mmRqaXKZ6rHTJVNPk8tU13Hh3o/cnnnll2xXuT0TiX/6/IdHNEBDsfvYGZFhjJ7QROw+dp7J8IKmaCZ2HztzMizQEr2K3btgS99PT2/5xpx39IFWYvcuONH37Cnvjjl7dEBfYvdZaXD3IcD/72o/t7nbCTBvCPu5QN+ip7cJYT9X6Fv1lDeE/eyTEPazT1zt50Qi4Z4/eGcSKXAXAAA=
+   H4sIAAAAAAAAC+2UMW5CMRBEvTVI0IMELWmghQYIXADCBRK4AJALJKEB0gBpAlyB3CCcLa9JhS3/Alv2l580smZl7Wosa5VK3IM12uRwlolvdMzhrKyURKmyZK/HTo1MdU0uUz12mmRqaXKZ6rHTJVNPk8tU13Hh3o/cnnnll2xXuT0TiX/6/IdHNEBDsfvYGZFhjJ7QROw+dp7J8IKmaCZ2HztzMizQEr2K3btgS99PT2/5xpx39IFWYvcuONH37Cnvjjl7dEBfYvdZaXD3IcD/72o/t7nbCTBvCPu5QN+ip7cJYT9X6Fv1lDeE/eyTEPazT1zt50Qi4Z4/eGcSKXAXAAA=
   </data>
  </layer>
  <objectgroup name="entrances" width="60" height="25">
-  <object name="chouse-2" type="entrance" x="944" y="192" width="16" height="128">
+  <object name="chouse-2" type="entrance" x="928" y="192" width="32" height="128">
    <properties>
     <property name="ID" value="M006"/>
     <property name="dest" value="city-chouse-2"/>
@@ -48,7 +48,12 @@
  <objectgroup name="objects" width="60" height="25">
   <object x="295" y="177">
    <properties>
-    <property name="ID" value="N007"/>
+    <property name="ID" value="N010"/>
+   </properties>
+  </object>
+  <object x="656" y="347">
+   <properties>
+    <property name="ID" value="N014"/>
    </properties>
   </object>
  </objectgroup>

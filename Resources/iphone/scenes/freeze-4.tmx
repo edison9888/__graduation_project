@@ -5,168 +5,172 @@
   <property name="sound" value="sounds/glacier.mp3"/>
   <property name="tmx" value="maps/M404.tmx"/>
  </properties>
- <tileset firstgid="1" name="045-Cave03" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="021-SnowTown01" tilewidth="16" tileheight="16">
+  <image source="021-SnowTown01.png" width="256" height="1280"/>
+ </tileset>
+ <tileset firstgid="1281" name="045-Cave03" tilewidth="16" tileheight="16">
   <image source="045-Cave03.png" width="256" height="1056"/>
  </tileset>
- <tileset firstgid="1057" name="Dungeon-9" tilewidth="16" tileheight="16">
+ <tileset firstgid="2337" name="Dungeon-9" tilewidth="16" tileheight="16">
   <image source="Dungeon-9.png" width="256" height="480"/>
  </tileset>
- <tileset firstgid="1537" name="Environment-13" tilewidth="16" tileheight="16">
+ <tileset firstgid="2817" name="Environment-13" tilewidth="16" tileheight="16">
   <image source="Environment-13.png" width="256" height="960"/>
  </tileset>
  <layer name="background" width="120" height="120">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3TQQ3DQAADwUsZtPzBNhjyWSmehzUEvNc553Pv4iv93vvxtdb/on6pX+p30fpf1C/1S/0uWv+L+qV+qd9F639Rv9Qv9bto/S/ql/qlfhet/0X9Ur/U76L1v6hf6pf6XbT+F/VL/VK/i9b/on6pX+p30fpf1C/1S/0uWv+L+qV+qd9F639Rv9Qv9bto/S/ql/qlfhet/0X9Ur/U76L1v6hf6pf6XbT+F/VL/VK/i9b/on6pX+p30fpf1C/1S/0uWv+L+qV+qd9F639Rv9Qv9bto/S/ql/qlfhet/0X9Ur/U76L1v6hf6pf6XbT+F/VL/VK/i9b/on6pX+p30fpf1C/1S/0uWv+L+qV+qd9F639Rv9Qv9bto/S/ql/qlfhet/0X98rl/NHJgnQDhAAA=
+   H4sIAAAAAAAAC+3TwQ2DAAADMcTKdAM6eJmhn5OIH5EXyF3ncXyeXXyl97MvX2v9L+qX+qV+F63/Rf1Sv9TvovW/qF/ql/pdtP4X9Uv9Ur+L1v+ifqlf6nfR+l/UL/VL/S5a/4v6pX6p30Xrf1G/1C/1u2j9L+qX+qV+F63/Rf1Sv9TvovW/qF/ql/pdtP4X9Uv9Ur+L1v+ifqlf6nfR+l/UL/VL/S5a/4v6pX6p30Xrf1G/1C/1u2j9L+qX+qV+F63/Rf1Sv9TvovW/qF/ql/pdtP4X9Uv9Ur+L1v+ifqlf6nfR+l/UL/VL/S5a/4v6pX6p30Xrf1G/1C/1u2j9L+qX+qV+F63/Rf1Sv9TvovW/qF/ql/pdtP4X9Uv9Ur+L1v+ifqlf6nfR+l/UL//3B1+i43AA4QAA
+  </data>
+ </layer>
+ <layer name="first" width="120" height="120">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3czXLTMBSGYS99G23KBfQH9i2BfUphrbSl+4TAHq5El8oXgmfAGA+Opero8D4zZ04XsUaJ+nmSsex12zT3qgfVo+P+WrX82d+1TVSPl6qFauy4fxnb8jw3qq3qk2pH/6Onek2peQIAAAAAAAAAAAAAAAAAAAAAyjhpm+ZUtVCdVdpTjuXNud7ThepSdVVpTzmWN9d6Tzft7/fx1NZTjuXNSu/ptv1xb1ZzV2lPOZY367b++yFTjuWNh/shU44FAAAAAAAAWGbleinysHK9FHlYuV6KPKxcL0UeJa6XXvXOzY+sbzYlrpcue+fmHevrhr4vh7veubn0d/euv+D/bDZ9jkHn5LA8rHPQuTmU/u7e9ZeqV6zxLIvDegadm4PyGx4Ofxffs7jvb1RvWd9ZhvJb+rt719+rPrC+swzl18KexX3/qHpifWcZyq+FPYv7/ln1hfWdZSi/+nxD6XkhjaH87lhfN8ivb+TXN/LrG/n1jfz6Rn59I7++kV/fyK9v5Nc38usb+fWN/PpGfn3Lkd9N28S1aqW6Vp2rTlRpZowpcuR3q7W8V92qblQXqlPWt4gc+dXxUeNEjRc1btT4ccH6FpEjvzo+apyo8aLGjRo/nrG+ReRYX/JrR47zM/m1o7b8Wnm+QS33UtWWXyvPN6jlXiplIejzCvodE/R7Juh3Tdgazq+V5xvUci+VzndBmQj63MJKtVZtDOfXyvMN/ud7qXLmt9bnwXu6lypnfmt9Hryne6n4/esbv399I7++kV/fyK9v5Nc38usb+fWN/PpGfn0jv76RX9/Ir2/k1zfy6xv5/bta9wcO9X5+x15feq7PtSey1v2BQ72f37HXl57rc+2JrHV/YNfH8jt2nIW5T+3H7ImsdX9g18fyO3achblP7cfsiax1f2DXf/0f7+d37DgLc5/aj9kTWev+wLndwhym9mP2RH7V679NPAYAAAAAAAAAAAAAYM93PLw4xQDhAAA=
   </data>
  </layer>
  <layer name="second" width="120" height="120">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3dP0/cQBCH4ZOoouQbJA0Q6BP+9AmBHgj0hEAPBD5/5oqVosiyZ7w755vZ95FGvsKMvbtntvnpvFoBvt5LfVj6JuDmo9SnpW8CTfHM5lae2bLOrHcO/69nWWf+R+fAem6n3Xf+1+B/dG4803nwrObGs5pDzXPKM779ap5T7d9OfQ/4nrS3yTmd+h6wF+hY1ow5jYc1A4DN2d1Zrfak9qU+NzzSy6/XgdThjm59v8h5X6WOpI4bHunl1+tE6lS5vt/kvO9SZ1I/Gh7p5dfrXOpCub6Xct6V1LXUz4ZHevn1upG6Va7vnZz3S+pe6nfDI738ej1IPSrX90nOe5Z6kfrT8Egvv16vUm/K9QUAAAAAAAAAALDqJZ9jybT8Oy+Rxrg/MN5e8jmWTMtamZdIYzwaGG8v+RxLpmWtzEukMZ4NjLeXfI4l07JW5iXSGK8HxttLPseSaVkr8xJpjPcD4+0ln2PNtJR5iTTGl4rxRnYudbH0TcDNjdTt0jcBNw9Sj0vfBNy8Sr0tfRNww/6bG/tvbuy/ubH/5sb+mxv7b27sv7mx/+bG/psb+29u7L+59bz/ts5PWnKK2mu3uK+IvWrm0is/ackpaq/d4r4i9qqZS6/8pCWnqL12q2xhtF41c+mVn7TkFLXXbpUtjNarZi698pOWnKL22tuYU9xEr5q59MpPWnJ72mtvY05xE71q5rKn/CQAAAAAAAAAAAAAnbn5u0g5tky9ymdtNm9u/i5Sji1Tr/JZm82bm7/zzp7RS/f7hFPm5u+8s2f00v0+4ZS5+TvLufTy+33CKXPzd5Zz6cXvEwIAAAAAAAAAAACo18v7fyP1sr6reEwv7/+N1Mv6ruIxvbz/N1Iv67uKx/Ty/t9IvazvKh7Ty/t/I/Wyvqt4TC/v/43Ui2wcAAAAAAAAAABY0l9Ucz5CAOEAAA==
+   H4sIAAAAAAAAC+3RtY5VAQBF0Zug70GHS4fL3w4OHS4dLh0uHS4dLh0uBfsbppncZK1k9yc5wwAAAAAAAAAAAAAAAAAAAAAAAAAAAMBYzUyGYVftrj21t/bV/jpQB+vQZK5XMluH++5IHa1jdbxO1Mk6VafrjH9H62zfnavzdaEu1qW6XFfqal3z72hd77sbdbNu1e26U3frXt2vB/4drYd996ge15N6Ws/qeb2ol/XKv6P1uu/e1Nt6V+/rQ32sT/W5vvh3tL723bf6Xj/qZ/2q3/Wn/tY//47WvOkwzK8FtbAW1eKa1LSW1NLpXK9ktpb13fJaUStrVa2uNbW21tV6/47Whr7bWJtqc22prbWttteO2ulfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgJP4D6xVQQgDhAAA=
   </data>
  </layer>
  <layer name="third" width="120" height="120">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3dOU4EMRAF0JEgBwlyuA1rzpqz5qyHpwhIWqORNW132eg96Ye2HDj8qlqtAAAAAAAAAAD4j04ip5GzyHnyW6jvKnIduYncJr9lyt+b7yHyGHmKPCe/ZWqJv7cT2W10dw/eIu+Rj8hn8lumlvh7B5HDRnezWc9/DwAAAAAAANjeReQy4ezIRuom3EXuE86ObIluwl5kv8I9L5HXhLNsdhQ5rnDPV+Q74SwAAAAAAAAAANQyt2dYcn7pmVWZM7IyO5/rupNze4Yl50tmVpV28kr6n5nz2TI7n+u6k3N7hiXnS2ZWlXbySvqfmfPZeut8zu0ZlpxfemZV5owsnU8AAAAAAAAAYJ0eZvXZC9lOzVl9286m63kn6ehq9ra2nU3X807S0fXQ27IXEgAAAAAAAACAPy26fj10GH/V2t06shZdv172DZf24+b8g97/UIuu32j7hufs8K21/7eVFl2/HjqMAAAAAAAAwLh+AHgqv9IA4QAA
+   H4sIAAAAAAAAC+3RNWwVYBhG4UtLBWib1LEF1wXXBdcF1wXXBdcF1wXXBdcF16VeZKnQFlmQCrJQRwZOGAlLp96bnCc54598f95AQPq/tJhAIJ0yKJOyKJtyKJee0XN6QS9jGvtaNVQem+VTARXSKyqiYiqh1/SG3tI79w0579nsA32kT1RKZVROFfSZvtBX+ua+Iec7m1VSFVVTDdVSHdXTD/pJv+i3+4acJrGBQBiFU1OKoEiKomhqRs2pBcXENva1aqh4NkugREqiZEqhVGpJrag1taG27hty2rFZe+pAHakTdaYu1JW6UXfqQT3dN+T0YrPe1If6Uj/qTwNoIA2iwTSEhrpvyBnGZsNpBI2kUTSaxtBYGkfjaQJNdN+QM4nNJtMUmkrTaDrNoJk0i2bTHJrrvkEvjY3SKYMyaR7NpwW0kBbRYlpCS2kZLacVtJKyKJtyKNe9g04em+RTARXSKlpNa2gtraP1tIE20ibaTFtoK72iIiqmEvcNOu/Z5AN9pE+0jbbTDtpJu2g37aG9tI/20wE6SKVURuVU4b5B5zubVFIVVdMhOkxH6Cgdo+N0gk7SKTpNZ+gs1VAt1VG9+wadJnGBQBiFU1M6x0bn6QJdpEt0ma7QVbpG1+kG3aQI3kRSFEXHNfZv9K94NkmgREqiW2x2m+7QXbpH9+kBPaRH9Jie0FNK5k0KpVJL95UkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSfrrD6TIrh4A4QAA
   </data>
  </layer>
- <layer name="add" width="120" height="120">
+ <layer name="forth" width="120" height="120">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3USdAXYgDH8T9Z3o69b6vlQNlzIJLtgJDtYC9cLGXrghRxQba4kOwXFIqLJWQ5ZL+2oCtRrnZH37MLF+PfzOcz8z0+z8wzv5lnMPhnE0YGg9Eaq4k1qSbXlJpa02q/2r8OqANH/sWlDI2D2uvgml4z6pA6tA6rw+uIOrKOqpl1tH13K8e017E1q46r42t2nVBz6sQ6qU6uU+pU++5WTmuv0+uMmltn1ll1ds2rc+rcOq/OrwvsO9Q2tc/H9Ul9WhfWRXVxXVKX1mV1ec2vBXVFXVlX1Wf1eX1RX9p66Gxuky21tbbV1XVNXVvX1cJaVNfXDXVj3VQ31+L6qr6ub2q7fYfOt23yXe2o7+uWurVuqyV1ey2tZXVH3VnL6666u36onbWrfrTv0PmpTX6uX+rXuqfurftqRd1fD9SD9VA9XCvrkXq0fqvf64/6075DZ4/xg8GeNa72qsfa6PFaVU/U6nqynqqn65l6tp6r52vvzuxT+9bI+P/7NfzdhDYZrbGaWC+02Yv1Uq2ptfVyvVKv1rpaX6/V6zWpM5NrSk2179B7o83erLfq7dpQ79S79V5trPfrg/qwPvInAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/4G/AINqI0QA4QAA
-  </data>
- </layer>
- <layer name="add2" width="120" height="120">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3Qt64WBxRG0V+CS+7IoQOT35YcOjK4wyZ35NCRQ0cyhg5jYsF+hBkJjYS0lrS7o684s9nva9f82Wx37am9ta/214E6WIfq8MCbMXtM40i/PlrH6nidqJN1qk7Xmfpz4M2YPaZxtl//VX/XuTpfF+piXarLdWXgzZg9pnG1X1+r63Wjbtatul136m7dG3gzZo9p3O/XD+phParH9aSe1rN6Xi8G3ozZYxov+/Wrel1v6m39U+/q33pfHwbejNljGh/79X/1qf6vz/Wlvta3+l4/Bt6M2WMa8+Zms/k1VwtqYS2qxbWkltaygTdj9pjG8n69olbWqlpda2ptrav1tWHgzZg9prGxX2+qP2pzbamtta22147aOfBmzB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC/3k8xOL/rAOEAAA==
+   H4sIAAAAAAAAC+3bPW/UQBAA0GtOIEFPJNKBBD1I4T8EAj3hoyck9JCEn86c8EmmiLI+vLfrufeklUtbGns94xmvVgD5PFuvVs/Xra+CWl5FbF+LLwAAAABwB9+Ic/ON+LA8ilg/HuLt2c7nacTzeIipZxsA4K9xDkw+4xwYgLzexV5/Fut9rA/2/RROI45vh1h+iuPnWF9ifRXfWbTOgT/Guc+H83+P42Wsq1g/xHcWrXPgb3Hui+H813G8iXUb67f47qS3Xs3PuJZfHV3P0unVAADk0brWpq7WtTYAdXh/5+b9zaF7Eff/y4nPwLhHS99OIk5vhlg9iOPDgriNe7Qsx5OI2VFB3MY9WvLRowXuYm4yt9K5SXn8smzz99K5SXn8smzz99K5SXl8bvJ4ACCL0j4Ey1Tah2jBTEduZjoAAKAOtVRu2Wsp929u2e9f4F+7/M9yH3Ny/Rj/zzIXc3K5mZPLzZwc7G5KHSwXWp4pdfCUXMj3k+WZkgu1/n5ir5muRi5Uo6beKNlrMswK9r5P1qipN0r2mp5nBUu13idbUXcB/J9a+RV9qJVfwaHad02VoQ5dkn3XVBnqUAAAAAAA2Ife5jf1cObV239zejjz8t9cbuY3AQAAAAAAACC3P/wL2KUA4QAA
   </data>
  </layer>
  <objectgroup name="barriers" width="120" height="120">
-  <object type="barrier" x="0" y="288" width="1760" height="80"/>
-  <object type="barrier" x="144" y="1280" width="1776" height="80"/>
-  <object type="barrier" x="0" y="1616" width="1632" height="80"/>
-  <object type="barrier" x="0" y="592" width="944" height="80"/>
-  <object type="barrier" x="512" y="944" width="1168" height="80"/>
-  <object type="barrier" x="1120" y="592" width="800" height="80"/>
-  <object type="barrier" x="0" y="944" width="336" height="80"/>
-  <object type="barrier" x="1824" y="944" width="96" height="80"/>
-  <object type="barrier" x="0" y="-16" width="1920" height="16"/>
+  <object type="barrier" x="0" y="-16" width="1920" height="48"/>
   <object type="barrier" x="0" y="1920" width="1920" height="16"/>
-  <object type="barrier" x="1920" y="-16" width="16" height="1952"/>
   <object type="barrier" x="-16" y="-16" width="16" height="1952"/>
-  <object type="barrier" x="896" y="672" width="48" height="272"/>
-  <object type="barrier" x="752" y="0" width="480" height="160"/>
-  <object type="barrier" x="144" y="0" width="192" height="176"/>
-  <object type="barrier" x="336" y="80" width="64" height="96"/>
-  <object type="barrier" x="80" y="80" width="64" height="96"/>
+  <object type="barrier" x="1920" y="-16" width="16" height="1952"/>
+  <object type="barrier" x="0" y="1568" width="1744" height="96"/>
+  <object type="barrier" x="832" y="416" width="1088" height="96"/>
+  <object type="barrier" x="0" y="672" width="544" height="96"/>
+  <object type="barrier" x="448" y="768" width="656" height="96"/>
+  <object type="barrier" x="1152" y="1216" width="768" height="96"/>
+  <object type="barrier" x="448" y="864" width="96" height="416"/>
+  <object type="barrier" x="784" y="1120" width="96" height="448"/>
+  <object type="barrier" x="144" y="768" width="160" height="128"/>
+  <object type="barrier" x="240" y="32" width="192" height="240"/>
+  <object type="barrier" x="176" y="240" width="64" height="32"/>
+  <object type="barrier" x="432" y="240" width="64" height="32"/>
  </objectgroup>
  <objectgroup name="entrances" width="120" height="120">
-  <object name="freeze-4" type="entrance" x="0" y="1712" width="32" height="208">
+  <object name="freeze-4" type="entrance" x="0" y="1664" width="48" height="256">
    <properties>
     <property name="ID" value="M403"/>
     <property name="dest" value="freeze-3-north"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="semi-transparents" width="120" height="120"/>
- <objectgroup color="#e0d726" name="objects" width="120" height="120">
-  <object x="554" y="1488">
+ <objectgroup name="semi-transparents" width="120" height="120">
+  <object type="semi-transparent" x="176" y="176" width="64" height="64"/>
+  <object type="semi-transparent" x="432" y="176" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup name="objects" width="120" height="120">
+  <object x="215" y="1388">
    <properties>
     <property name="ID" value="E301"/>
     <property name="flags" value="F312"/>
    </properties>
   </object>
-  <object x="422" y="1459">
+  <object x="323" y="1215">
+   <properties>
+    <property name="ID" value="E301"/>
+    <property name="flags" value="F312"/>
+   </properties>
+  </object>
+  <object x="325" y="1473">
+   <properties>
+    <property name="ID" value="E301"/>
+    <property name="flags" value="F312"/>
+   </properties>
+  </object>
+  <object x="340" y="1340">
    <properties>
     <property name="ID" value="E303"/>
     <property name="flags" value="F312"/>
    </properties>
   </object>
-  <object x="281" y="1507">
+  <object x="99" y="1253">
+   <properties>
+    <property name="ID" value="E303"/>
+    <property name="flags" value="F312"/>
+   </properties>
+  </object>
+  <object x="89" y="1488">
+   <properties>
+    <property name="ID" value="E303"/>
+    <property name="flags" value="F312"/>
+   </properties>
+  </object>
+  <object x="96" y="1087">
    <properties>
     <property name="ID" value="E391"/>
     <property name="flags" value="F312"/>
    </properties>
   </object>
-  <object x="1084" y="807">
-   <properties>
-    <property name="ID" value="E393"/>
-    <property name="flags" value="F314"/>
-   </properties>
-  </object>
-  <object x="1399" y="136">
-   <properties>
-    <property name="ID" value="E315"/>
-    <property name="flags" value="F315"/>
-   </properties>
-  </object>
-  <object x="1540" y="93">
-   <properties>
-    <property name="ID" value="E316"/>
-    <property name="flags" value="F315"/>
-   </properties>
-  </object>
-  <object x="1696" y="87">
-   <properties>
-    <property name="ID" value="E394"/>
-    <property name="flags" value="F315"/>
-   </properties>
-  </object>
-  <object x="337" y="1542">
+  <object x="279" y="1065">
    <properties>
     <property name="ID" value="E391"/>
     <property name="flags" value="F312"/>
    </properties>
   </object>
-  <object x="365" y="1422">
-   <properties>
-    <property name="ID" value="E303"/>
-    <property name="flags" value="F312"/>
-   </properties>
-  </object>
-  <object x="520" y="1425">
-   <properties>
-    <property name="ID" value="E301"/>
-    <property name="flags" value="F312"/>
-   </properties>
-  </object>
-  <object x="513" y="1555">
-   <properties>
-    <property name="ID" value="E301"/>
-    <property name="flags" value="F312"/>
-   </properties>
-  </object>
-  <object x="421" y="1515">
-   <properties>
-    <property name="ID" value="E303"/>
-    <property name="flags" value="F312"/>
-   </properties>
-  </object>
-  <object x="1176" y="788">
+  <object x="1601" y="857">
    <properties>
     <property name="ID" value="E393"/>
     <property name="flags" value="F314"/>
    </properties>
   </object>
-  <object x="1152" y="886">
+  <object x="1735" y="1033">
    <properties>
     <property name="ID" value="E393"/>
     <property name="flags" value="F314"/>
    </properties>
   </object>
-  <object x="1450" y="239">
+  <object x="1593" y="979">
    <properties>
-    <property name="ID" value="E315"/>
+    <property name="ID" value="E393"/>
+    <property name="flags" value="F314"/>
+   </properties>
+  </object>
+  <object x="312" y="393">
+   <properties>
+    <property name="ID" value="E394"/>
     <property name="flags" value="F315"/>
    </properties>
   </object>
-  <object x="1593" y="221">
+  <object x="176" y="451">
+   <properties>
+    <property name="ID" value="E394"/>
+    <property name="flags" value="F315"/>
+   </properties>
+  </object>
+  <object x="321" y="560">
    <properties>
     <property name="ID" value="E316"/>
     <property name="flags" value="F315"/>
    </properties>
   </object>
-  <object x="1755" y="182">
+  <object x="473" y="484">
    <properties>
-    <property name="ID" value="E394"/>
+    <property name="ID" value="E316"/>
+    <property name="flags" value="F315"/>
+   </properties>
+  </object>
+  <object x="492" y="373">
+   <properties>
+    <property name="ID" value="E315"/>
+    <property name="flags" value="F315"/>
+   </properties>
+  </object>
+  <object x="467" y="615">
+   <properties>
+    <property name="ID" value="E315"/>
     <property name="flags" value="F315"/>
    </properties>
   </object>

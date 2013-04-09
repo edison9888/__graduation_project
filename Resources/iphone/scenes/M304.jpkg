@@ -1,0 +1,1 @@
+{"scene-type":2,"id":"M304","internal":0,"scenes":{"dungeon-4-north":{"id":"M306","destination":"body"},"dungeon-4-south":{"id":"M301","destination":"dungeon-1-north"}},"objects":{"E413":{"x":163,"y":505,"flags":["F406"]},"E411":{"x":157,"y":654,"flags":["F406"]},"E412":{"x":242,"y":644,"flags":["F406"]}},"background":{"tmx":"scenes/dungeon-4.tmx","sound":"sounds/dungeon.mp3"}}

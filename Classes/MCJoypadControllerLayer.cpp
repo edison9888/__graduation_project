@@ -12,10 +12,14 @@
 
 #include "MCTeamLayer.h"
 
+static const char *kMCActionButtonFilepath = "UI/activate.png";
+static const char *kMCActionButtonPressedFilepath = "UI/activate_pressed.png";
+
 bool
 MCJoypadControllerLayer::init()
 {
     if (CCLayer::init()) {
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         CCSprite *bg = CCSprite::create ("joystick-background.png");
         CCSprite *control = CCSprite::create ("joystick-control.png");
         
@@ -25,6 +29,16 @@ MCJoypadControllerLayer::init()
         joypad_->setJoystick(MCJoystick::create(bg, control));
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
+        
+        CCMenu *actionButton = CCMenu::create();
+        addChild(actionButton);
+        CCMenuItemImage *imageButton = CCMenuItemImage::create(kMCActionButtonFilepath,
+                                                               kMCActionButtonPressedFilepath);
+        imageButton->setTarget(this, menu_selector(MCJoypadControllerLayer::activate));
+        actionButton->addChild(imageButton);
+        actionButton->setPosition(ccp(winSize.width - imageButton->getContentSize().width / 2,
+                                      winSize.height / 2));
+        actionButton_ = actionButton;
         
         setTouchEnabled(true);
         
@@ -64,33 +78,11 @@ MCJoypadControllerLayer::setEnable(bool var)
 {
     joypad_->setVisible(var);
     joypad_->setTouchEnabled(var);
+    actionButton_->setVisible(var);
 }
 
 void
-MCJoypadControllerLayer::ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+MCJoypadControllerLayer::activate(CCObject *aSender) /* 行动按键 */
 {
-    CCLayer::ccTouchesBegan(pTouches, pEvent);
-}
-
-void
-MCJoypadControllerLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCLayer::ccTouchesMoved(pTouches, pEvent);
-}
-
-void
-MCJoypadControllerLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCLayer::ccTouchesEnded(pTouches, pEvent);
-}
-
-void
-MCJoypadControllerLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
-{
-    CCLayer::ccTouchesCancelled(pTouches, pEvent);
-}
-
-void
-MCJoypadControllerLayer::didSelectAll(CCObject *aSender)
-{
+    joypad_->getDelegate()->controllerDidActivate();
 }

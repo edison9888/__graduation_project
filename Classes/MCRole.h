@@ -15,33 +15,33 @@
 #include "MCViewport.h"
 #include "MCAI.h"
 
+class MCScript;
+
 /* 基础角色 */
-class MCRole : public MCObject {
+class MCRole : public MCObject, public MCAIDelegate {
+    friend class MCRoleEntity;
 public:
+    /**
+     * 角色类型
+     */
+    enum {
+        MCUnknownRole   = 0,             /* 未知类型的人物 */
+        MCHero          = MCMakeEnum(0), /* 主角 */
+        MCNPC           = MCMakeEnum(1), /* NPC */
+        MCEnemy         = MCMakeEnum(2), /* 敌人 */
+        MCMercenary     = MCMakeEnum(3)  /* 佣兵 */
+    };
+    typedef mc_enum_t MCRoleType;
+    
     MCRole();
     ~MCRole();
-    virtual bool init();
+    
+    bool init();
     
     void loadSpriteSheet();
     void loadSpriteSheet(const char *aSpritesheetPath);
     
-    /* 回调事件 */
-    /**
-     * 某人进入视野
-     * 默认看到的都是敌人
-     */
-    virtual void onSeeSomeone(MCRole *aRole, bool isEnermy = true);
-    
-    /**
-     * 某人离开视野
-     * 默认离开的都是敌人
-     */
-    virtual void onSomeoneDidLeave(MCRole *aRole, bool isEnermy = true);
-    
-    /**
-     * 被攻击
-     */
-    virtual void wasAttacked(const MCEffect &anEffect);
+    /* MCAIDelegate */
     
     /**
      * 死亡
@@ -73,6 +73,7 @@ public:
     }
     
     /* 角色属性 */
+    CC_SYNTHESIZE(MCRoleType, roleType_, RoleType); /* 角色类型 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
     CC_SYNTHESIZE(mc_pp_t, pp_, PP); /* 角色体力值 */
@@ -91,6 +92,9 @@ public:
     
     /* AI */
     CC_SYNTHESIZE_READONLY(MCAI *, ai_, AI);
+    
+    /* 点击活动键触发 */
+    CC_SYNTHESIZE(MCScript *, trigger_, Trigger);
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

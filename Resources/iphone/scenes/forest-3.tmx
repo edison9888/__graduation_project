@@ -47,7 +47,7 @@
   <properties>
    <property name="sence-type" value="field"/>
   </properties>
-  <object name="forest-3" type="entrance" x="784" y="128" width="16" height="672">
+  <object name="forest-3" type="entrance" x="768" y="128" width="32" height="672">
    <properties>
     <property name="ID" value="M101"/>
     <property name="dest" value="forest-1-west-2"/>

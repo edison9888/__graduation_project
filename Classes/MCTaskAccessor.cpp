@@ -61,7 +61,15 @@ MCTaskAccessor::loadTasks(const char *aFilePath)
         JsonBox::Object tasksDict;
         JsonBox::Object::iterator oIter;
         
-        in.loadFromFile(aFilePath);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+        CCString* pstrFileContent = CCString::createWithContentsOfFile(aFilePath);
+        if (pstrFileContent) {
+            in.loadFromString(pstrFileContent->getCString());
+        }
+#else
+        in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aFilePath));
+#endif
+        
         CC_BREAK_IF(! in.isObject());
         
         tasksDict = in.getObject();

@@ -7,6 +7,8 @@
 //
 
 #include "MCRole.h"
+#include "MCAI.h"
+#include "MCScript.h"
 
 static const char *__mc_directions[4] = {
     "up",
@@ -38,11 +40,16 @@ MCRole::MCRole()
 {
     entity_ = NULL;
     entityMetadata_ = NULL;
+    ai_ = NULL;
+    roleType_ = MCRole::MCUnknownRole;
+    trigger_ = NULL;
 }
 
 
 MCRole::~MCRole()
 {
+    CC_SAFE_RELEASE(trigger_);
+    CC_SAFE_RELEASE(ai_);
     CC_SAFE_RELEASE(entityMetadata_);
     CC_SAFE_RELEASE(entity_);
 }
@@ -134,43 +141,14 @@ MCRole::getEntity()
         entity_->role_ = this;
         entityMetadata_->spriteSheet_->addChild(entity_);
         entityMetadata_->facade_ = MCFacingDown;
+        /* AI */
+#warning 添加AI
+        ai_ = MCAI::create();
+        ai_->retain();
+        ai_->bind(this);
     }
     
     return entity_;
-}
-/**
- * 某人进入视野
- * 默认看到的都是敌人
- */
-void
-MCRole::onSeeSomeone(MCRole *aRole, bool isEnermy)
-{
-}
-
-/**
- * 某人离开视野
- * 默认离开的都是敌人
- */
-void
-MCRole::onSomeoneDidLeave(MCRole *aRole, bool isEnermy)
-{
-}
-
-/**
- * 被攻击
- */
-void
-MCRole::wasAttacked(const MCEffect &anEffect)
-{
-    hp_ -= anEffect.hp;
-    
-    if (hp_ < 0) {
-        this->died();
-    } else {
-        pp_ -= anEffect.pp;
-        roleState_ |= anEffect.positive_state;
-        roleState_ ^= anEffect.negative_state;
-    }
 }
 
 /**

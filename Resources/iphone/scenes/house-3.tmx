@@ -29,7 +29,7 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="25" height="30">
-  <object name="house3" type="entrance" x="144" y="448" width="80" height="16">
+  <object name="house3" type="entrance" x="144" y="432" width="80" height="32">
    <properties>
     <property name="ID" value="M001"/>
     <property name="dest" value="village-h3"/>

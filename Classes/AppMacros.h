@@ -55,12 +55,13 @@ static Resource resources[] = {
     { cocos2d::CCSizeMake(480, 320),   "iphone" },
     { cocos2d::CCSizeMake(800, 480),   "iphone" },
     { cocos2d::CCSizeMake(854, 320),   "iphone" },
-    { cocos2d::CCSizeMake(960, 580),   "iphone" }
+    { cocos2d::CCSizeMake(960, 580),   "iphone" },
+    { cocos2d::CCSizeMake(960, 640),   "iphone" }
 };
 #endif // ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//static Resource PCResource  =  { cocos2d::CCSizeMake(640, 384),   "iphone" };
+//static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "iphone" };
 static Resource PCResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
 #endif // WIN32、MAC、LINUX
 

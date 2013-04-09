@@ -10,26 +10,26 @@
  </tileset>
  <layer name="background" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA9NkYGDQAmJNGtKWQGxFY5qW7h/1x6g/Rv0x6o9Rf4z6Y9Qfo/4Y9ceoPwbaHwCV+4mquAsAAA==
+   H4sIAAAAAAAAC9NkYGDQAmJNGtKWQGxFY5qW7h/1x6g/Rv0x6o9Rf4z6Y9Qfo/4Y9ceoPwbaHwCV+4mquAsAAA==
   </data>
  </layer>
  <layer name="first" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA82U6w3CMAyEDRvABmQDsgJsABvABmV/0R9EWNfzI6WRsHSqVDk+f3YbEZHLIF3lG7dBuiuPxyA9lcc0SC/lcR6oFoWI5Vt53pkWFWT1hHn1U9s7twVHDc70cGANxsF8WmR2p/stsvSy+tOzijyKLPfg9dCkZxX5YA3Gxb4JzRHtDmswLsaCHFVyXhaXx4G1e7wiVvRY62XxaA+LVZ+z/kFWV79nHuys9914e9FRgxreXeJx6IjuKe9O9IQerI9M39Y9cgKWaFYZWf1kZ5VhiOYVzWotQw/HL3PMclhcmdwWvTvvyc3GcdYBnlvHftYOnv8WbwEim6a4CwAA
+   H4sIAAAAAAAAC82U6w3CMAyEDRvABmQDsgJsABvABmV/0R9EWNfzI6WRsHSqVDk+f3YbEZHLIF3lG7dBuiuPxyA9lcc0SC/lcR6oFoWI5Vt53pkWFWT1hHn1U9s7twVHDc70cGANxsF8WmR2p/stsvSy+tOzijyKLPfg9dCkZxX5YA3Gxb4JzRHtDmswLsaCHFVyXhaXx4G1e7wiVvRY62XxaA+LVZ+z/kFWV79nHuys9914e9FRgxreXeJx6IjuKe9O9IQerI9M39Y9cgKWaFYZWf1kZ5VhiOYVzWotQw/HL3PMclhcmdwWvTvvyc3GcdYBnlvHftYOnv8WbwEim6a4CwAA
   </data>
  </layer>
  <layer name="second" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGBygGYhbaGzHZCCeQmM7YKCekYGhgRGTpiboB5o3gRGTpiYY9cfgAqP+IB6MpqtRQAgoYRH7TAc7qA2M6GDHKBgFo2BwAACTsazeuAsAAA==
+   H4sIAAAAAAAAC2NgGBygGYhbaGzHZCCeQmM7YKCekYGhgRGTpiboB5o3gRGTpiYY9cfgAqP+IB6MpqtRQAgoYRH7TAc7qA2M6GDHKBgFo2BwAACTsazeuAsAAA==
   </data>
  </layer>
  <layer name="third" width="25" height="30">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA2NgGAX0BGsZGRjWMWLS1AR7gebtY8SkyQH1QH0NjJg0Nf3RD9Q3gRGTHvXH8PXHG4bh4Y/BHh+43EdNf+By36g/Rv1BCSDWH5SAUX8QD+jhj1FAHAAAfphhaLgLAAA=
+   H4sIAAAAAAAAC2NgGAX0BGsZGRjWMWLS1AR7gebtY8SkyQH1QH0NjJg0Nf3RD9Q3gRGTHvXH8PXHG4bh4Y/BHh+43EdNf+By36g/Rv1BCSDWH5SAUX8QD+jhj1FAHAAAfphhaLgLAAA=
   </data>
  </layer>
  <objectgroup name="entrances" width="25" height="30">
-  <object name="house2" type="entrance" x="144" y="448" width="80" height="16">
+  <object name="house2" type="entrance" x="144" y="432" width="80" height="32">
    <properties>
     <property name="ID" value="M001"/>
     <property name="dest" value="village-h2"/>
@@ -50,7 +50,12 @@
  <objectgroup name="objects" width="25" height="30">
   <object x="72" y="168">
    <properties>
-    <property name="ID" value="N002"/>
+    <property name="ID" value="N005"/>
+   </properties>
+  </object>
+  <object x="303" y="353">
+   <properties>
+    <property name="ID" value="N007"/>
    </properties>
   </object>
  </objectgroup>

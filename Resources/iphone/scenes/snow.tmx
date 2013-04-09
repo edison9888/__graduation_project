@@ -37,7 +37,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="barriers" width="70" height="60" visible="0">
+ <objectgroup name="barriers" width="70" height="60">
   <object type="barrier" x="0" y="0" width="720" height="256"/>
   <object type="barrier" x="176" y="256" width="544" height="80"/>
   <object type="barrier" x="160" y="592" width="96" height="48"/>

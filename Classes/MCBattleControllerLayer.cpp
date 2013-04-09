@@ -60,6 +60,7 @@ MCBattleControllerLayer::isEnable()
 void
 MCBattleControllerLayer::setEnable(bool var)
 {
+    
     controller_->setVisible(var);
     controller_->setTouchEnabled(var);
 }

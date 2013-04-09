@@ -7,6 +7,7 @@
 //
 
 #include "MCGameScene.h"
+#include "MCObjectLayer.h"
 #include "MCJoypadControllerLayer.h"
 
 void

@@ -29,10 +29,10 @@ MCCamera::restore()
  * 设置位置，必须先设置场景代理
  */
 void
-MCCamera::locate(bool adjusted)
+MCCamera::locate()
 {
     if (sceneDelegate_) {
-        sceneDelegate_->moveSceneToLocation(ccpNeg(viewport_.origin), adjusted);
+        sceneDelegate_->moveSceneToLocation(ccpNeg(viewport_.origin));
     }
 }
 
@@ -53,59 +53,42 @@ MCCamera::focus(MCRole *aRole)
         CCSize sceneSize = scene->getSceneSize();
         CCPoint mapOffset = map->getPosition();
         CCPoint rolePosition = aRole->getEntity()->getPosition();
-        CCPointLog(rolePosition);
-        CCRect expectedViewport = CCRectMake(rolePosition.x - winSize.width / 2,
-                                             rolePosition.y - winSize.height / 2,
-                                             winSize.width,
-                                             winSize.height);
-//        CCPoint expectedCenter = ccp(rolePosition.x - winSize.width / 2,
-//                                     rolePosition.y - winSize.height / 2);
-//        CCPointLog(expectedCenter);
+        CCPoint expectedViewportOrigin = ccp(rolePosition.x - winSize.width / 2,
+                                             rolePosition.y - winSize.height / 2);
         /* 清除偏移 */
         /* 基于地图 */
-        float viewportLeft = expectedViewport.getMinX();
-        float viewportRight = expectedViewport.getMaxX();
-        float viewportTop = expectedViewport.getMaxY();
-        float viewportBottom = expectedViewport.getMinY();
+        float viewportLeft = expectedViewportOrigin.x;
+        float viewportRight = expectedViewportOrigin.x + viewport_.size.width;
+        float viewportTop = expectedViewportOrigin.y + viewport_.size.height;
+        float viewportBottom = expectedViewportOrigin.y;
+        
+        if (sceneSize.width < winSize.width) {
+            sceneSize.width = winSize.width;
+        }
+        if (sceneSize.height < winSize.height) {
+            sceneSize.height = winSize.height;
+        }
         
         if (viewportLeft < 0) {
-            expectedViewport.origin.x -= viewportLeft;
+            expectedViewportOrigin.x -= viewportLeft + mapOffset.x;
         } else if (viewportRight > sceneSize.width) {
-            expectedViewport.origin.x -= (viewportRight - sceneSize.width);
+            expectedViewportOrigin.x -= (viewportRight - sceneSize.width);
         }
         if (viewportTop > sceneSize.height) {
-            expectedViewport.origin.y -= (viewportTop - sceneSize.height);
+            expectedViewportOrigin.y -= (viewportTop - sceneSize.height + mapOffset.y);
         } else if (viewportBottom < 0) {
-            expectedViewport.origin.y -= viewportBottom;
+            expectedViewportOrigin.y -= viewportBottom;
         }
         
-        viewport_ = expectedViewport;
-        sceneDelegate_->moveSceneToLocation(ccpNeg(expectedViewport.origin));
+        viewport_.origin = expectedViewportOrigin;
+        sceneDelegate_->moveSceneToLocation(ccpNeg(expectedViewportOrigin));
     }
-//    if (sceneDelegate_) {
-//        CCSize winSize = CCDirectorGetWindowsSize();
-//        CCPoint mapOffset = sceneDelegate_->getScene()->getMapOffset();
-//        CCPoint rolePosition = aRole->getEntity()->getPosition();
-//        CCPoint center = ccp(winSize.width / 2, winSize.height / 2);
-//        CCPoint roleOffset = ccpSub(ccpSub(center, mapOffset), rolePosition);
-//        sceneDelegate_->moveSceneToLocation(roleOffset, true);
-//    }
 }
 
 void
 MCCamera::focusHero()
 {
     focus(MCHero::sharedHero());
-//    if (sceneDelegate_) {
-//        CCSize winSize = CCDirectorGetWindowsSize();
-//        CCPoint mapOffset = sceneDelegate_->getScene()->getMapOffset();
-//        CCPoint rolePosition = MCHero::sharedHero()->getEntity()->getPosition();
-//        CCPointLog(rolePosition);
-//        CCPoint expectedCenter = ccp(rolePosition.x - winSize.width / 2,
-//                                     rolePosition.y - winSize.height / 2);
-//        CCPointLog(expectedCenter);
-//        sceneDelegate_->moveSceneToLocation(ccpNeg(expectedCenter), true);
-//    }
 }
 
 MCSceneDelegate *

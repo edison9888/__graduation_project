@@ -227,9 +227,11 @@ MCRoleManager::loadNPCData()
         ccstring = CCString::create(npcObject["sprite-sheet"].getString().c_str());
         role->setSpriteSheet(ccstring);
         ccstring->retain();
-        MCScript *trigger = MCScriptMaker::createScript(npcObject["trigger"].getString().c_str());
-        role->setTrigger(trigger);
-        trigger->retain();
+        if (npcObject["trigger"].isString()) { /* 暂时只有NPC有脚本 */
+            MCScript *trigger = MCScriptMaker::createScript(npcObject["trigger"].getString().c_str());
+            role->setTrigger(trigger);
+            trigger->retain();
+        }
         ccstring = CCString::create(npcObject["description"].getString().c_str());
         role->setDescription(ccstring);
         ccstring->retain();

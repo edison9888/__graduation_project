@@ -27,6 +27,12 @@ public:
         atEntrance_ = var;
     }
     
+    /**
+     * 在主角面前的人物
+     * 判断当前视野中的人物，然后返回最近的那个
+     */
+    MCRole *roleOfFront();
+    
     CCObject *copy() { return copyWithZone(0); }
 private:
     bool atEntrance_;

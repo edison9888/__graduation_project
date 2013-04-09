@@ -27,19 +27,19 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="35" height="35">
-  <object name="dungeon-3-west" type="entrance" x="0" y="80" width="16" height="160">
+  <object name="dungeon-3-west" type="entrance" x="0" y="80" width="32" height="160">
    <properties>
     <property name="ID" value="M302"/>
     <property name="dest" value="dungeon-2-east"/>
    </properties>
   </object>
-  <object name="dungeon-3-north" type="entrance" x="224" y="0" width="112" height="16">
+  <object name="dungeon-3-north" type="entrance" x="224" y="0" width="112" height="32">
    <properties>
     <property name="ID" value="M309"/>
     <property name="dest" value="dungeon-0"/>
    </properties>
   </object>
-  <object name="dungeon-3-east" type="entrance" x="480" y="144" width="32" height="32">
+  <object name="dungeon-3-east" type="entrance" x="464" y="144" width="64" height="32">
    <properties>
     <property name="ID" value="M308"/>
     <property name="dest" value="dungeon-king"/>
@@ -60,6 +60,9 @@
   <object type="barrier" x="544" y="80" width="16" height="160"/>
   <object type="barrier" x="208" y="-16" width="160" height="16"/>
   <object type="barrier" x="-16" y="64" width="16" height="192"/>
+  <object type="barrier" x="448" y="144" width="16" height="48"/>
+  <object type="barrier" x="528" y="144" width="16" height="48"/>
+  <object type="barrier" x="448" y="176" width="96" height="16"/>
  </objectgroup>
  <objectgroup name="semi-transparents" width="35" height="35"/>
  <objectgroup name="objects" width="35" height="35">

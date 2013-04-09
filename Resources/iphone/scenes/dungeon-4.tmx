@@ -3,7 +3,7 @@
  <properties>
   <property name="scene-type" value="field"/>
   <property name="sound" value="sounds/dungeon.mp3"/>
-  <property name="tmx" value="maps/M401.tmx"/>
+  <property name="tmx" value="maps/M304.tmx"/>
  </properties>
  <tileset firstgid="1" name="050-DarkSpace01" tilewidth="16" tileheight="16">
   <image source="050-DarkSpace01.png" width="256" height="640"/>
@@ -50,31 +50,31 @@
  <objectgroup name="objects" width="25" height="60">
   <object type="object" x="144" y="576">
    <properties>
-    <property name="ID" value="M411"/>
+    <property name="ID" value="E411"/>
     <property name="flags" value="F406"/>
    </properties>
   </object>
   <object type="object" x="202" y="578">
    <properties>
-    <property name="ID" value="M412"/>
+    <property name="ID" value="E412"/>
     <property name="flags" value="F406"/>
    </properties>
   </object>
   <object type="object" x="163" y="505">
    <properties>
-    <property name="ID" value="M413"/>
+    <property name="ID" value="E413"/>
     <property name="flags" value="F406"/>
    </properties>
   </object>
   <object type="object" x="242" y="644">
    <properties>
-    <property name="ID" value="M412"/>
+    <property name="ID" value="E412"/>
     <property name="flags" value="F406"/>
    </properties>
   </object>
   <object type="object" x="157" y="654">
    <properties>
-    <property name="ID" value="M411"/>
+    <property name="ID" value="E411"/>
     <property name="flags" value="F406"/>
    </properties>
   </object>

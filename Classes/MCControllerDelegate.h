@@ -22,6 +22,9 @@ class MCItem;
 class MCJoypadControllerDelegate {
 public:
     virtual void controllerDidMove(MCJoypadControllerDelegate *aSender, const CCPoint &delta) {}
+    
+     /* 行动 */
+    virtual void controllerDidActivate() {}
 };
 
 class MCBattleControllerDelegate {

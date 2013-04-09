@@ -16,6 +16,19 @@
 #include "MCAStar.h"
 #include "MCTeam.h"
 #include "MCFlagManager.h"
+#include "MCObjectLayer.h"
+
+MCSceneContext::MCSceneContext()
+{
+    objects_ = CCArray::create();
+    objects_->retain();
+    inited_ = false;
+}
+
+MCSceneContext::~MCSceneContext()
+{
+    CC_SAFE_RELEASE(objects_);
+}
 
 #pragma mark *** MCSceneContextManager ***
 
@@ -124,6 +137,7 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         CCSize buttonSize = detailMenuItem->getContentSize();
         detailMenu->setPosition(ccp(winSize.width - buttonSize.width,
                                     winSize.height - buttonSize.height));
+        detailMenu_ = detailMenu;
         
         detail_ = MCDetail::create();
         detail_->initPosition();
@@ -132,6 +146,11 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
                                                                       callfuncO_selector(MCScene::detailDidHide),
                                                                       kMCDetailDidHideNotification,
                                                                       NULL);
+        
+#warning MCViewportLayer
+        viewport_ = MCViewportLayer::create();
+        addChild(viewport_);
+        viewport_->map = background_->getMap();
         
         return true;
     }
@@ -187,6 +206,12 @@ MCScene::onEnter()
     /* 已加载玩对象了现在 */
     background_->loadEnemies(objects_->objects());
     background_->loadTeam(MCTeam::sharedTeam());
+    
+#warning MCViewportLayer
+    viewport_->loadObjects(objects_->objects());
+    viewport_->loadBarriers(objects_->barriers_);
+    viewport_->loadSemis(objects_->semiTransparents_);
+    viewport_->loadEntrances(objects_->entrances_);
     
     /* 设置地图位置 */
     sceneCamera_->restore();
@@ -269,10 +294,7 @@ void
 MCScene::moveSceneToLocation(const CCPoint &aLocation, bool adjusted)
 {
     CCPoint offset = ccpSub(aLocation, getMapOffset());
-//    sceneCamera_->translate
-//    (objects_->setSceneOffset(offset, adjusted));
     objects_->setSceneOffset(offset);
-    CCPointLog(sceneCamera_->getViewport().origin);
 }
 
 bool

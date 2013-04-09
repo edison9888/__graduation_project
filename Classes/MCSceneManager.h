@@ -71,6 +71,9 @@ public:
     virtual MCScene *getScene() = 0;
     
     virtual MCScenePackage *getScenePackage() const = 0;
+    
+    virtual void pauseScene() {}
+    virtual void resumeScene() {}
 };
 
 #endif /* defined(__Military_Confrontation__MCSceneManager__) */

@@ -81,13 +81,16 @@ MCRoleEntity::onEnter()
 {
     CCSprite::onEnter();
     schedule(schedule_selector(MCRoleEntity::update));
+    CCAssert(role_->ai_ != NULL, "没脑子");
+    startThinking();
 }
 
 void
 MCRoleEntity::onExit()
 {
-    CCSprite::onExit();
+    stopThinking();
     unschedule(schedule_selector(MCRoleEntity::update));
+    CCSprite::onExit();
 }
 
 void
@@ -303,6 +306,33 @@ MCRoleEntity::stopAllMoveToActions()
         }
         moveToActions_->removeLastObject();
     }
+}
+
+void
+MCRoleEntity::startThinking()
+{
+    schedule(schedule_selector(MCRoleEntity::thinking));
+    schedule(schedule_selector(MCRoleEntity::checkObjects), 2.0f);
+}
+
+void
+MCRoleEntity::stopThinking()
+{
+    unschedule(schedule_selector(MCRoleEntity::checkObjects));
+    unschedule(schedule_selector(MCRoleEntity::thinking));
+}
+
+void
+MCRoleEntity::thinking(float dt)
+{
+    role_->ai_->update(dt);
+}
+
+/* 调用AI的checkObjects */
+void
+MCRoleEntity::checkObjects(float dt)
+{
+    role_->ai_->checkObjects(dt);
 }
 
 void

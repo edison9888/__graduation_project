@@ -13,22 +13,22 @@
  </tileset>
  <layer name="background" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YOW4CQRSE4RHXYxWQgQEBGauAzGw5a85+q/EN7Fv4DxFSJ+i1XQMdfOoXjUZdJbX04iiKvhAn6PzGT8JOhXsL96x5KtzbO9zzLfW3lO/58V8tv19ECWXj+fGfLb/fRAvtBM0jjDFJ0PxMRmlkkEUOeRSMcvfVjQqq+EANdTSMcvfVjQ666KGPAYZGufvqxiemmGGOBZZGufvqxgprbLDFDnuj3H1144AjTjjjgqtR7r668d+zwhsR3hTNWSHr0A3NWSHr0A3NWSHr0A3NWSHr0A3NWSHr0A3NWSHr+9m171Huhmvfo9wN175HuRuufY9yN1z7HuVuuPY9yt141TflF+sr7eakHwAA
+   H4sIAAAAAAAAA+3YNw4CMRSE4b0fUbAdUUBHFNARe2JPPBbcAG7BX1JgIYENs+Dik1/lwjOSpXcKguCMU4TOC64ROxXezb+z5qnwbv/wzp+m+s7PvHt/BlmElufwAVv3V1BFLUJzFz30IzS/klEMcSSQRAppS7m76kYOeRRQRAllS7m76kYdDTTRQhsdS7m76sYAQ4wwxgRTS7m76sYMcyywxAprS7m76sYGW+ywxwFHS7m76sa3Z4U/wv8pmrNC1r4bmrNC1r4bmrNC1r4bmrNC1r4bmrNC1r4bmrNC1vezad+j3A3Tvke5G6Z9j3I3TPse5W6Y9j3K3TDte5S78at/yg3mf71ipB8AAA==
   </data>
  </layer>
  <layer name="first" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XN08DMRyGcScbpK6QutJZ6XwL6k7dqTt1py7M1J26U3fqTt2pTySsnHQoueQc5S74lX6yiKU3fwnLcoTQ0dHRKf344C/2EDlmC9vYwe7v306WmrUGtThwiUO0oNXi/8QpceN5jiBa7CFyjDzPbkopnme5X4ZywxpAECGELfSoTLbzLPcrUGlYY4gjgaSFHpXJdp7lfhWqDWsd6tGARgs9KpPtPMv9JjQb1ja0owOdFnp0dHQKlw2RvrfdFHlvuyny3t4U5t8Re3l2quz6K/Le3hfpt/kRjnGSZ6fKrkw5xRnOcYFLXDmgK1OucYNb3OEeD8L8prLTpTqPeMIzXvCKN2F+U9npUp13fOATX/hOfegxv6nsdKmOj04/AggihLDH/Kay06U6ETqjiCGOBJJ5fo/KLh0dHZ3/nC6vEN3oQS/60O8t9lSZM8B8gxjCMEYw6vCZx5hvHBOYxBSmHT7zDPPNYg7zWMCiw2deYr5lrGAVa1gvwMw/frD3GKQfAAA=
+   H4sIAAAAAAAAA+3XN08DMRyGcScbpK6QutJZ6XwL6k7dqTt1py7M1J26U3fqTt2pTySsnHQoueQc5S74lX6yiKU3fwnLcoTQ0dHRKf344C/2EDlmC9vYwe7v306WmrUGtThwiUO0oNXi/8QpceN5jiBa7CFyjDzPbkopnme5X4ZywxpAECGELfSoTLbzLPcrUGlYY4gjgaSFHpXJdp7lfhWqDWsd6tGARgs9KpPtPMv9JjQb1ja0owOdFnp0dHQKlw2RvrfdFHlvuyny3t4U5t8Re3l2quz6K/Le3hfpt/kRjnGSZ6fKrkw5xRnOcYFLXDmgK1OucYNb3OEeD8L8prLTpTqPeMIzXvCKN2F+U9npUp13fOATX/hOfegxv6nsdKmOj04/AggihLDH/Kay06U6ETqjiCGOBJJ5fo/KLh0dHZ3/nC6vEN3oQS/60O8t9lSZM8B8gxjCMEYw6vCZx5hvHBOYxBSmHT7zDPPNYg7zWMCiw2deYr5lrGAVa1gvwMw/frD3GKQfAAA=
   </data>
  </layer>
  <layer name="second" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2YR07DQBiFnWwgBbaQAhKdFJDoJYEbUC5AuQDlAhSJsqNIlB1lAzeAK9HZ0hEfkr3AQvaYGcYK+EmfZjQZvf8pnoyj3zB+rrWQYayHJAwUeXjRHrX2Jeup8PjUCh6rAj5O9UQ9TthzKrDPzW+Hz3YlM4t6nLHnXGCfiJ/IOXPKPBI2jFEYg/GweyYniXqJnDOn5zqB9yRMwbRkZlEvkXPm9Fxn8J6FOZiXzGz3irEW95hHRAt4L8ISLEtmtnulWEvLWX6rDbw3YQu2JTPbvXKs5ZWk/KoDvA/hCI4lM9u9CqwVlaQMFChQIG+64/1zr/F/cB13Xj00mDRCk0mz4N36Rt53jZk7yNUJXSbd0GPSK5i5gn2Vku8O3aohb22JZQ6+Zz1qI297iWUeIu9wiWX+a7rg3r6EK7h2Ga35DdxqvO/teqD2IzzBs8tozV/g1cfMZZzzcohA1GW05jGI+/j7qKJ2NSQg6TJa8xSkfczcQu1WyEDWZbTmOcj7mLmP2v0e6xfYX1SQOQJReRutSkDS7xAelYGs3yEMb73LARj89UTuUtW71ClVvUudUtW71ClVvUudUtW7DBQo0P/RB6i0D2SkHwAA
+   H4sIAAAAAAAAA+2YR07DQBiFnWwgBbaQAhKdFJDoJYEbUC5AuQDlAhSJsqNIlB1lAzeAK9HZ0hEfkr3AQvaYGcYK+EmfZjQZvf8pnoyj3zB+rrWQYayHJAwUeXjRHrX2Jeup8PjUCh6rAj5O9UQ9TthzKrDPzW+Hz3YlM4t6nLHnXGCfiJ/IOXPKPBI2jFEYg/GweyYniXqJnDOn5zqB9yRMwbRkZlEvkXPm9Fxn8J6FOZiXzGz3irEW95hHRAt4L8ISLEtmtnulWEvLWX6rDbw3YQu2JTPbvXKs5ZWk/KoDvA/hCI4lM9u9CqwVlaQMFChQIG+64/1zr/F/cB13Xj00mDRCk0mz4N36Rt53jZk7yNUJXSbd0GPSK5i5gn2Vku8O3aohb22JZQ6+Zz1qI297iWUeIu9wiWX+a7rg3r6EK7h2Ga35DdxqvO/teqD2IzzBs8tozV/g1cfMZZzzcohA1GW05jGI+/j7qKJ2NSQg6TJa8xSkfczcQu1WyEDWZbTmOcj7mLmP2v0e6xfYX1SQOQJReRutSkDS7xAelYGs3yEMb73LARj89UTuUtW71ClVvUudUtW71ClVvUudUtW7DBQo0P/RB6i0D2SkHwAA
   </data>
  </layer>
  <layer name="third" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OpxJCMRRF0YChF0cvjl4cvfz/j1A9VbBN3BNkyMRw9syaxOTmGqOU+rZDzJgjTjg7nvZ+wTUWbucbf93xwNPxtPcX3gF3TsSNSSKFtONp7xlk4+F2LvFXGRVUHU97r6EecOcOf3XRQ9/xtPcBhgF3nvHX/Mf/VrxfB9xZKaWUUkqp0KWQ9jQrhzwKKHqaGVUFVU+zGmiihbanmVH10Pc0a4QxJph6mhnVAktPszbYYoe9p5lKKaWUUkr9Sx86LaJXpB8AAA==
+   H4sIAAAAAAAAA+3OpxJCMRRF0YChF0cvjl4cvfz/j1A9VbBN3BNkyMRw9syaxOTmGqOU+rZDzJgjTjg7nvZ+wTUWbucbf93xwNPxtPcX3gF3TsSNSSKFtONp7xlk4+F2LvFXGRVUHU97r6EecOcOf3XRQ9/xtPcBhgF3nvHX/Mf/VrxfB9xZKaWUUkqp0KWQ9jQrhzwKKHqaGVUFVU+zGmiihbanmVH10Pc0a4QxJph6mhnVAktPszbYYoe9p5lKKaWUUkr9Sx86LaJXpB8AAA==
   </data>
  </layer>
  <objectgroup name="barriers" width="45" height="45">
@@ -46,6 +46,9 @@
   <object type="barrier" x="-32" y="304" width="32" height="416"/>
   <object type="barrier" x="-32" y="720" width="752" height="16"/>
   <object type="barrier" x="720" y="128" width="16" height="608"/>
+  <object type="barrier" x="304" y="656" width="16" height="48"/>
+  <object type="barrier" x="384" y="656" width="16" height="48"/>
+  <object type="barrier" x="304" y="704" width="96" height="16"/>
  </objectgroup>
  <objectgroup name="entrances" width="45" height="45">
   <object name="body" type="entrance" x="320" y="656" width="64" height="48">
@@ -61,11 +64,6 @@
   <object type="semi-transparent" x="176" y="496" width="32" height="32"/>
   <object type="semi-transparent" x="0" y="544" width="48" height="64"/>
  </objectgroup>
- <layer name="meta" width="45" height="45">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3XwQ3AIAwEQZT+m0in9BDZB45mJL54X0asBUCl96k93X2Vd2nO0JyhOUNzxu1v01+aq2jO0JyhOaNjB3bv04nNHXM0Z+acbv4yV3NmTsVdk98NuNXEv9zEZuCsDXuF2+ikHwAA
-  </data>
- </layer>
  <objectgroup name="objects" width="45" height="45">
   <object x="421" y="242">
    <properties>

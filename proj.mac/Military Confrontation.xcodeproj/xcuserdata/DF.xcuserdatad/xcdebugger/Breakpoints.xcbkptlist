@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCObjectLayer.cpp"
-         timestampString = "387026907.204696"
+         timestampString = "387121686.002066"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "233"
-         endingLineNumber = "233"
+         startingLineNumber = "249"
+         endingLineNumber = "249"
          landmarkName = "MCObjectLayer::onEnter()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -52,7 +52,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "35"
          endingLineNumber = "35"
-         landmarkName = "MCCamera::locate(bool adjusted)"
+         landmarkName = "MCCamera::locate()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

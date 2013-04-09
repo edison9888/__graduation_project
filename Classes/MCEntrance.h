@@ -23,8 +23,10 @@ public:
     
     static MCEntrance* create(const CCRect &aRect);
     
-    bool collidesWith(const CCRect &aTargetRect);
-    bool collidesWith(const MCOBB &anOBB);
+    CC_DEPRECATED_ATTRIBUTE bool collidesWith(const CCRect &aTargetRect);
+    CC_DEPRECATED_ATTRIBUTE bool collidesWith(const MCOBB &anOBB);
+    
+    bool contains(const CCRect &aTargetRect);
     
     inline void setup(const CCRect &aRect) {
         obb_.setup(aRect, 0);

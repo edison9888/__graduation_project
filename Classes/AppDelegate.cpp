@@ -37,8 +37,6 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCSize frameSize = pEGLView->getFrameSize();
 
     pDirector->setOpenGLView(pEGLView);
-    
-    CCLog("%s(%d): %.0f %.0f", __FILE__, __LINE__, frameSize.width, frameSize.height);
 
 //#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
 //	pEGLView->setAccelerometerKeyHook(Win32KeyHook);
@@ -114,6 +112,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
+    
+    CCLog("%s(%d): %.0f %.0f %.0f", __FILE__, __LINE__, frameSize.width, frameSize.height, pDirector->getContentScaleFactor());
     
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();

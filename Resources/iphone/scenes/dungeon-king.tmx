@@ -82,7 +82,7 @@
   </data>
  </layer>
  <objectgroup name="entrances" width="40" height="40">
-  <object name="dungeon-king" type="entrance" x="288" y="624" width="96" height="16">
+  <object name="dungeon-king" type="entrance" x="288" y="608" width="96" height="32">
    <properties>
     <property name="ID" value="M303"/>
     <property name="dest" value="dungeon-3-east"/>

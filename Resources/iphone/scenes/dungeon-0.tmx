@@ -47,6 +47,9 @@
   <object type="barrier" x="48" y="448" width="544" height="16"/>
   <object type="barrier" x="576" y="96" width="64" height="48"/>
   <object type="barrier" x="272" y="48" width="80" height="16"/>
+  <object type="barrier" x="96" y="384" width="16" height="48"/>
+  <object type="barrier" x="176" y="384" width="16" height="48"/>
+  <object type="barrier" x="96" y="432" width="96" height="16"/>
  </objectgroup>
  <objectgroup name="entrances" width="40" height="40">
   <object name="dungeon-0-north" type="entrance" x="272" y="64" width="80" height="32">
