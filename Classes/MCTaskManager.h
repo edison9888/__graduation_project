@@ -23,6 +23,8 @@ public:
     
     MCTask *taskWithObjectId(mc_object_id_t anObjectId);
     
+    MCTask *protoTaskWithObjectId(mc_object_id_t anObjectId);
+    
     /**
      * 储存数据
      */
@@ -41,12 +43,12 @@ public:
     /**
      * 接受一个任务，成功接受返回true，否则返回false
      */
-    bool acceptTask(MCTask *task);
+    int acceptTask(MCTask *task);
     
     /**
      * 以任务ID接受一个任务，成功接受返回true，否则返回false
      */
-    bool acceptTaskWithObjectId(mc_object_id_t anObjectId);
+    int acceptTaskWithObjectId(mc_object_id_t anObjectId);
     
     /**
      * 放弃当前任务，成功放弃返回true，否则返回false
@@ -68,6 +70,8 @@ public:
     inline bool isTaskActiviting() {
         return currentTask_ && (currentTask_->getTaskStatus() == MCTaskActiviting);
     }
+    
+    CCArray *taskForRegion(MCRegion *aRegion);
     
 private:
     /**

@@ -93,6 +93,17 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
         CC_SAFE_RELEASE(entityMetadata_);
     }
     entityMetadata_ = new MCRoleEntityMetadata;
+    
+    CCDictionary *plist = CCDictionary::createWithContentsOfFileThreadSafe(str);
+    CCDictionary *metadataDict = (CCDictionary*) plist->objectForKey("metadata");
+    MCSpriteFrameType spriteFrameType = metadataDict->valueForKey("spriteFrameType")->intValue();
+    if (spriteFrameType == MCSpriteFrameSmallSize) {
+        entityMetadata_->frameSize_ = kMCSpriteFrameSmallSize;
+    } else if (spriteFrameType == MCSpriteFrameMediumSize) {
+        entityMetadata_->frameSize_ = kMCSpriteFrameMediumSize;
+    } else if (spriteFrameType == MCSpriteFrameLargeSize) {
+        entityMetadata_->frameSize_ = kMCSpriteFrameLargeSize;
+    }
 
     /* 纹理文件 */
     sprintf(str, "%s.st", aSpritesheetPath);

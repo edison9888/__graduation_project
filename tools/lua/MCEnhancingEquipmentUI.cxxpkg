@@ -1,0 +1,11 @@
+class MCEnhancingEquipmentUI {
+    bool init();
+    
+    void initPosition();
+    void attach(MCScene *aScene);
+    void detach();
+    
+    void confirmDidClickYesButton(MCConfirm *aConfirm);
+    
+    static MCEnhancingEquipmentUI *create();
+};

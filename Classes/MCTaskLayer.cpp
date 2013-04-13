@@ -314,7 +314,7 @@ MCTaskLayer::loadData()
         CCARRAY_FOREACH(targets, obj) {
             target = dynamic_cast<MCTaskTarget *>(obj);
             targetsList.append(CCString::createWithFormat("%-13s %8u/%u\n",
-                                                          roleManager->metaEnemyForObjectId(target->objectID)
+                                                          roleManager->protoEnemyForObjectId(target->objectID)
                                                                      ->getName()->getCString(),
                                                           target->count,
                                                           target->remaining)->getCString());

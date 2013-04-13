@@ -17,10 +17,9 @@ local function main()
     end
     ---------------
 
-    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
-    local origin = CCDirector:sharedDirector():getVisibleOrigin()
-    
-    CCLuaLog("装备")
+    local enhancingEquipmentUI = MCEnhancingEquipmentUI:create()
+    local currentScene = MCSceneContextManager:sharedSceneContextManager():currentContext():getScene()
+    enhancingEquipmentUI:attach(currentScene)
     
 end
 

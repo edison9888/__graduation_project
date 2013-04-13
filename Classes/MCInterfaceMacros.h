@@ -11,7 +11,8 @@
 
 #define kMCNotEnoughMoney -1
 #define kMCHandleSucceed 0
-#define kMCFullLevel 1
+#define kMCHandleFailured 1
+#define kMCFullLevel 2
 
 #define kMCHired 1
 #define kMCFullTeam 2

@@ -17,10 +17,9 @@ local function main()
     end
     ---------------
 
-    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
-    local origin = CCDirector:sharedDirector():getVisibleOrigin()
-    
-    CCLuaLog("物品")
+    local tradingPropsUI = MCTradingPropsUI:create()
+    local currentScene = MCSceneContextManager:sharedSceneContextManager():currentContext():getScene()
+    tradingPropsUI:attach(currentScene)
     
 end
 

@@ -109,7 +109,7 @@ MCRoleManager::loadData()
 MCRole *
 MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 {
-    MCRole *role = (MCRole *) metaRoleForObjectId(anObjectId)->copy();
+    MCRole *role = (MCRole *) protoRoleForObjectId(anObjectId)->copy();
     
     if (role && role->init()) {
         role->autorelease();
@@ -125,7 +125,7 @@ MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 MCNPC *
 MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
 {
-    MCNPC *npc = (MCNPC *) metaNPCForObjectId(anObjectId)->copy();
+    MCNPC *npc = (MCNPC *) protoNPCForObjectId(anObjectId)->copy();
     
     if (npc && npc->init()) {
         npc->autorelease();
@@ -141,7 +141,7 @@ MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
 MCEnemy *
 MCRoleManager::enemyForObjectId(mc_object_id_t anObjectId)
 {
-    MCEnemy *enemy = (MCEnemy *) metaEnemyForObjectId(anObjectId)->copy();
+    MCEnemy *enemy = (MCEnemy *) protoEnemyForObjectId(anObjectId)->copy();
     
     if (enemy && enemy->MCRole::init()) {
         enemy->autorelease();
@@ -155,20 +155,20 @@ MCRoleManager::enemyForObjectId(mc_object_id_t anObjectId)
 }
 
 MCRole *
-MCRoleManager::metaRoleForObjectId(mc_object_id_t anObjectId)
+MCRoleManager::protoRoleForObjectId(mc_object_id_t anObjectId)
 {
     MCRole *role;
     
-    role = (MCRole *) metaEnemyForObjectId(anObjectId);
+    role = (MCRole *) protoEnemyForObjectId(anObjectId);
     if (role == NULL) {
-        role = (MCRole *) metaNPCForObjectId(anObjectId);
+        role = (MCRole *) protoNPCForObjectId(anObjectId);
     }
     
     return role;
 }
 
 MCNPC *
-MCRoleManager::metaNPCForObjectId(mc_object_id_t anObjectId)
+MCRoleManager::protoNPCForObjectId(mc_object_id_t anObjectId)
 {
     MCNPC *npc;
     
@@ -178,7 +178,7 @@ MCRoleManager::metaNPCForObjectId(mc_object_id_t anObjectId)
 }
 
 MCEnemy *
-MCRoleManager::metaEnemyForObjectId(mc_object_id_t anObjectId)
+MCRoleManager::protoEnemyForObjectId(mc_object_id_t anObjectId)
 {
     MCEnemy *enemy;
     

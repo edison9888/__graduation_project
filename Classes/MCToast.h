@@ -18,9 +18,11 @@ enum {
 typedef float MCToastLength;
 
 class MCToast : public MCDialog {
+private:
+    bool init();
 public:
-    bool init(CCNode *aParent, const char *aMessage, MCToastLength aToastLength = MCLengthShort);
-    static MCToast *create(CCNode *aParent, const char *aMessage, MCToastLength aToastLength = MCLengthShort);
+    
+    static MCToast *make(CCNode *aParent, const char *aMessage, MCToastLength aToastLength = MCLengthShort);
     
     void show();
     void cancel();

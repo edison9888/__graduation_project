@@ -18,7 +18,11 @@ MCEntrance::~MCEntrance()
 void
 MCEntrance::init(const CCRect &aRect)
 {
+#if (MC_COLLISION_USE_OBB == 1)
     obb_.setup(aRect, 0);
+#else
+    frame_ = aRect;
+#endif
 }
 
 MCEntrance *
@@ -35,6 +39,7 @@ MCEntrance::create(const CCRect &aRect)
     return pRet;
 }
 
+#if (MC_COLLISION_USE_OBB == 1)
 bool
 MCEntrance::collidesWith(const CCRect &aTargetRect)
 {
@@ -87,21 +92,50 @@ MCEntrance::contains(const CCRect &aTargetRect)
     
     return true;
 }
+#else
+bool
+MCEntrance::collidesWith(const CCRect &aTargetRect)
+{
+    return frame_.intersectsRect(aTargetRect);
+}
 
 /**
- * 检测是否与人物碰撞
- *
- * aRoleEntity(in):   人物实体
- * anOffsetAtMap(in): 人物在地图上的位置
- *
- * 返回值你懂的
+ * 要包含就要矩形的四个点都在入口内
+ * p3 - p2
+ *  |   |
+ * p0 - p1
  */
+
 bool
-MCEntrance::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
+MCEntrance::contains(const CCRect &aTargetRect)
 {
-//    CCRect bounds = aRoleEntity->getAABB();
-//    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
+    float halfWidth = frame_.size.width;
+    float halfHeight = frame_.size.height;
+    CCPoint targetOrigin = aTargetRect.origin;
+    CCPoint center = ccp(targetOrigin.x + halfWidth,
+                         targetOrigin.y + halfHeight);
+    CCPoint centerOffset = ccpSub(targetOrigin, center);
     
-//    return rect_.intersectsRect(bounds);
-    return false;
+    /* p0.x, p3.x */
+    if (fabsf(centerOffset.x) > halfWidth) {
+        return false;
+    }
+    /* p0.y, p1.y */
+    if (fabsf(centerOffset.y) > halfHeight) {
+        return false;
+    }
+    targetOrigin.x += aTargetRect.size.width;
+    targetOrigin.y += aTargetRect.size.height;
+    centerOffset = ccpSub(targetOrigin, center);
+    /* p1.x, p2.x */
+    if (fabsf(centerOffset.x) > halfWidth) {
+        return false;
+    }
+    /* p2.y, p3.y */
+    if (fabsf(centerOffset.y) > halfHeight) {
+        return false;
+    }
+    
+    return true;
 }
+#endif

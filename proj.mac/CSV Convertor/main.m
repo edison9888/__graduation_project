@@ -17,6 +17,7 @@
 #import "MCItemHandler.h"
 #import "MCFlagHandler.h"
 #import "MCTaskHandler.h"
+#import "MCRegionHandler.h"
 
 #import "MCScenePackageGenerator.h"
 #import "MCTMXGenerator.h"
@@ -24,7 +25,7 @@
 static NSString *root = @"/Users/DF/Desktop/游戏策划";
 static NSString *kMCScenesRoot = @"/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/Resources/iphone/scenes";
 
-const BOOL do_csv_convert = NO;
+const BOOL do_csv_convert = YES;
 const BOOL do_scenes_generation = NO;
 
 int main(int argc, const char * argv[])
@@ -96,6 +97,14 @@ int main(int argc, const char * argv[])
             /* 任务 */
             handler = [[MCTaskHandler alloc] init];
             handler.startLine = 2;
+            handler.ignoreLine = 0;
+            [convertor setHandler:handler];
+            [convertor convert];
+            [handler release];
+            
+            /* 区域 */
+            handler = [[MCRegionHandler alloc] init];
+            handler.startLine = 1;
             handler.ignoreLine = 0;
             [convertor setHandler:handler];
             [convertor convert];

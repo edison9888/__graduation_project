@@ -21,11 +21,11 @@ static MCFlagManager *__shared_flag_manager = NULL;
 const char *kMCFlagsFilepath = "F000.jpkg";
 
 /* 任务状态 */
-static mc_object_id_t kMCTaskFlagId = {'F', '0', '0', '1'};
+static const mc_object_id_t kMCTaskFlagId = {'F', '0', '0', '1'};
 /* 高级区域封锁 */
-static mc_object_id_t kMCAreaBlockedFlagId = {'F', '0', '0', '2'};
+static const mc_object_id_t kMCAreaBlockedFlagId = {'F', '0', '0', '2'};
 /* 是否在重生点出现 */
-static mc_object_id_t kMCSpawnFlagId = {'F', '0', '0', '3'};
+static const mc_object_id_t kMCSpawnFlagId = {'F', '0', '0', '3'};
 
 static vector<string>
 split(string& str,const char* c)

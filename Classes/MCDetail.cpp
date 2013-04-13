@@ -49,6 +49,7 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
     if (CCLayer::init()) {
         CCMenuItem *menuItem;
         CCMenu *menu;
+        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
         
         CCSize winSize = CCDirectorGetWindowsSize();
         CCMenuItemImage *backwardMenuItem = CCMenuItemImage::create("back.png", "back_pressed.png");
@@ -56,8 +57,8 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
         menu = CCMenu::create();
         addChild(menu);
         menu->addChild(backwardMenuItem);
-        menu->setPosition(ccp(backwardMenuItem->getContentSize().width / 2 - 16,
-                              winSize.height - backwardMenuItem->getContentSize().height / 2 + 16));
+        menu->setPosition(ccp(backwardMenuItem->getContentSize().width / 2 - 16 / contentScaleFactor,
+                              winSize.height - backwardMenuItem->getContentSize().height / 2 + 16 / contentScaleFactor));
         
         menu = CCMenu::create();
         addChild(menu);
@@ -156,7 +157,7 @@ void
 MCDetail::show()
 {
     menuItem_clicked(((__MCViewSelectorLayer *) viewSelector_)->getDefaultMenuItem());
-    runAction(CCMoveTo::create(kMCActionDuration, ccp(0, 0)));
+    runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }
 
 void

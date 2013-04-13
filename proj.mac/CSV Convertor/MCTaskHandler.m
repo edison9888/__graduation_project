@@ -7,6 +7,47 @@
 //
 
 #import "MCTaskHandler.h"
+#import "MCCoreMacros.h"
+
+static const NSUInteger kMCIDIndex = 0;
+
+MCDefineIndexAndKey(Name, 1, name);
+
+static const NSString   *kMCTargetsKey = @"targets";
+
+static const NSUInteger kMCTargetAIndex = 2;
+static const NSUInteger kMCTargetBIndex = 4;
+static const NSUInteger kMCTargetCIndex = 6;
+static const NSUInteger kMCTargetDIndex = 8;
+
+static const NSUInteger kMCTargetACountIndex = 3;
+static const NSUInteger kMCTargetBCountIndex = 5;
+static const NSUInteger kMCTargetCCountIndex = 7;
+static const NSUInteger kMCTargetDCountIndex = 9;
+
+MCDefineIndexAndKey(TrapType, 11, trap-type);
+
+static const NSUInteger kMCTrapLimitedAIndex = 12;
+static const NSUInteger kMCTrapLimitedBIndex = 13;
+static const NSString   *kMCTrapLimitedKey = @"trap-limited";
+
+static const NSUInteger kMCPotionLimitedAIndex = 14;
+static const NSUInteger kMCPotionLimitedBIndex = 15;
+static const NSString   *kMCPotionLimitedKey = @"potion-limited";
+
+static const NSUInteger kMCTrapBonusAIndex = 16;
+static const NSUInteger kMCTrapBonusBIndex = 17;
+static const NSString   *kMCTrapBonusdKey = @"trap-bonus";
+
+static const NSUInteger kMCPotionBonusAIndex = 18;
+static const NSUInteger kMCPotionBonusBIndex = 19;
+static const NSString   *kMCPotionBonusKey = @"potion-bonus";
+
+MCDefineIndexAndKey(CashPledge, 20, cash-pledge);
+MCDefineIndexAndKey(Bonus, 21, bonus);
+MCDefineIndexAndKey(Flag, 22, flag);
+MCDefineIndexAndKey(Region, 23, region);
+MCDefineIndexAndKey(Description, 24, description);
 
 @implementation MCTaskHandler
 
@@ -47,70 +88,73 @@
     id object;
     
     /* ID */
-    NSString *ID = [data objectAtIndex:0];
+    NSString *ID = [data objectAtIndex:kMCIDIndex];
     /* name */
-    [content setObject:[data objectAtIndex:1] forKey:@"name"];
+    [content setObject:[data objectAtIndex:kMCNameIndex] forKey:kMCNameKey];
     /* targets */
     NSMutableDictionary *targets = [[NSMutableDictionary alloc] initWithCapacity:2];
-    [targets setObject:@([[data objectAtIndex:3] integerValue])
-                forKey:[data objectAtIndex:2]];
+    object = [data objectAtIndex:kMCTargetAIndex];
+    [targets setObject:@([[data objectAtIndex:kMCTargetACountIndex] integerValue])
+                forKey:[(NSString *)object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
     /* 测试多个目标 */
-    object = [data objectAtIndex:4];
+    object = [data objectAtIndex:kMCTargetBIndex];
     if ([(NSString *) object compare:@"-"] != NSOrderedSame) {
-        [targets setObject:@([[data objectAtIndex:5] integerValue])
-                    forKey:object];
+        [targets setObject:@([[data objectAtIndex:kMCTargetBCountIndex] integerValue])
+                    forKey:[(NSString *)object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
     }
-    object = [data objectAtIndex:6];
+    object = [data objectAtIndex:kMCTargetCIndex];
     if ([(NSString *) object compare:@"-"] != NSOrderedSame) {
-        [targets setObject:@([[data objectAtIndex:7] integerValue])
-                    forKey:object];
+        [targets setObject:@([[data objectAtIndex:kMCTargetCCountIndex] integerValue])
+                    forKey:[(NSString *)object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
     }
-    object = [data objectAtIndex:8];
+    object = [data objectAtIndex:kMCTargetDIndex];
     if ([(NSString *) object compare:@"-"] != NSOrderedSame) {
-        [targets setObject:@([[data objectAtIndex:9] integerValue])
-                    forKey:object];
+        [targets setObject:@([[data objectAtIndex:kMCTargetDCountIndex] integerValue])
+                    forKey:[(NSString *)object stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
     }
-    [content setObject:targets forKey:@"targets"];
+    [content setObject:targets forKey:kMCTargetsKey];
     /* trap-type */
-    NSString *trapType = [data objectAtIndex:11];
+    NSString *trapType = [data objectAtIndex:kMCTrapTypeIndex];
     if ([trapType compare:@"火球"] == NSOrderedSame) {
-        [content setObject:@(1) forKey:@"trap-type"];
+        [content setObject:@(1) forKey:kMCTrapTypeKey];
     } else if ([trapType compare:@"诅咒"] == NSOrderedSame) {
-        [content setObject:@(2) forKey:@"trap-type"];
+        [content setObject:@(2) forKey:kMCTrapTypeKey];
     } else if ([trapType compare:@"麻痹"] == NSOrderedSame) {
-        [content setObject:@(4) forKey:@"trap-type"];
+        [content setObject:@(4) forKey:kMCTrapTypeKey];
     } else if ([trapType compare:@"迷雾"] == NSOrderedSame) {
-        [content setObject:@(8) forKey:@"trap-type"];
+        [content setObject:@(8) forKey:kMCTrapTypeKey];
     } else if ([trapType compare:@"闪光"] == NSOrderedSame) {
-        [content setObject:@(16) forKey:@"trap-type"];
+        [content setObject:@(16) forKey:kMCTrapTypeKey];
     } else {
         NSLog(@"未知陷阱类型");
         exit(1);
     }
     /* trap-limited */
-    [content setObject:@[@([[data objectAtIndex:12] integerValue]),
-                        @([[data objectAtIndex:13] integerValue])]
-                forKey:@"trap-limited"];
+    [content setObject:@[@([[data objectAtIndex:kMCTrapLimitedAIndex] integerValue]),
+                        @([[data objectAtIndex:kMCTrapLimitedBIndex] integerValue])]
+                forKey:kMCTrapLimitedKey];
     /* potion-limited */
-    [content setObject:@[@([[data objectAtIndex:14] integerValue]),
-                        @([[data objectAtIndex:15] integerValue])]
-                forKey:@"potion-limited"];
+    [content setObject:@[@([[data objectAtIndex:kMCPotionLimitedAIndex] integerValue]),
+                        @([[data objectAtIndex:kMCPotionLimitedBIndex] integerValue])]
+                forKey:kMCPotionLimitedKey];
     /* trap-bonus */
-    [content setObject:@[@([[data objectAtIndex:16] integerValue]),
-                        @([[data objectAtIndex:17] integerValue])]
-                forKey:@"trap-bonus"];
+    [content setObject:@[@([[data objectAtIndex:kMCTrapBonusAIndex] integerValue]),
+                        @([[data objectAtIndex:kMCTrapBonusBIndex] integerValue])]
+                forKey:kMCTrapBonusdKey];
     /* potion-bonus */
-    [content setObject:@[@([[data objectAtIndex:18] integerValue]),
-                        @([[data objectAtIndex:19] integerValue])]
-                forKey:@"potion-bonus"];
+    [content setObject:@[@([[data objectAtIndex:kMCPotionBonusAIndex] integerValue]),
+                        @([[data objectAtIndex:kMCPotionBonusBIndex] integerValue])]
+                forKey:kMCPotionBonusKey];
     /* cash-pledge */
-    [content setObject:[data objectAtIndex:20] forKey:@"cash-pledge"];
+    [content setObject:@([[data objectAtIndex:kMCCashPledgeIndex] integerValue]) forKey:kMCCashPledgeKey];
     /* bonus */
-    [content setObject:@([[data objectAtIndex:21] integerValue]) forKey:@"bonus"];
+    [content setObject:@([[data objectAtIndex:kMCBonusIndex] integerValue]) forKey:kMCBonusKey];
     /* flag */
-    [content setObject:[data objectAtIndex:22] forKey:@"flag"];
+    [content setObject:[data objectAtIndex:kMCFlagIndex] forKey:kMCFlagKey];
+    /* region */
+    [content setObject:[data objectAtIndex:kMCRegionIndex] forKey:kMCRegionKey];
     /* description */
-    [content setObject:[data objectAtIndex:23] forKey:@"description"];
+    [content setObject:[data objectAtIndex:kMCDescriptionIndex] forKey:kMCDescriptionKey];
     
     [self setObject:content forKey:ID];
 }

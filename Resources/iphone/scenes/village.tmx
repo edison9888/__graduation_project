@@ -152,7 +152,7 @@
     <property name="ID" value="N006"/>
    </properties>
   </object>
-  <object name="spawn-point" x="1408" y="816" width="32" height="32"/>
+  <object name="spawn-point" x="1376" y="352" width="32" height="32"/>
   <object x="640" y="928">
    <properties>
     <property name="ID" value="N004"/>

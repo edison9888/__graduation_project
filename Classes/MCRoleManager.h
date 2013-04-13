@@ -32,10 +32,10 @@ public:
     MCEnemy *enemyForObjectId(mc_object_id_t anObjectId);
     
     /* 以下三个方法尽量不要使用！ */
-    /* metadata */
-    MCRole *metaRoleForObjectId(mc_object_id_t anObjectId);
-    MCNPC *metaNPCForObjectId(mc_object_id_t anObjectId);
-    MCEnemy *metaEnemyForObjectId(mc_object_id_t anObjectId);
+    /* proto-data */
+    MCRole *protoRoleForObjectId(mc_object_id_t anObjectId);
+    MCNPC *protoNPCForObjectId(mc_object_id_t anObjectId);
+    MCEnemy *protoEnemyForObjectId(mc_object_id_t anObjectId);
     
 private:
     void loadData();

@@ -37,8 +37,6 @@ protected:
     void weaponWasSelected(CCObject *obj);
     
 private:
-    CCMenu *changeWeaponButton_;
-    
     CCLayer *weaponLayer_;
     CCLayer *armorLayer_;
     

@@ -169,6 +169,7 @@ MCObjectLayer::onEnter()
     MCScene *scene = context->getScene();
     MCHero *hero = MCHero::sharedHero();
     MCRole *role;
+    MCRoleEntity *roleEntity;
     float contentScaleFactor = contentScaleFactor_;
     CCArray *team;
     CCObject *obj;
@@ -183,13 +184,12 @@ MCObjectLayer::onEnter()
     CCArray *roles = context->objects_;
     if (! context->inited_) {
         MCScenePackage *package = scene->getScenePackage();
-        CCDictionary *dataDict = package->getObjects();
-        CCDictElement *elem;
+        CCArray *objects = package->getObjects();
         CCArray *flags;
         bool has;
         
-        CCDICT_FOREACH(dataDict, elem) {
-            role = dynamic_cast<MCRole *>(elem->getObject());
+        CCARRAY_FOREACH(objects, obj) {
+            role = dynamic_cast<MCRole *>(obj);
             /* 初始化NPC数据 */
             has = false;
             if (scenePackageType_ == MCBattleFieldScenePackage) {
@@ -200,8 +200,7 @@ MCObjectLayer::onEnter()
                         break;
                     }
                 }
-#warning 判断是否应该添加进去
-            } else {
+            } else if (role->getRoleType() == MCRole::MCNPC) {
                 has = true;
             }
             if (has) {
@@ -220,19 +219,6 @@ MCObjectLayer::onEnter()
                             mapHeight_ - positionAtTMX.y / contentScaleFactor);
         role->getEntity()->setPosition(ccpAdd(positionAtTMX, mapPosition));
 
-    }
-    
-    /* mercenaries */
-    mercenaries_->removeAllObjects();
-    if (scenePackageType_ == MCBattleFieldScenePackage) {
-        team = MCTeam::sharedTeam()->getRoles();
-        CCARRAY_FOREACH(team, obj) {
-            MCRole *role = dynamic_cast<MCRole *>(obj);
-            if (role != hero) {
-                addChild(role->getEntity()->getSpriteSheet());
-                mercenaries_->addObject(role);
-            }
-        }
     }
     
     /* hero */
@@ -258,10 +244,17 @@ MCObjectLayer::onEnter()
                                                                                     ->getCString()));
         scene->getEntranceName()->release();
         CCAssert(entrance != NULL, "场景没有入口！");
+#if (MC_COLLISION_USE_OBB == 1)
         MCOBB obb = entrance->getOBB();
-        rolePosition = ccpAdd(obb.getOrigin(), map_->getPosition());
+        rolePosition = ccpAdd(obb.getOrigin(), mapPosition);
         rolePosition.x += obb.extents.width - hero_->getOBB().extents.width;
         rolePosition.y += obb.extents.height - hero_->getOBB().extents.height;
+#else
+        CCRect frame = entrance->getFrame();
+        rolePosition = ccpAdd(frame.origin, mapPosition);
+        rolePosition.x += (frame.size.width - hero_->getOBB().width) / 2;
+        rolePosition.y += (frame.size.height - hero_->getOBB().height) / 2;
+#endif
         atEntrance = true;
     } else {
 #warning debug
@@ -273,6 +266,21 @@ MCObjectLayer::onEnter()
     hero->setAtEntrance(atEntrance);
     hero_->setPosition(rolePosition);
     CCPointLog(hero_->getPosition());
+    
+    /* mercenaries */
+    mercenaries_->removeAllObjects();
+    if (scenePackageType_ == MCBattleFieldScenePackage) {
+        team = MCTeam::sharedTeam()->getRoles();
+        CCARRAY_FOREACH(team, obj) {
+            MCRole *role = dynamic_cast<MCRole *>(obj);
+            if (role != hero) {
+                roleEntity = role->getEntity();
+                addChild(roleEntity->getSpriteSheet());
+                roleEntity->setPosition(rolePosition);
+                mercenaries_->addObject(role);
+            }
+        }
+    }
 }
 
 void
@@ -344,6 +352,13 @@ MCObjectLayer::setSceneOffset(const CCPoint &anOffset)
             role->getEntity()->drag(anOffset);
         }
     }
+    objects = mercenaries_;
+    if (objects) {
+        CCARRAY_FOREACH(objects, obj) {
+            role = (MCRole *) obj;
+            role->getEntity()->drag(anOffset);
+        }
+    }
     hero_->drag(anOffset);
 }
 
@@ -356,7 +371,6 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     CCPoint heroCurrentPositionAtMap = ccpSub(heroCurrentPosition, mapCurrentPosition);
     CCPoint heroMaybeMoveToPosition;
     CCPoint heroMaybeMoveToPositionAtMap;
-    CCPoint heroMaybeMoveToPositionAtMapForCheck;
     CCPoint mapMaybeMoveToPosition;
     CCPoint delta;
     CCPoint deltaForMap;
@@ -381,17 +395,20 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     deltaForCheck = CCPoint(deltaForHero);
     
     /* 让移动更平滑~~~~ */
+//    CCPointLog(deltaForHero);
     if (deltaForHero.x > -1.5 && deltaForHero.x < 1.5) {
-        deltaForHero.x = 0;
-        deltaForCheck.x = deltaForHero.x > 0 ? -0.5 : 0.5;
+        deltaForHero.x = deltaForHero.x > 0 ? -0.5 : 0.5;
+//        deltaForHero.x = 0;
+        deltaForCheck.x = deltaForCheck.x > 0 ? -0.5 : 0.5;
     }
     if (deltaForHero.y > -1.5 && deltaForHero.y < 1.5) {
-        deltaForHero.y = 0;
-        deltaForCheck.y = deltaForHero.y > 0 ? -0.5 : 0.5;
+        deltaForHero.y = deltaForHero.y > 0 ? -0.5 : 0.5;
+//        deltaForHero.y = 0;
+        deltaForCheck.y = deltaForCheck.y > 0 ? -0.5 : 0.5;
     }
+//    CCPointLog(deltaForHero);
     
     heroMaybeMoveToPositionAtMap = ccpAdd(heroCurrentPositionAtMap, deltaForHero);
-    heroMaybeMoveToPositionAtMapForCheck = ccpAdd(heroCurrentPositionAtMap, deltaForCheck);
     
     if ((heroMaybeMoveToPositionAtMap.x > edgeLeft && heroMaybeMoveToPositionAtMap.x < edgeRight)) { /* 移动地图 */
         deltaForHero.x = 0;
@@ -424,6 +441,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     /* tags: #collision */
     /* 矩形框检测方案 */
     /* 场景切换检测 */
+#if (MC_COLLISION_USE_OBB == 1)
     MCOBB heroOBB = hero_->getOBB();
     /* recal origin */
     heroOBB.setup(deltaForCheck);
@@ -433,6 +451,41 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         deltaForMap = CCPointZero;
         deltaForHero = CCPointZero;
     }
+#else
+//    CCRect heroCurrentFrame = hero_->getOBB().getAABB();
+    CCSize frameSize = hero_->getMetadata()->getFrameSize();
+    CCRect heroCurrentFrame = CCRectMake(heroCurrentPosition.x - mapCurrentPosition.x,heroCurrentPosition.y - mapCurrentPosition.y,
+                                         frameSize.width,frameSize.height);
+    CCRect heroFrame(heroCurrentFrame);
+    heroFrame.origin = ccpAdd(heroFrame.origin, deltaForCheck);
+    detectsCollidesWithEntrances(heroFrame);
+    detectsCollidesWithSemiTransparents(heroFrame);
+//    deltaForHero = ccpAdd(deltaForHero, feedbackOffset);
+//    deltaForMap = ccpSub(deltaForMap, feedbackOffset);
+//    if (/*deltaForHero.x == 0.0f && deltaForHero.y == 0.0f
+//        &&*/ (feedbackOffset.x != 0.0f || feedbackOffset.y != 0.0f)) {
+#if 1
+    if (detectsCollidesWithBarriers(heroFrame)) {
+        deltaForMap = CCPointZero;
+        deltaForHero = CCPointZero;
+    }
+#else
+    CCPoint feedbackOffset = detectsCollidesWithBarriers(heroCurrentFrame, deltaForCheck);
+    printf("H<%.0f %.0f> - M<%.0f %.0f> - F<%.0f %.0f>\t|\t",
+           deltaForHero.x, deltaForHero.y,
+           deltaForMap.x, deltaForMap.y,
+           feedbackOffset.x, feedbackOffset.y);
+    deltaForHero = ccpAdd(deltaForHero, feedbackOffset);
+    printf("H<%.0f %.0f> - ",
+           deltaForHero.x, deltaForHero.y);
+//    if (deltaForHero.x == 0.0f && deltaForHero.y == 0.0f) {
+//    if (deltaForMap.x != 0.0f || deltaForMap.y != 0.0f) {
+        deltaForMap = ccpSub(deltaForMap, feedbackOffset);
+//    }
+    printf("M<%.0f %.0f> \n",
+           deltaForMap.x, deltaForMap.y);
+#endif
+#endif
     
     CCObject *obj;
     CCAction *scrollAction = CCSequence::create(CCMoveBy::create(kMCDuraitonMap, deltaForMap),
@@ -453,7 +506,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     hero_->walkOnScreen(deltaForHero, offset);
     getSceneDelegate()->getScene()->getSceneCamera()->translate(deltaForMap);
 }
-
+#if (MC_COLLISION_USE_OBB == 1)
 void
 MCObjectLayer::detectsCollidesWithEntrances(const MCOBB &anOBB)
 {
@@ -558,6 +611,136 @@ MCObjectLayer::detectsCollidesWithBarriers(const MCOBB &anOBB, const cocos2d::CC
     obb.center = ccpAdd(anOBB.center, anOffset);
     return detectsCollidesWithBarriers(obb);
 }
+#else
+void
+MCObjectLayer::detectsCollidesWithEntrances(const CCRect &anFrame)
+{
+    CCObject *obj;
+    MCEntrance *entrance;
+    MCHero *hero = dynamic_cast<MCHero *>(hero_->getPrototype());
+    bool atEntrance = false;
+    CCARRAY_FOREACH(entrances_, obj) {
+        entrance = (MCEntrance *) obj;
+#warning 暂时使用OBB检测，修改检测是否站在入口的方法之后再改为contains
+        if (entrance->collidesWith(anFrame)) {
+            /* 全部用push */
+            if (hero->atEntrance()) {
+                atEntrance = true;
+                break;
+            }
+            sceneDelegate_->gotoScene(entrance->getID(), entrance->getDestination()->getCString());
+            break;
+        }
+    }
+    if (hero->atEntrance() && !atEntrance) {
+        hero->setAtEntrance(false);
+    }
+}
+
+void
+MCObjectLayer::detectsCollidesWithEntrances(const CCRect &anFrame, const CCPoint &anOffset)
+{
+    CCRect frame(anFrame);
+    
+    frame.origin = ccpAdd(frame.origin, anOffset);
+    
+    detectsCollidesWithEntrances(frame);
+}
+
+bool
+MCObjectLayer::detectsCollision(const CCRect &anFrame)
+{
+//    if (detectsCollidesWithBarriers(anFrame)) {
+//        return true;
+//    }
+    
+    return false;
+}
+
+bool
+MCObjectLayer::detectsCollision(const CCRect &anFrame, const CCPoint &anOffset)
+{
+    CCRect frame(anFrame);
+    
+    frame.origin = ccpAdd(frame.origin, anOffset);
+    
+    return detectsCollision(frame);
+}
+
+void
+MCObjectLayer::detectsCollidesWithSemiTransparents(const CCRect &anFrame)
+{
+    CCObject *obj;
+    MCSemiTransparent *semiTransparent;
+    bool shouldBeTransparent = false;
+    CCARRAY_FOREACH(semiTransparents_, obj) {
+        semiTransparent = (MCSemiTransparent *) obj;
+        if (semiTransparent->collidesWith(anFrame)) {
+            shouldBeTransparent = true;
+            break;
+        }
+    }
+    hero_->setOpacity(shouldBeTransparent ? 160 : 255);
+}
+
+void
+MCObjectLayer::detectsCollidesWithSemiTransparents(const CCRect &anFrame, const CCPoint &anOffset)
+{
+    CCRect frame(anFrame);
+    
+    frame.origin = ccpAdd(frame.origin, anOffset);
+    
+    detectsCollidesWithSemiTransparents(frame);
+}
+
+CCPoint
+MCObjectLayer::detectsCollidesWithBarriers(const CCRect &anFrame, const CCPoint &anOffset)
+{
+    CCObject *obj;
+    MCBarrier *barrier;
+    CCRect frameForCheck(anFrame);
+    CCPoint feedbackOffset = CCPointZero;
+    
+    frameForCheck.origin = ccpAdd(frameForCheck.origin, anOffset);
+    CCARRAY_FOREACH(barriers_, obj) {
+        barrier = (MCBarrier *) obj;
+        if (barrier->MCSemiTransparent::collidesWith(frameForCheck)) { /* 撞上了 */
+            /* 尝试消除偏移 */
+            /* x轴 */
+            frameForCheck.origin = anFrame.origin;
+            frameForCheck.origin.x += anOffset.x;
+            if (barrier->MCSemiTransparent::collidesWith(frameForCheck)) { /* x bingo */
+                feedbackOffset.x = -anOffset.x;
+            }
+            /* y轴 */
+            frameForCheck.origin = anFrame.origin;
+            frameForCheck.origin.y += anOffset.y;
+            if (barrier->MCSemiTransparent::collidesWith(frameForCheck)) { /* y bingo */
+                feedbackOffset.y = -anOffset.y;
+            }
+            
+            break;
+        }
+    }
+    
+    return feedbackOffset;
+}
+bool
+MCObjectLayer::detectsCollidesWithBarriers(const CCRect &anFrame)
+{
+    CCObject *obj;
+    MCBarrier *barrier;
+    
+    CCARRAY_FOREACH(barriers_, obj) {
+        barrier = (MCBarrier *) obj;
+        if (barrier->MCSemiTransparent::collidesWith(anFrame)) { /* 撞上了 */
+            return true;
+        }
+    }
+    
+    return false;
+}
+#endif
 
 //bool
 //MCObjectLayer::detectsCollidesWithObjects(const MCOBB &anOBB)
@@ -632,17 +815,17 @@ MCGameSceneObjectLayer::dialogDidDismiss(void *anUserdata)
 #pragma mark -
 #pragma mark *** MCBattleFieldSceneObjectLayer ***
 
-bool
-MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB)
-{
-    return false;
-}
-
-bool
-MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB, const cocos2d::CCPoint &anOffset)
-{
-    return false;
-}
+//bool
+//MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB)
+//{
+//    return false;
+//}
+//
+//bool
+//MCBattleFieldSceneObjectLayer::detectsCollidesWithMercenaries(const MCOBB &anOBB, const cocos2d::CCPoint &anOffset)
+//{
+//    return false;
+//}
 
 #pragma mark -
 #pragma mark *** MCBattleFieldSceneObjectLayer::控制器 ***

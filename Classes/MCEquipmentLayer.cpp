@@ -215,7 +215,6 @@ MCEquipmentLayer::init()
         offsetYInc += label->getContentSize().height;
         
         /* price */
-#warning 在买卖界面再显示
         float checkpoint = offsetYInc; /* ~~~~ */
         
         /* 各自的 */
@@ -348,9 +347,8 @@ MCEquipmentLayer::init()
         /* 切换武器 */
         button = CCMenu::create();
         buttonLabel = CCLabelTTF::create("切换武器", "Marker Felt", valueFontSize);
-        addChild(button);
+        weaponLayer_->addChild(button);
         buttonCell = CCMenuItemLabel::create(buttonLabel, this, menu_selector(MCEquipmentLayer::changeWeapon));
-        buttonCell->setTag(kMCTagWeapon);
         button->addChild(buttonCell);
         button->setPosition(ccp(detailBackground->getPositionX()
                                 + detailBackground->getContentSize().width
@@ -358,8 +356,6 @@ MCEquipmentLayer::init()
                                 detailBackground->getPositionY()
                                 - detailBackground->getContentSize().height
                                 + buttonCell->getContentSize().height));
-        button->setVisible(false);
-        changeWeaponButton_ = button;
         
         return true;
     }
@@ -393,7 +389,6 @@ MCEquipmentLayer::loadData()
                                                      equipment->getOre()->getName()->getCString())->getCString());
     weaponLayer_->setVisible(false);
     armorLayer_->setVisible(false);
-    changeWeaponButton_->setVisible(false);
 }
 
 void
@@ -475,7 +470,6 @@ MCEquipmentLayer::showWeapon()
                                                                  weaponEquipment->effectCheck.min,
                                                                  weaponEquipment->effectCheck.max)->getCString());
     }
-    changeWeaponButton_->setVisible(true);
 }
 
 void
@@ -513,7 +507,6 @@ MCEquipmentLayer::showArmor(MCEquipmentItem *anArmor)
     armorArmorCheckPenalty_->setString(CCString::createWithFormat("%hi",
                                                                   armorEquipment->armorCheckPenalty
                                                                   + ore->getArmorCheckPenalty())->getCString());
-    changeWeaponButton_->setVisible(false);
 }
 
 void

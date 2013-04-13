@@ -49,7 +49,7 @@ MCItemManager::sharedItemManager()
 MCItem *
 MCItemManager::itemForObjectId(mc_object_id_t anObjectId)
 {
-    MCItem *item = (MCItem *) metaItemForObjectId(anObjectId)->copy();
+    MCItem *item = (MCItem *) protoItemForObjectId(anObjectId)->copy();
     
     if (item && item->init()) {
         item->autorelease();
@@ -64,7 +64,7 @@ MCItemManager::itemForObjectId(mc_object_id_t anObjectId)
 MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEquipmentItem *meta = metaEquipmentItemForObjectId(anObjectId);
+    MCEquipmentItem *meta = protoEquipmentItemForObjectId(anObjectId);
     MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(meta->copy());
 
     if (equipmentItem) {
@@ -80,7 +80,7 @@ MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 MCEffectiveItem *
 MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEffectiveItem *meta = metaEffectiveItemForObjectId(anObjectId);
+    MCEffectiveItem *meta = protoEffectiveItemForObjectId(anObjectId);
     MCEffectiveItem *effectiveItem = dynamic_cast<MCEffectiveItem *>(meta->copy());
     
     if (effectiveItem) {
@@ -95,7 +95,7 @@ MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
 
 /* metadata */
 MCItem *
-MCItemManager::metaItemForObjectId(mc_object_id_t anObjectId)
+MCItemManager::protoItemForObjectId(mc_object_id_t anObjectId)
 {
     MCItem *item;
     
@@ -108,7 +108,7 @@ MCItemManager::metaItemForObjectId(mc_object_id_t anObjectId)
 }
 
 MCEquipmentItem *
-MCItemManager::metaEquipmentItemForObjectId(mc_object_id_t anObjectId)
+MCItemManager::protoEquipmentItemForObjectId(mc_object_id_t anObjectId)
 {
     MCEquipmentItem *equipmentItem;
 
@@ -118,7 +118,7 @@ MCItemManager::metaEquipmentItemForObjectId(mc_object_id_t anObjectId)
 }
 
 MCEffectiveItem *
-MCItemManager::metaEffectiveItemForObjectId(mc_object_id_t anObjectId)
+MCItemManager::protoEffectiveItemForObjectId(mc_object_id_t anObjectId)
 {
     MCEffectiveItem *effectiveItem;
     

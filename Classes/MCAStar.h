@@ -124,7 +124,7 @@ private:
 //    CC_SYNTHESIZE_READONLY(CCArray *, route_, Route); /* 寻路结果 */
 
 public:
-    std::stack<CCPoint> route;/* 寻路结果 */
+    std::stack<CCPoint> *route; /* 寻路结果 */
 };
 
 class MCAStar : public CCObject {

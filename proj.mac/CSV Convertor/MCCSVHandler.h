@@ -16,7 +16,9 @@
 + (NSString *)filename;
 + (NSString *)sourceFilename;
 
-- (void)handleLine:(NSString *)aLine;
+- (void)willHandle;
+- (void)handle:(NSString *)aLine;
+- (void)didHandle;
 
 - (void)setObject:(NSObject *)anObject forKey:(NSString *)aKey;
 

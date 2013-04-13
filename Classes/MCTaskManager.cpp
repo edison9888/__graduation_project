@@ -8,6 +8,8 @@
 
 #include "MCTaskManager.h"
 #include "MCFlagManager.h"
+#include "MCRegion.h"
+#include "MCBackpack.h"
 
 const char *kMCTaskPackageFilepath = "T000.jpkg";
 const char *kMCTaskDidFinishNotification = "kMCTaskDidFinishNotification";
@@ -33,9 +35,16 @@ MCTaskManager::sharedTaskManager()
 MCTask *
 MCTaskManager::taskWithObjectId(mc_object_id_t anObjectId)
 {
-    MCTask *task = (MCTask *) taskAccessor_->taskWithObjectId(anObjectId)->copy();
+    MCTask *task = dynamic_cast<MCTask *>(protoTaskWithObjectId(anObjectId)->copy());
     
     return task;
+}
+
+
+MCTask *
+MCTaskManager::protoTaskWithObjectId(mc_object_id_t anObjectId)
+{
+    return taskAccessor_->taskWithObjectId(anObjectId);
 }
 
 /**
@@ -68,24 +77,29 @@ MCTaskManager::tasks()
 /**
  * 接受一个任务，成功接受返回true，否则返回false
  */
-bool
+int
 MCTaskManager::acceptTask(MCTask *task)
 {
+    MCBackpack *backpack = MCBackpack::sharedBackpack();
     MCTaskStatus status = task->getTaskStatus();
     if (status == MCTaskUncompleted) {
+        if (task->getCashPledge() > backpack->getMoney()) { /* 不够钱接受任务~~~~ */
+            return kMCNotEnoughMoney;
+        }
         currentTask_ = task;
         task->setTaskStatus(MCTaskAccepted);
         MCFlagManager::sharedFlagManager()->setTaskStarted(true);
-        return true;
+        backpack->setMoney(backpack->getMoney() - task->getCashPledge());
+        return kMCHandleSucceed;
     }
     
-    return false;
+    return kMCHandleFailured;
 }
 
 /**
  * 以任务ID接受一个任务，成功接受返回true，否则返回false
  */
-bool
+int
 MCTaskManager::acceptTaskWithObjectId(mc_object_id_t anObjectId)
 {
     return acceptTask(taskWithObjectId(anObjectId));
@@ -155,7 +169,28 @@ MCTaskManager::startCurrentTask()
                                         currentTask_);
         /* 建立任务上下文 */
         currentTask_->generateTaskContext();
+        currentTask_->setTaskStatus(MCTaskActiviting);
     }
+}
+
+CCArray *
+MCTaskManager::taskForRegion(MCRegion *aRegion)
+{
+    mc_object_id_t r_id = aRegion->getID();
+    CCArray *array = CCArray::create();
+    CCDictionary *tasks = taskAccessor_->getTasks();
+    CCDictElement *elem;
+    MCTask *task;
+    
+    array->retain();
+    CCDICT_FOREACH(tasks, elem) {
+        task = dynamic_cast<MCTask *>(elem->getObject());
+        if (task->getID().sub_class_ == r_id.sub_class_) {
+            array->addObject(task);
+        }
+    }
+    
+    return array;
 }
 
 void
@@ -164,8 +199,8 @@ MCTaskManager::taskDidFinish(CCObject *obj)
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     MCTask *task = dynamic_cast<MCTask *>(obj);
     
-    /* 清点任务 */
     task->setTaskStatus(MCTaskDone);
+    /* 清点任务物品 */
     
     notificatinCenter->removeObserver(task, kMCTaskDidFinishNotification);
     delete task; /* 由于是copy出来的，所以要清理下 */

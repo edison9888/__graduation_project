@@ -62,6 +62,7 @@
     NSString *path = [[property attributeForName:@"value"] objectValue];
     /* ID */
     [package setID:[[[path stringByDeletingPathExtension] pathComponents] objectAtIndex:1]];
+//    NSLog(@"%@: %@", [aTMXMapFilepath lastPathComponent], [package ID]);
     [package setObject:[package ID] forKey:kMCScenePackageID];
     [package setOutputFilepath:[[aTMXMapFilepath stringByDeletingLastPathComponent]
                                 stringByAppendingPathComponent:[[package ID] stringByAppendingString:@".jpkg"]]];
@@ -75,12 +76,17 @@
     
     /* objects */
     NSArray *objectNodes = [mapDocument nodesForXPath:@"map/objectgroup[@name='objects']/object" error:nil];
-    NSMutableDictionary *objects = [[NSMutableDictionary alloc] initWithCapacity:[objectNodes count]];
+    NSMutableArray *objects = [[NSMutableArray alloc] initWithCapacity:[objectNodes count]];
     for (NSXMLElement *objectElement in objectNodes) {
         if ([[objectElement attributeForName:@"name"] objectValue]) { /* 有name的是复活点，暂时来说 */
             continue;
         }
         NSMutableDictionary *object = [[NSMutableDictionary alloc] initWithCapacity:3];
+        /* ID */
+//        NSLog(@"%@", objectElement);
+        [object setObject:[[[[objectElement nodesForXPath:@"properties/property[@name='ID']"
+                                                  error:nil] objectAtIndex:0] attributeForName:@"value"] objectValue]
+                   forKey:kMCScenePackageObjectsID];
         /* x */
         [object setObject:@([[[objectElement attributeForName:@"x"] objectValue] integerValue]) forKey:kMCScenePackageObjectsX];
         /* y */
@@ -92,9 +98,7 @@
             NSString *flags = [[property attributeForName:@"value"] objectValue];
             [object setObject:[flags componentsSeparatedByString:@","] forKey:kMCScenePackageObjectsFlags];
         }
-        /* ID */
-        property = [[objectElement nodesForXPath:@"properties/property[@name='ID']" error:nil] objectAtIndex:0];
-        [objects setObject:object forKey:[[property attributeForName:@"value"] objectValue]];
+        [objects addObject:object];
     }
     [package setObject:objects forKey:kMCScenePackageObjects];
     

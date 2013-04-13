@@ -10,8 +10,10 @@
 
 static const float kMCActionDuration = 0.1f;
 
+static MCToast *__default_toast = NULL;
+
 bool
-MCToast::init(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
+MCToast::init()
 {
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
@@ -52,16 +54,24 @@ MCToast::init(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
 }
 
 MCToast *
-MCToast::create(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
+MCToast::make(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
 {
-    MCToast *toast = new MCToast;
+    MCToast *toast;
     
-    if (toast && toast->init(aParent, aMessage, aToastLength)) {
-        toast->autorelease();
-    } else {
-        CC_SAFE_DELETE(toast);
-        toast = NULL;
+    if (__default_toast == NULL) {
+        __default_toast = new MCToast;
+        if (__default_toast && __default_toast->init()) {
+        } else {
+            delete __default_toast;
+            __default_toast = NULL;
+        }
     }
+    toast = __default_toast;
+    
+    toast->parent_ = aParent;
+    toast->message_ = CCString::create(aMessage);
+    toast->message_->retain();
+    toast->length_ = aToastLength;
     
     return toast;
 }
@@ -70,6 +80,8 @@ void
 MCToast::show()
 {
     CCAssert(parent_ != NULL, "parent node is null!");
+    dialogue_->setString(message_->getCString());
+    CC_SAFE_RELEASE(message_);
     m_obPosition = ccp(0, -edge_->getContentSize().height);
     parent_->addChild(this);
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
@@ -95,5 +107,5 @@ MCToast::hide(CCObject *obj)
 void
 MCToast::destroy(CCObject *obj)
 {
-    removeFromParent();
+    removeFromParentAndCleanup(true);
 }

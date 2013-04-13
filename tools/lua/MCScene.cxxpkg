@@ -1,0 +1,83 @@
+class MCScene {
+    /**
+     * 从场景包加载场景初始化
+     */
+    bool initWithScenePackage(MCScenePackage *aPackage);
+    
+    /**
+     * 从场景包加载场景
+     */
+    static MCScene *createWithScenePackage(MCScenePackage *aPackage);
+    
+    /**
+     * 获取地图偏移值
+     */
+    CCPoint getMapOffset() const;
+    
+    /**
+     * 获取地图
+     */
+    CCTMXTiledMap *getMap() const;
+    
+    /**
+     * 获取场景大小
+     */
+    CCSize &getSceneSize() const;
+    
+    void onEnter();
+    void onExit();
+    void update(float dt);
+    
+    void installController();
+    
+    /**
+     * 是否为内部场景(如房子、商店)
+     */
+    bool isInternalScene();
+    
+    /**
+     * 安装触发器
+     */
+    void installTrigger(MCTrigger *aTrigger);
+    
+    /**
+     * 卸载触发器
+     */
+    void uninstallTrigger(MCTrigger *aTrigger);
+    
+    /**
+     * 移动到场景
+     * aSceneId(in): 场景ID
+     * anEntranceName(in): 场景入口名
+     */
+    void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false);
+    
+    /**
+     * 从内部场景(比如房子、商店)出去
+     */
+    void goOut();
+    
+    void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false);
+    
+    MCScene *getScene();
+    
+    void pauseScene();
+    void resumeScene();
+    
+  pauseInput();
+  resumeInput();
+    
+    void showDetail();
+    
+    /**
+     * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。
+     * 若为空，
+     */
+  CCString *getEntranceName();
+  MCCamera *getSceneCamera();
+  CCPoint getDefaultLocation();
+  MCAStar *getAStar();
+  CCDictionary *getEntrances();
+  MCSceneContext *getContext();
+  MCScenePackage *getScenePackage();
+};

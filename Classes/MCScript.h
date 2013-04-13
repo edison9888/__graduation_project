@@ -24,7 +24,7 @@ public:
     
     void run();
     
-private:
+//private:
     CCString *scriptPath_;
 };
 

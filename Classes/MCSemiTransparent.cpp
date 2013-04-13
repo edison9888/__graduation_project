@@ -14,7 +14,11 @@ const char *kMCTypeSemiTransparent = "semi-transparent";
 bool
 MCSemiTransparent::init(const CCRect &aRect)
 {
+#if (MC_COLLISION_USE_OBB == 1)
     obb_.setup(aRect, 0);
+#else
+    frame_ = aRect;
+#endif
     
     return true;
 }
@@ -33,6 +37,7 @@ MCSemiTransparent::create(const CCRect &aRect)
     }
 }
 
+#if (MC_COLLISION_USE_OBB == 1)
 bool
 MCSemiTransparent::collidesWith(const CCRect &aTargetRect)
 {
@@ -43,12 +48,18 @@ MCSemiTransparent::collidesWith(const CCRect &aTargetRect)
     return obb_.collidesWith(obb);
 }
 
-
 bool
 MCSemiTransparent::collidesWith(const MCOBB &anOBB)
 {
     return obb_.collidesWith(anOBB);
 }
+#else
+bool
+MCSemiTransparent::collidesWith(const CCRect &aTargetRect)
+{
+    return frame_.intersectsRect(aTargetRect);
+}
+#endif
 
 /**
  * 检测是否与人物碰撞
@@ -58,9 +69,9 @@ MCSemiTransparent::collidesWith(const MCOBB &anOBB)
  *
  * 返回值你懂的
  */
-bool
-MCSemiTransparent::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
-{
+//bool
+//MCSemiTransparent::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap)
+//{
 //    CCRect bounds = aRoleEntity->getAABB();
 //    bounds.origin = ccpAdd(bounds.origin, anOffsetAtMap);
     
@@ -68,5 +79,5 @@ MCSemiTransparent::collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffs
 //    MCOBB *obb = aRoleEntity->getOBB();
     
 //    return obb_.collidesWith(obb);
-    return false;
-}
+//    return false;
+//}

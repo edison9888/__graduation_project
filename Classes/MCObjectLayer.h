@@ -38,7 +38,7 @@ protected:
     void setSceneOffset(const CCPoint &anOffset);
     
     virtual void moveTo(const CCPoint &delta);
-    
+#if (MC_COLLISION_USE_OBB == 1)
     virtual void detectsCollidesWithEntrances(const MCOBB &anOBB);
     virtual void detectsCollidesWithEntrances(const MCOBB &anOBB, const CCPoint &anOffset);
     
@@ -50,13 +50,24 @@ protected:
     
     virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB);
     virtual bool detectsCollidesWithBarriers(const MCOBB &anOBB, const CCPoint &anOffset);
+#else
+    virtual void detectsCollidesWithEntrances(const CCRect &anFrame);
+    virtual void detectsCollidesWithEntrances(const CCRect &anFrame, const CCPoint &anOffset);
     
+    virtual bool detectsCollision(const CCRect &anFrame);
+    virtual bool detectsCollision(const CCRect &anFrame, const CCPoint &anOffset);
+    
+    virtual void detectsCollidesWithSemiTransparents(const CCRect &anFrame);
+    virtual void detectsCollidesWithSemiTransparents(const CCRect &anFrame, const CCPoint &anOffset);
+    
+    virtual CCPoint detectsCollidesWithBarriers(const CCRect &anFrame, const CCPoint &anOffset);
+    virtual bool detectsCollidesWithBarriers(const CCRect &anFrame);
+#endif
     /* 人物间不在相撞~~~~ */
 //    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
 //    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB, const CCPoint &anOffset);
-    
-    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB) { return false; }
-    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
+//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB) { return false; }
+//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
     
 protected:
     MCRoleEntity *hero_;
@@ -158,8 +169,9 @@ public:
     virtual void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset);
     
 protected:
-    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);
-    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset);
+    /* 人物间不在相撞~~~~ */
+//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);
+//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset);
 };
 
 #endif /* defined(__Military_Confrontation__MCObjectLayer__) */

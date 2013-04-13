@@ -1,0 +1,7 @@
+class MCSceneContextManager {
+    static MCSceneContextManager *sharedSceneContextManager();
+    
+    void pushContext(MCSceneContext *aContext);
+    void popContext();
+    MCSceneContext *currentContext();
+};

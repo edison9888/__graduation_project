@@ -90,6 +90,7 @@ MCTaskAccessor::loadTasks(const char *aFilePath)
                 task->loadTaskContent(o);
                 /* 默认为未完成状态，然后会在加载存档数据的时候更新为正确状态 */
                 task->setTaskStatus(MCTaskUncompleted);
+                task->proto_ = NULL;
                 tasks_->setObject(task, MCObjectIdToDickKey(o_id));
             }
         }

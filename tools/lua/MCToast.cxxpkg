@@ -1,0 +1,12 @@
+enum {
+    MCLengthShort = 1, /* 1秒 */
+    MCLengthLong  = 4  /* 4秒 */
+};
+typedef float MCToastLength;
+
+class MCToast {
+    static MCToast *make(CCNode *aParent, const char *aMessage, MCToastLength aToastLength = MCLengthShort);
+    
+    void show();
+    void cancel();
+};

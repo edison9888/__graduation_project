@@ -58,7 +58,7 @@ void
 MCViewportLayer::draw(void)
 {
     CCLayer::draw();
-    if (1) {
+    if (!1) {
     CCObject *obj;
     MCRoleEntity *roleEntity;
     MCRole *role;
@@ -93,24 +93,24 @@ MCViewportLayer::draw(void)
                             ccc4f(0.9, 0.2, 0.1, 0.4));
         }
     }
-    
-    /* entrances */
-    CCARRAY_FOREACH(entrances, obj) {
-        MCEntrance *entrance = (MCEntrance *) obj;
-        MCOBB obb = entrance->getOBB();
-        
-        /* AABB */
-        CCRect aabb = CCRectMake(obb.center.x - obb.extents.width,
-                                 obb.center.y - obb.extents.height,
-                                 obb.width,
-                                 obb.height);
-        aabb.origin = ccpAdd(aabb.origin, mapOffset);
-        CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
-                         aabb.origin.y + aabb.size.height);
-        ccDrawSolidRect(aabb.origin,
-                        dp,
-                        ccc4f(0.3, 0.9, 0.3, 0.4));
-    }
+#if (MC_COLLISION_USE_OBB == 1)
+        /* entrances */
+        CCARRAY_FOREACH(entrances, obj) {
+            MCEntrance *entrance = (MCEntrance *) obj;
+            MCOBB obb = entrance->getOBB();
+            
+            /* AABB */
+            CCRect aabb = CCRectMake(obb.center.x - obb.extents.width,
+                                     obb.center.y - obb.extents.height,
+                                     obb.width,
+                                     obb.height);
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
+                             aabb.origin.y + aabb.size.height);
+            ccDrawSolidRect(aabb.origin,
+                            dp,
+                            ccc4f(0.3, 0.9, 0.3, 0.4));
+        }
         /* semis */
         CCARRAY_FOREACH(semis, obj) {
             MCSemiTransparent *semi = (MCSemiTransparent *) obj;
@@ -146,5 +146,47 @@ MCViewportLayer::draw(void)
                             dp,
                             ccc4f(0.9, 0.1, 0.1, 0.4));
         }
+#else
+        /* entrances */
+        CCARRAY_FOREACH(entrances, obj) {
+            MCEntrance *entrance = (MCEntrance *) obj;
+            
+            /* AABB */
+            CCRect aabb = entrance->getFrame();
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
+                             aabb.origin.y + aabb.size.height);
+            ccDrawSolidRect(aabb.origin,
+                            dp,
+                            ccc4f(0.3, 0.9, 0.3, 0.4));
+        }
+        /* semis */
+        CCARRAY_FOREACH(semis, obj) {
+            MCSemiTransparent *semi = (MCSemiTransparent *) obj;
+            
+            /* AABB */
+            CCRect aabb = semi->getFrame();
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
+                             aabb.origin.y + aabb.size.height);
+            ccDrawSolidRect(aabb.origin,
+                            dp,
+                            ccc4f(0.2, 0.4, 0.9, 0.4));
+        }
+        
+        /* barriers */
+        CCARRAY_FOREACH(barriers, obj) {
+            MCBarrier *barrier = (MCBarrier *) obj;
+            
+            /* AABB */
+            CCRect aabb = barrier->getFrame();
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
+                             aabb.origin.y + aabb.size.height);
+            ccDrawSolidRect(aabb.origin,
+                            dp,
+                            ccc4f(0.9, 0.1, 0.1, 0.4));
+        }
+#endif
     }
 }

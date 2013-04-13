@@ -11,6 +11,8 @@
 static const ccColor3B Color_blue = ccc3 (54, 128, 241);
 static const ccColor3B Color_write = ccc3 (241, 241, 241);
 
+static MCConfirm *__default_confirm = NULL;
+
 MCConfirm::~MCConfirm()
 {
 }
@@ -71,8 +73,17 @@ MCConfirm::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 MCConfirm *
 MCConfirm::confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aMessage)
 {
-    MCConfirm *confirm = MCConfirm::create();
+    MCConfirm *confirm;
     
+    if (__default_confirm == NULL) {
+        __default_confirm = new MCConfirm;
+        if (__default_confirm && __default_confirm->init()) {
+        } else {
+            delete __default_confirm;
+            __default_confirm = NULL;
+        }
+    }
+    confirm = __default_confirm;
     confirm->setConfirm(aMessage);
     confirm->setDelegate(aDelegate);
     aParent->addChild(confirm);

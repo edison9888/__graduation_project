@@ -179,7 +179,7 @@ MCMercenaryManager::loadMercenaries()
 MCMercenary *
 MCMercenaryManager::mercenaryForObjectId(mc_object_id_t anObjectId)
 {
-    MCMercenary *mercenary = (MCMercenary *) metaMercenaryForObjectId(anObjectId)->copy();
+    MCMercenary *mercenary = (MCMercenary *) protoMercenaryForObjectId(anObjectId)->copy();
 
     if (mercenary && mercenary->MCRole::init()) {
         mercenary->autorelease();
@@ -193,7 +193,7 @@ MCMercenaryManager::mercenaryForObjectId(mc_object_id_t anObjectId)
 }
 
 MCMercenary *
-MCMercenaryManager::metaMercenaryForObjectId(mc_object_id_t anObjectId)
+MCMercenaryManager::protoMercenaryForObjectId(mc_object_id_t anObjectId)
 {
     return (MCMercenary *) mercenaries_->objectForKey(MCObjectIdToDickKey(anObjectId));
 }

@@ -51,7 +51,7 @@ public:
     MCSceneContext *currentContext();
     
 private:
-    CCArray* contextStack_;
+    CCArray *contextStack_;
 };
 
 class MCScene : public CCScene, public MCSceneDelegate {
@@ -142,6 +142,16 @@ public:
         detailMenu_->setVisible(true);
         controller_->setEnable(true);
         resumeSchedulerAndActions();
+    }
+    
+    inline void pauseInput() {
+        controller_->setEnable(false);
+        detailMenu_->setVisible(false);
+    }
+    
+    inline void resumeInput() {
+        detailMenu_->setVisible(true);
+        controller_->setEnable(true);
     }
     
     void showDetail();

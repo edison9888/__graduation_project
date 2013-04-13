@@ -15,6 +15,8 @@
 #include "MCEquipmentItem.h"
 #include "MCInterfaceMacros.h"
 
+extern const mc_size_t kMCItemMax;
+
 extern const char *kMCHealthPotionIcon;
 extern const char *kMCPhysicalPotionIcon;
 extern const char *kMCFireballWideIcon;

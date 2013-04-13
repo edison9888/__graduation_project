@@ -20,7 +20,7 @@ public:
     
     static CCScene *scene() {
         mc_object_id_t m_id = {
-            'M', '0', '0', '1'
+            'M', '1', '0', '1'
         };
         CCScene *scene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(m_id);
         
@@ -39,7 +39,7 @@ public:
         MCRoleEntity *e = MCHero::sharedHero()->getEntity();
         e->setPosition(ccp(200, 200));
 //        e->findPath(ccp(858, 432));
-        e->findPath(ccp(200, 220));
+        e->findPath(ccp(300, 2240));
     }
     
     void onExit() {

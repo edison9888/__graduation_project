@@ -11,6 +11,7 @@
 #include "MCTaskBonus.h"
 #include "MCTaskTarget.h"
 #include "MCTaskContext.h"
+#include "MCRegionManager.h"
 
 MCTask::MCTask()
 {
@@ -109,6 +110,16 @@ MCTask::loadTaskContent(JsonBox::Object &aTaskContent)
         s_f_id[3]
     };
     setFlag(MCFlagManager::sharedFlagManager()->flagForObjectId(f_id));
+    
+    /* task["region"] String */
+    const char *s_r_id = aTaskContent["region"].getString().c_str();
+    mc_object_id_t r_id = {
+        s_r_id[0],
+        s_r_id[1],
+        s_r_id[2],
+        s_r_id[3]
+    };
+    setRegion(MCRegionManager::sharedRegionManager()->regionForObjectId(r_id));
         
     /* task["description"] String */
     ccstring = CCString::create(aTaskContent["description"].getString());
@@ -143,6 +154,8 @@ MCTask::copy()
     }
     task->taskStatus_ = taskStatus_;
     task->flag_ = flag_;
+    task->region_ = region_;
+    task->proto_ = this;
     
     return task;
 }
@@ -219,6 +232,7 @@ MCTask::generateTaskContext()
         taskContext_->physicalPotionCount_ = taskContext_->physicalPotion_->count;
         
         taskContext_->task_ = this;
+        taskContext_->taskRegion_ = region_;
     }
 }
 
@@ -234,6 +248,8 @@ MCTask::setTaskStatus(MCTaskStatus var)
     taskStatus_ = var;
     if (var == MCTaskActiviting) {
         flag_->setState(MCOnState);
+    } else if (var == MCTaskDone && proto_) {
+        proto_->setTaskStatus(MCTaskDone);
     } else {
         flag_->setState(MCOffState);
     }

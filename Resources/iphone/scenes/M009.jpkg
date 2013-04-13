@@ -1,1 +1,1 @@
-{"scene-type":1,"id":"M009","internal":1,"scenes":{"chouse-3":{"id":"M006","destination":"city-chouse-3"}},"objects":{"N005":{"x":213,"y":333},"N007":{"x":330,"y":328}},"background":{"tmx":"scenes/chouse-3.tmx","sound":"sounds/town.mp3"}}
+{"scene-type":1,"id":"M009","internal":1,"scenes":{"chouse-3":{"id":"M006","destination":"city-chouse-3"}},"objects":[{"id":"N005","x":213,"y":333},{"id":"N007","x":330,"y":328}],"background":{"tmx":"scenes/chouse-3.tmx","sound":"sounds/town.mp3"}}

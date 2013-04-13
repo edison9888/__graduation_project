@@ -1,0 +1,11 @@
+class MCTradingPropsUI {
+    bool init();
+    
+    void initPosition();
+    void attach(MCScene *aScene);
+    void detach();
+    
+    void rangeInputDidSetValue(MCRangeInput *aRangeInput);
+    
+    static MCTradingPropsUI *create();
+};

@@ -28,10 +28,10 @@ public:
     MCEquipmentItem *equipmentItemForObjectId(mc_object_id_t anObjectId);
     MCEffectiveItem *effectiveItemForObjectId(mc_object_id_t anObjectId);
     
-    /* metadata */
-    MCItem *metaItemForObjectId(mc_object_id_t anObjectId);
-    MCEquipmentItem *metaEquipmentItemForObjectId(mc_object_id_t anObjectId);
-    MCEffectiveItem *metaEffectiveItemForObjectId(mc_object_id_t anObjectId);
+    /* proto-data */
+    MCItem *protoItemForObjectId(mc_object_id_t anObjectId);
+    MCEquipmentItem *protoEquipmentItemForObjectId(mc_object_id_t anObjectId);
+    MCEffectiveItem *protoEffectiveItemForObjectId(mc_object_id_t anObjectId);
     
 private:
     /**

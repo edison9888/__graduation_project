@@ -17,6 +17,7 @@ NSString *kMCScenePackageTMXMap = @"tmx";
 NSString *kMCScenePackageSound = @"sound";
 
 NSString *kMCScenePackageObjects = @"objects";
+NSString *kMCScenePackageObjectsID = @"id";
 NSString *kMCScenePackageObjectsX = @"x";
 NSString *kMCScenePackageObjectsY = @"y";
 NSString *kMCScenePackageObjectsFlags = @"flags";

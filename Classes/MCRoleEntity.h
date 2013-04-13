@@ -44,6 +44,8 @@ public:
     CC_SYNTHESIZE_READONLY(CCAnimation *, animationGoLeft_, AnimationGoLeft);
     CC_SYNTHESIZE_READONLY(CCAnimation *, animationGoRight_, AnimationGoRight);
     
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCSize, frameSize_, FrameSize);
+    
     /* 场景包数据 */
 public:
     inline float getX() {

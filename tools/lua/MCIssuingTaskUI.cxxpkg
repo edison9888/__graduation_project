@@ -1,0 +1,25 @@
+enum {
+    MCVillage   = 1,
+    MCCity      = 2,
+    MCForest    = 4,
+    MCDesert    = 8,
+    MCGlacier   = 16,
+    MCDungeon   = 32
+};
+typedef unsigned short int mc_ushort_t;
+typedef mc_ushort_t mc_enum_t;
+typedef mc_enum_t MCSceneRegion;
+
+class MCIssuingTaskUI : public CCLayer {
+public:
+    bool init();
+    
+    void initPosition();
+    void attach(MCScene *aScene);
+    void detach();
+    
+    static MCIssuingTaskUI *create();
+
+    MCSceneRegion getSceneRegion(void) const;
+    void setSceneRegion(int var);
+};

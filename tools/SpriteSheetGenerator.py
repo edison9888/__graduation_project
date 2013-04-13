@@ -25,6 +25,13 @@ direction4x4 = [
     'up'
 ]
 
+unexpeceted_directories = [
+    'build',
+    'build.old',
+    'prebuild',
+    'prebuild.old'
+]
+
 def trim(image):
     bg = Image.new(image.mode, image.size, image.getpixel((0,0))) 
     diff = ImageChops.difference(image, bg)
@@ -44,6 +51,7 @@ def toTransparent(image):
 
 def generate(path, width=4, height=4, padding=0):
     spritesheet = Image.open(path)
+    sprite_frame_type = pathExtension(path)
     spritesheetTextureSavePath = stringByDeletingPathExtension(path)
     spritesheetSize = spritesheet.size
     spriteWidth = spritesheetSize[0] / width
@@ -56,6 +64,9 @@ def generate(path, width=4, height=4, padding=0):
     basepath = os.path.dirname(spritesheetTextureSavePath)
     basename = os.path.basename(spritesheetTextureSavePath) #已经无后缀名了
     metadata.textureFileName = basename
+    metadata.spriteFrameType = 1 if sprite_frame_type == 'S' \
+                                else 2 if sprite_frame_type == 'M' \
+                                else 3
 
     trimmed = [[] for _ in range(height)]
     spritesheet = toTransparent(spritesheet) #透明化
@@ -177,57 +188,79 @@ class REGenerator(object):
             os.rename(build, old)
         self.prebuild = []
         directories = os.listdir(self.workspace)
+        for unexpeceted in unexpeceted_directories:
+            if unexpeceted in directories:
+                directories.remove(unexpeceted)
         for d in directories:
-            path = self.workspace + os.sep + d
-            if os.path.isdir(path):
+            directory = self.workspace + os.sep + d
+            if os.path.isdir(directory):
+                # L
+                path = directory + os.sep + 'L'
                 files = os.listdir(path)
                 for f in files:
                     filepath = path + os.sep + f
-                    if os.path.isdir(filepath):
-                        dirpath = filepath
-                        files = os.listdir(dirpath)
-                        for f in files:
-                            extension = pathExtension(f)
-                            filepath = dirpath + os.sep + f
-                            if os.path.isfile(filepath) and extension == 'png':
-                                #at first,copy
-                                #newFilepath = "%s%s%s%s%s.st"%(build, os.sep, d, os.sep, stringByDeletingPathExtension(f))
-                                newFilepath = "%s%s%s%s%s-%s.st"%(build,
-                                                                  os.sep,
-                                                                  d,
-                                                                  os.sep,
-                                                                  f[0].lower(),
-                                                                  stringByDeletingPathExtension(os.path.basename(f))[1:])
-                                print newFilepath
-                                basepath = os.path.dirname(newFilepath)
-                                if os.path.exists(basepath) is False:
-                                    os.makedirs(basepath)
-                                newFilepath = newFilepath + '.pre'
-                                shutil.copy2(filepath, newFilepath)
-                                self.prebuild.append(newFilepath)
-                    else:
-                        extension = pathExtension(f)
-                        filepath = path + os.sep + f
-                        if os.path.isfile(filepath) and extension == 'png':
-                            #at first,copy
-                            #newFilepath = "%s%s%s%s%s.st"%(build, os.sep, d, os.sep, stringByDeletingPathExtension(f))
-                            newFilepath = "%s%s%s%s%s-%s.st"%(build,
-                                                              os.sep,
-                                                              d,
-                                                              os.sep,
-                                                              f[0].lower(),
-                                                              stringByDeletingPathExtension(os.path.basename(f))[1:])
-                            print newFilepath
-                            basepath = os.path.dirname(newFilepath)
-                            if os.path.exists(basepath) is False:
-                                os.makedirs(basepath)
-                            newFilepath = newFilepath + '.pre'
-                            shutil.copy2(filepath, newFilepath)
-                            self.prebuild.append(newFilepath)
+                    extension = pathExtension(f)
+                    if os.path.isfile(filepath) and extension == 'png':
+                        #at first,copy
+                        newFilepath = "%s%s%s%s%s-%s.st"%(build,
+                                                          os.sep,
+                                                          d,
+                                                          os.sep,
+                                                          f[0].lower(),
+                                                          stringByDeletingPathExtension(os.path.basename(f))[1:])
+                        print newFilepath
+                        basepath = os.path.dirname(newFilepath)
+                        if os.path.exists(basepath) is False:
+                            os.makedirs(basepath)
+                        newFilepath = newFilepath + '.L'
+                        shutil.copy2(filepath, newFilepath)
+                        self.prebuild.append(newFilepath)
+                # M
+                path = directory + os.sep + 'M'
+                files = os.listdir(path)
+                for f in files:
+                    filepath = path + os.sep + f
+                    extension = pathExtension(f)
+                    if os.path.isfile(filepath) and extension == 'png':
+                        #at first,copy
+                        newFilepath = "%s%s%s%s%s-%s.st"%(build,
+                                                          os.sep,
+                                                          d,
+                                                          os.sep,
+                                                          f[0].lower(),
+                                                          stringByDeletingPathExtension(os.path.basename(f))[1:])
+                        print newFilepath
+                        basepath = os.path.dirname(newFilepath)
+                        if os.path.exists(basepath) is False:
+                            os.makedirs(basepath)
+                        newFilepath = newFilepath + '.M'
+                        shutil.copy2(filepath, newFilepath)
+                        self.prebuild.append(newFilepath)
+                # S
+                path = directory + os.sep + 'S'
+                files = os.listdir(path)
+                for f in files:
+                    filepath = path + os.sep + f
+                    extension = pathExtension(f)
+                    if os.path.isfile(filepath) and extension == 'png':
+                        #at first,copy
+                        newFilepath = "%s%s%s%s%s-%s.st"%(build,
+                                                          os.sep,
+                                                          d,
+                                                          os.sep,
+                                                          f[0].lower(),
+                                                          stringByDeletingPathExtension(os.path.basename(f))[1:])
+                        print newFilepath
+                        basepath = os.path.dirname(newFilepath)
+                        if os.path.exists(basepath) is False:
+                            os.makedirs(basepath)
+                        newFilepath = newFilepath + '.S'
+                        shutil.copy2(filepath, newFilepath)
+                        self.prebuild.append(newFilepath)
 
 if __name__ == '__main__':
     path = '../../raw-resources'
     g = REGenerator(path)
     g.parse()
-    g.build()
+    g.build() 
     g.install()

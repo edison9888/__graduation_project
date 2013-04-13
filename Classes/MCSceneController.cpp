@@ -86,10 +86,9 @@ MCSceneController::__loadScene()
     MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(expectedSceneId_);
     expectedScene_ = newScene;
     CCString *entranceName = newScene->getEntranceName();
-#warning not null
-//    if (entranceName) {
-//        entranceName->release();
-//    }
+    if (entranceName) {
+        entranceName->release();
+    }
     entranceName = CCString::create(entranceName_->getCString());
     newScene->setEntranceName(entranceName);
     entranceName->retain();

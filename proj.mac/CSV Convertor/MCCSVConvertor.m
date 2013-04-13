@@ -42,10 +42,12 @@
     NSUInteger ignore = [handler_ ignoreLine] * 2;
     NSUInteger endIndex = [csvContent count] - ignore;
     
+    [handler_ willHandle];
     for (index = startIndex; index < endIndex; ++index) {
         currentContent = [csvContent objectAtIndex:index];
-        [handler_ handleLine:currentContent];
+        [handler_ handle:currentContent];
     }
+    [handler_ didHandle];
     
     if (outputFilepath_) {
         outputFilepath = outputFilepath_;

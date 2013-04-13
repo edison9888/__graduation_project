@@ -30,6 +30,7 @@ public:
     CC_SYNTHESIZE_READONLY(mc_size_t, physicalPotionCount_, PhysicalPotionCount);     /* 体力药水持有个数 */
     
     CC_SYNTHESIZE_READONLY(MCTask *, task_, Task);
+    CC_SYNTHESIZE_READONLY(MCRegion *, taskRegion_, TaskRegion);
 };
 
 #endif /* defined(__Military_Confrontation__MCTaskContext__) */

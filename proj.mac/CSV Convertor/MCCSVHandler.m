@@ -44,7 +44,30 @@
     return nil;
 }
 
+- (void)willHandle
+{
+}
+
+- (void)handle:(NSString *)aLine
+{
+    [self willHandleLine:aLine];
+    [self handleLine:aLine];
+    [self didHandleLine:aLine];
+}
+
+- (void)didHandle
+{
+}
+
+- (void)willHandleLine:(NSString *)aLine
+{
+}
+
 - (void)handleLine:(NSString *)aLine
+{
+}
+
+- (void)didHandleLine:(NSString *)aLine
 {
 }
 

@@ -24,7 +24,7 @@ bool
 MCScenePackage::init()
 {
     do {
-        objects_ = CCDictionary::create();
+        objects_ = CCArray::create();
         objects_->retain();
         
         scenes_ = CCDictionary::create();
@@ -56,11 +56,11 @@ MCScenePackage::create(const char *aPackagePath)
     return NULL;
 }
 
-MCRole *
-MCScenePackage::objectForObjectId(mc_object_id_t anObjectId)
-{
-    return (MCRole *) objects_->objectForKey(MCObjectIdToDickKey(anObjectId));
-}
+//MCRole *
+//MCScenePackage::objectForObjectId(mc_object_id_t anObjectId)
+//{
+//    return (MCRole *) objects_->objectForKey(MCObjectIdToDickKey(anObjectId));
+//}
 
 void
 MCScenePackage::loadFromFile(const char *aPackagePath)
@@ -106,7 +106,7 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     description_ = CCString::create(root["description"].getString().c_str());
     description_->retain();
     
-    /* objects Object */
+    /* objects Array */
     loadObjects(root);
     
     /* background Object */
@@ -125,20 +125,20 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
 void
 MCScenePackage::loadObjects(JsonBox::Object &aRoot)
 {
-    JsonBox::Object objects = aRoot["objects"].getObject();
+    JsonBox::Array objects = aRoot["objects"].getArray();
     JsonBox::Value v;
     JsonBox::Object roles;
     JsonBox::Array flags;
     JsonBox::Array::iterator flagsIterator;
-    JsonBox::Object::iterator objectsIterator;
+    JsonBox::Array::iterator objectsIterator;
     JsonBox::Object roleObject;
     const char *c_str_o_id;
     MCRoleManager *roleManager = MCRoleManager::sharedRoleManager();
 
     /* load objects */
     for (objectsIterator = objects.begin(); objectsIterator != objects.end(); ++objectsIterator) {
-        c_str_o_id = objectsIterator->first.c_str();
-        roleObject = objectsIterator->second.getObject();
+        roleObject = objectsIterator->getObject();
+        c_str_o_id = roleObject["id"].getString().c_str();
         mc_object_id_t o_id = {
             c_str_o_id[0],
             c_str_o_id[1],
@@ -164,7 +164,7 @@ MCScenePackage::loadObjects(JsonBox::Object &aRoot)
                 };
                 flagsArray->addObject(MCFlagManager::sharedFlagManager()->flagForObjectId(flag_id));
             }
-            objects_->setObject(role, MCObjectIdToDickKey(o_id));
+            objects_->addObject(role);
         }
     }
 }

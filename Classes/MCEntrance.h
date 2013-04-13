@@ -24,27 +24,28 @@ public:
     static MCEntrance* create(const CCRect &aRect);
     
     CC_DEPRECATED_ATTRIBUTE bool collidesWith(const CCRect &aTargetRect);
+    bool contains(const CCRect &aTargetRect);
+    
+#if (MC_COLLISION_USE_OBB == 1)
     CC_DEPRECATED_ATTRIBUTE bool collidesWith(const MCOBB &anOBB);
     
-    bool contains(const CCRect &aTargetRect);
+    bool collidesWith(const MCOBB &anOBB);
     
     inline void setup(const CCRect &aRect) {
         obb_.setup(aRect, 0);
     }
     
-    /**
-     * 检测是否与人物碰撞
-     *
-     * aRoleEntity(in):   人物实体
-     * anOffsetAtMap(in): 人物在地图上的位置
-     *
-     * 返回值你懂的
-     */
-    bool collidesWith(MCRoleEntity *aRoleEntity, const CCPoint &anOffsetAtMap);
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
+#else
+    inline void setup(const CCRect &aRect) {
+        frame_ = aRect;
+    }
+    
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CCRect, frame_, Frame);
+#endif
     
 protected:
     CC_SYNTHESIZE(CCString *, destinaion_, Destination);
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
 };
 
 #endif /* defined(__Military_Confrontation__MCEntrance__) */

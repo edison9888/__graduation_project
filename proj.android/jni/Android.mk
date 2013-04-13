@@ -71,6 +71,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCEffect.cpp \
 					../../Classes/MCEffectiveItem.cpp \
 					../../Classes/MCEnemy.cpp \
+					../../Classes/MCEnhancingEquipmentUI.cpp \
 					../../Classes/MCEntrance.cpp \
 					../../Classes/MCEquipment.cpp \
 					../../Classes/MCEquipmentItem.cpp \
@@ -83,6 +84,8 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCGameState.cpp \
 					../../Classes/MCGeometry.cpp \
 					../../Classes/MCHero.cpp \
+					../../Classes/MCHiringMercenaryUI.cpp \
+					../../Classes/MCIssuingTaskUI.cpp \
 					../../Classes/MCItem.cpp \
 					../../Classes/MCItemManager.cpp \
 					../../Classes/MCJoypad.cpp \
@@ -93,7 +96,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCMainMenuScene.cpp \
 					../../Classes/MCMercenary.cpp \
 					../../Classes/MCMercenaryManager.cpp \
-					../../Classes/MCMicsUtil.cpp \
+					../../Classes/MCMiscUtil.cpp \
 					../../Classes/MCMutiplayerBattleImpl.cpp \
 					../../Classes/MCNormalBattleImpl.cpp \
 					../../Classes/MCNPC.cpp \
@@ -103,6 +106,9 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCOreManager.cpp \
 					../../Classes/MCPotion.cpp \
 					../../Classes/MCPropsLayer.cpp \
+					../../Classes/MCRangeInput.cpp \
+					../../Classes/MCRegion.cpp \
+					../../Classes/MCRegionManager.cpp \
 					../../Classes/MCRole.cpp \
 					../../Classes/MCRoleBaseInfo.cpp \
 					../../Classes/MCRoleEntity.cpp \
@@ -140,8 +146,10 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestParticle.cpp \
 					../../Classes/MCTestRoleBaseInfo.cpp \
 					../../Classes/MCTestRoleManager.cpp \
+					../../Classes/MCTestUI.cpp \
 					../../Classes/MCTestViewport.cpp \
 					../../Classes/MCToast.cpp \
+					../../Classes/MCTradingPropsUI.cpp \
 					../../Classes/MCTrap.cpp \
 					../../Classes/MCTrigger.cpp \
 					../../Classes/MCViewport.cpp \

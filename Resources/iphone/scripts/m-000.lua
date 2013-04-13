@@ -17,10 +17,9 @@ local function main()
     end
     ---------------
 
-    local visibleSize = CCDirector:sharedDirector():getVisibleSize()
-    local origin = CCDirector:sharedDirector():getVisibleOrigin()
-    
-    CCLuaLog("佣兵")
+    local hiringMercenaryUI = MCHiringMercenaryUI:create()
+    local currentScene = MCSceneContextManager:sharedSceneContextManager():currentContext():getScene()
+    hiringMercenaryUI:attach(currentScene)
     
 end
 

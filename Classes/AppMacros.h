@@ -61,8 +61,8 @@ static Resource resources[] = {
 #endif // ANDROID
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "iphone" };
-static Resource PCResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
+static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "iphone" };
+//static Resource PCResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
 #endif // WIN32、MAC、LINUX
 
 // The font size 24 is designed for small resolution, so we should change it to fit for current design resolution

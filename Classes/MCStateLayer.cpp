@@ -14,7 +14,7 @@
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
 
-#define MCValueOffsetX 13
+#define kMCValueOffsetX 13
 
 bool
 MCStateLayer::init()
@@ -123,11 +123,11 @@ MCStateLayer::init()
         money_ = CCLabelTTF::create("0", "Marker Felt", valueFontSize);
         addChild(money_);
         money_->setAnchorPoint(ccp(1, 0)); /* 右下角 */
-        money_->setPosition(ccp(label->getPosition().x - label->getContentSize().width - MCValueOffsetX,
+        money_->setPosition(ccp(label->getPosition().x - label->getContentSize().width - kMCValueOffsetX,
                                 48 / contentScaleFactor));
         
         /* line */
-        CCSize separatorSize = CCSizeMake(winSize.width - offsetX - 45 / contentScaleFactor, 1);
+        CCSize separatorSize = CCSizeMake(winSize.width - offsetX - 45 / contentScaleFactor, 4);
         line = CCScale9Sprite::create("UI/separator.png");
         addChild(line);
         line->setContentSize(separatorSize);

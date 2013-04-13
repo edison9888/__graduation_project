@@ -9,7 +9,10 @@
 #ifndef Military_Confrontation_MCRoleProperty_h
 #define Military_Confrontation_MCRoleProperty_h
 
+#include <cocos2d.h>
 #include "MCType.h"
+
+USING_NS_CC;
 
 /**
  * MCRole 角色属性类型
@@ -52,6 +55,19 @@ extern const char *kMCChaosState;
 
 const char *MCRoleStateGetName(MCRoleState aRoleState);
 
+enum {
+    MCSpriteFrameSmallSize = 1,
+    MCSpriteFrameMediumSize = 2,
+    MCSpriteFrameLargeSize = 3
+};
+typedef mc_enum_t MCSpriteFrameType;
 
+/**
+ * 人物碰撞矩形(正方形)
+ * 直接设置为三种规格的大小
+ */
+const CCSize kMCSpriteFrameSmallSize = CCSizeMake(24, 24);
+const CCSize kMCSpriteFrameMediumSize = CCSizeMake(44, 44);
+const CCSize kMCSpriteFrameLargeSize = CCSizeMake(72, 72);
 
 #endif

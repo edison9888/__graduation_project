@@ -179,6 +179,10 @@
 		A352DA9B170B063A004D4742 /* MCEquipmentLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A352DA99170B063A004D4742 /* MCEquipmentLayer.cpp */; };
 		A353BBFE170FD9A1005A4058 /* MCToast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353BBFC170FD9A1005A4058 /* MCToast.cpp */; };
 		A353BC03170FE63D005A4058 /* MCLoadingScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */; };
+		A353F20A1717C58B0038D726 /* MCRegionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A353F2081717C58B0038D726 /* MCRegionHandler.m */; };
+		A353F20D1717CE040038D726 /* MCRegionManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353F20B1717CE040038D726 /* MCRegionManager.cpp */; };
+		A353F2121717D1700038D726 /* MCRegion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353F2101717D1700038D726 /* MCRegion.cpp */; };
+		A353F2171717D9030038D726 /* MCIssuingTaskUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A353F2151717D9030038D726 /* MCIssuingTaskUI.cpp */; };
 		A3592B3416B9440900E0AD58 /* MCDetailLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */; };
 		A3592B3716B9442E00E0AD58 /* MCStateLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */; };
 		A35CB97E16FDE53400A345C6 /* MCMercenaryHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A35CB97C16FDE53400A345C6 /* MCMercenaryHandler.m */; };
@@ -212,6 +216,7 @@
 		A39FAFF316B26325007FECB7 /* MCControllerDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FAFF216B26325007FECB7 /* MCControllerDelegate.cpp */; };
 		A39FB00B16B27441007FECB7 /* MCGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB00716B27441007FECB7 /* MCGeometry.cpp */; };
 		A3A0F91717070FEF0078DDCF /* MCControllerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3A0F91517070FEE0078DDCF /* MCControllerLayer.cpp */; };
+		A3A56BC01718641200C5FB61 /* MCRangeInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3A56BBE1718641200C5FB61 /* MCRangeInput.cpp */; };
 		A3A8FAE616EEC858004EE947 /* MCViewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3A8FAE416EEC858004EE947 /* MCViewport.cpp */; };
 		A3A8FAEA16EED83A004EE947 /* MCTestViewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3A8FAE816EED83A004EE947 /* MCTestViewport.cpp */; };
 		A3AAAF201709C34600784259 /* MCShadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3AAAF1E1709C34600784259 /* MCShadow.cpp */; };
@@ -221,6 +226,11 @@
 		A3B1637616B01595009F95EE /* MCScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1637416B01595009F95EE /* MCScript.cpp */; };
 		A3B1639316B01D86009F95EE /* MCJoypad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1638F16B01D86009F95EE /* MCJoypad.cpp */; };
 		A3B1639416B01D86009F95EE /* MCJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1639116B01D86009F95EE /* MCJoystick.cpp */; };
+		A3B35FFC1717E0040012F5D2 /* MCTestUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B35FFA1717E0040012F5D2 /* MCTestUI.cpp */; };
+		A3B360001717E3610012F5D2 /* MCLoading.cxxpkg in Resources */ = {isa = PBXBuildFile; fileRef = A3B35FFF1717E3610012F5D2 /* MCLoading.cxxpkg */; };
+		A3B36007171845440012F5D2 /* MCEnhancingEquipmentUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B36005171845420012F5D2 /* MCEnhancingEquipmentUI.cpp */; };
+		A3B3600B1718458B0012F5D2 /* MCTradingPropsUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B360091718458A0012F5D2 /* MCTradingPropsUI.cpp */; };
+		A3B36013171846240012F5D2 /* MCHiringMercenaryUI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B36011171846230012F5D2 /* MCHiringMercenaryUI.cpp */; };
 		A3B5B08F170847E600B3C588 /* MCTestParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B5B08D170847E600B3C588 /* MCTestParticle.cpp */; };
 		A3B7F9B416F61C5000F3D0C5 /* MCTestAStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */; };
 		A3BB130616F7765500E4F394 /* MCBackpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BB130416F7765400E4F394 /* MCBackpack.cpp */; };
@@ -611,9 +621,17 @@
 		A352DA9A170B063A004D4742 /* MCEquipmentLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCEquipmentLayer.h; path = ../Classes/MCEquipmentLayer.h; sourceTree = "<group>"; };
 		A353BBFC170FD9A1005A4058 /* MCToast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCToast.cpp; path = ../Classes/MCToast.cpp; sourceTree = "<group>"; };
 		A353BBFD170FD9A1005A4058 /* MCToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCToast.h; path = ../Classes/MCToast.h; sourceTree = "<group>"; };
-		A353BC00170FE5D1005A4058 /* MCToast.pkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCToast.pkg; path = ../tools/lua/MCToast.pkg; sourceTree = "<group>"; };
+		A353BC00170FE5D1005A4058 /* MCToast.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCToast.cxxpkg; path = ../tools/lua/MCToast.cxxpkg; sourceTree = "<group>"; };
 		A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCLoadingScene.cpp; path = ../Classes/MCLoadingScene.cpp; sourceTree = "<group>"; };
 		A353BC02170FE63D005A4058 /* MCLoadingScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCLoadingScene.h; path = ../Classes/MCLoadingScene.h; sourceTree = "<group>"; };
+		A353F2071717C58B0038D726 /* MCRegionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCRegionHandler.h; sourceTree = "<group>"; };
+		A353F2081717C58B0038D726 /* MCRegionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCRegionHandler.m; sourceTree = "<group>"; };
+		A353F20B1717CE040038D726 /* MCRegionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRegionManager.cpp; path = ../Classes/MCRegionManager.cpp; sourceTree = "<group>"; };
+		A353F20C1717CE040038D726 /* MCRegionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRegionManager.h; path = ../Classes/MCRegionManager.h; sourceTree = "<group>"; };
+		A353F2101717D1700038D726 /* MCRegion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRegion.cpp; path = ../Classes/MCRegion.cpp; sourceTree = "<group>"; };
+		A353F2111717D1700038D726 /* MCRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRegion.h; path = ../Classes/MCRegion.h; sourceTree = "<group>"; };
+		A353F2151717D9030038D726 /* MCIssuingTaskUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCIssuingTaskUI.cpp; path = ../Classes/MCIssuingTaskUI.cpp; sourceTree = "<group>"; };
+		A353F2161717D9030038D726 /* MCIssuingTaskUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCIssuingTaskUI.h; path = ../Classes/MCIssuingTaskUI.h; sourceTree = "<group>"; };
 		A3592B3216B9440800E0AD58 /* MCDetailLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCDetailLayer.cpp; path = ../Classes/MCDetailLayer.cpp; sourceTree = "<group>"; };
 		A3592B3316B9440800E0AD58 /* MCDetailLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDetailLayer.h; path = ../Classes/MCDetailLayer.h; sourceTree = "<group>"; };
 		A3592B3516B9442E00E0AD58 /* MCStateLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCStateLayer.cpp; path = ../Classes/MCStateLayer.cpp; sourceTree = "<group>"; };
@@ -683,6 +701,11 @@
 		A3A042201705892A00CF90C9 /* MCCoreMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.objj.h; path = MCCoreMacros.h; sourceTree = "<group>"; };
 		A3A0F91517070FEE0078DDCF /* MCControllerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCControllerLayer.cpp; path = ../Classes/MCControllerLayer.cpp; sourceTree = "<group>"; };
 		A3A0F91617070FEE0078DDCF /* MCControllerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCControllerLayer.h; path = ../Classes/MCControllerLayer.h; sourceTree = "<group>"; };
+		A3A56BBB17185BF100C5FB61 /* MCEnhancingEquipmentUI.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCEnhancingEquipmentUI.cxxpkg; path = ../tools/lua/MCEnhancingEquipmentUI.cxxpkg; sourceTree = "<group>"; };
+		A3A56BBC17185C0C00C5FB61 /* MCTradingPropsUI.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCTradingPropsUI.cxxpkg; path = ../tools/lua/MCTradingPropsUI.cxxpkg; sourceTree = "<group>"; };
+		A3A56BBD17185C2400C5FB61 /* MCHiringMercenaryUI.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCHiringMercenaryUI.cxxpkg; path = ../tools/lua/MCHiringMercenaryUI.cxxpkg; sourceTree = "<group>"; };
+		A3A56BBE1718641200C5FB61 /* MCRangeInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRangeInput.cpp; path = ../Classes/MCRangeInput.cpp; sourceTree = "<group>"; };
+		A3A56BBF1718641200C5FB61 /* MCRangeInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRangeInput.h; path = ../Classes/MCRangeInput.h; sourceTree = "<group>"; };
 		A3A8FAE416EEC858004EE947 /* MCViewport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCViewport.cpp; path = ../Classes/MCViewport.cpp; sourceTree = "<group>"; };
 		A3A8FAE516EEC858004EE947 /* MCViewport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCViewport.h; path = ../Classes/MCViewport.h; sourceTree = "<group>"; };
 		A3A8FAE816EED83A004EE947 /* MCTestViewport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestViewport.cpp; path = ../Classes/MCTestViewport.cpp; sourceTree = "<group>"; };
@@ -702,6 +725,20 @@
 		A3B1639016B01D86009F95EE /* MCJoypad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoypad.h; path = ../Classes/MCJoypad.h; sourceTree = "<group>"; };
 		A3B1639116B01D86009F95EE /* MCJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCJoystick.cpp; path = ../Classes/MCJoystick.cpp; sourceTree = "<group>"; };
 		A3B1639216B01D86009F95EE /* MCJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCJoystick.h; path = ../Classes/MCJoystick.h; sourceTree = "<group>"; };
+		A3B35FFA1717E0040012F5D2 /* MCTestUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestUI.cpp; path = ../Classes/MCTestUI.cpp; sourceTree = "<group>"; };
+		A3B35FFB1717E0040012F5D2 /* MCTestUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestUI.h; path = ../Classes/MCTestUI.h; sourceTree = "<group>"; };
+		A3B35FFE1717E35A0012F5D2 /* MCSceneContextManager.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCSceneContextManager.cxxpkg; path = ../tools/lua/MCSceneContextManager.cxxpkg; sourceTree = "<group>"; };
+		A3B35FFF1717E3610012F5D2 /* MCLoading.cxxpkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MCLoading.cxxpkg; path = ../tools/lua/MCLoading.cxxpkg; sourceTree = "<group>"; };
+		A3B360011717E3AF0012F5D2 /* MCSceneContext.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCSceneContext.cxxpkg; path = ../tools/lua/MCSceneContext.cxxpkg; sourceTree = "<group>"; };
+		A3B360021717EA290012F5D2 /* MCIssuingTaskUI.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCIssuingTaskUI.cxxpkg; path = ../tools/lua/MCIssuingTaskUI.cxxpkg; sourceTree = "<group>"; };
+		A3B360031717EEC30012F5D2 /* Cocos2d.pkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cocos2d.pkg; path = "../../library/tools/tolua++/Cocos2d.pkg"; sourceTree = "<group>"; };
+		A3B360041717F1BF0012F5D2 /* MCScene.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCScene.cxxpkg; path = ../tools/lua/MCScene.cxxpkg; sourceTree = "<group>"; };
+		A3B36005171845420012F5D2 /* MCEnhancingEquipmentUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCEnhancingEquipmentUI.cpp; path = ../Classes/MCEnhancingEquipmentUI.cpp; sourceTree = "<group>"; };
+		A3B36006171845430012F5D2 /* MCEnhancingEquipmentUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCEnhancingEquipmentUI.h; path = ../Classes/MCEnhancingEquipmentUI.h; sourceTree = "<group>"; };
+		A3B360091718458A0012F5D2 /* MCTradingPropsUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTradingPropsUI.cpp; path = ../Classes/MCTradingPropsUI.cpp; sourceTree = "<group>"; };
+		A3B3600A1718458B0012F5D2 /* MCTradingPropsUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTradingPropsUI.h; path = ../Classes/MCTradingPropsUI.h; sourceTree = "<group>"; };
+		A3B36011171846230012F5D2 /* MCHiringMercenaryUI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCHiringMercenaryUI.cpp; path = ../Classes/MCHiringMercenaryUI.cpp; sourceTree = "<group>"; };
+		A3B36012171846240012F5D2 /* MCHiringMercenaryUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCHiringMercenaryUI.h; path = ../Classes/MCHiringMercenaryUI.h; sourceTree = "<group>"; };
 		A3B5B08D170847E600B3C588 /* MCTestParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestParticle.cpp; path = ../Classes/MCTestParticle.cpp; sourceTree = "<group>"; };
 		A3B5B08E170847E600B3C588 /* MCTestParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestParticle.h; path = ../Classes/MCTestParticle.h; sourceTree = "<group>"; };
 		A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestAStar.cpp; path = ../Classes/MCTestAStar.cpp; sourceTree = "<group>"; };
@@ -727,7 +764,7 @@
 		A3D5AF9516AC3B8B00E74791 /* MCDice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCDice.h; path = ../Classes/MCDice.h; sourceTree = "<group>"; };
 		A3E87E79170352B100C2E537 /* MCSceneController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSceneController.cpp; path = ../Classes/MCSceneController.cpp; sourceTree = "<group>"; };
 		A3E87E7A170352B100C2E537 /* MCSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCSceneController.h; path = ../Classes/MCSceneController.h; sourceTree = "<group>"; };
-		A3E87E7E1703590700C2E537 /* MCSceneController.pkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MCSceneController.pkg; path = ../tools/lua/MCSceneController.pkg; sourceTree = "<group>"; };
+		A3E87E7E1703590700C2E537 /* MCSceneController.cxxpkg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = MCSceneController.cxxpkg; path = ../tools/lua/MCSceneController.cxxpkg; sourceTree = "<group>"; };
 		A3E87E801703596600C2E537 /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Readme.md; path = ../tools/lua/Readme.md; sourceTree = "<group>"; };
 		A3E8C49D16DCF92700060C94 /* MCBarrier.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBarrier.cpp; path = ../Classes/MCBarrier.cpp; sourceTree = "<group>"; };
 		A3E8C49E16DCF92700060C94 /* MCBarrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBarrier.h; path = ../Classes/MCBarrier.h; sourceTree = "<group>"; };
@@ -1288,6 +1325,17 @@
 			name = TMX;
 			sourceTree = "<group>";
 		};
+		A353F20F1717D15E0038D726 /* Region */ = {
+			isa = PBXGroup;
+			children = (
+				A353F20B1717CE040038D726 /* MCRegionManager.cpp */,
+				A353F20C1717CE040038D726 /* MCRegionManager.h */,
+				A353F2101717D1700038D726 /* MCRegion.cpp */,
+				A353F2111717D1700038D726 /* MCRegion.h */,
+			);
+			name = Region;
+			sourceTree = "<group>";
+		};
 		A37C286B16AEBA1000A3D143 /* Roles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1327,6 +1375,16 @@
 				A352DA96170AE8E7004D4742 /* MCConfirm.h */,
 				A353BBFC170FD9A1005A4058 /* MCToast.cpp */,
 				A353BBFD170FD9A1005A4058 /* MCToast.h */,
+				A3A56BBE1718641200C5FB61 /* MCRangeInput.cpp */,
+				A3A56BBF1718641200C5FB61 /* MCRangeInput.h */,
+				A353F2151717D9030038D726 /* MCIssuingTaskUI.cpp */,
+				A353F2161717D9030038D726 /* MCIssuingTaskUI.h */,
+				A3B36005171845420012F5D2 /* MCEnhancingEquipmentUI.cpp */,
+				A3B36006171845430012F5D2 /* MCEnhancingEquipmentUI.h */,
+				A3B360091718458A0012F5D2 /* MCTradingPropsUI.cpp */,
+				A3B3600A1718458B0012F5D2 /* MCTradingPropsUI.h */,
+				A3B36011171846230012F5D2 /* MCHiringMercenaryUI.cpp */,
+				A3B36012171846240012F5D2 /* MCHiringMercenaryUI.h */,
 				A38D11B816B815D7009E1CB8 /* Detail */,
 			);
 			name = UI;
@@ -1518,6 +1576,7 @@
 				A30A0AC216FABC3A00F1F5B9 /* MCMercenaryManager.cpp */,
 				A30A0AC316FABC3A00F1F5B9 /* MCMercenaryManager.h */,
 				A30A0AC616FAC66B00F1F5B9 /* MCInterfaceMacros.h */,
+				A353F20F1717D15E0038D726 /* Region */,
 				A32A035416F98F8900000A79 /* Equipment */,
 				A32A034F16F98EDF00000A79 /* Ores */,
 				A32A034A16F9795C00000A79 /* Backpack */,
@@ -1580,6 +1639,8 @@
 				A3B5B08E170847E600B3C588 /* MCTestParticle.h */,
 				A3B7F9B216F61C5000F3D0C5 /* MCTestAStar.cpp */,
 				A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */,
+				A3B35FFA1717E0040012F5D2 /* MCTestUI.cpp */,
+				A3B35FFB1717E0040012F5D2 /* MCTestUI.h */,
 				A32CFC4D16E63FD50062F47F /* MCTestGame.h */,
 				A32CFC4E16E63FD50062F47F /* MCTestLayer.h */,
 				A36D12AD16DF9E8500A940ED /* MCTestbed.cpp */,
@@ -1637,8 +1698,17 @@
 		A3E87E7D170358F700C2E537 /* lua */ = {
 			isa = PBXGroup;
 			children = (
-				A3E87E7E1703590700C2E537 /* MCSceneController.pkg */,
-				A353BC00170FE5D1005A4058 /* MCToast.pkg */,
+				A3E87E7E1703590700C2E537 /* MCSceneController.cxxpkg */,
+				A353BC00170FE5D1005A4058 /* MCToast.cxxpkg */,
+				A3B360041717F1BF0012F5D2 /* MCScene.cxxpkg */,
+				A3B35FFE1717E35A0012F5D2 /* MCSceneContextManager.cxxpkg */,
+				A3B360011717E3AF0012F5D2 /* MCSceneContext.cxxpkg */,
+				A3B35FFF1717E3610012F5D2 /* MCLoading.cxxpkg */,
+				A3B360021717EA290012F5D2 /* MCIssuingTaskUI.cxxpkg */,
+				A3A56BBB17185BF100C5FB61 /* MCEnhancingEquipmentUI.cxxpkg */,
+				A3A56BBC17185C0C00C5FB61 /* MCTradingPropsUI.cxxpkg */,
+				A3A56BBD17185C2400C5FB61 /* MCHiringMercenaryUI.cxxpkg */,
+				A3B360031717EEC30012F5D2 /* Cocos2d.pkg */,
 				A3E87E801703596600C2E537 /* Readme.md */,
 			);
 			name = lua;
@@ -1714,6 +1784,8 @@
 				A33216331701D5D100CC06A6 /* MCFlagHandler.m */,
 				A332162E1701BF4800CC06A6 /* MCTaskHandler.h */,
 				A332162F1701BF4800CC06A6 /* MCTaskHandler.m */,
+				A353F2071717C58B0038D726 /* MCRegionHandler.h */,
+				A353F2081717C58B0038D726 /* MCRegionHandler.m */,
 			);
 			name = Handlers;
 			sourceTree = "<group>";
@@ -1811,6 +1883,7 @@
 				1514DA40163004980095A81C /* ipadhd in Resources */,
 				1514DA41163004980095A81C /* iphone in Resources */,
 				A3E87E811703596600C2E537 /* Readme.md in Resources */,
+				A3B360001717E3610012F5D2 /* MCLoading.cxxpkg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2021,6 +2094,14 @@
 				A345DB5F170E8A91007142CA /* MCCamera.cpp in Sources */,
 				A353BBFE170FD9A1005A4058 /* MCToast.cpp in Sources */,
 				A353BC03170FE63D005A4058 /* MCLoadingScene.cpp in Sources */,
+				A353F20D1717CE040038D726 /* MCRegionManager.cpp in Sources */,
+				A353F2121717D1700038D726 /* MCRegion.cpp in Sources */,
+				A353F2171717D9030038D726 /* MCIssuingTaskUI.cpp in Sources */,
+				A3B35FFC1717E0040012F5D2 /* MCTestUI.cpp in Sources */,
+				A3B36007171845440012F5D2 /* MCEnhancingEquipmentUI.cpp in Sources */,
+				A3B3600B1718458B0012F5D2 /* MCTradingPropsUI.cpp in Sources */,
+				A3B36013171846240012F5D2 /* MCHiringMercenaryUI.cpp in Sources */,
+				A3A56BC01718641200C5FB61 /* MCRangeInput.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2044,6 +2125,7 @@
 				A34F70741707F104006C3313 /* MCTMXGenerator.m in Sources */,
 				A34F70781707F644006C3313 /* MCScenes.m in Sources */,
 				A34F707C1707F75E006C3313 /* MCScenePackage.m in Sources */,
+				A353F20A1717C58B0038D726 /* MCRegionHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2145,6 +2227,7 @@
 				GCC_PREFIX_HEADER = "Military Confrontation_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					CC_TARGET_OS_MAC,
+					"MC_COLLISION_USE_OBB=0",
 					"DEBUG=1",
 					USE_FILE32API,
 					"$(inherited)",
@@ -2188,6 +2271,7 @@
 				GCC_PREFIX_HEADER = "Military Confrontation_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					USE_FILE32API,
+					"MC_COLLISION_USE_OBB=0",
 					CC_TARGET_OS_MAC,
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;

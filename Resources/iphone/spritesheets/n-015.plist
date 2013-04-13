@@ -311,6 +311,8 @@
 	</dict>
 	<key>metadata</key>
 	<dict>
+		<key>spriteFrameType</key>
+		<integer>1</integer>
 		<key>textureFileName</key>
 		<string>n-015.st</string>
 	</dict>

@@ -15,6 +15,7 @@ extern NSString *kMCScenePackageBackground;
 extern NSString *kMCScenePackageTMXMap;
 extern NSString *kMCScenePackageSound;
 extern NSString *kMCScenePackageObjects;
+extern NSString *kMCScenePackageObjectsID;
 extern NSString *kMCScenePackageObjectsX;
 extern NSString *kMCScenePackageObjectsY;
 extern NSString *kMCScenePackageObjectsFlags;

@@ -25,7 +25,7 @@ public:
     void loadMercenaries();
     
     MCMercenary *mercenaryForObjectId(mc_object_id_t anObjectId);
-    MCMercenary *metaMercenaryForObjectId(mc_object_id_t anObjectId);
+    MCMercenary *protoMercenaryForObjectId(mc_object_id_t anObjectId);
     
     /**
      * 已雇佣将返回kMCHired

@@ -12,5 +12,12 @@
 #include "MCLoadingScene.h"
 #include "MCSceneController.h"
 #include "MCToast.h"
+#include "MCScene.h"
+
+/* UI */
+#include "MCIssuingTaskUI.h"
+#include "MCEnhancingEquipmentUI.h"
+#include "MCTradingPropsUI.h"
+#include "MCHiringMercenaryUI.h"
 
 #endif

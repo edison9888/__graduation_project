@@ -16,6 +16,7 @@
 
 class MCFlag;
 class MCTaskContext;
+class MCRegion;
 
 enum {
     MCTaskUnknownStatus = 0,
@@ -56,6 +57,9 @@ private:
     CC_PROPERTY(MCTaskStatus, taskStatus_, TaskStatus);                 /* 任务状态 */
     CC_SYNTHESIZE_READONLY(MCTaskContext *, taskContext_, TaskContext); /* 任务上下文 */
     CC_SYNTHESIZE(MCFlag *, flag_, Flag);                               /* 开启标签 */
+    CC_SYNTHESIZE(MCRegion *, region_, Region);                         /* 任务区域 */
+    
+    CC_SYNTHESIZE_READONLY(MCTask *, proto_, Proto);                    /* 指向原始的任务，复制后这个值就不为空 */
 };
 
 #endif /* defined(__Military_Confrontation__MCTask__) */
