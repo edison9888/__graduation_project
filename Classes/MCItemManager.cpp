@@ -150,7 +150,7 @@ MCItemManager::loadEquipmentItems()
         weapon.loadFromString(pstrFileContent->getCString());
     }
 #else
-    weapon.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEquipmentItemWeaponFilepath));
+    weapon.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCEquipmentItemWeaponFilepath).c_str());
 #endif
     
     root = weapon.getObject();
@@ -213,7 +213,7 @@ MCItemManager::loadEquipmentItems()
         armor.loadFromString(pstrFileContent->getCString());
     }
 #else
-    armor.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEquipmentItemArmorFilepath));
+    armor.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCEquipmentItemArmorFilepath).c_str());
 #endif
     
     root = armor.getObject();
@@ -263,7 +263,7 @@ MCItemManager::loadEffectiveItems()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEffectiveItemFilepath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCEffectiveItemFilepath).c_str());
 #endif
     
     root = v.getObject();

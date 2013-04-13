@@ -11,11 +11,15 @@
 
 #include "MCType.h"
 #include "MCConfirm.h"
+#include <cocos-ext.h>
+
+USING_NS_CC_EXT;
 
 class MCScene;
 class MCEquipmentItem;
+class MCTableViewTextFieldCell;
 
-class MCEnhancingEquipmentUI : public CCLayer, public MCConfirmDelegate {
+class MCEnhancingEquipmentUI : public CCLayer, public MCConfirmDelegate, public CCTableViewDataSource, public CCTableViewDelegate {
 public:
     bool init();
     
@@ -25,11 +29,22 @@ public:
     
     void confirmDidClickYesButton(MCConfirm *aConfirm);
     
+    /* CCScrollViewDelegate */
+    void scrollViewDidScroll(CCScrollView *view) {}
+    void scrollViewDidZoom(CCScrollView *view) {}
+    
+    /* CCTableViewDataSource */
+    CCSize cellSizeForTable(CCTableView *table);
+    CCTableViewCell *tableCellAtIndex(CCTableView *table, unsigned int idx);
+    unsigned int numberOfCellsInTableView(CCTableView *table);
+    
+    /* CCTableViewDelegate */
+    void tableCellTouched(CCTableView *table, CCTableViewCell *cell);
+    
     CREATE_FUNC(MCEnhancingEquipmentUI);
     
 protected:
     void equipmentType_clicked(CCObject *obj);
-    void item_clicked(CCObject *obj);
     
     void levelUp_click(CCObject *aSender);
     
@@ -40,10 +55,14 @@ protected:
     void loadWeapon(MCEquipmentItem *aWeapon);
     void loadArmor(MCEquipmentItem *anArmor);
     
+    CCTableView *tableView_; /* 装备列表 */
+    CCSize tableViewSize_;
+    MCTableViewTextFieldCell *selectedCell_;
+    
     CCLayer *infoLayer_; /* 显示装备信息的层 */
-    CCMenu *currentMenu_;
+    CCArray *equipments_;
     CCMenuItemLabel *lastSelectedEquipmentTypeMenuItem_;
-    CCMenuItemLabel *lastSelectedEquipmentMenuItem_;
+    MCEquipmentItem *lastSelectedEquipmentItem_;
     
     CCLayer *weaponLayer_;
     CCLayer *armorLayer_;

@@ -38,14 +38,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     pDirector->setOpenGLView(pEGLView);
 
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-//	pEGLView->setAccelerometerKeyHook(Win32KeyHook);
-//#endif  // CC_PLATFORM_WIN32 设置Windows的键盘响应
+    std::vector<std::string> searchPaths;
 
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     pEGLView->setDesignResolutionSize(PCResource.size.width, PCResource.size.height, kResolutionExactFit);
-    CCFileUtils::sharedFileUtils()->setResourceDirectory(PCResource.directory);
+    searchPaths.push_back(PCResource.directory);
 //    pDirector->setContentScaleFactor(MIN(32 * 25 / PCResource.size.width, 32 * 15 / PCResource.size.height));
 //    pDirector->setContentScaleFactor(0.75f);
     pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
@@ -54,19 +52,19 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	if (frameSize.height == smallResource.size.height)
 	{
         pEGLView->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, kResolutionNoBorder);
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
+		searchPaths.push_back(smallResource.directory);
 	}
         // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height == mediumResource.size.height)
     {
         pEGLView->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, kResolutionNoBorder);
-        CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
+        searchPaths.push_back(mediumResource.directory);
     }
         // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
     {
         pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, kResolutionNoBorder);
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
+		searchPaths.push_back(largeResource.directory);
     }
     pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -76,36 +74,37 @@ bool AppDelegate::applicationDidFinishLaunching() {
     for (; i < size; ++i) {
         if ((frameSize.width == resources[i].size.width && frameSize.height == resources[i].size.height)
             || (frameSize.width == resources[i].size.height && frameSize.height == resources[i].size.width)) {
-            CCFileUtils::sharedFileUtils()->setResourceDirectory(resources[i].directory);
+            searchPaths.push_back(resources[i].directory);
             pEGLView->setDesignResolutionSize(resources[i].size.width, resources[i].size.height, kResolutionNoBorder);
             found = 1;
             break;
         }
     }
     if (found == 0) {
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(resources[0].directory);
+		searchPaths.push_back(resources[0].directory);
         pEGLView->setDesignResolutionSize(resources[0].size.width, resources[0].size.height, kResolutionNoBorder);
     }
 #else
     // if the frame's height is larger than the height of medium resource size, select large resource.
 	if (frameSize.height > mediumResource.size.height)
 	{
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(largeResource.directory);
+		searchPaths.push_back(largeResource.directory);
         pDirector->setContentScaleFactor(MIN(largeResource.size.height/smallResource.size.height, largeResource.size.width/smallResource.size.width));
 	}
     // if the frame's height is larger than the height of small resource size, select medium resource.
     else if (frameSize.height > smallResource.size.height)
     {
-        CCFileUtils::sharedFileUtils()->setResourceDirectory(mediumResource.directory);
+        searchPaths.push_back(mediumResource.directory);
         pDirector->setContentScaleFactor(MIN(mediumResource.size.height/smallResource.size.height, mediumResource.size.width/smallResource.size.width));
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
 	else
     {
-		CCFileUtils::sharedFileUtils()->setResourceDirectory(smallResource.directory);
+		searchPaths.push_back(smallResource.directory);
         pDirector->setContentScaleFactor(MIN(smallResource.size.height, smallResource.size.width));
     }
 #endif
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 	
     // turn on display FPS
 //    pDirector->setDisplayStats(true);

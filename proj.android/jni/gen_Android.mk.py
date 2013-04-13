@@ -11,45 +11,6 @@ LOCAL_MODULE := MC_shared
 LOCAL_MODULE_FILENAME := libMC
 
 LOCAL_SRC_FILES := main.cpp \\
-					../../../library/scripting/lua/lua/lapi.c \\
-					../../../library/scripting/lua/lua/lauxlib.c \\
-					../../../library/scripting/lua/lua/lbaselib.c \\
-					../../../library/scripting/lua/lua/lcode.c \\
-					../../../library/scripting/lua/lua/ldblib.c \\
-					../../../library/scripting/lua/lua/ldebug.c \\
-					../../../library/scripting/lua/lua/ldo.c \\
-					../../../library/scripting/lua/lua/ldump.c \\
-					../../../library/scripting/lua/lua/lfunc.c \\
-					../../../library/scripting/lua/lua/lgc.c \\
-					../../../library/scripting/lua/lua/linit.c \\
-					../../../library/scripting/lua/lua/liolib.c \\
-					../../../library/scripting/lua/lua/llex.c \\
-					../../../library/scripting/lua/lua/lmathlib.c \\
-					../../../library/scripting/lua/lua/lmem.c \\
-					../../../library/scripting/lua/lua/loadlib.c \\
-					../../../library/scripting/lua/lua/lobject.c \\
-					../../../library/scripting/lua/lua/lopcodes.c \\
-					../../../library/scripting/lua/lua/loslib.c \\
-					../../../library/scripting/lua/lua/lparser.c \\
-					../../../library/scripting/lua/lua/lstate.c \\
-					../../../library/scripting/lua/lua/lstring.c \\
-					../../../library/scripting/lua/lua/lstrlib.c \\
-					../../../library/scripting/lua/lua/ltable.c \\
-					../../../library/scripting/lua/lua/ltablib.c \\
-					../../../library/scripting/lua/lua/ltm.c \\
-					../../../library/scripting/lua/lua/lua.c \\
-					../../../library/scripting/lua/lua/lundump.c \\
-					../../../library/scripting/lua/lua/lvm.c \\
-					../../../library/scripting/lua/lua/lzio.c \\
-					../../../library/scripting/lua/lua/print.c \\
-					../../../library/scripting/lua/tolua/tolua_event.c \\
-					../../../library/scripting/lua/tolua/tolua_is.c \\
-					../../../library/scripting/lua/tolua/tolua_map.c \\
-					../../../library/scripting/lua/tolua/tolua_push.c \\
-					../../../library/scripting/lua/tolua/tolua_to.c \\
-					../../../library/scripting/lua/cocos2dx_support/tolua_fix.c \\
-					../../../library/scripting/lua/cocos2dx_support/Cocos2dxLuaLoader.cpp \\
-					../../../library/scripting/lua/cocos2dx_support/CCLuaEngine.cpp \\
 %s \\
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \\
@@ -57,9 +18,8 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \\
 					$(LOCAL_PATH)/../../Classes/JSON/include/JsonBox \\
 					$(LOCAL_PATH)/../../../library/CocosDenshion/include \\
 					$(LOCAL_PATH)/../../../library/extensions \\
-					$(LOCAL_PATH)/../../../library/scripting/lua/cocos2dx_support \\
-					$(LOCAL_PATH)/../../../library/scripting/lua/lua \\
-					$(LOCAL_PATH)/../../../library/scripting/lua/tolua \\
+
+LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 
 LOCAL_WHOLE_STATIC_LIBRARIES := cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
@@ -70,6 +30,8 @@ include $(BUILD_SHARED_LIBRARY)
 
 $(call import-module,cocos2dx)
 $(call import-module,CocosDenshion/android)
+$(call import-module,scripting/lua/proj.android/jni)
+$(call import-module,cocos2dx/platform/third_party/android/prebuilt/libcurl)
 $(call import-module,extensions)
 '''
 

@@ -10,7 +10,8 @@
 #include "MCBackpack.h"
 #include "MCScene.h"
 #include "MCToast.h"
-#include "MCRangeInput.h"
+#include "MCSlider.h"
+#include "MCTableViewTextFieldCell.h"
 
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
@@ -34,8 +35,6 @@ MCTradingPropsUI::init()
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCMenu *menu;
-        CCMenuItem *menuItem;
-        CCLabelTTF *label;
         float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
         float fontSize = 21 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
@@ -44,10 +43,11 @@ MCTradingPropsUI::init()
         float offsetX = 24 / contentScaleFactor;
         float offsetY = contentHeightWithoutBottom / 4 + 4;
         float itemHeight = 0;
+        CCLabelTTF *label;
         MCBackpack *backpack = MCBackpack::sharedBackpack();
         MCBackpackItem *backpackItem;
-        CCPoint menuItemAnchorPoint = ccp(0, 0.5);
         CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
+        CCNode *backpackItemObject;
         
         CCSprite *bg = CCSprite::create(kMCBackgroundFilepath);
         addChild(bg);
@@ -63,8 +63,8 @@ MCTradingPropsUI::init()
                               winSize.height - backwardMenuItem->getContentSize().height / 2 + 16 / contentScaleFactor));
         
         
-        CCMenu *items = CCMenu::create();
-        addChild(items);
+        CCArray *items = CCArray::create();
+        items->retain();
         
         /**
          * item的userdata设置为对应的MCBackpackItem
@@ -72,140 +72,89 @@ MCTradingPropsUI::init()
          */
         /* health potion */
         backpackItem = backpack->getHealthPotion();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCHealthPotionIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCHealthPotionIcon));
+        items->addObject(backpackItemObject);
         
         /* physical potion */
         backpackItem = backpack->getPhysicalPotion();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCPhysicalPotionIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCPhysicalPotionIcon));
+        items->addObject(backpackItemObject);
         
         /* fireball trap wide */
         backpackItem = backpack->getFireballTrapWide();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFireballWideIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFireballWideIcon));
+        items->addObject(backpackItemObject);
         
         /* fireball trap damage */
         backpackItem = backpack->getFireballTrapDamage();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFireballDamageIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFireballDamageIcon));
+        items->addObject(backpackItemObject);
         
         /* curse trap wide */
         backpackItem = backpack->getCurseTrapWide();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCCurseWideIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCCurseWideIcon));
+        items->addObject(backpackItemObject);
         
         /* curse trap damage */
         backpackItem = backpack->getCurseTrapDamage();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCCurseDamageIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCCurseDamageIcon));
+        items->addObject(backpackItemObject);
         
         /* paralysis trap wide */
         backpackItem = backpack->getParalysisTrapWide();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCParalysisWideIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCParalysisWideIcon));
+        items->addObject(backpackItemObject);
         
         /* paralysis trap damage */
         backpackItem = backpack->getParalysisTrapDamage();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCParalysisDamageIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCParalysisDamageIcon));
+        items->addObject(backpackItemObject);
         
         /* fog trap wide */
         backpackItem = backpack->getFogTrapWide();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFogWideIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFogWideIcon));
+        items->addObject(backpackItemObject);
         
         /* fog trap damage */
         backpackItem = backpack->getFogTrapDamage();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFogDamageIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFogDamageIcon));
+        items->addObject(backpackItemObject);
         
         /* flash trap wide */
         backpackItem = backpack->getFlashTrapWide();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFlashWideIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFlashWideIcon));
+        items->addObject(backpackItemObject);
         
         /* flash trap damage */
         backpackItem = backpack->getFlashTrapDamage();
-        label = CCLabelTTF::create(backpackItem->item->getName()->getCString(), "", fontSize);
-        label->setColor(kMCUnselectedColor);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::item_clicked));
-        menuItem->setUserData(backpackItem);
-        menuItem->setUserObject(cache->spriteFrameByName(kMCFlashDamageIcon));
-        itemHeight += label->getContentSize().height;
-        menuItem->setAnchorPoint(menuItemAnchorPoint);
-        items->addChild(menuItem);
+        backpackItemObject = CCNode::create();
+        backpackItemObject->setUserData(backpackItem);
+        backpackItemObject->setUserObject(cache->spriteFrameByName(kMCFlashDamageIcon));
+        items->addObject(backpackItemObject);
         
-        items->setAnchorPoint(ccp(0, 1));
-        items->setPosition(ccp(offsetX,  winSize.height - offsetY - itemHeight / 2));
-        items->alignItemsVertically();
-        items_ = items;
+        effectiveItems_ = items;
         
         CCPoint detailOrigin = ccp(winSize.width - offsetY,
                                    winSize.height - offsetY);
@@ -286,19 +235,21 @@ MCTradingPropsUI::init()
         
         menu = CCMenu::create();
         info_->addChild(menu);
-        label = CCLabelTTF::create("购买", "", fontSize);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::buy_click));
-        menu->addChild(menuItem);
-        menu->setPosition(ccp(detailOrigin.x - menuItem->getContentSize().width,
-                              winSize.height / 4));
         
         menu = CCMenu::create();
         info_->addChild(menu);
+        
+        label = CCLabelTTF::create("购买", "", fontSize);
+        backpackItemObject = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::buy_click));
+        menu->addChild(backpackItemObject);
+        
         label = CCLabelTTF::create("卖出", "", fontSize);
-        menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::sell_click));
-        menu->addChild(menuItem);
-        menu->setPosition(ccp(detailOrigin.x + menuItem->getContentSize().width,
+        backpackItemObject = CCMenuItemLabel::create(label, this, menu_selector(MCTradingPropsUI::sell_click));
+        menu->addChild(backpackItemObject);
+        menu->alignItemsHorizontallyWithPadding(13.0f / contentScaleFactor);
+        menu->setPosition(ccp(detailOrigin.x + detailSize.width - backpackItemObject->getContentSize().width,
                               winSize.height / 4));
+        
         /* money */
         label = CCLabelTTF::create("马克", "Marker Felt", fontSize);
         addChild(label);
@@ -321,8 +272,19 @@ MCTradingPropsUI::init()
         line->setAnchorPoint(ccp(0, 0)); /* 左下角 */
         line->setPosition(ccp(offsetX, 45 / contentScaleFactor));
         
+        tableViewSize_ = CCSizeMake(180 / contentScaleFactor,
+                                    (400 - line->getPositionY()) / contentScaleFactor);
+        tableView_ = CCTableView::create(this, tableViewSize_);
+        addChild(tableView_);
+        tableView_->setDirection(kCCScrollViewDirectionVertical);
+        tableView_->setDelegate(this);
+        tableView_->setVerticalFillOrder(kCCTableViewFillTopDown);
+        tableView_->reloadData();
+        tableView_->setPosition(ccp(offsetX,
+                                    (winSize.height - tableViewSize_.height) / 2));
+        selectedCell_ = NULL;
+        
         info_->setVisible(false);
-        lastClickedItem_ = NULL;
         tradingOperation_ = MCUnknownOperation;
         
         return true;
@@ -367,39 +329,56 @@ MCTradingPropsUI::backward(CCObject *aSender) /* 关闭.... */
 void
 MCTradingPropsUI::buy_click(CCObject *aSender)
 {
-    CCMenuItem *menuItem = dynamic_cast<CCMenuItemLabel *>(lastClickedItem_);
-    MCBackpackItem *backpackItem = (MCBackpackItem *) menuItem->getUserData();
-    mc_size_t now = backpackItem->count;
-    mc_size_t min = now < kMCItemMax ? 1 : 0;
-    mc_size_t max = kMCItemMax - now;
-    MCRangeInput *rangeInpout = MCRangeInput::defaultRangeInput(min, max, min);
+    if (!selectedCell_) {
+        return;
+    }
+    CCNode *node = dynamic_cast<CCNode *>(effectiveItems_->objectAtIndex(selectedCell_->getIdx()));
+    MCBackpackItem *backpackItem = (MCBackpackItem *) node->getUserData();
+    float now = (float) backpackItem->count;
+    float min = now < kMCItemMax ? 1.0f : 0.0f;
+    float max = (float) kMCItemMax - now;
+    MCSlider *slider = MCSlider::defaultSlider(0.0f, 99.0f, 0.0f);
+    
+    slider->setMinimumAllowedValue(min);
+    slider->setValue(now);
+    slider->setMaximumAllowedValue(max);
     
     tradingOperation_ = MCBuyOperation;
-    rangeInpout->setDelegate(this);
-    rangeInpout->attach(this);
+    slider->setDelegate(this);
+    slider->attach(this);
 }
 
 void
 MCTradingPropsUI::sell_click(CCObject *aSender)
 {
-    CCMenuItem *menuItem = dynamic_cast<CCMenuItemLabel *>(lastClickedItem_);
-    MCBackpackItem *backpackItem = (MCBackpackItem *) menuItem->getUserData();
-    mc_size_t min = 0;
-    mc_size_t max = backpackItem->count;
-    MCRangeInput *rangeInpout = MCRangeInput::defaultRangeInput(min, max, min);
+    if (!selectedCell_) {
+        return;
+    }
+    CCNode *node = dynamic_cast<CCNode *>(effectiveItems_->objectAtIndex(selectedCell_->getIdx()));
+    MCBackpackItem *backpackItem = (MCBackpackItem *) node->getUserData();
+    float min = 0.0f;
+    float max = (float) backpackItem->count;
+    MCSlider *slider = MCSlider::defaultSlider(0.0f, 99.0f, 0.0f);
+    
+    slider->setMinimumAllowedValue(min);
+    slider->setValue(min);
+    slider->setMaximumAllowedValue(max);
     
     tradingOperation_ = MCSellOperation;
-    rangeInpout->setDelegate(this);
-    rangeInpout->attach(this);
+    slider->setDelegate(this);
+    slider->attach(this);
 }
 
 void
-MCTradingPropsUI::rangeInputDidSetValue(MCRangeInput *aRangeInput)
+MCTradingPropsUI::sliderDidOk(MCSlider *aSlider)
 {
-    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(lastClickedItem_);
-    MCBackpackItem *backpackItem = (MCBackpackItem *) menuItem->getUserData();
+    if (!selectedCell_) {
+        return;
+    }
+    CCNode *node = dynamic_cast<CCNode *>(effectiveItems_->objectAtIndex(selectedCell_->getIdx()));
+    MCBackpackItem *backpackItem = (MCBackpackItem *) node->getUserData();
     MCBackpack *backpack = MCBackpack::sharedBackpack();
-    mc_size_t count = aRangeInput->getValue();
+    mc_size_t count = aSlider->getValue();
     mc_price_t money = backpack->getMoney();
     mc_price_t price = backpackItem->item->getPrice() * count;
     
@@ -410,30 +389,56 @@ MCTradingPropsUI::rangeInputDidSetValue(MCRangeInput *aRangeInput)
             MCToast::make(this, "兄台，你不够钱~")->show();
         }
     } else if (tradingOperation_ == MCSellOperation) {
+        backpackItem->count -= count;
         backpack->setMoney(money + (mc_price_t) (price * kMCSellPercentage));
     }
-    loadItem(menuItem);
+    loadItem(node);
     money_->setString(CCString::createWithFormat("%d", backpack->getMoney())->getCString());
 }
 
-void
-MCTradingPropsUI::item_clicked(CCObject *obj)
+/* CCTableViewDataSource */
+CCSize
+MCTradingPropsUI::cellSizeForTable(CCTableView *table)
 {
-    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(obj);
-    CCLabelTTF *label;
+    return CCSizeMake(96, 32);
+}
+
+CCTableViewCell *
+MCTradingPropsUI::tableCellAtIndex(CCTableView *table, unsigned int idx)
+{
+    CCNode *node = dynamic_cast<CCNode *>(effectiveItems_->objectAtIndex(idx));
+    MCBackpackItem *backpackItem = (MCBackpackItem *) node->getUserData();
+    MCEffectiveItem *effectiveItem = dynamic_cast<MCEffectiveItem *>(backpackItem->item);
     
-    /* 更改选中颜色 */
-    if (lastClickedItem_) {
-        label = dynamic_cast<CCLabelTTF *>(lastClickedItem_->getLabel());
-        label->setColor(kMCUnselectedColor);
+    CCTableViewCell *cell = table->dequeueCell();
+    if (! cell) {
+        cell = MCTableViewTextFieldCell::create(effectiveItem->getName()->getCString(),
+                                                "Helvetica",
+                                                18.0f / CCDirectorGetContentScaleFactor());
+    } else {
+        dynamic_cast<MCTableViewTextFieldCell *>(cell)->setString(effectiveItem->getName()->getCString());
     }
-    label = dynamic_cast<CCLabelTTF *>(menuItem->getLabel());
-    label->setColor(kMCSelectedColor);
-    lastClickedItem_ = menuItem;
-    
-    /* 更改显示内容 */
-    info_->setVisible(true);
-    loadItem(menuItem);
+        
+    return cell;
+}
+
+unsigned int
+MCTradingPropsUI::numberOfCellsInTableView(CCTableView *table)
+{
+    return effectiveItems_ ? effectiveItems_->count() : 0;
+}
+
+/* CCTableViewDelegate */
+void
+MCTradingPropsUI::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
+{
+    if (selectedCell_) {
+        selectedCell_->unselected();
+    }
+    selectedCell_ = dynamic_cast<MCTableViewTextFieldCell *>(cell);
+    selectedCell_->selected();
+
+    loadItem(dynamic_cast<CCNode *>(effectiveItems_->objectAtIndex(cell->getIdx())));
 }
 
 void
@@ -446,14 +451,14 @@ MCTradingPropsUI::destroy()
 }
 
 void
-MCTradingPropsUI::loadItem(CCMenuItemLabel *aMenuItem)
+MCTradingPropsUI::loadItem(CCNode *aBackpackItemObject)
 {
     MCBackpackItem *backpackItem;
     MCEffectiveItem *item;
     CCSpriteFrame *frame;
-    if (aMenuItem) {
-        backpackItem = (MCBackpackItem *) aMenuItem->getUserData();
-        frame = dynamic_cast<CCSpriteFrame *>(aMenuItem->getUserObject());
+    if (aBackpackItemObject) {
+        backpackItem = (MCBackpackItem *) aBackpackItemObject->getUserData();
+        frame = dynamic_cast<CCSpriteFrame *>(aBackpackItemObject->getUserObject());
         item = dynamic_cast<MCEffectiveItem *>(backpackItem->item);
         /* icon */
         icon_->setDisplayFrame(frame);
@@ -469,5 +474,8 @@ MCTradingPropsUI::loadItem(CCMenuItemLabel *aMenuItem)
         
         /* description */
         description_->setString(item->getDescription()->getCString());
+        info_->setVisible(true);
+    } else {
+        info_->setVisible(false);
     }
 }

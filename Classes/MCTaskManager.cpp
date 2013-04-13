@@ -150,7 +150,7 @@ MCTaskManager::loadTasks()
         
         /* 加载任务 */
         taskAccessor_ = new MCTaskAccessor;
-        taskAccessor_->loadTasks(fileUtils->fullPathFromRelativePath(kMCTaskPackageFilepath));
+        taskAccessor_->loadTasks(fileUtils->fullPathForFilename(kMCTaskPackageFilepath).c_str());
         
         result = true;
     } while (0);
@@ -174,7 +174,7 @@ MCTaskManager::startCurrentTask()
 }
 
 CCArray *
-MCTaskManager::taskForRegion(MCRegion *aRegion)
+MCTaskManager::tasksForRegion(MCRegion *aRegion)
 {
     mc_object_id_t r_id = aRegion->getID();
     CCArray *array = CCArray::create();

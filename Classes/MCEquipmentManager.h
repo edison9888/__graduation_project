@@ -115,6 +115,7 @@ private:
     CC_SYNTHESIZE_READONLY(MCEquipmentItem *, helmet_, Helmet); /* 头盔 */
     CC_SYNTHESIZE_READONLY(MCEquipmentItem *, armor_, Armor); /* 铠甲 */
     CC_SYNTHESIZE_READONLY(MCEquipmentItem *, shinGuard_, ShinGuard); /* 护胫 */
+    CC_SYNTHESIZE_READONLY(CCArray *, armors_, Armors); /* 所有防具的列表 */
 };
 
 #endif /* defined(__Military_Confrontation__MCEquipmentManager__) */

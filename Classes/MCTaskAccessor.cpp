@@ -67,7 +67,7 @@ MCTaskAccessor::loadTasks(const char *aFilePath)
             in.loadFromString(pstrFileContent->getCString());
         }
 #else
-        in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aFilePath));
+        in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(aFilePath).c_str());
 #endif
         
         CC_BREAK_IF(! in.isObject());

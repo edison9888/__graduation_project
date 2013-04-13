@@ -60,7 +60,7 @@ MCMercenaryManager::loadMercenaries()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCMercenariesFilepath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCMercenariesFilepath).c_str());
 #endif
 
     mercenaries = v.getObject();

@@ -205,7 +205,7 @@ MCRoleManager::loadNPCData()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCNPCResourceFilePath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCNPCResourceFilePath).c_str());
 #endif
 
     npcs = v.getObject();
@@ -302,7 +302,7 @@ MCRoleManager::loadEnemyData()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCEnemyResourceFilePath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCEnemyResourceFilePath).c_str());
 #endif
     
     enemies = v.getObject();

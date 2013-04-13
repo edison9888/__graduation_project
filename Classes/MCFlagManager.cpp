@@ -124,7 +124,7 @@ MCFlagManager::loadAllFlags()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCFlagsFilepath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCFlagsFilepath).c_str());
 #endif
     
     root = v.getObject();

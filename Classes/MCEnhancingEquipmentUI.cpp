@@ -12,6 +12,7 @@
 #include "MCScene.h"
 #include "MCToast.h"
 #include "MCEquipmentManager.h"
+#include "MCTableViewTextFieldCell.h"
 
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
@@ -38,8 +39,6 @@ MCEnhancingEquipmentUI::init()
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCMenu *menu;
-        CCMenu *subMenu;
-        CCMenuItem *subMenuItem;
         CCMenuItem *menuItem;
         CCLabelTTF *label;
         float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
@@ -52,11 +51,9 @@ MCEnhancingEquipmentUI::init()
         float offsetXLeft = 180 / contentScaleFactor;
         float offsetYInc = offsetY / 2;
         float valuePositionXLeft;
-        CCPoint menuItemAnchorPoint = ccp(0, 0.5);
         MCEquipmentManager *equipmentManager = MCEquipmentManager::sharedEquipmentManager();
         CCArray *weapons = equipmentManager->getWeapons();
-        CCObject *obj;
-        MCEquipmentItem *equipmentItem;
+        CCArray *armors = equipmentManager->getArmors();
         MCBackpack *backpack = MCBackpack::sharedBackpack();
         
         CCSprite *bg = CCSprite::create(kMCBackgroundFilepath);
@@ -78,41 +75,15 @@ MCEnhancingEquipmentUI::init()
         label = CCLabelTTF::create("武器", "", fontSize);
         menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::equipmentType_clicked));
         menu->addChild(menuItem);
-        subMenu = CCMenu::create();
-        CCARRAY_FOREACH(weapons, obj) {
-            equipmentItem = dynamic_cast<MCEquipmentItem *>(obj);
-            label = CCLabelTTF::create(equipmentItem->getName()->getCString(), "", fontSize);
-            subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::item_clicked));
-            subMenuItem->setTag(kMCTagWeapon);
-            subMenuItem->setUserData(equipmentItem);
-            subMenu->addChild(subMenuItem);
-        }
-        menuItem->setUserObject(subMenu);
+        menuItem->setTag(kMCTagWeapon);
+        menuItem->setUserObject(weapons);
+        weapons->release();
         
         label = CCLabelTTF::create("防具", "", fontSize);
         menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::equipmentType_clicked));
         menu->addChild(menuItem);
-        subMenu = CCMenu::create();
-        /* helmet */
-        equipmentItem = equipmentManager->getHelmet();
-        label = CCLabelTTF::create(equipmentItem->getName()->getCString(), "", fontSize);
-        subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::item_clicked));
-        subMenuItem->setUserData(equipmentItem);
-        subMenu->addChild(subMenuItem);
-        /* armor */
-        equipmentItem = equipmentManager->getArmor();
-        label = CCLabelTTF::create(equipmentItem->getName()->getCString(), "", fontSize);
-        subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::item_clicked));
-        subMenuItem->setUserData(equipmentItem);
-        subMenu->addChild(subMenuItem);
-        /* shinguard */
-        equipmentItem = equipmentManager->getShinGuard();
-        label = CCLabelTTF::create(equipmentItem->getName()->getCString(), "", fontSize);
-        subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::item_clicked));
-        subMenuItem->setUserData(equipmentItem);
-        subMenu->addChild(subMenuItem);
-        
-        menuItem->setUserObject(subMenu);
+        menuItem->setUserObject(armors);
+        armors->release();
         
         menu->alignItemsVertically();
         menu->setAnchorPoint(ccp(0, 0.5));
@@ -414,9 +385,21 @@ MCEnhancingEquipmentUI::init()
         line->setAnchorPoint(ccp(0, 0)); /* 左下角 */
         line->setPosition(ccp(offsetX, 45 / contentScaleFactor));
         
-        currentMenu_ = NULL;
+        tableViewSize_ = CCSizeMake(180 / contentScaleFactor,
+                                    (400 - line->getPositionY() * 2) / contentScaleFactor);
+        tableView_ = CCTableView::create(this, tableViewSize_);
+        addChild(tableView_);
+        tableView_->setDirection(kCCScrollViewDirectionVertical);
+        tableView_->setDelegate(this);
+        tableView_->setVerticalFillOrder(kCCTableViewFillTopDown);
+        tableView_->reloadData();
+        tableView_->setPosition(ccp(menu->getPositionX() + menuItem->getContentSize().width,
+                                    (winSize.height - tableViewSize_.height) / 2));
+        selectedCell_ = NULL;
+        
+        equipments_ = NULL;
         lastSelectedEquipmentTypeMenuItem_ = NULL;
-        lastSelectedEquipmentMenuItem_ = NULL;
+        lastSelectedEquipmentItem_ = NULL;
         
         return true;
     }
@@ -454,13 +437,13 @@ void
 MCEnhancingEquipmentUI::confirmDidClickYesButton(MCConfirm *aConfirm)
 {
     MCEquipmentManager *equipmentManager = MCEquipmentManager::sharedEquipmentManager();
-    MCEquipmentItem *equipmentItem = (MCEquipmentItem *) lastSelectedEquipmentMenuItem_->getUserData();
+    MCEquipmentItem *equipmentItem = lastSelectedEquipmentItem_;
     MCBackpack *backpack = MCBackpack::sharedBackpack();
     int result = equipmentManager->levelUp(equipmentItem);
     
     if (result == kMCHandleSucceed) {
         MCToast::make(this, "升级成功！")->show();
-        if (lastSelectedEquipmentMenuItem_->getTag() == kMCTagWeapon) {
+        if (lastSelectedEquipmentTypeMenuItem_->getTag() == kMCTagWeapon) {
             loadWeapon(equipmentItem);
         } else {
             loadArmor(equipmentItem);
@@ -473,39 +456,49 @@ MCEnhancingEquipmentUI::confirmDidClickYesButton(MCConfirm *aConfirm)
     }
 }
 
-void
-MCEnhancingEquipmentUI::equipmentType_clicked(CCObject *obj)
+/* CCTableViewDataSource */
+CCSize
+MCEnhancingEquipmentUI::cellSizeForTable(CCTableView *table)
 {
-    CCSize winSize = CCDirectorGetWindowsSize();
-    float offsetX = 96 / CCDirector::sharedDirector()->getContentScaleFactor();
-    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(obj);
-    CCMenu *subMenu = dynamic_cast<CCMenu *>(menuItem->getUserObject());
-    
-    if (currentMenu_) {
-        currentMenu_->removeFromParentAndCleanup(false);
-    }
-    currentMenu_ = subMenu;
-    if (lastSelectedEquipmentTypeMenuItem_) {
-        dynamic_cast<CCLabelTTF *>(lastSelectedEquipmentTypeMenuItem_->getLabel())->setColor(kMCUnselectedColor);
-    }
-    dynamic_cast<CCLabelTTF *>(menuItem->getLabel())->setColor(kMCSelectedColor);
-    lastSelectedEquipmentTypeMenuItem_ = menuItem;
-    
-    subMenu->alignItemsVertically();
-    addChild(subMenu);
-    subMenu->setPosition(ccp(offsetX, winSize.height / 2));
-    currentMenu_ = subMenu;
-    weaponLayer_->setVisible(false);
-    armorLayer_->setVisible(false);
+    return CCSizeMake(96, 32);
 }
 
-void
-MCEnhancingEquipmentUI::item_clicked(CCObject *obj)
+CCTableViewCell *
+MCEnhancingEquipmentUI::tableCellAtIndex(CCTableView *table, unsigned int idx)
 {
-    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(obj);
-    MCEquipmentItem *equipmentItem = (MCEquipmentItem *) menuItem->getUserData();
+    MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(equipments_->objectAtIndex(idx));
 
-    if (menuItem->getTag() == kMCTagWeapon) {
+    CCTableViewCell *cell = table->dequeueCell();
+    if (! cell) {
+        cell = MCTableViewTextFieldCell::create(equipmentItem->getName()->getCString(),
+                                                "Helvetica",
+                                                18.0f / CCDirectorGetContentScaleFactor());
+    } else {
+        dynamic_cast<MCTableViewTextFieldCell *>(cell)->setString(equipmentItem->getName()->getCString());
+    }
+    
+    
+    return cell;
+}
+
+unsigned int
+MCEnhancingEquipmentUI::numberOfCellsInTableView(CCTableView *table)
+{
+    return equipments_ ? equipments_->count() : 0;
+}
+
+/* CCTableViewDelegate */
+void
+MCEnhancingEquipmentUI::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
+{
+    if (selectedCell_) {
+        selectedCell_->unselected();
+    }
+    selectedCell_ = dynamic_cast<MCTableViewTextFieldCell *>(cell);
+    selectedCell_->selected();
+    
+    MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(equipments_->objectAtIndex(cell->getIdx()));
+    if (lastSelectedEquipmentTypeMenuItem_->getTag() == kMCTagWeapon) {
         loadWeapon(equipmentItem);
         weaponLayer_->setVisible(true);
         armorLayer_->setVisible(false);
@@ -514,18 +507,30 @@ MCEnhancingEquipmentUI::item_clicked(CCObject *obj)
         weaponLayer_->setVisible(false);
         armorLayer_->setVisible(true);
     }
+    lastSelectedEquipmentItem_ = equipmentItem;
+}
+
+void
+MCEnhancingEquipmentUI::equipmentType_clicked(CCObject *obj)
+{
+    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(obj);
     
-    if (lastSelectedEquipmentMenuItem_) {
-        dynamic_cast<CCLabelTTF *>(lastSelectedEquipmentMenuItem_->getLabel())->setColor(kMCUnselectedColor);
+    if (lastSelectedEquipmentTypeMenuItem_) {
+        dynamic_cast<CCLabelTTF *>(lastSelectedEquipmentTypeMenuItem_->getLabel())->setColor(kMCUnselectedColor);
     }
     dynamic_cast<CCLabelTTF *>(menuItem->getLabel())->setColor(kMCSelectedColor);
-    lastSelectedEquipmentMenuItem_ = menuItem;
+    lastSelectedEquipmentTypeMenuItem_ = menuItem;
+    
+    equipments_= dynamic_cast<CCArray *>(menuItem->getUserObject());
+    tableView_->reloadData();
+    weaponLayer_->setVisible(false);
+    armorLayer_->setVisible(false);
 }
 
 void
 MCEnhancingEquipmentUI::levelUp_click(CCObject *aSender)
 {
-    MCEquipmentItem *equipmentItem = (MCEquipmentItem *) lastSelectedEquipmentMenuItem_->getUserData();
+    MCEquipmentItem *equipmentItem = lastSelectedEquipmentItem_;
     MCOre *nextLevelOre = equipmentItem->getOre()->getNextLevel();
 
     if (nextLevelOre) {

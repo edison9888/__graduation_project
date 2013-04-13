@@ -118,7 +118,7 @@ MCSceneManager::loadSceneListFile()
         in.loadFromString(pstrFileContent->getCString());
     }
 #else
-    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCScenesResourceFilePath));
+    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCScenesResourceFilePath).c_str());
 #endif
     
     packages = in.getObject();

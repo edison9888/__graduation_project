@@ -59,7 +59,7 @@ MCRegionManager::loadRegions()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCRegionFilepath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCRegionFilepath).c_str());
 #endif
     
     regions = v.getObject();

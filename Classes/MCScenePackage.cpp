@@ -77,7 +77,7 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
         in.loadFromString(pstrFileContent->getCString());
     }
 #else
-    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(aPackagePath));
+    in.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(aPackagePath).c_str());
 #endif
 
     root = in.getObject();

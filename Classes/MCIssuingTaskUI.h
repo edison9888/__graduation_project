@@ -12,11 +12,15 @@
 #include "MCType.h"
 #include "MCRegion.h"
 #include "MCConfirm.h"
+#include <cocos-ext.h>
+
+USING_NS_CC_EXT;
 
 class MCScene;
 class MCTask;
+class MCTableViewTextFieldCell;
 
-class MCIssuingTaskUI : public CCLayer, public MCConfirmDelegate {
+class MCIssuingTaskUI : public CCLayer, public MCConfirmDelegate, public CCTableViewDataSource, public CCTableViewDelegate {
 public:
     bool init();
     
@@ -25,11 +29,22 @@ public:
     void detach();
     void confirmDidClickYesButton(MCConfirm *aConfirm);
     
+    /* CCScrollViewDelegate */
+    void scrollViewDidScroll(CCScrollView *view) {}
+    void scrollViewDidZoom(CCScrollView *view) {}
+    
+    /* CCTableViewDataSource */
+    CCSize cellSizeForTable(CCTableView *table);
+    CCTableViewCell *tableCellAtIndex(CCTableView *table, unsigned int idx);
+    unsigned int numberOfCellsInTableView(CCTableView *table);
+    
+    /* CCTableViewDelegate */
+    void tableCellTouched(CCTableView *table, CCTableViewCell *cell);
+    
     CREATE_FUNC(MCIssuingTaskUI);
     
 protected:
     void region_clicked(CCObject* aSender); /* 点击显示该区域的任务列表 */
-    void task_clicked(CCObject* aSender); /* 点击显示任务内容 */
     void backward(CCObject* aSender); /* 关闭.... */
     void acceptTask_click(CCObject* aSender);
     
@@ -37,8 +52,12 @@ protected:
     void destroy();
     void loadTask(MCTask *aTask);
     
+    CCTableView *tableView_; /* 任务列表 */
+    CCSize tableViewSize_;
+    MCTableViewTextFieldCell *selectedCell_;
+    
     CCLayer *taskLayer_; /* 显示任务信息的层 */
-    CCMenu *currentMenu_;
+    CCArray *tasks_;
     CCMenuItemLabel *lastSelectedRegionMenuItem_;
     CCMenuItemLabel *lastSelectedTaskMenuItem_;
     MCTask *currentTask_; /* 当前显示的任务 */

@@ -27,10 +27,10 @@ public:
 
 class _viewport_MCGameScene : public MCScene {
 public:
-    void init() {
+    bool init() {
         _viewport_MCScenePackage *p = new _viewport_MCScenePackage;
-        p->setTMXTiledMapPath(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("maps/village.tmx"));
-        p->setBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath("sounds/bgm-b.mp3"));
+        p->setTMXTiledMapPath(CCFileUtils::sharedFileUtils()->fullPathForFilename("maps/village.tmx").c_str());
+        p->setBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathForFilename("sounds/bgm-b.mp3").c_str());
         this->initWithScenePackage(p);
         this->setSilent();
         MCHero::sharedHero()->getEntity()->setPosition(ccp(160, 160));
@@ -38,6 +38,7 @@ public:
         MCNPC *role = new MCNPC;
         addChild(role->getEntity()->getSpriteSheet());
         role->getEntity()->setPosition(ccp(200, 200));
+        return true;
     }
     
     void setSilent() {

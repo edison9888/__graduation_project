@@ -55,10 +55,13 @@ MCEquipmentManager::MCEquipmentManager()
     currentWeapon_ = NULL;
     weapons_ = CCArray::create();
     weapons_->retain();
+    armors_ = CCArray::create();
+    armors_->retain();
 }
 
 MCEquipmentManager::~MCEquipmentManager()
 {
+    CC_SAFE_RELEASE(armors_);
     CC_SAFE_RELEASE(weapons_);
     /* 装备 */
     /* 数据就按这个顺序储存 */
@@ -439,11 +442,11 @@ MCEquipmentManager::loadEquipmentItems()
     longbow_ = itemManager->equipmentItemForObjectId(equipmentsOID[kMCLongbow]);
     weapons_->addObject(longbow_);
     helmet_ = itemManager->equipmentItemForObjectId(equipmentsOID[kMCHelmet]);
-    helmet_->retain();
+    armors_->addObject(helmet_);
     armor_ = itemManager->equipmentItemForObjectId(equipmentsOID[kMCArmor]);
-    armor_->retain();
+    armors_->addObject(armor_);
     shinGuard_ = itemManager->equipmentItemForObjectId(equipmentsOID[kMCShinGuard]);
-    shinGuard_->retain();
+    armors_->addObject(shinGuard_);
     
     if (data.size() > 0) {
         const char *input = data.c_str();

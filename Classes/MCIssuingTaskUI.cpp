@@ -14,9 +14,12 @@
 #include "MCTaskTarget.h"
 #include "MCToast.h"
 #include "MCBackpack.h"
+#include "MCTableViewTextFieldCell.h"
 
 const char *kMCIssuingTaskUIDidHideNotification = "kMCIssuingTaskUIDidHideNotification";
 static const float kMCActionDuration = 0.1f;
+
+static const int kMCTagTaskName = 0x12;
 
 static const char *kMCBackgroundFilepath = "bg.png";
 
@@ -38,11 +41,11 @@ MCIssuingTaskUI::init()
         CCMenuItem *menuItem;
         CCLabelTTF *label;
         float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
-        float fontSize = 18 / contentScaleFactor;
-        float valueFontSize = 21 / contentScaleFactor;
+        float fontSize = 21 / contentScaleFactor;
+        float valueFontSize = 18 / contentScaleFactor;
         float contentHeight = winSize.height - 90 / contentScaleFactor;
         float contentHeightWithoutBottom = contentHeight * 2 / 3;
-        float offsetXLeft = 180 / contentScaleFactor;
+        float offsetXLeft = 210 / contentScaleFactor;
         float offsetXRight;
         float offsetY = contentHeightWithoutBottom / 4 + 4;
         float offsetYInc = offsetY;
@@ -257,16 +260,26 @@ MCIssuingTaskUI::init()
         targets_->setPosition(ccp(valuePositionXLeft + label->getContentSize().width * 3 / 2 + 24 / contentScaleFactor,
                                   label->getPositionY()));
         
-        /* 接收任务 */
+        /* 接受任务 */
         menu = CCMenu::create();
         taskLayer_->addChild(menu);
-        label = CCLabelTTF::create("接收任务", "", fontSize);
+        label = CCLabelTTF::create("接受任务", "", fontSize);
         menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCIssuingTaskUI::acceptTask_click));
         menu->addChild(menuItem);
         menu->setPosition(ccp(winSize.width - label->getContentSize().width,
                               label->getContentSize().height * 3));
         
-        currentMenu_ = NULL;
+        tableViewSize_ = CCSizeMake(180 / contentScaleFactor,
+                                    320 / contentScaleFactor);
+        tableView_ = CCTableView::create(this, tableViewSize_);
+        addChild(tableView_);
+        tableView_->setDirection(kCCScrollViewDirectionVertical);
+        tableView_->setDelegate(this);
+        tableView_->setVerticalFillOrder(kCCTableViewFillTopDown);
+        tableView_->reloadData();
+        selectedCell_ = NULL;
+        
+        tasks_ = NULL;
         currentTask_ = NULL;
         confirmType_ = kMCUnknown;
         lastSelectedRegionMenuItem_ = NULL;
@@ -310,41 +323,20 @@ MCIssuingTaskUI::detach()
 void
 MCIssuingTaskUI::region_clicked(CCObject* aSender)
 {
-    CCSize winSize = CCDirectorGetWindowsSize();
     CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(aSender);
-    float offsetX = (menuItem->getContentSize().width * 2.4)
-                        / CCDirector::sharedDirector()->getContentScaleFactor();
-    CCMenu *menu;
     
-    if (currentMenu_) {
-        currentMenu_->removeFromParentAndCleanup(false);
-    }
     if (lastSelectedRegionMenuItem_) {
         dynamic_cast<CCLabelTTF *>(lastSelectedRegionMenuItem_->getLabel())->setColor(kMCUnselectedColor);
     }
     dynamic_cast<CCLabelTTF *>(menuItem->getLabel())->setColor(kMCSelectedColor);
     lastSelectedRegionMenuItem_ = menuItem;
     
-    menu = dynamic_cast<CCMenu *>(menuItem->getUserObject());
-    menu->alignItemsVertically();
-    addChild(menu);
-    menu->setPosition(ccp(offsetX, winSize.height / 2));
-    currentMenu_ = menu;
-}
-
-/* 点击显示任务内容 */
-void
-MCIssuingTaskUI::task_clicked(CCObject* aSender)
-{
-    CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(aSender);
-    MCTask *task = (MCTask *) menuItem->getUserData();
-    loadTask(task);
-    
-    if (lastSelectedTaskMenuItem_) {
-        dynamic_cast<CCLabelTTF *>(lastSelectedTaskMenuItem_->getLabel())->setColor(kMCUnselectedColor);
+    tasks_ = dynamic_cast<CCArray *>(menuItem->getUserObject());
+    tableView_->reloadData();
+    if (selectedCell_) {
+        selectedCell_->unselected();
     }
-    dynamic_cast<CCLabelTTF *>(menuItem->getLabel())->setColor(kMCSelectedColor);
-    lastSelectedTaskMenuItem_ = menuItem;
+    taskLayer_->setVisible(false);
 }
 
 /* 关闭.... */
@@ -386,6 +378,54 @@ MCIssuingTaskUI::confirmDidClickYesButton(MCConfirm *aConfirm)
     }
 }
 
+/* CCTableViewDataSource */
+CCSize
+MCIssuingTaskUI::cellSizeForTable(CCTableView *table)
+{
+    return CCSizeMake(96, 32);
+}
+
+CCTableViewCell *
+MCIssuingTaskUI::tableCellAtIndex(CCTableView *table, unsigned int idx)
+{
+    MCTask *task = dynamic_cast<MCTask *>(tasks_->objectAtIndex(idx));
+    CCString *ccstring;
+    if (task->getTaskStatus() == MCTaskDone) {
+        ccstring = CCString::createWithFormat("%2d. %s[已完成]", idx + 1, task->getName()->getCString());
+    } else {
+        ccstring = CCString::createWithFormat("%2d. %s", idx + 1, task->getName()->getCString());
+    }
+    
+    CCTableViewCell *cell = table->dequeueCell();
+    if (! cell) {
+        cell = MCTableViewTextFieldCell::create(ccstring->getCString(), "Helvetica", 18.0f);
+    } else {
+        dynamic_cast<MCTableViewTextFieldCell *>(cell)->setString(ccstring->getCString());
+    }
+    
+    
+    return cell;
+}
+
+unsigned int
+MCIssuingTaskUI::numberOfCellsInTableView(CCTableView *table)
+{
+    return tasks_ ? tasks_->count() : 0;
+}
+
+/* CCTableViewDelegate */
+void
+MCIssuingTaskUI::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
+{
+    if (selectedCell_) {
+        selectedCell_->unselected();
+    }
+    selectedCell_ = dynamic_cast<MCTableViewTextFieldCell *>(cell);
+    selectedCell_->selected();
+    
+    loadTask(dynamic_cast<MCTask *>(tasks_->objectAtIndex(cell->getIdx())));
+}
+
 /* 生成任务列表 */
 void
 MCIssuingTaskUI::generate()
@@ -394,17 +434,11 @@ MCIssuingTaskUI::generate()
     MCTaskManager *taskManager = MCTaskManager::sharedTaskManager();
     CCLabelTTF *label;
     CCMenu *menu;
-    CCMenu *subMenu;
     CCMenuItem *menuItem;
-    CCMenuItem *subMenuItem;
     MCRegion *region;
-    MCRegionManager *regionManager = MCRegionManager::sharedRegionManager();
     CCArray *tasks;
-    CCObject *obj;
-    MCTask *task;
-    CCString *ccstring;
+    MCRegionManager *regionManager = MCRegionManager::sharedRegionManager();
     float menuLabelFontSize = 27;
-    float menuItemLabelFontSize = 22;
     
     /* regions */
     menu = CCMenu::create();
@@ -416,21 +450,9 @@ MCIssuingTaskUI::generate()
         menuItem->setUserData(region); /* region和task获取到的都是原始数据，不是复制的，用userdata比较好，没有被retain */
         menu->addChild(menuItem);
         
-        subMenu = CCMenu::create();
-        menuItem->setUserObject(subMenu);
-        tasks = taskManager->taskForRegion(region);
-        CCARRAY_FOREACH(tasks, obj) {
-            task = dynamic_cast<MCTask *>(obj);
-            if (task->getTaskStatus() == MCTaskDone) {
-                ccstring = CCString::createWithFormat("%s[已完成]", task->getName()->getCString());
-            } else {
-                ccstring = task->getName();
-            }
-            label = CCLabelTTF::create(ccstring->getCString(), "", menuItemLabelFontSize);
-            subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCIssuingTaskUI::task_clicked));
-            subMenuItem->setUserData(task);
-            subMenu->addChild(subMenuItem);
-        }
+        tasks = taskManager->tasksForRegion(region);
+        menuItem->setUserObject(tasks);
+        tasks->release();
     }
     if ((sceneRegion_ & MCDesert) == MCDesert) {
         region = regionManager->desertRegion();
@@ -439,21 +461,9 @@ MCIssuingTaskUI::generate()
         menuItem->setUserData(region);
         menu->addChild(menuItem);
         
-        subMenu = CCMenu::create();
-        menuItem->setUserObject(subMenu);
-        tasks = taskManager->taskForRegion(region);
-        CCARRAY_FOREACH(tasks, obj) {
-            task = dynamic_cast<MCTask *>(obj);
-            if (task->getTaskStatus() == MCTaskDone) {
-                ccstring = CCString::createWithFormat("%s[已完成]", task->getName()->getCString());
-            } else {
-                ccstring = task->getName();
-            }
-            label = CCLabelTTF::create(ccstring->getCString(), "", menuItemLabelFontSize);
-            subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCIssuingTaskUI::task_clicked));
-            subMenuItem->setUserData(task);
-            subMenu->addChild(subMenuItem);
-        }
+        tasks = taskManager->tasksForRegion(region);
+        menuItem->setUserObject(tasks);
+        tasks->release();
     }
     if ((sceneRegion_ & MCGlacier) == MCGlacier) {
         region = regionManager->glacierRegion();
@@ -462,21 +472,9 @@ MCIssuingTaskUI::generate()
         menuItem->setUserData(region);
         menu->addChild(menuItem);
         
-        subMenu = CCMenu::create();
-        menuItem->setUserObject(subMenu);
-        tasks = taskManager->taskForRegion(region);
-        CCARRAY_FOREACH(tasks, obj) {
-            task = dynamic_cast<MCTask *>(obj);
-            if (task->getTaskStatus() == MCTaskDone) {
-                ccstring = CCString::createWithFormat("%s[已完成]", task->getName()->getCString());
-            } else {
-                ccstring = task->getName();
-            }
-            label = CCLabelTTF::create(ccstring->getCString(), "", menuItemLabelFontSize);
-            subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCIssuingTaskUI::task_clicked));
-            subMenuItem->setUserData(task);
-            subMenu->addChild(subMenuItem);
-        }
+        tasks = taskManager->tasksForRegion(region);
+        menuItem->setUserObject(tasks);
+        tasks->release();
     }
     if ((sceneRegion_ & MCDungeon) == MCDungeon) {
         region = regionManager->dungeonRegion();
@@ -485,26 +483,17 @@ MCIssuingTaskUI::generate()
         menuItem->setUserData(region);
         menu->addChild(menuItem);
         
-        subMenu = CCMenu::create();
-        menuItem->setUserObject(subMenu);
-        tasks = taskManager->taskForRegion(region);
-        CCARRAY_FOREACH(tasks, obj) {
-            task = dynamic_cast<MCTask *>(obj);
-            if (task->getTaskStatus() == MCTaskDone) {
-                ccstring = CCString::createWithFormat("%s[已完成]", task->getName()->getCString());
-            } else {
-                ccstring = task->getName();
-            }
-            label = CCLabelTTF::create(ccstring->getCString(), "", menuItemLabelFontSize);
-            subMenuItem = CCMenuItemLabel::create(label, this, menu_selector(MCIssuingTaskUI::task_clicked));
-            subMenuItem->setUserData(task);
-            subMenu->addChild(subMenuItem);
-        }
+        tasks = taskManager->tasksForRegion(region);
+        menuItem->setUserObject(tasks);
+        tasks->release();
     }
     
     if (menu->getChildrenCount() > 0) {
         menu->alignItemsVertically();
         menu->setPosition(ccp(menuItem->getContentSize().width, winSize.height / 2));
+        
+        tableView_->setPosition(ccp(menu->getPositionX() + menuItem->getContentSize().width,
+                                    (winSize.height - tableViewSize_.height) / 2));
     }
 }
 
@@ -522,7 +511,6 @@ MCIssuingTaskUI::loadTask(MCTask *aTask)
 {
     currentTask_ = aTask;
     if (aTask) {
-        CCSize winSize = CCDirectorGetWindowsSize();
         /* 任务名称 */
         name_->setString(aTask->getName()->getCString());
         
@@ -558,7 +546,7 @@ MCIssuingTaskUI::loadTask(MCTask *aTask)
         std::string targetsList;
         CCARRAY_FOREACH(targets, obj) {
             target = dynamic_cast<MCTaskTarget *>(obj);
-            targetsList.append(CCString::createWithFormat("%s [ %u ]\n",
+            targetsList.append(CCString::createWithFormat("%s %u \n",
                                                           roleManager->protoEnemyForObjectId(target->objectID)
                                                           ->getName()->getCString(),
                                                           target->count)->getCString());

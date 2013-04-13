@@ -73,7 +73,7 @@ MCOreManager::loadAllOres()
         v.loadFromString(pstrFileContent->getCString());
     }
 #else
-    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(kMCOresFilepath));
+    v.loadFromFile(CCFileUtils::sharedFileUtils()->fullPathForFilename(kMCOresFilepath).c_str());
 #endif
     root = v.getObject();
     

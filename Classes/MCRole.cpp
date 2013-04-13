@@ -86,7 +86,7 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     /* 生成路径 */
     /* plist */
     sprintf(str, "%s.plist", aSpritesheetPath);
-    plistFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
+    plistFilepath = CCFileUtils::sharedFileUtils()->fullPathForFilename(str).c_str();
     /* 把精灵表加载到cache里 */
     spriteFrameCache->addSpriteFramesWithFile(plistFilepath);
     if (entityMetadata_) {
@@ -107,7 +107,7 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
 
     /* 纹理文件 */
     sprintf(str, "%s.st", aSpritesheetPath);
-    textureFilepath = CCFileUtils::sharedFileUtils()->fullPathFromRelativePath(str);
+    textureFilepath = CCFileUtils::sharedFileUtils()->fullPathForFilename(str).c_str();
     spriteSheet = CCSpriteBatchNode::create(textureFilepath, kDefaultSpriteBatchCapacity);
     spriteSheet->retain();
 

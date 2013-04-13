@@ -71,7 +71,7 @@ public:
         return currentTask_ && (currentTask_->getTaskStatus() == MCTaskActiviting);
     }
     
-    CCArray *taskForRegion(MCRegion *aRegion);
+    CCArray *tasksForRegion(MCRegion *aRegion);
     
 private:
     /**

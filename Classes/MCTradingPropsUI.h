@@ -10,10 +10,14 @@
 #define __Military_Confrontation__MCTradingPropsUI__
 
 #include "MCType.h"
-#include "MCRangeInput.h"
+#include "MCSlider.h"
+#include <cocos-ext.h>
+
+USING_NS_CC_EXT;
 
 class MCScene;
 class MCBackpackItem;
+class MCTableViewTextFieldCell;
 
 extern const float kMCSellPercentage;
 
@@ -24,31 +28,45 @@ enum {
 };
 typedef mc_enum_t MCTradingOperation;
 
-class MCTradingPropsUI : public CCLayer, public MCRangeInputDelegate {
+class MCTradingPropsUI : public CCLayer, public MCSliderDelegate, public CCTableViewDataSource, public CCTableViewDelegate {
 public:
     bool init();
     
     void initPosition();
     void attach(MCScene *aScene);
     void detach();
-        
-    void rangeInputDidSetValue(MCRangeInput *aRangeInput);
+    
+    void sliderDidOk(MCSlider *aSlider);
+    
+    /* CCScrollViewDelegate */
+    void scrollViewDidScroll(CCScrollView *view) {}
+    void scrollViewDidZoom(CCScrollView *view) {}
+    
+    /* CCTableViewDataSource */
+    CCSize cellSizeForTable(CCTableView *table);
+    CCTableViewCell *tableCellAtIndex(CCTableView *table, unsigned int idx);
+    unsigned int numberOfCellsInTableView(CCTableView *table);
+    
+    /* CCTableViewDelegate */
+    void tableCellTouched(CCTableView *table, CCTableViewCell *cell);
     
     CREATE_FUNC(MCTradingPropsUI);
     
 protected:
-    void item_clicked(CCObject *obj);
     void buy_click(CCObject* aSender);
     void sell_click(CCObject* aSender);
     void backward(CCObject* aSender); /* 关闭.... */
     
     void destroy();
-    void loadItem(CCMenuItemLabel *aMenuItem);
+    void loadItem(CCNode *aBackpackItemObject);
     
     MCTradingOperation tradingOperation_;
     
-    CCMenu *items_;
-    CCMenuItemLabel *lastClickedItem_;
+    CCArray *effectiveItems_;
+    
+    CCTableView *tableView_; /* 装备列表 */
+    CCSize tableViewSize_;
+    MCTableViewTextFieldCell *selectedCell_;
     
     CCLabelTTF *name_;
     CCLabelTTF *description_;
@@ -58,7 +76,6 @@ protected:
     
     CCLabelTTF *money_;
     
-    CCMenuItemLabel *lastSelectedMenuItem_;
     CCLayer *info_;
 };
 

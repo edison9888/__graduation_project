@@ -313,7 +313,7 @@ MCTaskLayer::loadData()
         std::string targetsList;
         CCARRAY_FOREACH(targets, obj) {
             target = dynamic_cast<MCTaskTarget *>(obj);
-            targetsList.append(CCString::createWithFormat("%-13s %8u/%u\n",
+            targetsList.append(CCString::createWithFormat("%s %u/%u  \n",
                                                           roleManager->protoEnemyForObjectId(target->objectID)
                                                                      ->getName()->getCString(),
                                                           target->count,
