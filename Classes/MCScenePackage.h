@@ -28,8 +28,6 @@ public:
     
     static MCScenePackage *create(const char *aPackagePath);
     
-//    MCRole *objectForObjectId(mc_object_id_t anObjectId);
-    
     inline bool isInternalScene() {
         return isInternalScene_;
     }

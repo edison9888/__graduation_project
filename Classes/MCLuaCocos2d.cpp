@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun Apr 14 01:16:41 2013.
+** Generated automatically by tolua++-1.0.92 on Sun Apr 14 13:07:48 2013.
 */
 
 /****************************************************************************
@@ -73,9 +73,23 @@ static int tolua_collect_ccQuad3 (lua_State* tolua_S)
     return 0;
 }
 
+static int tolua_collect_MCTrapType (lua_State* tolua_S)
+{
+ MCTrapType* self = (MCTrapType*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
 static int tolua_collect_CCLayerRGBA (lua_State* tolua_S)
 {
  CCLayerRGBA* self = (CCLayerRGBA*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_mc_size_t (lua_State* tolua_S)
+{
+ mc_size_t* self = (mc_size_t*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -139,6 +153,13 @@ static int tolua_collect_CCRect (lua_State* tolua_S)
 static int tolua_collect_CCCamera (lua_State* tolua_S)
 {
  CCCamera* self = (CCCamera*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_mc_price_t (lua_State* tolua_S)
+{
+ mc_price_t* self = (mc_price_t*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -209,6 +230,13 @@ static int tolua_collect_ccAnimationFrameData (lua_State* tolua_S)
 static int tolua_collect_CCImage (lua_State* tolua_S)
 {
  CCImage* self = (CCImage*) tolua_tousertype(tolua_S,1,0);
+    Mtolua_delete(self);
+    return 0;
+}
+
+static int tolua_collect_mc_object_id_t (lua_State* tolua_S)
+{
+ mc_object_id_t* self = (mc_object_id_t*) tolua_tousertype(tolua_S,1,0);
     Mtolua_delete(self);
     return 0;
 }
@@ -304,6 +332,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionSplitCols");
  tolua_usertype(tolua_S,"CCMenu");
  tolua_usertype(tolua_S,"CCToggleVisibility");
+ tolua_usertype(tolua_S,"mc_size_t");
  tolua_usertype(tolua_S,"CCTMXTilesetInfo");
  tolua_usertype(tolua_S,"CCNodeRGBA");
  tolua_usertype(tolua_S,"CCShuffleTiles");
@@ -322,6 +351,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCEaseRateAction");
  tolua_usertype(tolua_S,"CCEaseBackIn");
  tolua_usertype(tolua_S,"CCTransitionScene");
+ tolua_usertype(tolua_S,"MCTaskContext");
  tolua_usertype(tolua_S,"CCGridAction");
  tolua_usertype(tolua_S,"CCTransitionFlipY");
  tolua_usertype(tolua_S,"CCSpriteFrameCache");
@@ -338,6 +368,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCMenuItemSprite");
  tolua_usertype(tolua_S,"CCTextureProtocol");
  tolua_usertype(tolua_S,"CCEaseExponentialInOut");
+ tolua_usertype(tolua_S,"MCTask");
  tolua_usertype(tolua_S,"CCFadeOutUpTiles");
  tolua_usertype(tolua_S,"CCTransitionZoomFlipX");
  tolua_usertype(tolua_S,"ccV2F_C4B_T2F_Quad");
@@ -353,6 +384,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCWaves");
  tolua_usertype(tolua_S,"CCParticleFireworks");
  tolua_usertype(tolua_S,"CCEvent");
+ tolua_usertype(tolua_S,"MCFlag");
  tolua_usertype(tolua_S,"CCActionInterval");
  tolua_usertype(tolua_S,"CCRenderTexture");
  tolua_usertype(tolua_S,"CCObject");
@@ -373,6 +405,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"SimpleAudioEngine");
  tolua_usertype(tolua_S,"CCNotificationCenter");
  tolua_usertype(tolua_S,"ccBezierConfig");
+ tolua_usertype(tolua_S,"MCRegion");
  tolua_usertype(tolua_S,"CCSpriteBatchNode");
  tolua_usertype(tolua_S,"CCEaseSineInOut");
  tolua_usertype(tolua_S,"CCTwirl");
@@ -399,6 +432,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionMoveInT");
  tolua_usertype(tolua_S,"CCLayerGradient");
  tolua_usertype(tolua_S,"CCStopGrid");
+ tolua_usertype(tolua_S,"MCTrapType");
  tolua_usertype(tolua_S,"CCTMXMapInfo");
  tolua_usertype(tolua_S,"CCTableViewCell");
  tolua_usertype(tolua_S,"CCLayerColor");
@@ -408,6 +442,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCRect");
  tolua_usertype(tolua_S,"MCConfirm");
  tolua_usertype(tolua_S,"CCActionInstant");
+ tolua_usertype(tolua_S,"mc_price_t");
  tolua_usertype(tolua_S,"CCTurnOffTiles");
  tolua_usertype(tolua_S,"CCParticleSnow");
  tolua_usertype(tolua_S,"CCMenuItemImage");
@@ -423,6 +458,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCActionEase");
  tolua_usertype(tolua_S,"CCParallaxNode");
  tolua_usertype(tolua_S,"CCRotateTo");
+ tolua_usertype(tolua_S,"MCTaskManager");
  tolua_usertype(tolua_S,"CCLabelBMFont");
  tolua_usertype(tolua_S,"CCShakyTiles3D");
  tolua_usertype(tolua_S,"MCTradingPropsUI");
@@ -54975,6 +55011,48 @@ static int tolua_Cocos2d_MCSceneController___changeScene00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: getExpectedSceneId of class  MCSceneController */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCSceneController_getExpectedSceneId00
+static int tolua_Cocos2d_MCSceneController_getExpectedSceneId00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCSceneController",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCSceneController* self = (MCSceneController*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getExpectedSceneId'", NULL);
+#endif
+  {
+   mc_object_id_t tolua_ret = (mc_object_id_t)  self->getExpectedSceneId();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_object_id_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_object_id_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_object_id_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_object_id_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getExpectedSceneId'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: make of class  MCToast */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_MCToast_make00
 static int tolua_Cocos2d_MCToast_make00(lua_State* tolua_S)
@@ -57486,6 +57564,1379 @@ static int tolua_Cocos2d_MCTradingPropsUI_create00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sharedTaskManager of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_sharedTaskManager00
+static int tolua_Cocos2d_MCTaskManager_sharedTaskManager00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   MCTaskManager* tolua_ret = (MCTaskManager*)  MCTaskManager::sharedTaskManager();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTaskManager");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sharedTaskManager'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: taskWithObjectId of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_taskWithObjectId00
+static int tolua_Cocos2d_MCTaskManager_taskWithObjectId00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"mc_object_id_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+  mc_object_id_t anObjectId = *((mc_object_id_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'taskWithObjectId'", NULL);
+#endif
+  {
+   MCTask* tolua_ret = (MCTask*)  self->taskWithObjectId(anObjectId);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTask");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'taskWithObjectId'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: protoTaskWithObjectId of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_protoTaskWithObjectId00
+static int tolua_Cocos2d_MCTaskManager_protoTaskWithObjectId00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"mc_object_id_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+  mc_object_id_t anObjectId = *((mc_object_id_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'protoTaskWithObjectId'", NULL);
+#endif
+  {
+   MCTask* tolua_ret = (MCTask*)  self->protoTaskWithObjectId(anObjectId);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTask");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'protoTaskWithObjectId'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: saveData of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_saveData00
+static int tolua_Cocos2d_MCTaskManager_saveData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'saveData'", NULL);
+#endif
+  {
+   self->saveData();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'saveData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: loadData of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_loadData00
+static int tolua_Cocos2d_MCTaskManager_loadData00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'loadData'", NULL);
+#endif
+  {
+   self->loadData();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'loadData'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tasks of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_tasks00
+static int tolua_Cocos2d_MCTaskManager_tasks00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tasks'", NULL);
+#endif
+  {
+   CCDictionary* tolua_ret = (CCDictionary*)  self->tasks();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCDictionary");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tasks'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: acceptTask of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_acceptTask00
+static int tolua_Cocos2d_MCTaskManager_acceptTask00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+  MCTask* task = ((MCTask*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'acceptTask'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->acceptTask(task);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'acceptTask'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: acceptTaskWithObjectId of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_acceptTaskWithObjectId00
+static int tolua_Cocos2d_MCTaskManager_acceptTaskWithObjectId00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"mc_object_id_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+  mc_object_id_t anObjectId = *((mc_object_id_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'acceptTaskWithObjectId'", NULL);
+#endif
+  {
+   int tolua_ret = (int)  self->acceptTaskWithObjectId(anObjectId);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'acceptTaskWithObjectId'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: abortCurrentTask of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_abortCurrentTask00
+static int tolua_Cocos2d_MCTaskManager_abortCurrentTask00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'abortCurrentTask'", NULL);
+#endif
+  {
+   self->abortCurrentTask();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'abortCurrentTask'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: startCurrentTask of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_startCurrentTask00
+static int tolua_Cocos2d_MCTaskManager_startCurrentTask00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'startCurrentTask'", NULL);
+#endif
+  {
+   self->startCurrentTask();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'startCurrentTask'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isTaskAccepted of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_isTaskAccepted00
+static int tolua_Cocos2d_MCTaskManager_isTaskAccepted00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTaskAccepted'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isTaskAccepted();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isTaskAccepted'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isTaskActiviting of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_isTaskActiviting00
+static int tolua_Cocos2d_MCTaskManager_isTaskActiviting00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isTaskActiviting'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isTaskActiviting();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isTaskActiviting'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tasksForRegion of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_tasksForRegion00
+static int tolua_Cocos2d_MCTaskManager_tasksForRegion00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCRegion",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+  MCRegion* aRegion = ((MCRegion*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tasksForRegion'", NULL);
+#endif
+  {
+   CCArray* tolua_ret = (CCArray*)  self->tasksForRegion(aRegion);
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tasksForRegion'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCurrentTask of class  MCTaskManager */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_getCurrentTask00
+static int tolua_Cocos2d_MCTaskManager_getCurrentTask00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTaskManager",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTaskManager* self = (MCTaskManager*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCurrentTask'", NULL);
+#endif
+  {
+   MCTask* tolua_ret = (MCTask*)  self->getCurrentTask();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTask");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCurrentTask'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: copy of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_copy00
+static int tolua_Cocos2d_MCTask_copy00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'copy'", NULL);
+#endif
+  {
+   CCObject* tolua_ret = (CCObject*)  self->copy();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCObject");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'copy'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: generateTaskContext of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_generateTaskContext00
+static int tolua_Cocos2d_MCTask_generateTaskContext00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'generateTaskContext'", NULL);
+#endif
+  {
+   self->generateTaskContext();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'generateTaskContext'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTrapType of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTrapType00
+static int tolua_Cocos2d_MCTask_getTrapType00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTrapType'", NULL);
+#endif
+  {
+   MCTrapType tolua_ret = (MCTrapType)  self->getTrapType();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((MCTrapType)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"MCTrapType");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(MCTrapType));
+     tolua_pushusertype(tolua_S,tolua_obj,"MCTrapType");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTrapType'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTrapWideMaxSize of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTrapWideMaxSize00
+static int tolua_Cocos2d_MCTask_getTrapWideMaxSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTrapWideMaxSize'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getTrapWideMaxSize();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTrapWideMaxSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTrapDamageMaxSize of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTrapDamageMaxSize00
+static int tolua_Cocos2d_MCTask_getTrapDamageMaxSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTrapDamageMaxSize'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getTrapDamageMaxSize();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTrapDamageMaxSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getHealthPotionMaxSize of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getHealthPotionMaxSize00
+static int tolua_Cocos2d_MCTask_getHealthPotionMaxSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHealthPotionMaxSize'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getHealthPotionMaxSize();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getHealthPotionMaxSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPhysicalPotionMaxSize of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getPhysicalPotionMaxSize00
+static int tolua_Cocos2d_MCTask_getPhysicalPotionMaxSize00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPhysicalPotionMaxSize'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getPhysicalPotionMaxSize();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPhysicalPotionMaxSize'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTrapWideBonus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTrapWideBonus00
+static int tolua_Cocos2d_MCTask_getTrapWideBonus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTrapWideBonus'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getTrapWideBonus();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTrapWideBonus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTrapDamageBonus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTrapDamageBonus00
+static int tolua_Cocos2d_MCTask_getTrapDamageBonus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTrapDamageBonus'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getTrapDamageBonus();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTrapDamageBonus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getHealthPotionBonus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getHealthPotionBonus00
+static int tolua_Cocos2d_MCTask_getHealthPotionBonus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getHealthPotionBonus'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getHealthPotionBonus();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getHealthPotionBonus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getPhysicalPotionBonus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getPhysicalPotionBonus00
+static int tolua_Cocos2d_MCTask_getPhysicalPotionBonus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getPhysicalPotionBonus'", NULL);
+#endif
+  {
+   mc_size_t tolua_ret = (mc_size_t)  self->getPhysicalPotionBonus();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_size_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_size_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_size_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getPhysicalPotionBonus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getCashPledge of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getCashPledge00
+static int tolua_Cocos2d_MCTask_getCashPledge00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getCashPledge'", NULL);
+#endif
+  {
+   mc_price_t tolua_ret = (mc_price_t)  self->getCashPledge();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_price_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_price_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_price_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_price_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getCashPledge'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getBonus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getBonus00
+static int tolua_Cocos2d_MCTask_getBonus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getBonus'", NULL);
+#endif
+  {
+   mc_price_t tolua_ret = (mc_price_t)  self->getBonus();
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((mc_price_t)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_price_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(mc_price_t));
+     tolua_pushusertype(tolua_S,tolua_obj,"mc_price_t");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getBonus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTargets of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTargets00
+static int tolua_Cocos2d_MCTask_getTargets00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTargets'", NULL);
+#endif
+  {
+   CCArray* tolua_ret = (CCArray*)  self->getTargets();
+    int nID = (tolua_ret) ? (int)tolua_ret->m_uID : -1;
+    int* pLuaID = (tolua_ret) ? &tolua_ret->m_nLuaID : NULL;
+    toluafix_pushusertype_ccobject(tolua_S, nID, pLuaID, (void*)tolua_ret,"CCArray");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTargets'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTaskStatus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTaskStatus00
+static int tolua_Cocos2d_MCTask_getTaskStatus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTaskStatus'", NULL);
+#endif
+  {
+     unsigned short int tolua_ret = (   unsigned short int)  self->getTaskStatus();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTaskStatus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setTaskStatus of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_setTaskStatus00
+static int tolua_Cocos2d_MCTask_setTaskStatus00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+    unsigned short int var = ((   unsigned short int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setTaskStatus'", NULL);
+#endif
+  {
+   self->setTaskStatus(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setTaskStatus'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getTaskContext of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getTaskContext00
+static int tolua_Cocos2d_MCTask_getTaskContext00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getTaskContext'", NULL);
+#endif
+  {
+   MCTaskContext* tolua_ret = (MCTaskContext*)  self->getTaskContext();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTaskContext");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getTaskContext'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getFlag of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getFlag00
+static int tolua_Cocos2d_MCTask_getFlag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getFlag'", NULL);
+#endif
+  {
+   MCFlag* tolua_ret = (MCFlag*)  self->getFlag();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCFlag");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getFlag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setFlag of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_setFlag00
+static int tolua_Cocos2d_MCTask_setFlag00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCFlag",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+  MCFlag* var = ((MCFlag*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setFlag'", NULL);
+#endif
+  {
+   self->setFlag(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setFlag'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getRegion of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getRegion00
+static int tolua_Cocos2d_MCTask_getRegion00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getRegion'", NULL);
+#endif
+  {
+   MCRegion* tolua_ret = (MCRegion*)  self->getRegion();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCRegion");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getRegion'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setRegion of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_setRegion00
+static int tolua_Cocos2d_MCTask_setRegion00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCRegion",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+  MCRegion* var = ((MCRegion*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setRegion'", NULL);
+#endif
+  {
+   self->setRegion(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setRegion'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getProto of class  MCTask */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTask_getProto00
+static int tolua_Cocos2d_MCTask_getProto00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCTask",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCTask* self = (MCTask*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getProto'", NULL);
+#endif
+  {
+   MCTask* tolua_ret = (MCTask*)  self->getProto();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCTask");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getProto'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: hasScene of class  MCRegion */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCRegion_hasScene00
+static int tolua_Cocos2d_MCRegion_hasScene00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCRegion",0,&tolua_err) ||
+     (tolua_isvaluenil(tolua_S,2,&tolua_err) || !tolua_isusertype(tolua_S,2,"mc_object_id_t",0,&tolua_err)) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCRegion* self = (MCRegion*)  tolua_tousertype(tolua_S,1,0);
+  mc_object_id_t aSceneId = *((mc_object_id_t*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'hasScene'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->hasScene(aSceneId);
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'hasScene'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: getSceneRegion of class  MCRegion */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCRegion_getSceneRegion00
+static int tolua_Cocos2d_MCRegion_getSceneRegion00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCRegion",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCRegion* self = (MCRegion*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'getSceneRegion'", NULL);
+#endif
+  {
+     unsigned short int tolua_ret = (   unsigned short int)  self->getSceneRegion();
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'getSceneRegion'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: setSceneRegion of class  MCRegion */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCRegion_setSceneRegion00
+static int tolua_Cocos2d_MCRegion_setSceneRegion00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCRegion",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,2,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCRegion* self = (MCRegion*)  tolua_tousertype(tolua_S,1,0);
+    unsigned short int var = ((   unsigned short int)  tolua_tonumber(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'setSceneRegion'", NULL);
+#endif
+  {
+   self->setSceneRegion(var);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'setSceneRegion'.",&tolua_err);
  return 0;
 #endif
 }
@@ -60470,6 +61921,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"requestChangingScene",tolua_Cocos2d_MCSceneController_requestChangingScene00);
    tolua_function(tolua_S,"__loadScene",tolua_Cocos2d_MCSceneController___loadScene00);
    tolua_function(tolua_S,"__changeScene",tolua_Cocos2d_MCSceneController___changeScene00);
+   tolua_function(tolua_S,"getExpectedSceneId",tolua_Cocos2d_MCSceneController_getExpectedSceneId00);
   tolua_endmodule(tolua_S);
   tolua_constant(tolua_S,"MCLengthShort",MCLengthShort);
   tolua_constant(tolua_S,"MCLengthLong",MCLengthLong);
@@ -60575,6 +62027,65 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"numberOfCellsInTableView",tolua_Cocos2d_MCTradingPropsUI_numberOfCellsInTableView00);
    tolua_function(tolua_S,"tableCellTouched",tolua_Cocos2d_MCTradingPropsUI_tableCellTouched00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_MCTradingPropsUI_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"MCTaskManager","MCTaskManager","",NULL);
+  tolua_beginmodule(tolua_S,"MCTaskManager");
+   tolua_function(tolua_S,"sharedTaskManager",tolua_Cocos2d_MCTaskManager_sharedTaskManager00);
+   tolua_function(tolua_S,"taskWithObjectId",tolua_Cocos2d_MCTaskManager_taskWithObjectId00);
+   tolua_function(tolua_S,"protoTaskWithObjectId",tolua_Cocos2d_MCTaskManager_protoTaskWithObjectId00);
+   tolua_function(tolua_S,"saveData",tolua_Cocos2d_MCTaskManager_saveData00);
+   tolua_function(tolua_S,"loadData",tolua_Cocos2d_MCTaskManager_loadData00);
+   tolua_function(tolua_S,"tasks",tolua_Cocos2d_MCTaskManager_tasks00);
+   tolua_function(tolua_S,"acceptTask",tolua_Cocos2d_MCTaskManager_acceptTask00);
+   tolua_function(tolua_S,"acceptTaskWithObjectId",tolua_Cocos2d_MCTaskManager_acceptTaskWithObjectId00);
+   tolua_function(tolua_S,"abortCurrentTask",tolua_Cocos2d_MCTaskManager_abortCurrentTask00);
+   tolua_function(tolua_S,"startCurrentTask",tolua_Cocos2d_MCTaskManager_startCurrentTask00);
+   tolua_function(tolua_S,"isTaskAccepted",tolua_Cocos2d_MCTaskManager_isTaskAccepted00);
+   tolua_function(tolua_S,"isTaskActiviting",tolua_Cocos2d_MCTaskManager_isTaskActiviting00);
+   tolua_function(tolua_S,"tasksForRegion",tolua_Cocos2d_MCTaskManager_tasksForRegion00);
+   tolua_function(tolua_S,"getCurrentTask",tolua_Cocos2d_MCTaskManager_getCurrentTask00);
+  tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"MCTaskUnknownStatus",MCTaskUnknownStatus);
+  tolua_constant(tolua_S,"MCTaskDone",MCTaskDone);
+  tolua_constant(tolua_S,"MCTaskAccepted",MCTaskAccepted);
+  tolua_constant(tolua_S,"MCTaskActiviting",MCTaskActiviting);
+  tolua_constant(tolua_S,"MCTaskUncompleted",MCTaskUncompleted);
+  tolua_cclass(tolua_S,"MCTask","MCTask","",NULL);
+  tolua_beginmodule(tolua_S,"MCTask");
+   tolua_function(tolua_S,"copy",tolua_Cocos2d_MCTask_copy00);
+   tolua_function(tolua_S,"generateTaskContext",tolua_Cocos2d_MCTask_generateTaskContext00);
+   tolua_function(tolua_S,"getTrapType",tolua_Cocos2d_MCTask_getTrapType00);
+   tolua_function(tolua_S,"getTrapWideMaxSize",tolua_Cocos2d_MCTask_getTrapWideMaxSize00);
+   tolua_function(tolua_S,"getTrapDamageMaxSize",tolua_Cocos2d_MCTask_getTrapDamageMaxSize00);
+   tolua_function(tolua_S,"getHealthPotionMaxSize",tolua_Cocos2d_MCTask_getHealthPotionMaxSize00);
+   tolua_function(tolua_S,"getPhysicalPotionMaxSize",tolua_Cocos2d_MCTask_getPhysicalPotionMaxSize00);
+   tolua_function(tolua_S,"getTrapWideBonus",tolua_Cocos2d_MCTask_getTrapWideBonus00);
+   tolua_function(tolua_S,"getTrapDamageBonus",tolua_Cocos2d_MCTask_getTrapDamageBonus00);
+   tolua_function(tolua_S,"getHealthPotionBonus",tolua_Cocos2d_MCTask_getHealthPotionBonus00);
+   tolua_function(tolua_S,"getPhysicalPotionBonus",tolua_Cocos2d_MCTask_getPhysicalPotionBonus00);
+   tolua_function(tolua_S,"getCashPledge",tolua_Cocos2d_MCTask_getCashPledge00);
+   tolua_function(tolua_S,"getBonus",tolua_Cocos2d_MCTask_getBonus00);
+   tolua_function(tolua_S,"getTargets",tolua_Cocos2d_MCTask_getTargets00);
+   tolua_function(tolua_S,"getTaskStatus",tolua_Cocos2d_MCTask_getTaskStatus00);
+   tolua_function(tolua_S,"setTaskStatus",tolua_Cocos2d_MCTask_setTaskStatus00);
+   tolua_function(tolua_S,"getTaskContext",tolua_Cocos2d_MCTask_getTaskContext00);
+   tolua_function(tolua_S,"getFlag",tolua_Cocos2d_MCTask_getFlag00);
+   tolua_function(tolua_S,"setFlag",tolua_Cocos2d_MCTask_setFlag00);
+   tolua_function(tolua_S,"getRegion",tolua_Cocos2d_MCTask_getRegion00);
+   tolua_function(tolua_S,"setRegion",tolua_Cocos2d_MCTask_setRegion00);
+   tolua_function(tolua_S,"getProto",tolua_Cocos2d_MCTask_getProto00);
+  tolua_endmodule(tolua_S);
+  tolua_constant(tolua_S,"MCVillage",MCVillage);
+  tolua_constant(tolua_S,"MCCity",MCCity);
+  tolua_constant(tolua_S,"MCForest",MCForest);
+  tolua_constant(tolua_S,"MCDesert",MCDesert);
+  tolua_constant(tolua_S,"MCGlacier",MCGlacier);
+  tolua_constant(tolua_S,"MCDungeon",MCDungeon);
+  tolua_cclass(tolua_S,"MCRegion","MCRegion","",NULL);
+  tolua_beginmodule(tolua_S,"MCRegion");
+   tolua_function(tolua_S,"hasScene",tolua_Cocos2d_MCRegion_hasScene00);
+   tolua_function(tolua_S,"getSceneRegion",tolua_Cocos2d_MCRegion_getSceneRegion00);
+   tolua_function(tolua_S,"setSceneRegion",tolua_Cocos2d_MCRegion_setSceneRegion00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

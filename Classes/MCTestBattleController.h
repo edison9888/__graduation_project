@@ -45,6 +45,15 @@ public:
         role = MCTeam::sharedTeam()->lastRole();
         role->setHP(80);
         role->setPP(40);
+        m_id.sub_class_ = '8';
+        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        role = MCTeam::sharedTeam()->lastRole();
+        role->setHP(80);
+        role->setPP(40);
+        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        role = MCTeam::sharedTeam()->lastRole();
+        role->setHP(80);
+        role->setPP(40);
         
         MCBackpack::sharedBackpack()->buyFireballTrapWide(2);
         MCBackpack::sharedBackpack()->buyHealthPotion(20);

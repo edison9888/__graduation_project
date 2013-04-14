@@ -77,13 +77,11 @@ MCEnhancingEquipmentUI::init()
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagWeapon);
         menuItem->setUserObject(weapons);
-        weapons->release();
         
         label = CCLabelTTF::create("防具", "", fontSize);
         menuItem = CCMenuItemLabel::create(label, this, menu_selector(MCEnhancingEquipmentUI::equipmentType_clicked));
         menu->addChild(menuItem);
         menuItem->setUserObject(armors);
-        armors->release();
         
         menu->alignItemsVertically();
         menu->setAnchorPoint(ccp(0, 0.5));
@@ -530,6 +528,10 @@ MCEnhancingEquipmentUI::equipmentType_clicked(CCObject *obj)
 void
 MCEnhancingEquipmentUI::levelUp_click(CCObject *aSender)
 {
+    if (MCConfirm::hasParent()) {
+        return;
+    }
+    
     MCEquipmentItem *equipmentItem = lastSelectedEquipmentItem_;
     MCOre *nextLevelOre = equipmentItem->getOre()->getNextLevel();
 

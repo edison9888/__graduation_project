@@ -10,11 +10,11 @@
 #define __Military_Confrontation__MCBattleControllerLayer__
 
 #include "MCControllerDelegate.h"
-#include "MCControllerLayer.h"
+#include "MCJoypadControllerLayer.h"
 
 class MCBattleController;
 
-class MCBattleControllerLayer : public MCControllerLayer {
+class MCBattleControllerLayer : public MCJoypadControllerLayer {
     
 public:
     MCBattleControllerLayer();
@@ -27,14 +27,12 @@ public:
     bool isEnable();
     void setEnable(bool var);
     
-    void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-    void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
+    bool getJoypadEnable();
+    void setJoypadEnable(bool var);
     
 protected:
+    void activate(CCObject *aSender); /* 在这里是切换为Joypad控制的按钮 */
     
-private:
     MCBattleController *controller_;
     
     CC_PROPERTY(MCBattleControllerDelegate *, delegate_, Delegate);

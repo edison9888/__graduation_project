@@ -22,7 +22,6 @@ MCDetailLayer::onEnter()
 void
 MCDetailLayer::show()
 {
-    CCSize winSize = CCDirectorGetWindowsSize();
     loadData();
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }

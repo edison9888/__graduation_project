@@ -120,6 +120,8 @@ MCRoleBaseInfo::init(MCRole *aRole)
         role_ = aRole;
         aRole->retain();
         
+        width_ = faceBox_->getContentSize().width + valueBox->getContentSize().width;
+        height_ = faceBox_->getContentSize().height;
         touched_ = false;
         
         return true;
@@ -193,6 +195,8 @@ MCRoleBaseInfoGroup::MCRoleBaseInfoGroup()
         addChild(info);
         infoList_->addObject(info);
     }
+    width_ = 0;
+    height_ = 0;
     align();
 }
 
@@ -239,6 +243,8 @@ MCRoleBaseInfoGroup::align()
         info = (MCRoleBaseInfo *) obj;
         info->setAnchorPoint(anchorPoint);
         info->setPosition(ccp(0, y));
+        width_ = info->getWidth();
+        height_ += info->getHeight();
         y -= 73.f / contentScaleFactor;
     }
 }

@@ -502,6 +502,10 @@ MCObjectLayer::moveTo(const CCPoint &offset)
                 role->getEntity()->moveBy(deltaForMap);
             }
         }
+        CCARRAY_FOREACH(mercenaries_, obj) {
+            role = (MCRole *) obj;
+            role->getEntity()->moveBy(deltaForMap);
+        }
     }
     hero_->walkOnScreen(deltaForHero, offset);
     getSceneDelegate()->getScene()->getSceneCamera()->translate(deltaForMap);
@@ -833,7 +837,7 @@ MCGameSceneObjectLayer::dialogDidDismiss(void *anUserdata)
 void 
 MCBattleFieldSceneObjectLayer::controllerDidSelectRole(MCBattleControllerDelegate *aSender, MCRole *aSelectedRole)
 {
-    
+//    sceneDelegate_->getScene()->getSceneCamera()->focus(aSelectedRole);
 }
 
 /**
@@ -842,7 +846,6 @@ MCBattleFieldSceneObjectLayer::controllerDidSelectRole(MCBattleControllerDelegat
 void 
 MCBattleFieldSceneObjectLayer::controllerDidUnselectRole(MCBattleControllerDelegate *aSender, MCRole *aSelectedRole)
 {
-    
 }
 
 /**
@@ -851,7 +854,7 @@ MCBattleFieldSceneObjectLayer::controllerDidUnselectRole(MCBattleControllerDeleg
 void
 MCBattleFieldSceneObjectLayer::controllerDidSelectAll(MCBattleControllerDelegate *aSender, MCTeam *aTeam)
 {
-    
+//    sceneDelegate_->getScene()->getSceneCamera()->focus(dynamic_cast<MCRole *>(aTeam->getRoles()->objectAtIndex(0)));
 }
 
 /**
@@ -860,7 +863,6 @@ MCBattleFieldSceneObjectLayer::controllerDidSelectAll(MCBattleControllerDelegate
 void
 MCBattleFieldSceneObjectLayer::controllerDidUnselectAll(MCBattleControllerDelegate *aSender, MCTeam *aTeam)
 {
-    
 }
 
 /**

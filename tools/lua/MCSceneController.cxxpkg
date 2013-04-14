@@ -13,4 +13,6 @@ class MCSceneController {
     
     void __loadScene();
     void __changeScene();
+    
+    mc_object_id_t getExpectedSceneId();
 };

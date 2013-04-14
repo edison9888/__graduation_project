@@ -37,7 +37,7 @@ public:
         scene->addChild(l1);
         
         MCJoypadControllerLayer *layer = MCJoypadControllerLayer::create();
-        layer->setDelegate(l1);
+        layer->setJoypadDelegate(l1);
         scene->addChild(layer);
         
         return scene;

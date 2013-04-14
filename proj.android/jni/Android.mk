@@ -67,7 +67,6 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCOreManager.cpp \
 					../../Classes/MCPotion.cpp \
 					../../Classes/MCPropsLayer.cpp \
-					../../Classes/MCRangeInput.cpp \
 					../../Classes/MCRegion.cpp \
 					../../Classes/MCRegionManager.cpp \
 					../../Classes/MCRole.cpp \
@@ -84,6 +83,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCShadow.cpp \
 					../../Classes/MCSkill.cpp \
 					../../Classes/MCSkillManager.cpp \
+					../../Classes/MCSlider.cpp \
 					../../Classes/MCSplashScene.cpp \
 					../../Classes/MCStateLayer.cpp \
 					../../Classes/MCTableViewTextFieldCell.cpp \

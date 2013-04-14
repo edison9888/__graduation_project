@@ -23,9 +23,14 @@ MCBattleControllerLayer::~MCBattleControllerLayer()
 bool
 MCBattleControllerLayer::init()
 {
-    if (CCLayer::init()) {
+    if (MCJoypadControllerLayer::init()) {
         controller_ = MCBattleController::create();
         addChild(controller_);
+        
+        CCMenuItem *menuItem = dynamic_cast<CCMenuItem *>(actionButton_->getChildren()->objectAtIndex(0));
+        menuItem->setTarget(this,
+                            menu_selector(MCBattleControllerLayer::activate));
+        
         return true;
     }
     
@@ -60,31 +65,34 @@ MCBattleControllerLayer::isEnable()
 void
 MCBattleControllerLayer::setEnable(bool var)
 {
-    
+    MCJoypadControllerLayer::setEnable(var);
     controller_->setVisible(var);
     controller_->setTouchEnabled(var);
 }
 
-void
-MCBattleControllerLayer::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
+bool
+MCBattleControllerLayer::getJoypadEnable()
 {
+    return joypad_->isTouchEnabled();
 }
 
 void
-MCBattleControllerLayer::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
+MCBattleControllerLayer::setJoypadEnable(bool var)
 {
-    
+    joypad_->setVisible(var);
+    joypad_->setTouchEnabled(var);
 }
 
 void
-MCBattleControllerLayer::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
+MCBattleControllerLayer::activate(CCObject *aSender) /* 在这里是切换为Joypad控制的按钮 */
 {
-    
+    if (joypad_->isVisible()) {
+        setJoypadEnable(false);
+        controller_->setVisible(true);
+        controller_->setTouchEnabled(true);
+    } else {
+        setJoypadEnable(true);
+        controller_->setVisible(false);
+        controller_->setTouchEnabled(false);
+    }
 }
-
-void
-MCBattleControllerLayer::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
-{
-    
-}
-

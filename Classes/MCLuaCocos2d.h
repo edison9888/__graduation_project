@@ -20,4 +20,7 @@
 #include "MCTradingPropsUI.h"
 #include "MCHiringMercenaryUI.h"
 
+/* task */
+#include "MCTaskManager.h"
+
 #endif

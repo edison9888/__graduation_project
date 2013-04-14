@@ -33,6 +33,8 @@ MCBattleController::init()
         teamLayer_ = MCTeamLayer::create();
         addChild(teamLayer_);
         
+        CCSizeLog(teamLayer_->getFrameSize());
+        
         actionBar_ = MCActionBar::create();
         addChild(actionBar_);
         

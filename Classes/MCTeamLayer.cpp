@@ -10,6 +10,13 @@
 #include "MCActionBar.h"
 #include "MCShadow.h"
 
+static const char *kMCTeamLayerItemOpenedFilepath = "UI/tl_opened.png";
+static const char *kMCTeamLayerItemOpenedSelectedFilepath = "UI/tl_opened_selected.png";
+static const char *kMCTeamLayerItemClosedFilepath = "UI/tl_closed.png";
+static const char *kMCTeamLayerItemClosedSelectedFilepath = "UI/tl_closed_selected.png";
+
+static const float kMCActionDuration = 0.2f;
+
 MCTeamLayer::~MCTeamLayer()
 {
     CC_SAFE_RELEASE(selectedRoles_);
@@ -21,6 +28,24 @@ MCTeamLayer::init()
     if (CCLayer::init()) {
         group_ = MCRoleBaseInfoGroup::create();
         addChild(group_);
+        frameSize_ = CCSizeMake(group_->width_, group_->height_);
+        
+        CCMenuItemImage *opened = CCMenuItemImage::create(kMCTeamLayerItemOpenedFilepath,
+                                                          kMCTeamLayerItemOpenedSelectedFilepath);
+        CCMenuItemImage *closed = CCMenuItemImage::create(kMCTeamLayerItemClosedFilepath,
+                                                          kMCTeamLayerItemClosedSelectedFilepath);
+        CCMenuItemToggle *toggleButton = CCMenuItemToggle::createWithTarget(this,
+                                                                            menu_selector(MCTeamLayer::toggle),
+                                                                            opened, closed, NULL);
+        CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        CCPoint anchorPoint = ccp(0.0f, 1.0f);
+        CCMenu *menu = CCMenu::createWithItem(toggleButton);
+        addChild(menu);
+        toggleButton->setAnchorPoint(anchorPoint);
+        menu->setAnchorPoint(anchorPoint);
+        menu->setPosition(ccp(0, winSize.height - frameSize_.height));
+        toggleButton_ = menu;
+        
         selectedRoles_ = CCArray::create();
         selectedRoles_->retain();
         isMultiSeletionMode_ = false;
@@ -159,6 +184,11 @@ MCTeamLayer::size()
     return group_->size();
 }
 
+const CCSize &
+MCTeamLayer::getFrameSize() {
+    return frameSize_;
+}
+
 MCRoleBaseInfo *
 MCTeamLayer::roleBaseInfoForTouch(CCTouch *aTouch)
 {
@@ -258,7 +288,6 @@ MCTeamLayer::acceptActionBarItem(MCActionBarItem *anActionBarItem)
     }
 }
 
-
 void
 MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
 {
@@ -274,3 +303,14 @@ MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
         }
     }
 }
+
+void
+MCTeamLayer::toggle()
+{
+    CCPoint offset = ccp(frameSize_.width * 2, 0);
+    if (group_->getPositionX() >= 0) { /* 将要隐藏 */
+        offset.x = -offset.x;
+    }
+    group_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+}
+

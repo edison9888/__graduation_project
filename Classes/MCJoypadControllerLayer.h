@@ -24,13 +24,12 @@ public:
     bool isEnable();
     void setEnable(bool var);
     
-    MCJoypadControllerDelegate *getDelegate();
-    void setDelegate(MCJoypadControllerDelegate *aDelegate);
+    MCJoypadControllerDelegate *getJoypadDelegate();
+    void setJoypadDelegate(MCJoypadControllerDelegate *aJoypadDelegate);
     
 protected:
     void activate(CCObject *aSender); /* 行动 */
     
-private:
     MCJoypad *joypad_;
     CCMenu *actionButton_;
 };

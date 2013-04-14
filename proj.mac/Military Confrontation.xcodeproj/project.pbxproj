@@ -659,7 +659,7 @@
 		A3A72B451719996A009C65A5 /* SimpleAudioEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SimpleAudioEngine.mm; sourceTree = "<group>"; };
 		A3A72B461719996A009C65A5 /* SimpleAudioEngine_objc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = SimpleAudioEngine_objc.h; sourceTree = "<group>"; };
 		A3A72B471719996A009C65A5 /* SimpleAudioEngine_objc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine_objc.m; sourceTree = "<group>"; };
-		A3A72BEE17199C8D009C65A5 /* Cocos2d.pkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cocos2d.pkg; path = "../../library/tools/tolua++/Cocos2d.pkg"; sourceTree = "<group>"; };
+		A3A72BEE17199C8D009C65A5 /* Cocos2d.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = Cocos2d.cxxpkg; path = "../../library/tools/tolua++/Cocos2d.cxxpkg"; sourceTree = "<group>"; };
 		A3A72BF01719A017009C65A5 /* CCLuaBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaBridge.cpp; sourceTree = "<group>"; };
 		A3A72BF11719A017009C65A5 /* CCLuaBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = CCLuaBridge.h; sourceTree = "<group>"; };
 		A3A72BF21719A017009C65A5 /* CCLuaEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCLuaEngine.cpp; sourceTree = "<group>"; };
@@ -775,6 +775,9 @@
 		A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestAStar.h; path = ../Classes/MCTestAStar.h; sourceTree = "<group>"; };
 		A3BB130416F7765400E4F394 /* MCBackpack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBackpack.cpp; path = ../Classes/MCBackpack.cpp; sourceTree = "<group>"; };
 		A3BB130516F7765400E4F394 /* MCBackpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBackpack.h; path = ../Classes/MCBackpack.h; sourceTree = "<group>"; };
+		A3BFAA48171A680F00096D16 /* MCTaskManager.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCTaskManager.cxxpkg; path = ../tools/lua/MCTaskManager.cxxpkg; sourceTree = "<group>"; };
+		A3BFAA4B171A6E9600096D16 /* MCTask.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCTask.cxxpkg; path = ../tools/lua/MCTask.cxxpkg; sourceTree = "<group>"; };
+		A3BFAA4C171A6ED300096D16 /* MCRegion.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCRegion.cxxpkg; path = ../tools/lua/MCRegion.cxxpkg; sourceTree = "<group>"; };
 		A3C2C86916F829E700A14FD2 /* MCTaskBonus.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTaskBonus.cpp; path = ../Classes/MCTaskBonus.cpp; sourceTree = "<group>"; };
 		A3C2C86A16F829E800A14FD2 /* MCTaskBonus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTaskBonus.h; path = ../Classes/MCTaskBonus.h; sourceTree = "<group>"; };
 		A3C2C86D16F82B1500A14FD2 /* MCTaskTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTaskTarget.cpp; path = ../Classes/MCTaskTarget.cpp; sourceTree = "<group>"; };
@@ -1639,6 +1642,40 @@
 			name = Algorithm;
 			sourceTree = "<group>";
 		};
+		A3BFAA49171A6E7700096D16 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				A353BC00170FE5D1005A4058 /* MCToast.cxxpkg */,
+				A3B360021717EA290012F5D2 /* MCIssuingTaskUI.cxxpkg */,
+				A3A56BBB17185BF100C5FB61 /* MCEnhancingEquipmentUI.cxxpkg */,
+				A3A56BBC17185C0C00C5FB61 /* MCTradingPropsUI.cxxpkg */,
+				A3A56BBD17185C2400C5FB61 /* MCHiringMercenaryUI.cxxpkg */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		A3BFAA4A171A6E7E00096D16 /* Task */ = {
+			isa = PBXGroup;
+			children = (
+				A3BFAA48171A680F00096D16 /* MCTaskManager.cxxpkg */,
+				A3BFAA4B171A6E9600096D16 /* MCTask.cxxpkg */,
+				A3BFAA4C171A6ED300096D16 /* MCRegion.cxxpkg */,
+			);
+			name = Task;
+			sourceTree = "<group>";
+		};
+		A3BFAA4D171A718500096D16 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				A3B35FFF1717E3610012F5D2 /* MCLoading.cxxpkg */,
+				A3E87E7E1703590700C2E537 /* MCSceneController.cxxpkg */,
+				A3B360041717F1BF0012F5D2 /* MCScene.cxxpkg */,
+				A3B35FFE1717E35A0012F5D2 /* MCSceneContextManager.cxxpkg */,
+				A3B360011717E3AF0012F5D2 /* MCSceneContext.cxxpkg */,
+			);
+			name = Scene;
+			sourceTree = "<group>";
+		};
 		A3C2C87516F8478A00A14FD2 /* Skills */ = {
 			isa = PBXGroup;
 			children = (
@@ -1792,17 +1829,10 @@
 		A3E87E7D170358F700C2E537 /* lua */ = {
 			isa = PBXGroup;
 			children = (
-				A3E87E7E1703590700C2E537 /* MCSceneController.cxxpkg */,
-				A353BC00170FE5D1005A4058 /* MCToast.cxxpkg */,
-				A3B360041717F1BF0012F5D2 /* MCScene.cxxpkg */,
-				A3B35FFE1717E35A0012F5D2 /* MCSceneContextManager.cxxpkg */,
-				A3B360011717E3AF0012F5D2 /* MCSceneContext.cxxpkg */,
-				A3B35FFF1717E3610012F5D2 /* MCLoading.cxxpkg */,
-				A3B360021717EA290012F5D2 /* MCIssuingTaskUI.cxxpkg */,
-				A3A56BBB17185BF100C5FB61 /* MCEnhancingEquipmentUI.cxxpkg */,
-				A3A56BBC17185C0C00C5FB61 /* MCTradingPropsUI.cxxpkg */,
-				A3A56BBD17185C2400C5FB61 /* MCHiringMercenaryUI.cxxpkg */,
-				A3A72BEE17199C8D009C65A5 /* Cocos2d.pkg */,
+				A3BFAA4D171A718500096D16 /* Scene */,
+				A3BFAA49171A6E7700096D16 /* UI */,
+				A3BFAA4A171A6E7E00096D16 /* Task */,
+				A3A72BEE17199C8D009C65A5 /* Cocos2d.cxxpkg */,
 				A3E87E801703596600C2E537 /* Readme.md */,
 			);
 			name = lua;

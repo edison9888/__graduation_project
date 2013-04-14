@@ -41,11 +41,11 @@ MCIssuingTaskUI::init()
         CCMenuItem *menuItem;
         CCLabelTTF *label;
         float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
-        float fontSize = 21 / contentScaleFactor;
-        float valueFontSize = 18 / contentScaleFactor;
+        float fontSize = 18 / contentScaleFactor;
+        float valueFontSize = 16 / contentScaleFactor;
         float contentHeight = winSize.height - 90 / contentScaleFactor;
         float contentHeightWithoutBottom = contentHeight * 2 / 3;
-        float offsetXLeft = 210 / contentScaleFactor;
+        float offsetXLeft = 200 / contentScaleFactor;
         float offsetXRight;
         float offsetY = contentHeightWithoutBottom / 4 + 4;
         float offsetYInc = offsetY;
@@ -492,7 +492,7 @@ MCIssuingTaskUI::generate()
         menu->alignItemsVertically();
         menu->setPosition(ccp(menuItem->getContentSize().width, winSize.height / 2));
         
-        tableView_->setPosition(ccp(menu->getPositionX() + menuItem->getContentSize().width,
+        tableView_->setPosition(ccp(menu->getPositionX() + menuItem->getContentSize().width - 24 / CCDirectorGetContentScaleFactor(),
                                     (winSize.height - tableViewSize_.height) / 2));
     }
 }

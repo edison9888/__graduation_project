@@ -463,14 +463,14 @@ MCAStarAlgorithm::process(CCObject *obj)
             side = side->parent_;
         }
     }
-    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * mapWidth_] = kMCStartPoint;
-    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * mapWidth_] = kMCEndPoint;
-    for (mc_ssize_t y = mapHeight_ - 1; y >= 0; --y) {
-        for (mc_ssize_t x = 0; x < mapWidth_; ++x) {
-            printf("%d ", mapAltas_[x + y * mapWidth_]);
-        }
-        printf("\n");
-    }
+//    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * mapWidth_] = kMCStartPoint;
+//    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * mapWidth_] = kMCEndPoint;
+//    for (mc_ssize_t y = mapHeight_ - 1; y >= 0; --y) {
+//        for (mc_ssize_t x = 0; x < mapWidth_; ++x) {
+//            printf("%d ", mapAltas_[x + y * mapWidth_]);
+//        }
+//        printf("\n");
+//    }
     
     /* 不需要反序了，直接当做栈处理 */
     /* 发出算法结束的通知 */
@@ -532,8 +532,8 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
     CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
                                     mapSize.height * tileSize.height / contentScaleFactor);
     
-    startPoint = ccpAdd(startPoint, mapOffset);
-    endPoint = ccpAdd(aDestinationLocation, mapOffset);
+    startPoint = ccpSub(startPoint, mapOffset);
+    endPoint = ccpSub(aDestinationLocation, mapOffset);
     CCSizeLog(mapRealSize);
     CCLog("start(%.0f %.0f) end(%.0f %.0f)",
           startPoint.x, startPoint.y,

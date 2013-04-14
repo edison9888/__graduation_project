@@ -102,6 +102,32 @@ MCEquipmentManager::sharedEquipmentManager()
     return __shared_equipment_manager;
 }
 
+mc_ssize_t
+MCEquipmentManager::levelUp(MCEquipmentItem *anEquipment)
+{
+    MCOre *currentOre = anEquipment->getOre();
+    MCOre *nextLevelOre = currentOre->getNextLevel();
+    MCBackpack *backpack = MCBackpack::sharedBackpack();
+    mc_price_t money = backpack->getMoney();
+    
+    if (nextLevelOre) {
+        if (nextLevelOre->getPrice() + anEquipment->getPrice() > money) {
+            return kMCNotEnoughMoney;
+        }
+        money -= (nextLevelOre->getPrice() + anEquipment->getPrice());
+        backpack->setMoney(money);
+        
+        anEquipment->setOre(nextLevelOre);
+        /* 重置计算 */
+        anEquipment->ac_ = -1;
+        anEquipment->attackCheck_ = -1;
+        
+        return kMCHandleSucceed;
+    }
+    
+    return kMCFullLevel;
+}
+
 void
 MCEquipmentManager::saveData()
 {

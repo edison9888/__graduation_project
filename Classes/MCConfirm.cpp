@@ -92,6 +92,12 @@ MCConfirm::confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aM
     return confirm;
 }
 
+bool
+MCConfirm::hasParent()
+{
+    return __default_confirm && __default_confirm->m_pParent;
+}
+
 void
 MCConfirm::open()
 {

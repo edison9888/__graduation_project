@@ -1,0 +1,16 @@
+enum {
+    MCVillage   = MCMakeEnum(0),
+    MCCity      = MCMakeEnum(1),
+    MCForest    = MCMakeEnum(2),
+    MCDesert    = MCMakeEnum(3),
+    MCGlacier   = MCMakeEnum(4),
+    MCDungeon   = MCMakeEnum(5)
+};
+typedef mc_enum_t MCSceneRegion;
+
+class MCRegion {
+    bool hasScene(mc_object_id_t aSceneId);
+    
+  MCSceneRegion getSceneRegion();
+  void setSceneRegion(MCSceneRegion var);
+};

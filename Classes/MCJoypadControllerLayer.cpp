@@ -49,22 +49,22 @@ MCJoypadControllerLayer::init()
 }
 
 MCJoypadControllerDelegate *
-MCJoypadControllerLayer::getDelegate()
+MCJoypadControllerLayer::getJoypadDelegate()
 {
     return joypad_->getDelegate();
 }
 
 void
-MCJoypadControllerLayer::setDelegate(MCJoypadControllerDelegate *aDelegate)
+MCJoypadControllerLayer::setJoypadDelegate(MCJoypadControllerDelegate *aJoypadDelegate)
 {
-    if (aDelegate) {
+    if (aJoypadDelegate) {
         joypad_->setVisible(true);
         joypad_->setTouchEnabled(true);
     } else {
         joypad_->setVisible(false);
         joypad_->setTouchEnabled(false);
     }
-    joypad_->setDelegate(aDelegate);
+    joypad_->setDelegate(aJoypadDelegate);
 }
 
 bool

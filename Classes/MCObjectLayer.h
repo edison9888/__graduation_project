@@ -107,7 +107,7 @@ protected:
     void dialogDidDismiss(void *anUserdata);
 };
 
-class MCBattleFieldSceneObjectLayer : public MCObjectLayer {
+class MCBattleFieldSceneObjectLayer : public MCGameSceneObjectLayer {
 public:
     void didSelectRole(MCRole *aRole);
     

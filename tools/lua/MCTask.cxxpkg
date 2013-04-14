@@ -1,0 +1,41 @@
+enum {
+    MCTaskUnknownStatus = 0,
+    MCTaskDone          = MCMakeEnum(0),
+    MCTaskAccepted      = MCMakeEnum(1),
+    MCTaskActiviting    = MCMakeEnum(2),
+    MCTaskUncompleted   = MCMakeEnum(3)
+};
+typedef mc_enum_t MCTaskStatus;
+
+class MCTask {
+    CCObject *copy();
+    
+    void generateTaskContext();
+    
+  MCTrapType getTrapType();
+
+    mc_size_t getTrapWideMaxSize();
+    mc_size_t getTrapDamageMaxSize();
+    mc_size_t getHealthPotionMaxSize();
+    mc_size_t getPhysicalPotionMaxSize();
+    
+    mc_size_t getTrapWideBonus();
+    mc_size_t getTrapDamageBonus();
+    mc_size_t getHealthPotionBonus();
+    mc_size_t getPhysicalPotionBonus();
+    
+    mc_price_t getCashPledge();
+    mc_price_t getBonus();
+    CCArray *getTargets();
+    MCTaskStatus getTaskStatus();
+    void setTaskStatus(MCTaskStatus var);
+    MCTaskContext *getTaskContext();
+
+    MCFlag *getFlag();
+    void setFlag(MCFlag *var);
+
+    MCRegion *getRegion();
+    void setRegion(MCRegion *var);
+    
+    MCTask *getProto();
+};

@@ -26,7 +26,6 @@ public:
     void removeRole(MCRole *aRole);
     mc_size_t size();
     
-    
     /* 选择控制 */
     void selectFirstRole();
     void selectAll();
@@ -62,10 +61,15 @@ public:
     void selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem);
     
 private:
+    void toggle();
+    
     MCRoleBaseInfoGroup *group_;
     bool isMultiSeletionMode_;
     
+    CCMenu *toggleButton_;
+    
     CC_SYNTHESIZE_READONLY(CCArray *, selectedRoles_, SelectedRoles);
+    CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, frameSize_, FrameSize);
 };
 
 #endif /* defined(__Military_Confrontation__MCTeamLayer__) */

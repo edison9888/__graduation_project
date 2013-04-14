@@ -34,6 +34,8 @@ public:
     
     static MCConfirm *confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aMessage);
     
+    static bool hasParent();
+    
     CREATE_FUNC(MCConfirm);
     
 private:

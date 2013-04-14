@@ -59,10 +59,11 @@ private:
     MCScene *lastScene_;
     MCScene *currentScene_;
     
-    mc_object_id_t expectedSceneId_;
     MCScene *expectedScene_;
     CCString *entranceName_;
     MCChangeSceneMethod method_;
+    
+    CC_SYNTHESIZE_PASS_BY_REF(mc_object_id_t, expectedSceneId_, ExpectedSceneId)
 };
 
 #endif /* defined(__Military_Confrontation__MCSceneController__) */

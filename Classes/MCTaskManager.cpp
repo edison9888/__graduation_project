@@ -88,7 +88,6 @@ MCTaskManager::acceptTask(MCTask *task)
         }
         currentTask_ = task;
         task->setTaskStatus(MCTaskAccepted);
-        MCFlagManager::sharedFlagManager()->setTaskStarted(true);
         backpack->setMoney(backpack->getMoney() - task->getCashPledge());
         return kMCHandleSucceed;
     }
@@ -170,6 +169,7 @@ MCTaskManager::startCurrentTask()
         /* 建立任务上下文 */
         currentTask_->generateTaskContext();
         currentTask_->setTaskStatus(MCTaskActiviting);
+        MCFlagManager::sharedFlagManager()->setTaskStarted(true);
     }
 }
 
@@ -203,6 +203,6 @@ MCTaskManager::taskDidFinish(CCObject *obj)
     /* 清点任务物品 */
     
     notificatinCenter->removeObserver(task, kMCTaskDidFinishNotification);
-    delete task; /* 由于是copy出来的，所以要清理下 */
+    CC_SAFE_RELEASE(task); /* 由于是copy出来的，所以要清理下 */
     MCFlagManager::sharedFlagManager()->setTaskStarted(false);
 }

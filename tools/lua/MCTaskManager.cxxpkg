@@ -1,0 +1,29 @@
+class MCTaskManager {
+    static MCTaskManager *sharedTaskManager();
+    
+    MCTask *taskWithObjectId(mc_object_id_t anObjectId);
+    
+    MCTask *protoTaskWithObjectId(mc_object_id_t anObjectId);
+    
+    void saveData();
+
+    void loadData();
+
+    CCDictionary *tasks();
+
+    int acceptTask(MCTask *task);
+
+    int acceptTaskWithObjectId(mc_object_id_t anObjectId);
+
+    void abortCurrentTask();
+    
+    void startCurrentTask();
+    
+  bool isTaskAccepted();
+    
+    bool isTaskActiviting();
+    
+    CCArray *tasksForRegion(MCRegion *aRegion);
+    
+    MCTask *getCurrentTask();
+};

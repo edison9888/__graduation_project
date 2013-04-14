@@ -66,7 +66,8 @@ private:
     CCLabelTTF *maxPPLabel_;
     
     CC_SYNTHESIZE_READONLY(MCRole *, role_, Role);
-    
+    CC_SYNTHESIZE_READONLY(float, width_, Width);
+    CC_SYNTHESIZE_READONLY(float, height_, Height);
     CC_SYNTHESIZE(bool, touched_, Touched);
 };
 
@@ -90,6 +91,9 @@ protected:
 private:
     MCTeam *team_;
     CCArray *infoList_;
+    
+    CC_SYNTHESIZE_READONLY(float, width_, Width);
+    CC_SYNTHESIZE_READONLY(float, height_, Height);
 };
 
 #endif /* defined(__Military_Confrontation__MCRoleBaseInfo__) */

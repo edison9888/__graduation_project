@@ -26,6 +26,8 @@ class MCRegion : public MCObject {
 public:
     std::vector<mc_object_id_t> regions;
     
+    bool hasScene(mc_object_id_t aSceneId);
+    
     CC_SYNTHESIZE(MCSceneRegion, sceneRegion_, SceneRegion);
 };
 
