@@ -25,11 +25,12 @@ private:
 public:
     static MCDungeonMaster *sharedDungeonMaster();
     
+    void destroyGameWorld();
+    
     void saveSpawnPoint();
+    void loadSpawnPoint();
     
 private:
-    
-    void loadSpawnPoint();
     
 private:
     MCTeam *team_; /* 队伍 */

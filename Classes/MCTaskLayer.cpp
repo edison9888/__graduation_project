@@ -323,9 +323,7 @@ MCTaskLayer::loadData()
         
         /* 放弃任务 */
         MCTaskStatus status = task->getTaskStatus();
-        if (status == MCTaskAccepted
-#warning 添加检测
-            || true /* 正处于可以放弃任务的地方 */ ) {
+        if (status == MCTaskAccepted) {
             abortTaskButton_->setVisible(true);
         } else {
             abortTaskButton_->setVisible(false);

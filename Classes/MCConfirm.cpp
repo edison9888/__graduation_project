@@ -11,7 +11,7 @@
 static const ccColor3B Color_blue = ccc3 (54, 128, 241);
 static const ccColor3B Color_write = ccc3 (241, 241, 241);
 
-static MCConfirm *__default_confirm = NULL;
+//static MCConfirm *__default_confirm = NULL;
 
 MCConfirm::~MCConfirm()
 {
@@ -55,7 +55,9 @@ MCConfirm::init()
         no_ = noMenuItem;
         actionButtonsMenu_ = menu;
         
-        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, menu->getTouchPriority(), true);
+        CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this,
+                                                                                menu->getTouchPriority(),
+                                                                                true);
         
         return true;
     }
@@ -73,21 +75,27 @@ MCConfirm::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 MCConfirm *
 MCConfirm::confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aMessage)
 {
-    MCConfirm *confirm;
+    MCConfirm *confirm = new MCConfirm;
     
-    if (__default_confirm == NULL) {
-        __default_confirm = new MCConfirm;
-        if (__default_confirm && __default_confirm->init()) {
-        } else {
-            delete __default_confirm;
-            __default_confirm = NULL;
-        }
+//    if (__default_confirm == NULL) {
+//        __default_confirm = new MCConfirm;
+//        if (__default_confirm && __default_confirm->init()) {
+//        } else {
+//            delete __default_confirm;
+//            __default_confirm = NULL;
+//        }
+//    }
+//    confirm = __default_confirm;
+    if (confirm && confirm->init()) {
+        confirm->autorelease();
+        confirm->setConfirm(aMessage);
+        confirm->setDelegate(aDelegate);
+        aParent->addChild(confirm);
+        confirm->open();
+    } else {
+        delete confirm;
+        confirm = NULL;
     }
-    confirm = __default_confirm;
-    confirm->setConfirm(aMessage);
-    confirm->setDelegate(aDelegate);
-    aParent->addChild(confirm);
-    confirm->open();
     
     return confirm;
 }
@@ -95,7 +103,21 @@ MCConfirm::confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aM
 bool
 MCConfirm::hasParent()
 {
-    return __default_confirm && __default_confirm->m_pParent;
+//    return __default_confirm && __default_confirm->m_pParent;
+    return false;
+}
+
+void
+MCConfirm::onEnter()
+{
+    CCLayerColor::onEnter();
+}
+
+void
+MCConfirm::onExit()
+{
+    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    CCLayerColor::onExit();
 }
 
 void
@@ -152,7 +174,6 @@ MCConfirm::showActionButton(CCNode* pSender)
 void
 MCConfirm::hideActionButton(CCNode* pSender)
 {
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     actionButtonsMenu_->runAction(CCMoveTo::create(0.3,
                                                      ccp(-actionButtonsMenu_->getContentSize().width / 2,
                                                          actionButtonsLocation_.y)));
@@ -161,8 +182,7 @@ MCConfirm::hideActionButton(CCNode* pSender)
 void
 MCConfirm::destroy()
 {
-    CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
-    removeFromParentAndCleanup(true);
+    removeFromParentAndCleanup(false);
 }
 
 MCConfirmDelegate *

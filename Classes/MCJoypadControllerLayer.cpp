@@ -68,13 +68,13 @@ MCJoypadControllerLayer::setJoypadDelegate(MCJoypadControllerDelegate *aJoypadDe
 }
 
 bool
-MCJoypadControllerLayer::isEnable()
+MCJoypadControllerLayer::isEnabled()
 {
     return joypad_->isTouchEnabled();
 }
 
 void
-MCJoypadControllerLayer::setEnable(bool var)
+MCJoypadControllerLayer::setEnabled(bool var)
 {
     joypad_->setVisible(var);
     joypad_->setTouchEnabled(var);

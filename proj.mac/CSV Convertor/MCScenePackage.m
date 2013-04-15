@@ -10,6 +10,7 @@
 
 NSString *kMCScenePackageID = @"id";
 NSString *kMCScenePackageInternal = @"internal";
+NSString *kMCScenePackageTrigger = @"trigger";
 NSString *kMCScenePackageSceneType = @"scene-type";
 
 NSString *kMCScenePackageBackground = @"background";

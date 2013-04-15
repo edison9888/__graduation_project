@@ -84,6 +84,13 @@ public:
      */
     bool spend(mc_price_t money);
     
+    /**
+     * 清除数据
+     */
+    void erase();
+    
+    void reload();
+    
     /* 道具 */
     /* 药品 */
     MCDefineInterface(healthPotion_, HealthPotion);
@@ -102,9 +109,9 @@ public:
     
     void saveData();
     
-private:
     void loadData();
     
+private:
     void saveEffectiveItems();
     void loadEffectiveItems();
     

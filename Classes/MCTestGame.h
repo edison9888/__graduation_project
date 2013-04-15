@@ -20,4 +20,11 @@ public:
     }
 };
 
+class MCTestMenuScene {
+public:
+    static CCScene *scene() {
+        return MCMainMenu::scene();
+    }
+};
+
 #endif /* defined(__Military_Confrontation__MCTestGame__) */

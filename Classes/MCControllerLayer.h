@@ -14,8 +14,8 @@ USING_NS_CC;
 
 class MCControllerLayer : public CCLayer {
 public:
-    virtual bool isEnable() { return true; }
-    virtual void setEnable(bool var) {}
+    virtual bool isEnabled() { return true; }
+    virtual void setEnabled(bool var) {}
 };
 
 #endif /* defined(__Military_Confrontation__MCControllerLayer__) */

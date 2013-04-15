@@ -36,6 +36,9 @@ public:
     
     static bool hasParent();
     
+    void onEnter();
+    void onExit();
+    
     CREATE_FUNC(MCConfirm);
     
 private:
@@ -62,8 +65,8 @@ private:
 
 class MCConfirmDelegate {
 public:
-    virtual void confirmDidClickYesButton(MCConfirm *aConfirm) {};
-    virtual void confirmDidClickNoButton(MCConfirm *aConfirm) {};
+    virtual void confirmDidClickYesButton(MCConfirm *aConfirm) {}
+    virtual void confirmDidClickNoButton(MCConfirm *aConfirm) {}
 };
 
 #endif /* defined(__Military_Confrontation__MCConfirm__) */

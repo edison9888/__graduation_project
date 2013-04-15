@@ -43,6 +43,7 @@
         [package setObject:@(MCGameScenePackage) forKey:kMCScenePackageSceneType];
     }
     
+    /* internal */
     properties = [mapDocument nodesForXPath:@"map/properties/property[@name='internal']" error:nil];
     BOOL isInternal = NO;
     if ([properties count] > 0) {
@@ -53,6 +54,16 @@
         }
     }
     [package setObject:@(isInternal == YES ? 1 : 0) forKey:kMCScenePackageInternal];
+    
+    /* trigger */
+    properties = [mapDocument nodesForXPath:@"map/properties/property[@name='trigger']" error:nil];
+    if ([properties count] > 0) {
+        property = [properties objectAtIndex:0];
+        NSString *trigger = [[property attributeForName:@"value"] objectValue];
+        [package setObject:trigger forKey:kMCScenePackageTrigger];
+    } else {
+        [package setObject:[NSNull null] forKey:kMCScenePackageTrigger];
+    }
     
     /* background */
     NSMutableDictionary *background = [[NSMutableDictionary alloc] init];

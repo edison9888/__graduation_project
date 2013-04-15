@@ -7,6 +7,7 @@
 //
 
 #include "MCSkillManager.h"
+#include "MCGameState.h"
 
 static MCSkillManager *__shared_skill_manager = NULL;
 

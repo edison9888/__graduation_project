@@ -9,13 +9,18 @@
 #include "MCSceneController.h"
 #include "MCSceneManager.h"
 #include "MCScript.h"
+#include "MCDungeonMaster.h"
+#include "MCFlagManager.h"
 
-const char *kMCChangingSceneScriptFilepath = "scripts/changing-scene.lua";
+const char *kMCSceneDidLoadNotification = "kMCSceneDidLoadNotification";
+
+static const char *kMCChangingSceneScriptFilepath = "scripts/changing-scene.lua";
 
 static MCSceneController *__shared_scene_controller = NULL;
 
 MCSceneController::MCSceneController()
 {
+    loadSpawnScene_ = false;
     lastScene_ = NULL;
     currentScene_ = NULL;
 }
@@ -36,23 +41,19 @@ MCSceneController::sharedSceneController()
 }
 
 /**
- * 提交期待转换的场景信息
+ * 死亡或者开始游戏的时候加载，场景为最后的重生点场景
  */
-//void
-//MCSceneController::pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method)
-//{
-//    expectedScene_ = aNewScene;
-//    entranceName_ = new CCString;
-//    entranceName_->initWithFormat("%s", anEntranceName);
-//    CCString *entranceName = aNewScene->getEntranceName();
-//    if (entranceName) {
-//        entranceName->release();
-//    }
-//    entranceName = CCString::create(entranceName_->getCString());
-//    aNewScene->setEntranceName(entranceName);
-//    entranceName->retain();
-//    method_ = method;
-//}
+void
+MCSceneController::loadSpawnScene()
+{
+    MCDungeonMaster *dm = MCDungeonMaster::sharedDungeonMaster();
+    
+    pushExpectedScene(dm->getSpawnPointID(), NULL);
+    loadSpawnScene_ = true;
+#warning need?
+//    MCFlagManager::sharedFlagManager()->spawn();
+    requestChangingScene();
+}
 
 /**
  * 提交期待转换的场景信息
@@ -61,8 +62,12 @@ void
 MCSceneController::pushExpectedScene(mc_object_id_t anObjectId, const char *anEntranceName, MCChangeSceneMethod method)
 {
     expectedSceneId_ = anObjectId;
-    entranceName_ = new CCString;
-    entranceName_->initWithFormat("%s", anEntranceName);
+    if (anEntranceName) {
+        entranceName_ = new CCString;
+        entranceName_->initWithFormat("%s", anEntranceName);
+    } else {
+        entranceName_ = NULL;
+    }
     method_ = method;
 }
 
@@ -89,9 +94,13 @@ MCSceneController::__loadScene()
     if (entranceName) {
         entranceName->release();
     }
-    entranceName = CCString::create(entranceName_->getCString());
-    newScene->setEntranceName(entranceName);
-    entranceName->retain();
+    if (entranceName_) { /* entranceName_在载入到重生点场景时为NULL */
+        entranceName = CCString::create(entranceName_->getCString());
+        newScene->setEntranceName(entranceName);
+        entranceName->retain();
+    }
+    
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCSceneDidLoadNotification);
 }
 
 /**
@@ -103,11 +112,14 @@ void
 MCSceneController::__changeScene()
 {
     if ((expectedScene_ == NULL && method_ != MCPopScene)
-        || (!expectedScene_->hasEntrance(entranceName_->getCString()) && method_ != MCPopScene)) {
+        || (entranceName_ == NULL && !loadSpawnScene_)
+        || (entranceName_ != NULL && !expectedScene_->hasEntrance(entranceName_->getCString()) && method_ != MCPopScene)) {
         expectedScene_ = NULL;
         CC_SAFE_RELEASE_NULL(entranceName_);
         return;
     }
+    
+    loadSpawnScene_ = false;
     
 //    if (MCPushScene == method_) {
 //        CCDirector::sharedDirector()->pushScene(expectedScene_);

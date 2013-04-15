@@ -46,20 +46,24 @@ public:
     
     /* 防具接口 */
     inline mc_ac_t getAC() {
-        return 10 + helmet_->getAC() + armor_->getAC() + shinGuard_->getAC();
+        return helmet_->getAC() + armor_->getAC() + shinGuard_->getAC();
     }
     
     inline void changeWeaponTo(MCEquipmentItem *aWeapon) {
         currentWeapon_ = aWeapon;
     }
     
+    /**
+     * 清除数据
+     */
+    void erase();
+    
     mc_ssize_t levelUp(MCEquipmentItem *anEquipment);
     
     void saveData();
-    
-private:
     void loadData();
     
+private:
     void saveEquipmentItems();
     void loadEquipmentItems();
     

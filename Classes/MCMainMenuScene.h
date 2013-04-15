@@ -9,11 +9,17 @@
 #ifndef __Military_Confrontation__MCMainMenuScene__
 #define __Military_Confrontation__MCMainMenuScene__
 
-#include <cocos2d.h>
+#include "MCConfirm.h"
+#include "MCType.h"
 
-USING_NS_CC;
+enum {
+    MCUnknownOperation      = 0,
+    MCQuitOperation         = MCMakeEnum(0),
+    MCStartNewGameOperation = MCMakeEnum(1)
+};
+typedef mc_enum_t MCMainMenuConfirmOperation;
 
-class MCMainMenu : public CCLayerColor {
+class MCMainMenu : public CCLayerColor, public MCConfirmDelegate {
     
 public:
     bool init();
@@ -28,13 +34,17 @@ public:
         return scene;
     }
     
+    void confirmDidClickYesButton(MCConfirm *aConfirm);
+    
 protected:
-    void playGame_clicked(CCObject* sender);    /* 单人游戏 */
-    void multiplayer_clicked(CCObject* sender); /* 多人对战 */
-    void about_clicked(CCObject* sender);       /* 关于 */
-    void quit_clicked(CCObject* sender);        /* 退出 */
+    void continue_clicked(CCObject *aSender);    /* 继续游戏 */
+    void playGame_clicked(CCObject *aSender);    /* 单人游戏 */
+    void multiplayer_clicked(CCObject *aSender); /* 多人对战 */
+    void about_clicked(CCObject *aSender);       /* 关于 */
+    void quit_clicked(CCObject *aSender);        /* 退出 */
     
 private:
+    MCMainMenuConfirmOperation confirmOperation_;
 };
 
 #endif /* defined(__Military_Confrontation__MCMainMenuScene__) */

@@ -41,6 +41,7 @@ private:
     CC_SYNTHESIZE_READONLY(MCScenePackageType, scenePackageType_, ScenePackageType); /* 场景类型 */
     CC_SYNTHESIZE_READONLY(CCArray *, objects_, Objects) /* object，根据地图类型不同而不同 */
     
+    CC_SYNTHESIZE_READONLY(CCString *, triggerFilepath_, TriggerFilepath); /* 场景触发器地址，可能为NULL */
     CC_SYNTHESIZE_READONLY(CCString *, tmxTiledMapPath_, TMXTiledMapPath); /* 贴图地图路径 */
     CC_SYNTHESIZE_READONLY(CCString *, backgroundMusicPath_, BackgroundMusicPath); /* 背景音乐文件路径，NULL为无音乐 */
     

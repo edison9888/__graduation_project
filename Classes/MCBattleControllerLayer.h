@@ -24,8 +24,8 @@ public:
     
     CREATE_FUNC(MCBattleControllerLayer);
     
-    bool isEnable();
-    void setEnable(bool var);
+    bool isEnabled();
+    void setEnabled(bool var);
     
     bool getJoypadEnable();
     void setJoypadEnable(bool var);

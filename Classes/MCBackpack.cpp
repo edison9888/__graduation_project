@@ -15,6 +15,7 @@ using namespace std;
 #include "MCBase64.h"
 #include "MCItemManager.h"
 #include "MCEffectiveItem.h"
+#include "MCGameState.h"
 
 MCDefineConstantString(kMCHealthPotionIcon);
 MCDefineConstantString(kMCPhysicalPotionIcon);
@@ -35,8 +36,10 @@ const mc_size_t kMCItemMax = 99;
 static const char *kMCMoneyKey = "bW9uZXk"; /* money的BASE64编码没有最后的= */
 static const char *kMCBackpackKey = "YmFja3BhY2s"; /* backpack的BASE64编码没有最后的= */
 static const char *kMCEffectiveItemsKey = "ZWZmZWN0aXZlLWl0ZW1z"; /* effective-items的BASE64编码 */
+static const char *kMCZero = "MA=="; /* 0的BASE64编码没有最后的== */
 
 static MCBackpack *__shared_backpack = NULL;
+static bool __icon_loaded = false;
 
 /* 道具 */
 mc_object_id_t effectiveItemsOID[] = {
@@ -110,7 +113,6 @@ MCBackpack::sharedBackpack()
 {
     if (__shared_backpack == NULL) {
         __shared_backpack = new MCBackpack;
-        __shared_backpack->loadData();
     }
     
     return __shared_backpack;
@@ -128,6 +130,28 @@ MCBackpack::spend(mc_price_t money)
     }
     
     return false;
+}
+
+/**
+ * 清除数据
+ */
+void
+MCBackpack::erase()
+{
+//    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+//    
+//    userDefault->setStringForKey(kMCMoneyKey, "");
+//    userDefault->setStringForKey(kMCBackpackKey, "");
+//    userDefault->setStringForKey(kMCEffectiveItemsKey, "");
+//    
+    delete __shared_backpack;
+    __shared_backpack = NULL;
+}
+
+void
+MCBackpack::reload()
+{
+//    loadData();
 }
 
 void
@@ -159,22 +183,29 @@ void
 MCBackpack::loadData()
 {
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-
-    loadEffectiveItems();
-    loadIcons();
     
-    string data = userDefault->getStringForKey(kMCBackpackKey, "");
-    if (data.size() > 0) {
-        const char *input = data.c_str();
-        char *output;
-        mc_size_t len = strlen(input);
-        MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
-        JsonBox::Value v;
-        v.loadFromString(output);
-        
-        JsonBox::Object backpack = v.getObject();
-        /* 加载金钱 */
-        money_ = backpack[kMCMoneyKey].getInt();
+    loadEffectiveItems();
+    
+    if (! __icon_loaded) {
+        loadIcons();
+    }
+    
+    if (MCGameState::sharedGameState()->isSaveFileExists()) {
+        string data = userDefault->getStringForKey(kMCBackpackKey, kMCZero);
+        if (data.size() > 0) {
+            const char *input = data.c_str();
+            char *output;
+            mc_size_t len = strlen(input);
+            MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+            JsonBox::Value v;
+            v.loadFromString(output);
+            
+            JsonBox::Object backpack = v.getObject();
+            /* 加载金钱 */
+            money_ = backpack[kMCMoneyKey].getInt();
+        }
+    } else {
+        money_ = 0;
     }
 }
 
@@ -217,7 +248,8 @@ MCBackpack::loadEffectiveItems()
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
     string data = userDefault->getStringForKey(kMCEffectiveItemsKey, "");
     
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists()
+        && data.size() > 0) {
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
@@ -333,4 +365,6 @@ MCBackpack::loadIcons()
     pobFrame = CCSpriteFrame::create(flashTrapDamage_->item->getIcon()->getCString(),
                                      iconRect);
     cache->addSpriteFrame(pobFrame, kMCFlashDamageIcon);
+    
+    __icon_loaded = true;
 }

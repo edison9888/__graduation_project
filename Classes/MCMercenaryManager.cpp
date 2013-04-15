@@ -14,6 +14,8 @@ using namespace std;
 #include "MCBackpack.h"
 #include "MCMercenaryManager.h"
 #include "MCDice.h"
+#include "MCHero.h"
+#include "MCGameState.h"
 
 static const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
 static const char *kMCMercenariesFilepath = "M000.jpkg";
@@ -243,6 +245,7 @@ MCMercenaryManager::saveData()
     char *c_str_o_id = o_id_buffer;
     
     CCArray *hired = hired_->getRoles();
+    hired->removeObject(MCHero::sharedHero());
     CCARRAY_FOREACH(hired, obj) {
         mercenary = (MCMercenary *) obj;
         mc_object_id_t o_id = mercenary->getID();
@@ -270,7 +273,7 @@ MCMercenaryManager::loadData()
     CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
     string data = userDefault->getStringForKey(kMCMercenariesKey, "");
     
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);

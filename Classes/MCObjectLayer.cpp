@@ -12,6 +12,7 @@
 #include "MCEntrance.h"
 #include "MCScript.h"
 #include "MCDialog.h"
+#include "MCBattleController.h"
 
 #define kMCDuraitonMap   0.025f
 
@@ -233,11 +234,9 @@ MCObjectLayer::onEnter()
     CCPoint rolePosition;
     bool atEntrance = false;
     if (spawnPoint && flagManager->isSpawnFlagOn()) {
-        if (spawnPoint) {
-            rolePosition = ccp(spawnPoint->valueForKey("x")->floatValue() / contentScaleFactor,
-                               spawnPoint->valueForKey("y")->floatValue() / contentScaleFactor);
-            flagManager->setSpawnFlagOff();
-        }
+        rolePosition = ccp(spawnPoint->valueForKey("x")->floatValue() / contentScaleFactor,
+                           spawnPoint->valueForKey("y")->floatValue() / contentScaleFactor);
+        flagManager->setSpawnFlagOff();
     } else if (scene->getEntranceName()) {
         MCEntrance *entrance = dynamic_cast<MCEntrance *>(scene->getEntrances()
                                                                 ->objectForKey(scene->getEntranceName()
@@ -365,8 +364,16 @@ MCObjectLayer::setSceneOffset(const CCPoint &anOffset)
 void
 MCObjectLayer::moveTo(const CCPoint &offset)
 {
+    MCRole *aSelectedRole = selectedRole();
+    
+    if (aSelectedRole == NULL) {
+        return;
+    }
+    
+    MCRoleEntity *roleEntity = aSelectedRole->getEntity();
+    
     /* screen view */
-    CCPoint heroCurrentPosition = hero_->getPosition();
+    CCPoint heroCurrentPosition = roleEntity->getPosition();
     CCPoint mapCurrentPosition = map_->getPosition();
     CCPoint heroCurrentPositionAtMap = ccpSub(heroCurrentPosition, mapCurrentPosition);
     CCPoint heroMaybeMoveToPosition;
@@ -374,11 +381,11 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     CCPoint mapMaybeMoveToPosition;
     CCPoint delta;
     CCPoint deltaForMap;
-    CCPoint deltaForHero;
+    CCPoint deltaForRole;
     CCPoint deltaForCheck;
     
     /* 障碍物检测用 */
-    CCSize spriteSize = hero_->getContentSize();
+    CCSize spriteSize = roleEntity->getContentSize();
     CCPoint pointForCheck = CCPointZero;
     
     /* 地图移动检测用 */
@@ -391,38 +398,38 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     delta = ccpNormalize(offset);
     delta = ccpMult(delta, 4);
     deltaForMap = ccpNeg(delta);
-    deltaForHero = CCPoint(delta);
-    deltaForCheck = CCPoint(deltaForHero);
+    deltaForRole = CCPoint(delta);
+    deltaForCheck = CCPoint(deltaForRole);
     
     /* 让移动更平滑~~~~ */
 //    CCPointLog(deltaForHero);
-    if (deltaForHero.x > -1.5 && deltaForHero.x < 1.5) {
-        deltaForHero.x = deltaForHero.x > 0 ? -0.5 : 0.5;
-//        deltaForHero.x = 0;
+    if (deltaForRole.x > -1.5 && deltaForRole.x < 1.5) {
+//        deltaForHero.x = deltaForHero.x > 0 ? -0.5 : 0.5;
+        deltaForRole.x = 0;
         deltaForCheck.x = deltaForCheck.x > 0 ? -0.5 : 0.5;
     }
-    if (deltaForHero.y > -1.5 && deltaForHero.y < 1.5) {
-        deltaForHero.y = deltaForHero.y > 0 ? -0.5 : 0.5;
-//        deltaForHero.y = 0;
+    if (deltaForRole.y > -1.5 && deltaForRole.y < 1.5) {
+//        deltaForHero.y = deltaForHero.y > 0 ? -0.5 : 0.5;
+        deltaForRole.y = 0;
         deltaForCheck.y = deltaForCheck.y > 0 ? -0.5 : 0.5;
     }
 //    CCPointLog(deltaForHero);
     
-    heroMaybeMoveToPositionAtMap = ccpAdd(heroCurrentPositionAtMap, deltaForHero);
+    heroMaybeMoveToPositionAtMap = ccpAdd(heroCurrentPositionAtMap, deltaForRole);
     
     if ((heroMaybeMoveToPositionAtMap.x > edgeLeft && heroMaybeMoveToPositionAtMap.x < edgeRight)) { /* 移动地图 */
-        deltaForHero.x = 0;
+        deltaForRole.x = 0;
     } else {
         deltaForMap.x = 0;
     }
     
     if ((heroMaybeMoveToPositionAtMap.y > edgeBottom && heroMaybeMoveToPositionAtMap.y < edgeTop)) { /* 移动地图 */
-        deltaForHero.y = 0;
+        deltaForRole.y = 0;
     } else {
         deltaForMap.y = 0;
     }
     
-    heroMaybeMoveToPosition = ccpAdd(heroCurrentPosition, deltaForHero);
+    heroMaybeMoveToPosition = ccpAdd(heroCurrentPosition, deltaForRole);
     mapMaybeMoveToPosition = ccpAdd(mapCurrentPosition, deltaForMap);
     
     /* tags: #map #offset */
@@ -442,7 +449,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     /* 矩形框检测方案 */
     /* 场景切换检测 */
 #if (MC_COLLISION_USE_OBB == 1)
-    MCOBB heroOBB = hero_->getOBB();
+    MCOBB heroOBB = roleEntity->getOBB();
     /* recal origin */
     heroOBB.setup(deltaForCheck);
     detectsCollidesWithEntrances(heroOBB);
@@ -452,22 +459,22 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         deltaForHero = CCPointZero;
     }
 #else
-//    CCRect heroCurrentFrame = hero_->getOBB().getAABB();
-    CCSize frameSize = hero_->getMetadata()->getFrameSize();
-    CCRect heroCurrentFrame = CCRectMake(heroCurrentPosition.x - mapCurrentPosition.x,heroCurrentPosition.y - mapCurrentPosition.y,
+//    CCRect heroCurrentFrame = roleEntity->getOBB().getAABB();
+    CCSize frameSize = roleEntity->getMetadata()->getFrameSize();
+    CCRect roleCurrentFrame = CCRectMake(heroCurrentPosition.x - mapCurrentPosition.x,heroCurrentPosition.y - mapCurrentPosition.y,
                                          frameSize.width,frameSize.height);
-    CCRect heroFrame(heroCurrentFrame);
-    heroFrame.origin = ccpAdd(heroFrame.origin, deltaForCheck);
-    detectsCollidesWithEntrances(heroFrame);
-    detectsCollidesWithSemiTransparents(heroFrame);
+    CCRect roleFrame(roleCurrentFrame);
+    roleFrame.origin = ccpAdd(roleFrame.origin, deltaForCheck);
+    detectsCollidesWithEntrances(roleFrame);
+    detectsCollidesWithSemiTransparents(roleFrame);
 //    deltaForHero = ccpAdd(deltaForHero, feedbackOffset);
 //    deltaForMap = ccpSub(deltaForMap, feedbackOffset);
 //    if (/*deltaForHero.x == 0.0f && deltaForHero.y == 0.0f
 //        &&*/ (feedbackOffset.x != 0.0f || feedbackOffset.y != 0.0f)) {
 #if 1
-    if (detectsCollidesWithBarriers(heroFrame)) {
+    if (detectsCollidesWithBarriers(roleFrame)) {
         deltaForMap = CCPointZero;
-        deltaForHero = CCPointZero;
+        deltaForRole = CCPointZero;
     }
 #else
     CCPoint feedbackOffset = detectsCollidesWithBarriers(heroCurrentFrame, deltaForCheck);
@@ -489,13 +496,14 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     
     CCObject *obj;
     CCAction *scrollAction = CCSequence::create(CCMoveBy::create(kMCDuraitonMap, deltaForMap),
-                                                CCCallFunc::create(hero_, callfunc_selector(MCRoleEntity::walkEnded)),
+                                                CCCallFunc::create(roleEntity, callfunc_selector(MCRoleEntity::walkEnded)),
                                                 NULL);
     map_->runAction(scrollAction);
     if (deltaForMap.x != 0.0f || deltaForMap.y != 0.0f) {
         MCSceneContext *context = MCSceneContextManager::sharedSceneContextManager()->currentContext();
         CCArray *objects = context->objects_;
         MCRole *role;
+        MCRoleEntity *mercenaryEntity;
         if (objects) {
             CCARRAY_FOREACH(objects, obj) {
                 role = (MCRole *) obj;
@@ -504,10 +512,17 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         }
         CCARRAY_FOREACH(mercenaries_, obj) {
             role = (MCRole *) obj;
-            role->getEntity()->moveBy(deltaForMap);
+            mercenaryEntity = role->getEntity();
+            if (mercenaryEntity != roleEntity) {
+                mercenaryEntity->moveBy(deltaForMap);
+            }
         }
     }
-    hero_->walkOnScreen(deltaForHero, offset);
+    
+    roleEntity->walkOnScreen(deltaForRole, offset);
+    if (roleEntity != hero_) {
+        hero_->moveBy(deltaForMap);
+    }
     getSceneDelegate()->getScene()->getSceneCamera()->translate(deltaForMap);
 }
 #if (MC_COLLISION_USE_OBB == 1)
@@ -951,4 +966,20 @@ MCBattleFieldSceneObjectLayer::controllerDidDragMap(MCBattleControllerDelegate *
     
     camera->translate(delta);
     camera->locate();
+}
+
+void
+MCBattleFieldSceneObjectLayer::controllerDidAttach(MCBattleController *aBattleController)
+{
+    controller_ = aBattleController;
+}
+
+MCRole *
+MCBattleFieldSceneObjectLayer::selectedRole()
+{
+    CCArray *selectedRoles = controller_->getSelectedRoles();
+
+    return selectedRoles->count() > 0
+            ? dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0))
+            : NULL;
 }

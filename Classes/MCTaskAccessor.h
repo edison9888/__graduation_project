@@ -22,6 +22,11 @@ public:
     bool loadTasks(const char *aFilePath);
     
     /**
+     * 清除数据
+     */
+    void erase();
+    
+    /**
      * 储存数据
      */
     void saveData();

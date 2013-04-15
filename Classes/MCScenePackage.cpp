@@ -13,6 +13,8 @@
 
 MCScenePackage::~MCScenePackage()
 {
+    CC_SAFE_RELEASE(triggerFilepath_);
+    
     CC_SAFE_RELEASE(objects_);
     CC_SAFE_RELEASE(scenes_);
     
@@ -31,6 +33,7 @@ MCScenePackage::init()
         CC_BREAK_IF(! scenes_);
         scenes_->retain();
         
+        triggerFilepath_ = NULL;
         tmxTiledMapPath_ = NULL;
         backgroundMusicPath_ = NULL;
         
@@ -101,6 +104,12 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     /* name String */
     name_ = CCString::create(root["name"].getString().c_str());
     name_->retain();
+    
+    /* trigger String */
+    if (root["trigger"].isString()) {
+        triggerFilepath_ = CCString::create(root["trigger"].getString().c_str());
+        triggerFilepath_->retain();
+    }
     
     /* description String */
     description_ = CCString::create(root["description"].getString().c_str());

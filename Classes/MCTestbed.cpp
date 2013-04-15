@@ -59,6 +59,8 @@ public:
 };
 
 static struct __mc_test_scene __test_scenes[] = {
+    {"Enter the Game", MCTestGame::scene},
+    {"Enter Menu Scene", MCTestMenuScene::scene},
     {"Test Detail", MCTestDetail::scene},
     {"Test A*", MCTestAStar::scene},
     {"Test Particle", MCTestParticle::scene},
@@ -77,7 +79,6 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test Viewport", MCTestViewport::scene},
     {"Test OBB", MCTestOBB::scene},
     {"Test Role Base Info", MCTestRoleBaseInfo::scene},
-    {"Enter the Game", MCTestGame::scene},
     {"Quit", __mc_quit::scene}
 };
 

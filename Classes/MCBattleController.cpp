@@ -65,6 +65,12 @@ MCBattleController::init()
     return false;
 }
 
+CCArray *
+MCBattleController::getSelectedRoles()
+{
+    return teamLayer_->getSelectedRoles();
+}
+
 void
 MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {

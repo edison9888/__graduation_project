@@ -18,6 +18,7 @@
 #include "MCControllerLayer.h"
 #include "MCSceneManager.h"
 #include "MCDetail.h"
+#include "MCConfirm.h"
 
 class MCScene;
 class MCCamera;
@@ -54,7 +55,7 @@ private:
     CCArray *contextStack_;
 };
 
-class MCScene : public CCScene, public MCSceneDelegate {
+class MCScene : public CCScene, public MCSceneDelegate, public MCConfirmDelegate {
     friend class MCSceneManager;
     friend class MCSceneController;
 public:
@@ -64,7 +65,7 @@ public:
     , viewport_(NULL)
     , background_(NULL)
     , entranceName_(NULL)
-    , isInternalScene_(false) { }
+    , trigger_(NULL) { }
     
     ~MCScene();
     
@@ -100,13 +101,6 @@ public:
     virtual void installController() {}
     
     /**
-     * 是否为内部场景(如房子、商店)
-     */
-    inline bool isInternalScene() {
-        return isInternalScene_;
-    }
-    
-    /**
      * 安装触发器
      */
     void installTrigger(MCTrigger *aTrigger);
@@ -134,27 +128,31 @@ public:
     
     inline void pauseScene() {
         pauseSchedulerAndActions();
-        controller_->setEnable(false);
+        controller_->setEnabled(false);
         detailMenu_->setVisible(false);
     }
     
     inline void resumeScene() {
         detailMenu_->setVisible(true);
-        controller_->setEnable(true);
+        controller_->setEnabled(true);
         resumeSchedulerAndActions();
     }
     
     inline void pauseInput() {
-        controller_->setEnable(false);
+        controller_->setEnabled(false);
         detailMenu_->setVisible(false);
     }
     
     inline void resumeInput() {
+        controller_->setEnabled(true);
         detailMenu_->setVisible(true);
-        controller_->setEnable(true);
     }
     
     void showDetail();
+    
+    /* abort task confirm */
+    void showAbortTaskConfirm(const char *aMessage);
+    void confirmDidClickYesButton(MCConfirm *aConfirm);
     
 protected:
     bool hasEntrance(const char *anEntranceName);
@@ -170,10 +168,10 @@ protected:
     CCArray *scenes_; /* 场景地图ID数组 */
     CCArray *triggers_; /* 触发器 */
     
-    bool isInternalScene_;
-    
     MCDetail *detail_; /* 状态界面 */
     CCMenu *detailMenu_;
+    
+    MCScript *trigger_; /* 若存在则进入场景后执行 */
     
     /**
      * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。

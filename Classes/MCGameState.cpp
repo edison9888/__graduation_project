@@ -49,8 +49,18 @@ MCGameState::isSaveFileExists()
 }
 
 /**
+ * 清除所有记录
+ */
+void
+MCGameState::erase()
+{
+    CCUserDefault::sharedUserDefault()->setBoolForKey(kMCSaveFileExistsKey, false);
+    load();
+}
+
+/**
  * 保存
- * 
+ *
  * 保存的东西列表
  * 背包(装备)信息
  * 背包(道具)信息
@@ -84,11 +94,12 @@ MCGameState::save()
 void
 MCGameState::load()
 {
-    MCBackpack::sharedBackpack();
-    MCEquipmentManager::sharedEquipmentManager();
-    MCMercenaryManager::sharedMercenaryManager();
+    MCBackpack::sharedBackpack()->loadData();
+    MCEquipmentManager::sharedEquipmentManager()->loadData();
+    MCMercenaryManager::sharedMercenaryManager()->loadData();
+    MCFlagManager::sharedFlagManager()->loadAllFlags();
     MCFlagManager::sharedFlagManager()->spawn(); /* 加载游戏的时候直接出现在重生点 */
-    MCTaskManager::sharedTaskManager();
-    MCSkillManager::sharedSkillManager();
-    MCDungeonMaster::sharedDungeonMaster();
+    MCTaskManager::sharedTaskManager()->loadData();
+    MCSkillManager::sharedSkillManager()->loadData();
+    MCDungeonMaster::sharedDungeonMaster()->loadSpawnPoint();
 }

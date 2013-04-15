@@ -13,6 +13,7 @@ using namespace std;
 #include "MCBase64.h"
 #include "JsonBox.h"
 #include "MCFlagManager.h"
+#include "MCGameState.h"
 
 const char *kMCFlagsKey = "ZmxhZ3M"; /* flags的BASE64编码没有最后的= */
 
@@ -143,7 +144,7 @@ MCFlagManager::loadAllFlags()
     
     /* 从存档读取数据 */
     string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCFlagsKey, "");
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char  *output;
         mc_size_t len = strlen(input);
@@ -173,6 +174,20 @@ MCFlagManager::loadAllFlags()
     taskFlag_ = flagForObjectId(kMCTaskFlagId);
     areaBlockedFlag_ = flagForObjectId(kMCAreaBlockedFlagId);
     spawnFlag_ = flagForObjectId(kMCSpawnFlagId);
+}
+
+/**
+ * 清除数据
+ */
+void
+MCFlagManager::erase()
+{
+//    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+//    
+//    userDefault->setStringForKey(kMCFlagsKey, "");
+    
+    delete __shared_flag_manager;
+    __shared_flag_manager = NULL;
 }
 
 /**

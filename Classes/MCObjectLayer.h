@@ -13,6 +13,7 @@
 #include "MCControllerDelegate.h"
 #include "MCSceneManager.h"
 #include "MCScene.h"
+#include "MCHero.h"
 
 class MCObjectLayer : public CCLayer, public MCJoypadControllerDelegate, public MCBattleControllerDelegate {
     friend class MCScene;
@@ -103,6 +104,8 @@ public:
       */
     void controllerDidActivate();
     
+    MCRole *selectedRole() { return MCHero::sharedHero(); }
+    
 protected:
     void dialogDidDismiss(void *anUserdata);
 };
@@ -168,7 +171,13 @@ public:
      */
     virtual void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset);
     
+    void controllerDidAttach(MCBattleController *aBattleController);
+    
+    MCRole *selectedRole();
+    
 protected:
+    MCBattleController *controller_;
+    
     /* 人物间不在相撞~~~~ */
 //    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);
 //    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset);

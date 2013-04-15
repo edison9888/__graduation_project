@@ -26,6 +26,11 @@ public:
     void updateFlag(MCFlag *aFlag);
     
     /**
+     * 清除数据
+     */
+    void erase();
+    
+    /**
      * save all flags
      */
     void saveAllFlags();
@@ -54,12 +59,12 @@ public:
         spawnFlag_->setState(MCOnState);
     }
     
-private:
-    
     /**
      * load all flags
      */
     void loadAllFlags();
+    
+private:
     
     CCDictionary *sourceFlags_; /* 源文件的标志 */
     CCDictionary *flags_;       /* 存储过的标志 */

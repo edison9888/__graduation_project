@@ -53,19 +53,20 @@ MCBattleControllerLayer::setDelegate(MCBattleControllerDelegate* aDelegate)
         controller_->setVisible(false);
         controller_->setTouchEnabled(false);
     }
+    aDelegate->controllerDidAttach(controller_);
     controller_->setDelegate(aDelegate);
 }
 
 bool
-MCBattleControllerLayer::isEnable()
+MCBattleControllerLayer::isEnabled()
 {
     return controller_->isTouchEnabled();
 }
 
 void
-MCBattleControllerLayer::setEnable(bool var)
+MCBattleControllerLayer::setEnabled(bool var)
 {
-    MCJoypadControllerLayer::setEnable(var);
+    MCJoypadControllerLayer::setEnabled(var);
     controller_->setVisible(var);
     controller_->setTouchEnabled(var);
 }

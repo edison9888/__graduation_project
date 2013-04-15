@@ -17,6 +17,7 @@ USING_NS_CC;
 class MCRole;
 class MCTeam;
 class MCItem;
+class MCBattleController;
 
 /* 控制器代理 */
 class MCJoypadControllerDelegate {
@@ -25,6 +26,8 @@ public:
     
      /* 行动 */
     virtual void controllerDidActivate() {}
+    
+    virtual MCRole *selectedRole() { return NULL; }
 };
 
 class MCBattleControllerDelegate {
@@ -88,6 +91,8 @@ public:
      * 拖动地图
      */
     virtual void controllerDidDragMap(MCBattleControllerDelegate *aSender, const CCPoint &anOffset) {}
+    
+    virtual void controllerDidAttach(MCBattleController *aBattleController) {}
     
     virtual void controllerDid(MCBattleControllerDelegate *aSender) {}
 };

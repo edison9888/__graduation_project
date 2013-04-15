@@ -3,6 +3,7 @@
  <properties>
   <property name="sound" value="sounds/village.mp3"/>
   <property name="tmx" value="maps/M001.tmx"/>
+  <property name="trigger" value="scripts/spawn-point.lua"/>
  </properties>
  <tileset firstgid="1" name="forest" tilewidth="16" tileheight="16">
   <image source="forest.png" trans="ffffff" width="1024" height="1312"/>
@@ -152,7 +153,7 @@
     <property name="ID" value="N006"/>
    </properties>
   </object>
-  <object name="spawn-point" x="1376" y="352" width="32" height="32"/>
+  <object name="spawn-point" x="1904" y="832" width="32" height="32"/>
   <object x="640" y="928">
    <properties>
     <property name="ID" value="N004"/>

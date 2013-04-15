@@ -1,0 +1,25 @@
+enum {
+    MCUnknownPackage            = 0,                /* 未知场景包类型，直接终结游戏 */
+    MCGameScenePackage          = MCMakeEnum(0),    /* 对应MCGameScene */
+    MCBattleFieldScenePackage   = MCMakeEnum(1)     /* 对应MCBattleFieldScene */
+};
+typedef mc_enum_t MCScenePackageType;
+
+class MCScenePackage {
+    bool init();
+    
+    static MCScenePackage *create(const char *aPackagePath);
+    
+    bool isInternalScene();
+
+    MCScenePackageType getScenePackageType();
+    CCArray *getObjects();
+    
+    CCString *getTriggerFilepath();
+    CCString *getTMXTiledMapPath();
+    CCString *getBackgroundMusicPath();
+    
+    CCDictionary *getScenes();
+    
+  mc_object_id_t getID();
+};

@@ -23,4 +23,7 @@
 /* task */
 #include "MCTaskManager.h"
 
+/* system */
+#include "MCDungeonMaster.h"
+
 #endif

@@ -19,11 +19,21 @@ public:
     
     static MCLoading *sharedLoading();
     
-    void show();
-    void hide();
+    /**
+     * 执行过程
+     * 1.注册通知中心
+     * 2.显示loading
+     * 3.加载场景
+     * 4.发出加载完成的通知
+     * 5.隐藏loading
+     * 6.切换场景
+     */
+    void loadNewScene();
     
 protected:
     void loading(float dt);
+    void sceneDidLoad(CCObject *obj);
+    void didHide();
     
     CCLabelTTF *points_;
 };

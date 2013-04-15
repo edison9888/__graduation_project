@@ -4,6 +4,5 @@ public:
     
     static MCLoading *sharedLoading();
     
-    void show();
-    void hide();
+    void loadNewScene();
 };

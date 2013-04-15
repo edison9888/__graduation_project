@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="16" tileheight="16">
  <properties>
-  <property name="sence-type" value="field"/>
+  <property name="scene-type" value="field"/>
   <property name="sound" value="sounds/desert.mp3"/>
   <property name="tmx" value="maps/M201.tmx"/>
  </properties>

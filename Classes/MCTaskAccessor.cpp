@@ -12,6 +12,7 @@ using namespace std;
 
 #include "MCTaskAccessor.h"
 #include "MCBase64.h"
+#include "MCGameState.h"
 
 const char *kMCTasksKey = "dGFza3M"; /* tasks的BASE64编码没有最后的= */
 
@@ -102,6 +103,17 @@ MCTaskAccessor::loadTasks(const char *aFilePath)
 }
 
 /**
+ * 清除数据
+ */
+void
+MCTaskAccessor::erase()
+{
+    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
+    
+    userDefault->setStringForKey(kMCTasksKey, "");
+}
+
+/**
  * 储存数据
  */
 void
@@ -145,7 +157,7 @@ void
 MCTaskAccessor::loadData()
 {
     string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCTasksKey, "");
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char  *output;
         mc_size_t len = strlen(input);

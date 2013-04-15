@@ -7,6 +7,7 @@
 //
 
 #include "MCLoadingScene.h"
+#include "MCSceneController.h"
 
 static const char *kMCPoints[] = {
     ".",
@@ -76,27 +77,28 @@ MCLoading::sharedLoading()
     return __shared_loading;
 }
 
+/**
+ * 执行过程
+ * 1.注册通知中心
+ * 2.显示loading
+ * 3.加载场景
+ * 4.发出加载完成的通知
+ * 5.隐藏loading
+ * 6.切换场景
+ */
 void
-MCLoading::show()
+MCLoading::loadNewScene()
 {
     setOpacity(0);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(MCLoading::sceneDidLoad),
+                                                                  kMCSceneDidLoadNotification,
+                                                                  NULL);
     CCDirector::sharedDirector()->pushScene(MCLoadingSharedScene());
     schedule(schedule_selector(MCLoading::loading));
     runAction(CCFadeIn::create(kMCActionDuration));
-}
-
-void
-MCLoading::hide()
-{
-    CCDirector *director = CCDirector::sharedDirector();
     
-    CCLog("will hide");
-//    if (director->getRunningScene() == MCLoadingSharedScene()) {
-        CCLog("hide");
-        unschedule(schedule_selector(MCLoading::loading));
-        runAction(CCFadeOut::create(kMCActionDuration));
-        director->popScene();
-//    }
+    MCSceneController::sharedSceneController()->__loadScene();
 }
 
 void
@@ -110,4 +112,18 @@ MCLoading::loading(float dt)
     }
     points_->setString(kMCPoints[kMCPointsIndex++]);
 }
+void 
+MCLoading::sceneDidLoad(CCObject *obj)
+{
+    runAction(CCSequence::create(CCFadeOut::create(kMCActionDuration),
+                                 CCCallFunc::create(this, callfunc_selector(MCLoading::didHide)),
+                                 NULL));
+}
 
+void
+MCLoading::didHide()
+{
+    unschedule(schedule_selector(MCLoading::loading));
+    CCDirector::sharedDirector()->popScene();
+    MCSceneController::sharedSceneController()->__changeScene();
+}

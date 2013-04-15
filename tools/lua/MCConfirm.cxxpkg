@@ -1,0 +1,26 @@
+class MCConfirm {
+    bool init();
+    
+    void open();
+    void close();
+    
+    const char *getConfirm();
+    
+    void setConfirm(const char *aConfirm);
+    
+    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
+    
+    static MCConfirm *confirm(CCNode *aParent, MCConfirmDelegate *aDelegate, const char *aMessage);
+    
+    static bool hasParent();
+    
+    static MCConfirm *create();
+    
+  MCConfirmDelegate *getDelegate();
+  void setDelegate(MCConfirmDelegate *var);
+};
+
+class MCConfirmDelegate {
+    void confirmDidClickYesButton(MCConfirm *aConfirm);
+    void confirmDidClickNoButton(MCConfirm *aConfirm);
+};

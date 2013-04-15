@@ -10,6 +10,7 @@
 
 extern NSString *kMCScenePackageID;
 extern NSString *kMCScenePackageInternal;
+extern NSString *kMCScenePackageTrigger;
 extern NSString *kMCScenePackageSceneType;
 extern NSString *kMCScenePackageBackground;
 extern NSString *kMCScenePackageTMXMap;

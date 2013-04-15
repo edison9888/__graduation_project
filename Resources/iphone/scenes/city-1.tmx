@@ -3,6 +3,7 @@
  <properties>
   <property name="sound" value="sounds/town.mp3"/>
   <property name="tmx" value="maps/M006.tmx"/>
+  <property name="trigger" value="scripts/spawn-point.lua"/>
  </properties>
  <tileset firstgid="1" name="city-src" tilewidth="16" tileheight="16">
   <image source="city-src.png" width="1792" height="1568"/>

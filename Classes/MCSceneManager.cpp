@@ -18,10 +18,8 @@ MCSceneMake(MCScenePackageType aScenePackageType) {
     CCAssert(MCUnknownPackage != aScenePackageType, "unknown scene package type");
     MCScene *scene;
     
-#define debug
     if (MCFlagManager::sharedFlagManager()->isTaskStarted()
         && MCBattleFieldScenePackage == aScenePackageType) {
-//    if (false) {
         scene = new MCBattleFieldScene;
     } else {
         scene = new MCGameScene;

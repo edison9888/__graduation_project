@@ -22,9 +22,9 @@ public:
     MCSkill *skillForObjectId(mc_object_id_t anObjectId);
     
     void saveData();
+    void loadData();
     
 private:
-    void loadData();
     
 private:
     CCDictionary *skills_;

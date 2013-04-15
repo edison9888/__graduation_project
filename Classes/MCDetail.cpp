@@ -11,6 +11,8 @@
 #include "MCPropsLayer.h"
 #include "MCTaskLayer.h"
 #include "MCEquipmentLayer.h"
+#include "MCGameState.h"
+
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
 
@@ -209,7 +211,18 @@ MCDetail::showMercenary() /* 显示佣兵选项卡 */
 void
 MCDetail::showQuitWindow() /* 显示退出窗口 */
 {
+    MCConfirm::confirm(this, this, "确定退出？");
+}
+
+void
+MCDetail::confirmDidClickYesButton(MCConfirm *aConfirm)
+{
+    MCGameState::sharedGameState()->save();
+    CCDirector::sharedDirector()->end();
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS || CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
     exit(0);
+#endif
 }
 
 void

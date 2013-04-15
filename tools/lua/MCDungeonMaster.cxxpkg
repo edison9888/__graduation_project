@@ -1,0 +1,8 @@
+class MCDungeonMaster  {
+    static MCDungeonMaster *sharedDungeonMaster();
+    
+    void saveSpawnPoint();
+
+  mc_object_id_t getSpawnPointID();
+  void setSpawnPointID(mc_object_id_t var);
+};

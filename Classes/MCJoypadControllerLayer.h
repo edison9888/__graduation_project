@@ -21,8 +21,8 @@ public:
     
     CREATE_FUNC(MCJoypadControllerLayer);
     
-    bool isEnable();
-    void setEnable(bool var);
+    bool isEnabled();
+    void setEnabled(bool var);
     
     MCJoypadControllerDelegate *getJoypadDelegate();
     void setJoypadDelegate(MCJoypadControllerDelegate *aJoypadDelegate);

@@ -38,10 +38,8 @@ public:
     void dismiss(mc_object_id_t anObjectId);
     
     void saveData();
-    
-private:
     void loadData();
-    
+private:
     CCDictionary *mercenaries_; /* 原始数据 */
     MCTeam       *hired_;     /* 现在雇佣的 */
 };

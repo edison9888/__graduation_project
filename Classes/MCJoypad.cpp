@@ -3,7 +3,7 @@
 //  Military Confrontation
 //
 //  Created by 江宇英 on 13-1-23.
-//  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
+//  Copyright(c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
 #include "MCJoypad.h"
@@ -18,7 +18,7 @@ getIntersectionPoint(CCPoint linePoint, float circleRadius,
 {
     float k = linePoint.x / linePoint.y;
     float squareOfRadius = circleRadius * circleRadius;
-    float squareOfY = squareOfRadius / (k * k + 1);
+    float squareOfY = squareOfRadius /(k * k + 1);
     float squareOfX = squareOfRadius  - squareOfY;
 
     intersectionPointX = sqrtf(squareOfX);
@@ -32,12 +32,10 @@ MCJoypad::~MCJoypad()
 bool
 MCJoypad::init()
 {
-    if (CCLayer::init())
-    {
+    if (CCLayer::init()) {
         joystickDelta_ = __cc_point_zero;
         isValidControl_ = false;
         setTouchEnabled(true);
-//        setTouchMode(kCCTouchesAllAtOnce);
 
         return true;
     }
@@ -54,42 +52,42 @@ MCJoypad::getJoystick()
 void
 MCJoypad::setJoystick(MCJoystick *joystick)
 {
-    this->removeChild (joystick_, true);
+    this->removeChild(joystick_, true);
     joystick_ = joystick;
-    joystick->setVisible (false);
-    this->addChild (joystick, 1);
+    joystick->setVisible(false);
+    this->addChild(joystick, 1);
 }
 
 void
 MCJoypad::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 {
-    CC_UNUSED_PARAM (pEvent);
+    CC_UNUSED_PARAM(pEvent);
 
-    CCTouch *pTouch = (CCTouch *) pTouches->anyObject();
+    CCTouch *pTouch =(CCTouch *) pTouches->anyObject();
     CCPoint location;
     
     CCLayer::ccTouchesBegan(pTouches, pEvent);
     
     controlTouch_ = pTouch;
 
-    location = CCDirector::sharedDirector()->convertToGL (pTouch->getLocationInView());
-
+    location = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
+    
     if (! joystick_->isVisible())
     {
-        joystick_->showAtLocation (location);
+        joystick_->showAtLocation(location);
         joystickPosition_ = location;
         s_pJoystickTrailer.x = location.x;
         s_pJoystickTrailer.y = location.y;
 
-        joystick_->setPosition (location);
+        joystick_->setPosition(location);
         joystickDelta_ = __mc_joystick_delta;
     }
 }
 
 void
-MCJoypad::ccTouchesMoved (CCSet *pTouches, CCEvent *pEvent)
+MCJoypad::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    CC_UNUSED_PARAM (pEvent);
+    CC_UNUSED_PARAM(pEvent);
 
     CCTouch *pTouch;
     CCPoint location;
@@ -104,33 +102,29 @@ MCJoypad::ccTouchesMoved (CCSet *pTouches, CCEvent *pEvent)
     
     CCLayer::ccTouchesMoved(pTouches, pEvent);
 
-    for (iter = pTouches->begin(); iter != pTouches->end(); ++iter)
-    {
-        pTouch = (CCTouch *) *iter;
-        location = CCDirector::sharedDirector()->convertToGL (pTouch->getLocationInView());
-        prevousLocation = CCDirector::sharedDirector()->convertToGL (pTouch->getPreviousLocationInView());
+    for (iter = pTouches->begin(); iter != pTouches->end(); ++iter) {
+        pTouch =(CCTouch *) *iter;
+        location = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
+        prevousLocation = CCDirector::sharedDirector()->convertToGL(pTouch->getPreviousLocationInView());
 
-        if (s_pJoystickTrailer.equals(prevousLocation)) //移动joystick的点
-        {
+        if (s_pJoystickTrailer.equals(prevousLocation)) { //移动joystick的点
             s_pJoystickTrailer.x = location.x;
             s_pJoystickTrailer.y = location.y;
 //            prevousLocation.x = location.x;
 //            prevousLocation.y = location.y;
             offsetX = location.x -= joystickPosition_.x;
             offsetY = location.y -= joystickPosition_.y;
-            offset = sqrtf (offsetX * offsetX + offsetY * offsetY);
-
-            if (offset > joystick_->getThreshold()) //有效偏移
-            {
+            offset = sqrtf(offsetX * offsetX + offsetY * offsetY);
+            
+            if (offset > joystick_->getThreshold()) { //有效偏移
                 radius = joystick_->getRadius();
-                if (fabsf (offsetX) > radius || fabsf (offsetY) > radius) //越界
-                {
-                    getIntersectionPoint (location, radius,
-                                          intersectionPointX, intersectionPointY);
+                if (fabsf(offsetX) > radius || fabsf(offsetY) > radius) { //越界
+                    getIntersectionPoint(location, radius,
+                                         intersectionPointX, intersectionPointY);
                     location.x = offsetX > 0 ? intersectionPointX : -intersectionPointX;
                     location.y = offsetY > 0 ? intersectionPointY : -intersectionPointY;
                 }
-
+                
                 /* do handle */
                 if (joystick_->isVisible()) { /* 响应了按钮后不响应joystick */
                     isValidControl_ = true;
@@ -140,27 +134,26 @@ MCJoypad::ccTouchesMoved (CCSet *pTouches, CCEvent *pEvent)
                     isValidControl_ = false;
                 }
             }
-            joystick_->moveControl (location);
+            joystick_->moveControl(location);
             break;
         }
     }
 }
 
 void
-MCJoypad::ccTouchesEnded (CCSet *pTouches, CCEvent *pEvent)
+MCJoypad::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
-    CC_UNUSED_PARAM (pTouches);
-    CC_UNUSED_PARAM (pEvent);
+    CC_UNUSED_PARAM(pTouches);
+    CC_UNUSED_PARAM(pEvent);
 
-    CCTouch *pTouch = (CCTouch *) pTouches->anyObject();
+    CCTouch *pTouch =(CCTouch *) pTouches->anyObject();
     CCPoint location;
     CCPoint prevousLocation;
 
     location = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     prevousLocation = CCDirector::sharedDirector()->convertToGL(pTouch->getPreviousLocationInView());
 
-    if (s_pJoystickTrailer.equals(prevousLocation)) //移动joystick的点
-    {
+    if (s_pJoystickTrailer.equals(prevousLocation)) { //移动joystick的点
         joystick_->hide();
         s_pJoystickTrailer.x = 0;
         s_pJoystickTrailer.y = 0;

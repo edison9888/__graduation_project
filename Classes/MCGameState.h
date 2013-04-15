@@ -28,6 +28,11 @@ public:
     bool isSaveFileExists();
     
     /**
+     * 清除所有记录
+     */
+    void erase();
+    
+    /**
      * 保存
      *
      * 保存的东西列表

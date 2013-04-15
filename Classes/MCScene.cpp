@@ -17,6 +17,8 @@
 #include "MCTeam.h"
 #include "MCFlagManager.h"
 #include "MCObjectLayer.h"
+#include "MCTaskManager.h"
+#include "MCScript.h"
 
 MCSceneContext::MCSceneContext()
 {
@@ -80,6 +82,7 @@ MCSceneContextManager::currentContext()
 
 MCScene::~MCScene()
 {
+    CC_SAFE_RELEASE(trigger_);
     CC_SAFE_DELETE(sceneCamera_);
     CC_SAFE_RELEASE(aStar_);
 }
@@ -88,7 +91,7 @@ MCScene::~MCScene()
 bool
 MCScene::initWithScenePackage(MCScenePackage *aPackage)
 {
-    if (CCScene::init() && aPackage) {
+    if (aPackage && CCScene::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         scenePackage_ = aPackage;
         background_ = MCBackgroundLayer::create(aPackage->getTMXTiledMapPath()->getCString(),
@@ -101,7 +104,12 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
                                sceneSize.height > winSize.height
                                ? 0
                                : (winSize.height - sceneSize.height) / 2);
-        isInternalScene_ = aPackage->isInternalScene();
+        
+        CCString *triggerFilepath = aPackage->getTriggerFilepath();
+        if (triggerFilepath) {
+            trigger_ = MCScriptMaker::createScript(triggerFilepath->getCString());
+            trigger_->retain();
+        }
         
         sceneCamera_ = new MCCamera;
         sceneCamera_->setSceneDelegate(this);
@@ -203,6 +211,11 @@ MCScene::onEnter()
     MCSceneContextManager::sharedSceneContextManager()->pushContext(context);
     
     CCScene::onEnter();
+    
+    if (trigger_) {
+        trigger_->run();
+    }
+    
     /* 已加载玩对象了现在 */
     background_->loadEnemies(objects_->objects());
     background_->loadTeam(MCTeam::sharedTeam());
@@ -312,12 +325,29 @@ MCScene::getScene()
 void
 MCScene::showDetail()
 {
-    controller_->setEnable(false);
+    pauseInput();
     detail_->show();
+}
+
+void
+MCScene::showAbortTaskConfirm(const char *aMessage)
+{
+    pauseInput();
+    MCConfirm::confirm(this, this, aMessage);
+}
+
+void
+MCScene::confirmDidClickYesButton(MCConfirm *aConfirm)
+{
+    MCTaskManager *taskManager = MCTaskManager::sharedTaskManager();
+    
+    taskManager->abortCurrentTask();
+    resumeInput();
+    MCSceneController::sharedSceneController()->requestChangingScene();
 }
 
 void
 MCScene::detailDidHide()
 {
-    controller_->setEnable(true);
+    resumeInput();
 }

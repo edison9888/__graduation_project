@@ -8,9 +8,12 @@
 
 #include "MCDungeonMaster.h"
 #include "MCBase64.h"
+#include "MCGameState.h"
 
 const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码没有最后的= */
-const char *kMCSpawnPointDefaultValue = "U1AwMQ=="; /* SP01的BASE64编码 */
+const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
+
+static const mc_object_id_t kMCDefaultSpawnPointSceneId = {'M', '0', '0', '1'};
 
 static MCDungeonMaster *__shared_dungeon_master = NULL;
 
@@ -19,10 +22,15 @@ MCDungeonMaster::sharedDungeonMaster()
 {
     if (__shared_dungeon_master == NULL) {
         __shared_dungeon_master = new MCDungeonMaster;
-        __shared_dungeon_master->loadSpawnPoint();
     }
     
     return __shared_dungeon_master;
+}
+
+void
+MCDungeonMaster::destroyGameWorld()
+{
+    MCGameState::sharedGameState()->erase();
 }
 
 void
@@ -45,7 +53,7 @@ void
 MCDungeonMaster::loadSpawnPoint()
 {
     std::string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCSpawnPointKey, kMCSpawnPointDefaultValue);
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
@@ -59,5 +67,7 @@ MCDungeonMaster::loadSpawnPoint()
             c_str_o_id[3]
         };
         spawnPointID_ = o_id;
+    } else {
+        spawnPointID_ = kMCDefaultSpawnPointSceneId;
     }
 }

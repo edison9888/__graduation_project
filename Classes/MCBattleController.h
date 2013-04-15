@@ -20,6 +20,8 @@ public:
     
     CREATE_FUNC(MCBattleController);
     
+    CCArray *getSelectedRoles();
+    
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);

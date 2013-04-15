@@ -11,6 +11,8 @@
 
 #include "MCScene.h"
 
+extern const char *kMCSceneDidLoadNotification;
+
 enum {
     MCPushScene     = 0,
     MCPopScene      = 1,
@@ -27,9 +29,9 @@ public:
     static MCSceneController *sharedSceneController();
     
     /**
-     * 提交期待转换的场景信息
+     * 死亡或者开始游戏的时候加载，场景为最后的重生点场景
      */
-//    void pushExpectedScene(MCScene *aNewScene, const char *anEntranceName, MCChangeSceneMethod method = MCReplaceScene);
+    void loadSpawnScene();
     
     /**
      * 提交期待转换的场景信息
@@ -56,6 +58,7 @@ public:
     void __changeScene();
     
 private:
+    bool loadSpawnScene_;
     MCScene *lastScene_;
     MCScene *currentScene_;
     

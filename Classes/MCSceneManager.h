@@ -66,8 +66,6 @@ public:
      */
     virtual CCPoint getDefaultLocation() const = 0;
     
-    virtual bool isInternalScene() = 0;
-    
     virtual MCScene *getScene() = 0;
     
     virtual MCScenePackage *getScenePackage() const = 0;

@@ -14,6 +14,7 @@ using namespace std;
 #include "MCBase64.h"
 #include "MCEquipmentManager.h"
 #include "MCItemManager.h"
+#include "MCGameState.h"
 
 static const char *kMCEquipmentManagerKey = "ZXF1aXBtZW50LW1hbmFnZXI"; /* equipment-manager的BASE64编码没有最后的= */
 static const char *kMCCurrentWeaponKey = "Y3VycmVudC13ZWFwb24"; /* current-weapon的BASE64编码没有最后的= */
@@ -96,7 +97,6 @@ MCEquipmentManager::sharedEquipmentManager()
 {
     if (__shared_equipment_manager == NULL) {
         __shared_equipment_manager = new MCEquipmentManager;
-        __shared_equipment_manager->loadData();
     }
     
     return __shared_equipment_manager;
@@ -168,7 +168,7 @@ MCEquipmentManager::loadData()
     loadEquipmentItems();
     
     string data = userDefault->getStringForKey(kMCEquipmentManagerKey, "");
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
@@ -474,7 +474,7 @@ MCEquipmentManager::loadEquipmentItems()
     shinGuard_ = itemManager->equipmentItemForObjectId(equipmentsOID[kMCShinGuard]);
     armors_->addObject(shinGuard_);
     
-    if (data.size() > 0) {
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);

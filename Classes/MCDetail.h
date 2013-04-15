@@ -9,8 +9,7 @@
 #ifndef __Military_Confrontation__MCDetailScene__
 #define __Military_Confrontation__MCDetailScene__
 
-#include <cocos2d.h>
-USING_NS_CC;
+#include "MCConfirm.h"
 
 extern const char *kMCDetailDidHideNotification;
 
@@ -20,7 +19,7 @@ class MCPropsLayer;
 class MCTaskLayer;
 class MCEquipmentLayer;
 
-class MCDetail : public CCLayer {
+class MCDetail : public CCLayer, public MCConfirmDelegate {
 public:
     bool init();
     
@@ -38,6 +37,8 @@ public:
     void showSkills(); /* 显示技能选项卡 */
     void showMercenary(); /* 显示佣兵选项卡 */
     void showQuitWindow(); /* 显示退出窗口 */
+    
+    void confirmDidClickYesButton(MCConfirm *aConfirm);
         
     CREATE_FUNC(MCDetail);
 private:
