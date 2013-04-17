@@ -110,7 +110,7 @@ MCDialog::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
         CCPoint local = child->convertToNodeSpace(touchLocation);
         CCSize size = child->getContentSize();
         CCRect r = CCRectMake(0, 0, size.width, size.height);
-        if (r.containsPoint(touchLocation)) {
+        if (r.containsPoint(local)) {
             in = true;
         }
     }

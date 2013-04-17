@@ -10,6 +10,7 @@
 #include "MCGameState.h"
 #include "MCSceneController.h"
 #include "MCDungeonMaster.h"
+#include "MCDialog.h"
 
 static const float kMCMajorFontSize = 64.0f;
 static const float kMCNormalFontSize = 36.0f;
@@ -133,7 +134,7 @@ MCMainMenu::multiplayer_clicked(CCObject *aSender) /* 多人对战 */
 void
 MCMainMenu::about_clicked(CCObject *aSender)       /* 关于 */
 {
-    
+    MCDungeonMaster::sharedDungeonMaster()->speak("僕のゲームへようこそ！");
 }
 
 void

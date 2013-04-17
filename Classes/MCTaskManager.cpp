@@ -10,9 +10,14 @@
 #include "MCFlagManager.h"
 #include "MCRegion.h"
 #include "MCBackpack.h"
+#include "MCBase64.h"
+#include "MCGameState.h"
+using namespace std;
 
 const char *kMCTaskPackageFilepath = "T000.jpkg";
 const char *kMCTaskDidFinishNotification = "kMCTaskDidFinishNotification";
+
+static const char *kMCCurrentTaskKey = "Y3VycmVudC10YXNr"; /* current-task的BASE64编码 */
 
 static MCTaskManager *__shared_task_manager = NULL;
 
@@ -54,6 +59,25 @@ void
 MCTaskManager::saveData()
 {
     taskAccessor_->saveData();
+    
+    string data;
+    if (currentTask_) {
+        mc_byte_t b_o_id[5] = {0};
+        const char *c_s_o_id = (const char *) b_o_id;
+        mc_object_id_t o_id = currentTask_->getID();
+        b_o_id[0] = o_id.class_;
+        b_o_id[1] = o_id.sub_class_;
+        b_o_id[2] = o_id.index_;
+        b_o_id[3] = o_id.sub_index_;
+        data.append(c_s_o_id);
+    }
+    
+    const char *input = data.c_str();
+    char  *output;
+    mc_size_t len = strlen(input);
+    MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+    CCUserDefault::sharedUserDefault()->setStringForKey(kMCCurrentTaskKey, output);
+    delete []output;
 }
 
 /**
@@ -63,6 +87,25 @@ void
 MCTaskManager::loadData()
 {
     taskAccessor_->loadData();
+    
+    string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCCurrentTaskKey, "");
+    if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+        const char *input = data.c_str();
+        char  *output;
+        mc_size_t len = strlen(input);
+        MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+        data.assign(output);
+        
+        const char *c_s_o_id = data.c_str();
+        mc_object_id_t o_id = {
+            c_s_o_id[0],
+            c_s_o_id[1],
+            c_s_o_id[2],
+            c_s_o_id[3]
+        };
+        currentTask_ = taskWithObjectId(o_id);
+        currentTask_->setTaskStatus(MCTaskAccepted);
+    }
 }
 
 /**
@@ -81,8 +124,9 @@ int
 MCTaskManager::acceptTask(MCTask *task)
 {
     MCBackpack *backpack = MCBackpack::sharedBackpack();
-    MCTaskStatus status = task->getTaskStatus();
-    if (status == MCTaskUncompleted) {
+//    MCTaskStatus status = task->getTaskStatus();
+    
+//    if (status == MCTaskUncompleted) {
         if (task->getCashPledge() > backpack->getMoney()) { /* 不够钱接受任务~~~~ */
             return kMCNotEnoughMoney;
         }
@@ -90,7 +134,7 @@ MCTaskManager::acceptTask(MCTask *task)
         task->setTaskStatus(MCTaskAccepted);
         backpack->setMoney(backpack->getMoney() - task->getCashPledge());
         return kMCHandleSucceed;
-    }
+//    }
     
     return kMCHandleFailured;
 }

@@ -28,6 +28,17 @@ MCDungeonMaster::sharedDungeonMaster()
 }
 
 void
+MCDungeonMaster::speak(const char *aMessage)
+{
+    MCDialog *dmDialog = MCDialog::sharedDialog(MCDMDialog);
+    dmDialog->setMessage(aMessage);
+    dmDialog->setDismissSelector(this,
+                                 dismiss_selector(MCDungeonMaster::dismiss),
+                                 NULL);
+    dmDialog->attach(CCDirector::sharedDirector()->getRunningScene());
+}
+
+void
 MCDungeonMaster::destroyGameWorld()
 {
     MCGameState::sharedGameState()->erase();
@@ -70,4 +81,9 @@ MCDungeonMaster::loadSpawnPoint()
     } else {
         spawnPointID_ = kMCDefaultSpawnPointSceneId;
     }
+}
+
+void
+MCDungeonMaster::dismiss(void *anUserdata)
+{
 }

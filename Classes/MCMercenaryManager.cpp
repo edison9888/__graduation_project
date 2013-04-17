@@ -111,9 +111,17 @@ MCMercenaryManager::loadMercenaries()
         /* HP Integer */
         mercenary->setHP(mercenaryObject["HP"].getInt());
         mercenary->setMaxHP(mercenary->getHP());
+        /* dying Integer */
+        mercenary->setDying(mercenaryObject["dying"].getInt());
         /* PP Integer */
         mercenary->setPP(mercenaryObject["PP"].getInt());
         mercenary->setMaxPP(mercenary->getPP());
+        /* exhaustion Integer */
+        mercenary->setExhaustion(mercenaryObject["exhaustion"].getInt());
+        /* tired Integer */
+        mercenary->setTired(mercenaryObject["tired"].getInt());
+        /* dexterity Integer */
+        mercenary->setDexterity(mercenaryObject["dexterity"].getInt());
         /* AC Integer */
         mercenary->setAC(mercenaryObject["AC"].getInt());
         /* armor-check-penalty Integer */

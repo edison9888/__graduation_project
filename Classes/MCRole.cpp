@@ -10,6 +10,8 @@
 #include "MCAI.h"
 #include "MCScript.h"
 
+const char *kMCRoleDiedNotification = "kMCRoleDiedNotification";
+
 static const char *__mc_directions[4] = {
     "up",
     "down",
@@ -138,6 +140,119 @@ MCRole::loadSpriteSheet(const char *aSpritesheetPath)
     /* 创建AI */
 }
 
+/* MCAIDelegate */
+/**
+ * 某人进入视野
+ * 默认看到的都是敌人
+ */
+void
+MCRole::roleDidEnterVision(MCRole *aRole, bool isEnermy)
+{
+    if (isEnermy) {
+        CCLog("敵(%s)、一人見つけた！", aRole->name_->getCString());
+        ai_->AIState_ = MCCombatantStatus;
+    }
+}
+
+/**
+ * 某人离开视野
+ * 默认离开的都是敌人
+ */
+void
+MCRole::roleDidExitVision(MCRole *aRole, bool isEnermy)
+{
+    CCLog("敵(%s)、一人離れた！", aRole->name_->getCString());
+}
+
+/**
+ * 被攻击
+ */
+void
+MCRole::roleWasAttacked(const MCEffect &anEffect)
+{
+    CCLog("攻撃された");
+    /* 透支状态时是不会切换的！ */
+    if (! exhausted_) {
+        ai_->AIState_ = MCCombatantStatus;
+    }
+}
+
+/**
+ * 攻击结束
+ */
+void
+MCRole::attackDidFinish()
+{
+    ai_->AIState_ = MCCombatantStatus;
+}
+
+/**
+ * 状态切换
+ */
+void
+MCRole::roleDidChangeStateTo(MCAIState anAIState)
+{
+}
+
+/* MCAIStateMachineDelegate */
+/**
+ * 空闲状态下回调
+ */
+void
+MCRole::performWhenIdleState()
+{
+//    CCLog("くだらないなぁ");
+}
+
+/**
+ * 战斗状态下回调
+ */
+void
+MCRole::performWhenCombatantStatus()
+{
+    CCLog("戦え！少年よ！");
+    if (! exhausted_ /* 体力透支以上 */
+        && ai_->getEnemiesInVision()->count() > 1) {
+        ai_->AIState_ = MCAttackState;
+    } else { /* 体力透支，需要休息 */
+        ai_->AIState_ = MCRestingState;
+    }
+}
+
+/**
+ * 休息状态下回调
+ */
+void
+MCRole::performWhenRestingState()
+{
+//    CCLog("やすみたいなー");
+}
+
+/**
+ * 攻击状态下回调
+ */
+void
+MCRole::performWhenAttackState()
+{
+    ai_->activating_ = true;
+    CCLog("攻撃せよ！");
+    /* 确定攻击对象、攻击方式 */
+#warning not implemented!
+#warning debug
+    attackDidFinish();
+}
+
+/**
+ * 死亡状态下回调
+ */
+void
+MCRole::performWhenDeathState()
+{
+    CCLog("死んだ");
+    /* 死亡动画神马的还是算了 */
+    died();
+}
+
 MCRoleEntity *
 MCRole::getEntity()
 {
@@ -152,11 +267,6 @@ MCRole::getEntity()
         entity_->role_ = this;
         entityMetadata_->spriteSheet_->addChild(entity_);
         entityMetadata_->facade_ = MCFacingDown;
-        /* AI */
-#warning 添加AI
-        ai_ = MCAI::create();
-        ai_->retain();
-        ai_->bind(this);
     }
     
     return entity_;
@@ -168,7 +278,9 @@ MCRole::getEntity()
 void
 MCRole::died()
 {
-    entity_->removeFromParentAndCleanup(true);
+    MCRoleEntity *roleEntity = getEntity();
+    roleEntity->removeFromParentAndCleanup(true);
     entity_ = NULL;
     CC_SAFE_RELEASE(this);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification);
 }

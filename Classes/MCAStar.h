@@ -119,7 +119,7 @@ private:
     MCAStarNode *startPoint_;
     
     CC_SYNTHESIZE_READONLY(MCAStarNode *, endPoint_, EndPoint);
-	CC_SYNTHESIZE_READONLY(CCPoint, mapOffset_, MapOffset);
+//	CC_SYNTHESIZE_READONLY(CCPoint, mapOffset_, MapOffset);
     
 //    CC_SYNTHESIZE_READONLY(CCArray *, route_, Route); /* 寻路结果 */
 

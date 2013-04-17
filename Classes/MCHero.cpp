@@ -7,6 +7,7 @@
 //
 
 #include "MCHero.h"
+#include "MCAI.h"
 
 static MCHero *__shared_hero = NULL;
 const char *kMCHeroFacePath = "faces/x-000.png";
@@ -56,6 +57,22 @@ MCHero::sharedHero()
     return __shared_hero;
 }
 
+MCRoleEntity *
+MCHero::getEntity()
+{
+    MCRoleEntity *roleEntity = MCRole::getEntity();
+    
+    /* AI */
+    if (ai_ == NULL) {
+        ai_ = MCAI::create();
+        ai_->retain();
+        ai_->bind(this);
+    }
+    
+    return roleEntity;
+}
+
+
 /**
  * 在主角面前的人物
  * 判断当前视野中的人物，然后返回最近的那个
@@ -63,26 +80,37 @@ MCHero::sharedHero()
 MCRole *
 MCHero::roleOfFront()
 {
-    CCArray *roles = ai_->rolesInVisions();
-    CCObject *obj;
-    MCRole *role;
+    CCDictionary *roles = ai_->getRolesInVision();
+    CCDictElement *elem;
+    MCAIRole *role;
     MCRole *nearest = NULL;
     CCPoint roleCenter = getEntity()->getOBB().center;
     float minLength = 10000; /* 一个灰常大的值 */
     float length;
     
-    CCARRAY_FOREACH(roles, obj) {
-        role = dynamic_cast<MCRole *>(obj);
+    CCDICT_FOREACH(roles, elem) {
+        role = dynamic_cast<MCAIRole *>(elem->getObject());
         /* 对敌人表示无视 */
-        if (role->getRoleType() == MCRole::MCEnemy) {
+        if (role->role->getRoleType() == MCRole::MCEnemy) {
             continue;
         }
-        length = ccpLength(ccpSub(role->getEntity()->getOBB().center, roleCenter));
+        length = ccpLength(ccpSub(role->role->getEntity()->getOBB().center, roleCenter));
         if (length < minLength) {
-            nearest = role;
+            nearest = role->role;
             minLength = length;
         }
     }
     
     return nearest;
+}
+
+/**
+ * 死亡状态下回调
+ */
+void
+MCHero::died()
+{
+    MCRoleEntity *roleEntity = getEntity();
+    roleEntity->removeFromParentAndCleanup(false);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification);
 }

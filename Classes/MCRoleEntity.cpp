@@ -104,20 +104,6 @@ MCRoleEntity::update(float dt)
 const MCOBB &
 MCRoleEntity::getOBB()
 {
-    /* deprecated */
-//    CCPoint origin = getPosition();
-//    CCSize size = getContentSize();
-//    CCPoint center(origin.x + size.width / 2,
-//                   origin.y + size.height / 4);
-//    
-//    /* 加上地图的偏移值 */
-//    MCSceneContext *currentContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
-//    if (currentContext) {
-//        center = ccpSub(center,
-//                        currentContext->getScene()->getMapOffset());
-//    }
-//    obb_.setup(center, size.width, size.height / 2, 0);
-    
     CCPoint origin = getPosition();
     CCSize size = getContentSize();
     CCSize frameSize = metadata_->frameSize_;
@@ -152,6 +138,7 @@ MCRoleEntity::shouldBeSelected(const CCPoint &aPoint)
 void
 MCRoleEntity::face(MCFacade aFacade)
 {
+#warning 都向下了~
     setDisplayFrame(((CCAnimationFrame *) metadata_->animationGoDown_->getFrames()->objectAtIndex(0))->getSpriteFrame());
     metadata_->facade_ = aFacade;
 }
@@ -188,6 +175,34 @@ MCRoleEntity::walk(MCFacade aFacade)
         runAction(walkAction);
     }
     metadata_->facade_ = aFacade;
+}
+
+void
+MCRoleEntity::walk(const CCPoint &delta)
+{
+    float angle;
+    
+    //每个方向分配60度角的空间
+    MCGetAngleForPoint(delta, angle);
+    if (angle < 22.5f) {
+        if (delta.x > 0) {
+            walk(MCFacingRight);
+        } else {
+            walk(MCFacingLeft);
+        }
+    } else if (angle < 67.5f) {
+        if (delta.y > 0) {
+            walk(MCFacingUp);
+        } else {
+            walk(MCFacingDown);
+        }
+    } else {
+        if (delta.y > 0) {
+            walk(MCFacingUp);
+        } else {
+            walk(MCFacingDown);
+        }
+    }
 }
 
 void
@@ -364,13 +379,16 @@ MCRoleEntity::actionEnded(CCObject* anObject)
 
 /**
  * 使用寻路算法
+ * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
  */
 void
 MCRoleEntity::findPath(const CCPoint &aDestinationLocation)
 {
     MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
-    MCAStar *aStar = sceneContext->getScene()->getAStar();
-    aStar->findPath(getPrototype(), aDestinationLocation);
+    MCScene *scene = sceneContext->getScene();
+    MCAStar *aStar = scene->getAStar();
+    
+    aStar->findPath(getPrototype(), ccpSub(aDestinationLocation, scene->getMapOffset()));
 }
 
 /**
@@ -391,6 +409,18 @@ MCRoleEntity::findPathDidFinish(CCObject *obj)
 //    }
 //    CC_SAFE_RELEASE(route);
     walkWithPathFinding(obj);
+//#warning debug
+//    MCAStarAlgorithm *algo = dynamic_cast<MCAStarAlgorithm *>(obj);
+//    std::stack<CCPoint> *route = algo->route;
+//    while (route->size() > 1) {
+//        route->pop();
+//    }
+//    if (route->size() == 1) {
+//        CCPoint dest = route->top();
+//        CCPoint offset = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene()->getMapOffset();
+//        setPosition(ccpAdd(dest, offset));
+//        CCPointLog(getPosition());
+//    }
     
     //warning: goto destination
 //    if (moveToDestinations_->count() > 0) {
@@ -421,11 +451,12 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
     MCAStarAlgorithm *algo = dynamic_cast<MCAStarAlgorithm *>(algoObject);
     std::stack<CCPoint> *route = algo->route;
     if (route->size() > 0) {
-        CCPoint target = route->top();
+        CCPoint target = route->top(); /* 位于地图的位置 */
+        CCPoint mapOffset = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene()->getMapOffset();
         CCFiniteTimeAction *action = NULL;
         float angle;
-        CCLog("target: <%.0f %.0f>", target.x, target.y);
-        CCPoint offset = ccpSub(target, m_obPosition);
+//        CCLog("target: <%.0f %.0f>", target.x, target.y);
+        CCPoint offset = ccpSub(ccpAdd(target, mapOffset), m_obPosition);
         
         route->pop();
         //每个方向分配60度角的空间
@@ -449,7 +480,7 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
                 walk(MCFacingDown);
             }
         }
-        action = CCSequence::create(CCMoveTo::create(kMCDurationHero, target),
+        action = CCSequence::create(CCMoveBy::create(kMCDurationHero, offset),
                                     CCCallFunc::create(this, callfunc_selector(MCRoleEntity::walkEnded)),
                                     CCCallFuncO::create(this, callfuncO_selector(MCRoleEntity::walkWithPathFinding), algoObject),
                                     NULL);

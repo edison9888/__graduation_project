@@ -75,6 +75,7 @@ public:
     
     void face(MCFacade aFacade);
     void walk(MCFacade aFacade);
+    void walk(const CCPoint &delta);
     void walkTo(CCPoint &aDestinationPosition);
     
     /* 坑爹啊！直接moveby居然不行！ */
@@ -87,6 +88,7 @@ public:
     
     /**
      * 使用寻路算法
+     * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
      */
     void findPath(const CCPoint &aDestinationLocation);
     

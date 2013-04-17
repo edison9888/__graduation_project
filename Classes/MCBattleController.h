@@ -41,6 +41,8 @@ private:
     CCSprite *multiSelection_;
     CCTouch *multiSelectionTouch_;
     
+    struct cc_timeval lastTouchedTime_;
+    
     CC_SYNTHESIZE(MCBattleControllerDelegate *, delegate_, Delegate);
 };
 

@@ -25,8 +25,8 @@
 static NSString *root = @"/Users/DF/Desktop/游戏策划";
 static NSString *kMCScenesRoot = @"/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/Resources/iphone/scenes";
 
-const BOOL do_csv_convert = NO;
-const BOOL do_scenes_generation = YES;
+const BOOL do_csv_convert = YES;
+const BOOL do_scenes_generation = NO;
 
 int main(int argc, const char * argv[])
 {
@@ -49,7 +49,7 @@ int main(int argc, const char * argv[])
             /* 佣兵 */
             handler = [[MCMercenaryHandler alloc] init];
             handler.startLine = 3;
-            handler.ignoreLine = 4;
+            handler.ignoreLine = 5;
             [convertor setHandler:handler];
             [convertor convert];
             [handler release];

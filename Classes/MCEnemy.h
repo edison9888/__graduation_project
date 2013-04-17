@@ -21,8 +21,11 @@ public:
     
     static MCEnemy *create(mc_object_id_t anObjectId);
     
+    MCRoleEntity *getEntity();
+    
     CCObject *copy();
     
+    CC_SYNTHESIZE(mc_dexterity_t, dexterity_, Dexterity); /* 敏捷调整值 */
     CC_SYNTHESIZE(mc_ac_t, ac_, AC); /* 防御等级 */
     CC_SYNTHESIZE(mc_armor_check_penalty_t, armorCheckPenalty_, ArmorCheckPenalty); /* 防具检定减值 */
     CC_SYNTHESIZE(MCDice *, damage_, Damage); /* 伤害值 */

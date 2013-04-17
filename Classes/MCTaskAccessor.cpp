@@ -14,7 +14,7 @@ using namespace std;
 #include "MCBase64.h"
 #include "MCGameState.h"
 
-const char *kMCTasksKey = "dGFza3M"; /* tasks的BASE64编码没有最后的= */
+static const char *kMCTasksKey = "dGFza3M"; /* tasks的BASE64编码没有最后的= */
 
 static vector<string>
 split(string& str,const char* c)

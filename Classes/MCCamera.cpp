@@ -52,7 +52,7 @@ MCCamera::focus(MCRole *aRole)
         CCTMXTiledMap *map = sceneDelegate_->getScene()->getMap();
         CCSize sceneSize = scene->getSceneSize();
         CCPoint mapOffset = map->getPosition();
-        CCPoint rolePosition = aRole->getEntity()->getPosition();
+        CCPoint rolePosition = ccpSub(aRole->getEntity()->getPosition(), mapOffset);
         CCPoint expectedViewportOrigin = ccp(rolePosition.x - winSize.width / 2,
                                              rolePosition.y - winSize.height / 2);
         /* 清除偏移 */
@@ -70,12 +70,12 @@ MCCamera::focus(MCRole *aRole)
         }
         
         if (viewportLeft < 0) {
-            expectedViewportOrigin.x -= viewportLeft + mapOffset.x;
+            expectedViewportOrigin.x -= viewportLeft;
         } else if (viewportRight > sceneSize.width) {
             expectedViewportOrigin.x -= (viewportRight - sceneSize.width);
         }
         if (viewportTop > sceneSize.height) {
-            expectedViewportOrigin.y -= (viewportTop - sceneSize.height + mapOffset.y);
+            expectedViewportOrigin.y -= (viewportTop - sceneSize.height);
         } else if (viewportBottom < 0) {
             expectedViewportOrigin.y -= viewportBottom;
         }

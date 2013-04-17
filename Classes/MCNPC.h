@@ -19,6 +19,8 @@ public:
     
     static MCNPC *create(mc_object_id_t anObjectId);
     
+    MCRoleEntity *getEntity();
+    
     CCObject *copy();
 };
 

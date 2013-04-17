@@ -17,24 +17,28 @@ MCDefineIndexAndKey(SpriteSheet, 3, sprite-sheet);
 MCDefineIndexAndKey(AI, 4, AI);
 MCDefineIndexAndKey(Cost, 5, cost);
 MCDefineIndexAndKey(HP, 6, HP);
-MCDefineIndexAndKey(PP, 7, PP);
-MCDefineIndexAndKey(AC, 8, AC);
-MCDefineIndexAndKey(ArmorCheckPenalty, 9, armor-check-penalty);
-MCDefineIndexAndKey(Damage, 10, damage);
-MCDefineIndexAndKey(DamageBonus, 13, damage-bonus);
-MCDefineIndexAndKey(CriticalHitVisible, 14, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 15, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 16, critical-hit);
-MCDefineIndexAndKey(Distance, 17, distance);
+MCDefineIndexAndKey(Dying, 7, dying);
+MCDefineIndexAndKey(PP, 8, PP);
+MCDefineIndexAndKey(Exhaustion, 9, exhaustion);
+MCDefineIndexAndKey(Tired, 10, tired);
+MCDefineIndexAndKey(Dexterity, 11, dexterity);
+MCDefineIndexAndKey(AC, 12, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 13, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 14, damage);
+MCDefineIndexAndKey(DamageBonus, 17, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 18, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 19, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 20, critical-hit);
+MCDefineIndexAndKey(Distance, 21, distance);
 
-static const NSUInteger kMCSkillAIndex = 18;
-static const NSUInteger kMCSkillBIndex = 19;
-static const NSUInteger kMCSkillCIndex = 20;
-static const NSUInteger kMCSkillDIndex = 21;
+static const NSUInteger kMCSkillAIndex = 22;
+static const NSUInteger kMCSkillBIndex = 23;
+static const NSUInteger kMCSkillCIndex = 24;
+static const NSUInteger kMCSkillDIndex = 25;
 static const NSString   *kMCSkillsKey = @"skills";
 
-MCDefineIndexAndKey(Effect, 22, effect);
-MCDefineIndexAndKey(EffectCheck, 23, effect-check);
+MCDefineIndexAndKey(Effect, 26, effect);
+MCDefineIndexAndKey(EffectCheck, 27, effect-check);
 
 @implementation MCMercenaryHandler
 
@@ -55,7 +59,7 @@ MCDefineIndexAndKey(EffectCheck, 23, effect-check);
         return;
     }
     NSArray *data = [aLine componentsSeparatedByString:@","];
-    NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:24];
+    NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:28];
     id object;
     
     /* ID */
@@ -73,8 +77,16 @@ MCDefineIndexAndKey(EffectCheck, 23, effect-check);
     [content setObject:@([[data objectAtIndex:kMCCostIndex] integerValue]) forKey:kMCCostKey];
     /* HP */
     [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
+    /* dying */
+    [content setObject:@([[data objectAtIndex:kMCDyingIndex] integerValue]) forKey:kMCDyingKey];
     /* PP */
     [content setObject:@([[data objectAtIndex:kMCPPIndex] integerValue]) forKey:kMCPPKey];
+    /* exhaustion */
+    [content setObject:@([[data objectAtIndex:kMCExhaustionIndex] integerValue]) forKey:kMCExhaustionKey];
+    /* tired */
+    [content setObject:@([[data objectAtIndex:kMCTiredIndex] integerValue]) forKey:kMCTiredKey];
+    /* dexterity */
+    [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     /* AC */
     [content setObject:@([[data objectAtIndex:kMCACIndex] integerValue]) forKey:kMCACKey];
     /* armor-check-penalty */

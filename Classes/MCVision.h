@@ -38,7 +38,11 @@ private:
     CCRect       boundingBox_;
     float        unitLength_;
     
+#if (MC_COLLISION_USE_OBB == 1)
     CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);
+#else
+    CC_PROPERTY_READONLY_PASS_BY_REF(CCRect, frame_, Frame);
+#endif
 };
 
 #endif /* defined(__Military_Confrontation__MCVision__) */

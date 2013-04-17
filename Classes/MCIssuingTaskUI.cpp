@@ -369,6 +369,7 @@ MCIssuingTaskUI::confirmDidClickYesButton(MCConfirm *aConfirm)
     }
     if (currentTask_) {
         int result = taskManager->acceptTask(currentTask_);
+
         if (result == kMCHandleSucceed) {
             MCToast::make(this, "已接受新任务")->show();
         }

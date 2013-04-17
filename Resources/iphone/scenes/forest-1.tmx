@@ -40,7 +40,7 @@
   <object type="barrier" x="160" y="496" width="288" height="64"/>
   <object type="barrier" x="176" y="80" width="64" height="32"/>
   <object type="barrier" x="16" y="0" width="64" height="320"/>
-  <object type="barrier" x="784" y="704" width="48" height="304"/>
+  <object type="barrier" x="784" y="704" width="240" height="304"/>
   <object type="barrier" x="512" y="496" width="48" height="64"/>
   <object type="barrier" x="160" y="288" width="464" height="16"/>
   <object type="barrier" x="608" y="304" width="16" height="192"/>
@@ -62,10 +62,10 @@
   <object type="barrier" x="352" y="1840" width="192" height="128"/>
   <object type="barrier" x="304" y="1904" width="48" height="64"/>
   <object type="barrier" x="352" y="1824" width="16" height="16"/>
-  <object type="barrier" x="992" y="1104" width="32" height="528"/>
+  <object type="barrier" x="992" y="1072" width="32" height="672"/>
   <object type="barrier" x="768" y="960" width="128" height="48"/>
   <object type="barrier" x="800" y="1072" width="192" height="48"/>
-  <object type="barrier" x="864" y="1008" width="32" height="64"/>
+  <object type="barrier" x="864" y="1008" width="160" height="64"/>
   <object type="barrier" x="832" y="704" width="192" height="16"/>
   <object type="barrier" x="944" y="688" width="80" height="16"/>
   <object type="barrier" x="864" y="304" width="64" height="80"/>

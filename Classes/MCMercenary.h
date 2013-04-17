@@ -9,16 +9,17 @@
 #ifndef __Military_Confrontation__MCMercenary__
 #define __Military_Confrontation__MCMercenary__
 
-#include "MCNPC.h"
+#include "MCEnemy.h"
 #include "MCEquipmentProperty.h"
 #include "MCDice.h"
+#include "MCMercenaryAI.h"
 
 typedef mc_ushort_t mc_cost_t;
 
 class MCMercenaryManager;
 
 /* 佣兵 */
-class MCMercenary : public MCNPC {
+class MCMercenary : public MCEnemy, public MCMercenaryAIStateMachineDelegate {
     friend class MCMercenaryManager;
 public:
     ~MCMercenary();
@@ -27,20 +28,27 @@ public:
     
     static MCMercenary *create(mc_object_id_t anObjectId);
     
+    /**
+     * 跟随状态下回调
+     */
+    void performWhenFollowingState();
+    
+    /**
+     * 逃跑状态下回调
+     */
+    void performWhenFleeState();
+    
+    /**
+     * 跟随主角
+     */
+    void follow();
+    
+    MCRoleEntity *getEntity();
+    
     CCObject *copy();
     
+    CC_SYNTHESIZE(mc_hp_t, dying_, Dying); /* 生命垂危线 */
     CC_SYNTHESIZE_READONLY(mc_cost_t, cost_, Cost); /* 雇佣所需费用 */
-    CC_SYNTHESIZE(mc_ac_t, ac_, AC); /* 防御等级 */
-    CC_SYNTHESIZE(mc_armor_check_penalty_t, armorCheckPenalty_, ArmorCheckPenalty); /* 防具检定减值 */
-    CC_SYNTHESIZE(MCDice *, damage_, Damage); /* 伤害值 */
-    CC_SYNTHESIZE(mc_bonus_t, damageBonus_, DamageBonus); /* 伤害值加成 */
-    CC_SYNTHESIZE(MCDiceRange, criticalHitVisible_, CriticalHitVisible); /* 可视区域重击范围 */
-    CC_SYNTHESIZE(MCDiceRange, criticalHitInvisible_, CriticalHitInvisible); /* 非可视区域重击范围 */
-    CC_SYNTHESIZE(mc_critical_hit_t, criticalHit_, CriticalHit); /* 重击倍数 */
-    CC_SYNTHESIZE(mc_distance_t, distance_, Distance); /* 攻击距离 */
-#warning 木有配置技能
-    CC_SYNTHESIZE(MCRoleState, effect_, Effect); /* 附带效果 */
-    CC_SYNTHESIZE(MCDiceRange, effectCheck_, EffectCheck); /* 附带效果判定 */
 };
 
 #endif /* defined(__Military_Confrontation__MCMercenary__) */

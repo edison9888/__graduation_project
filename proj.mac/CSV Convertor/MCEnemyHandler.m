@@ -16,23 +16,26 @@ MCDefineIndexAndKey(SpriteSheet, 2, sprite-sheet);
 MCDefineIndexAndKey(AI, 3, AI);
 MCDefineIndexAndKey(HP, 4, HP);
 MCDefineIndexAndKey(PP, 5, PP);
-MCDefineIndexAndKey(AC, 6, AC);
-MCDefineIndexAndKey(ArmorCheckPenalty, 7, armor-check-penalty);
-MCDefineIndexAndKey(Damage, 8, damage);
-MCDefineIndexAndKey(DamageBonus, 11, damage-bonus);
-MCDefineIndexAndKey(CriticalHitVisible, 12, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 13, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 14, critical-hit);
-MCDefineIndexAndKey(Distance, 15, distance);
+MCDefineIndexAndKey(Exhaustion, 6, exhaustion);
+MCDefineIndexAndKey(Tired, 7, tired);
+MCDefineIndexAndKey(Dexterity, 8, dexterity);
+MCDefineIndexAndKey(AC, 9, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 10, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 11, damage);
+MCDefineIndexAndKey(DamageBonus, 14, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 15, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 16, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 17, critical-hit);
+MCDefineIndexAndKey(Distance, 18, distance);
 
-static const NSUInteger kMCSkillAIndex = 16;
-static const NSUInteger kMCSkillBIndex = 17;
-static const NSUInteger kMCSkillCIndex = 18;
-static const NSUInteger kMCSkillDIndex = 19;
+static const NSUInteger kMCSkillAIndex = 19;
+static const NSUInteger kMCSkillBIndex = 20;
+static const NSUInteger kMCSkillCIndex = 21;
+static const NSUInteger kMCSkillDIndex = 22;
 static const NSString   *kMCSkillsKey = @"skills";
 
-MCDefineIndexAndKey(Effect, 20, effect);
-MCDefineIndexAndKey(EffectCheck, 21, effect-check);
+MCDefineIndexAndKey(Effect, 23, effect);
+MCDefineIndexAndKey(EffectCheck, 24, effect-check);
 
 @implementation MCEnemyHandler
 
@@ -69,6 +72,12 @@ MCDefineIndexAndKey(EffectCheck, 21, effect-check);
     [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
     /* PP */
     [content setObject:@([[data objectAtIndex:kMCPPIndex] integerValue]) forKey:kMCPPKey];
+    /* exhaustion */
+    [content setObject:@([[data objectAtIndex:kMCExhaustionIndex] integerValue]) forKey:kMCExhaustionKey];
+    /* tired */
+    [content setObject:@([[data objectAtIndex:kMCTiredIndex] integerValue]) forKey:kMCTiredKey];
+    /* dexterity */
+    [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     /* AC */
     [content setObject:@([[data objectAtIndex:kMCACIndex] integerValue]) forKey:kMCACKey];
     /* armor-check-penalty */

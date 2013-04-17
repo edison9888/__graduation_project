@@ -14,6 +14,7 @@
 USING_NS_CC;
 
 #include "MCTeam.h"
+#include "MCDialog.h"
 
 /**
  * 城主
@@ -25,12 +26,15 @@ private:
 public:
     static MCDungeonMaster *sharedDungeonMaster();
     
+    void speak(const char *aMessage);
+    
     void destroyGameWorld();
     
     void saveSpawnPoint();
     void loadSpawnPoint();
     
 private:
+    void dismiss(void *anUserdata);
     
 private:
     MCTeam *team_; /* 队伍 */

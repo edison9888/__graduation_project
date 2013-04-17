@@ -17,13 +17,13 @@
 USING_NS_CC_EXT;
 
 enum __detail_scene_Tags {
-    Tag_State,
-    Tag_Props,
-    Tag_Equipment,
-    Tag_Task,
-    Tag_Skills,
-    Tag_Mercenary,
-    Tag_Quit,
+    kMCTagState,
+    kMCTagProps,
+    kMCTagEquipment,
+    kMCTagTask,
+    kMCTagSkills,
+    kMCTagMercenary,
+    kMCTagQuit,
 };
 
 const char *kMCDetailDidHideNotification = "kMCDetailDidHideNotification";
@@ -68,37 +68,37 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
         menuItem = CCMenuItemImage::create("user_info.png", "user_info_selected.png");
         menu->addChild(menuItem);
         defaultMenuItem_ = menuItem;
-        menuItem->setTag(Tag_State);
+        menuItem->setTag(kMCTagState);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("props.png", "props_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Props);
+        menuItem->setTag(kMCTagProps);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("equipment.png", "equipment_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Equipment);
+        menuItem->setTag(kMCTagEquipment);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("tasks.png", "tasks_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Task);
+        menuItem->setTag(kMCTagTask);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("skills.png", "skills_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Skills);
+        menuItem->setTag(kMCTagSkills);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("mercenary.png", "mercenary_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Mercenary);
+        menuItem->setTag(kMCTagMercenary);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("quit.png", "quit_selected.png");
         menu->addChild(menuItem);
-        menuItem->setTag(Tag_Quit);
+        menuItem->setTag(kMCTagQuit);
         menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
         
         menu->alignItemsVerticallyWithPadding(0);
@@ -236,39 +236,43 @@ void
 MCDetail::menuItem_clicked(CCObject* aSender)
 {
     CCMenuItemImage *menuItem = (CCMenuItemImage *)aSender;
+    int tag = menuItem->getTag();
     
-    menuItem->selected(); /* 点击过后menu那边就把menuitem设置为unselected */
-    if (menuItem == lastSelectedMenuItem_) {
-        return;
+    if (tag != kMCTagQuit) {
+        menuItem->selected(); /* 点击过后menu那边就把menuitem设置为unselected */
+        if (menuItem == lastSelectedMenuItem_) {
+            return;
+        }
+        if (lastSelectedMenuItem_ != NULL) {
+            lastSelectedMenuItem_->unselected();
+        }
+        lastSelectedMenuItem_ = menuItem;
+        
+        if (lastShownLayer_ != NULL) {
+            lastShownLayer_->hide();
+        }
     }
-    if (lastSelectedMenuItem_ != NULL) {
-        lastSelectedMenuItem_->unselected();
-    }
-    lastSelectedMenuItem_ = menuItem;
     
-    if (lastShownLayer_ != NULL) {
-        lastShownLayer_->hide();
-    }
-    switch (menuItem->getTag()) {
-        case Tag_State:
+    switch (tag) {
+        case kMCTagState:
             showState();
             break;
-        case Tag_Props:
+        case kMCTagProps:
             showProps();
             break;
-        case Tag_Equipment:
+        case kMCTagEquipment:
             showEquipment();
             break;
-        case Tag_Task:
+        case kMCTagTask:
             showTask();
             break;
-        case Tag_Skills:
+        case kMCTagSkills:
             showSkills();
             break;
-        case Tag_Mercenary:
+        case kMCTagMercenary:
             showMercenary();
             break;
-        case Tag_Quit:
+        case kMCTagQuit:
             showQuitWindow();
             break;
     }

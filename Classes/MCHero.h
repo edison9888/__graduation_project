@@ -19,6 +19,8 @@ public:
     
     static MCHero *sharedHero();
     
+    MCRoleEntity *getEntity();
+    
     inline bool atEntrance() {
         return atEntrance_;
     }
@@ -32,6 +34,11 @@ public:
      * 判断当前视野中的人物，然后返回最近的那个
      */
     MCRole *roleOfFront();
+    
+    /**
+     * 主角挂了
+     */
+    void died();
     
     CCObject *copy() { return copyWithZone(0); }
 private:

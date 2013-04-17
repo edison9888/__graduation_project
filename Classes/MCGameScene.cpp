@@ -13,13 +13,8 @@
 void
 MCGameScene::installController()
 {
-    MCScenePackageType scenePackageType = scenePackage_->getScenePackageType();
-
-    CCAssert(scenePackageType != MCUnknownPackage, "unknown scene package type!");
-//    if (MCGameScenePackage == scenePackageType) {
-        MCJoypadControllerLayer *controller = MCJoypadControllerLayer::create();
-        controller->setJoypadDelegate(objects_);
-        addChild(controller);
-        controller_ = controller;
-//    }
+    MCJoypadControllerLayer *controller = MCJoypadControllerLayer::create();
+    controller->setJoypadDelegate(objects_);
+    addChild(controller);
+    controller_ = controller;
 }

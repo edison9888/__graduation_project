@@ -12,14 +12,16 @@
 #include "MCObject.h"
 #include "MCRoleEntity.h"
 #include "MCEffect.h"
-#include "MCViewport.h"
 #include "MCAI.h"
+
+extern const char *kMCRoleDiedNotification;
 
 class MCScript;
 
 /* 基础角色 */
-class MCRole : public MCObject, public MCAIDelegate {
+class MCRole : public MCObject, public MCAIDelegate, public MCAIStateMachineDelegate {
     friend class MCRoleEntity;
+    friend class MCAI;
 public:
     /**
      * 角色类型
@@ -42,6 +44,58 @@ public:
     void loadSpriteSheet(const char *aSpritesheetPath);
     
     /* MCAIDelegate */
+    /**
+     * 某人进入视野
+     * 默认看到的都是敌人
+     */
+    void roleDidEnterVision(MCRole *aRole, bool isEnermy = true);
+    
+    /**
+     * 某人离开视野
+     * 默认离开的都是敌人
+     */
+    void roleDidExitVision(MCRole *aRole, bool isEnermy = true);
+    
+    /**
+     * 被攻击
+     */
+    void roleWasAttacked(const MCEffect &anEffect);
+    
+    /**
+     * 攻击结束
+     */
+    void attackDidFinish();
+    
+    /**
+     * 状态切换
+     */
+    void roleDidChangeStateTo(MCAIState anAIState);
+    
+    /* MCAIStateMachineDelegate */
+    /**
+     * 空闲状态下回调
+     */
+    void performWhenIdleState();
+    
+    /**
+     * 战斗状态下回调
+     */
+    void performWhenCombatantStatus();
+    
+    /**
+     * 休息状态下回调
+     */
+    void performWhenRestingState();
+    
+    /**
+     * 攻击状态下回调
+     */
+    void performWhenAttackState();
+    
+    /**
+     * 死亡状态下回调
+     */
+    void performWhenDeathState();
     
     /**
      * 死亡
@@ -72,11 +126,18 @@ public:
         return pp_;
     }
     
+    inline bool isExhausted() {
+        return exhausted_;
+    }
+    
     /* 角色属性 */
     CC_SYNTHESIZE(MCRoleType, roleType_, RoleType); /* 角色类型 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
     CC_SYNTHESIZE(mc_hp_t, hp_, HP); /* 角色生命值 */
     CC_SYNTHESIZE(mc_pp_t, pp_, PP); /* 角色体力值 */
+    bool exhausted_; /* 体力透支导致快挂了 */
+    CC_SYNTHESIZE(mc_pp_t, exhaustion_, Exhaustion); /* 体力透支线 */
+    CC_SYNTHESIZE(mc_pp_t, tired_, Tired); /* 体力疲惫线 */
     CC_SYNTHESIZE(mc_hp_t, maxHP_, MaxHP); /* 角色满生命值 */
     CC_SYNTHESIZE(mc_pp_t, maxPP_, MaxPP); /* 角色满体力值 */
     CC_SYNTHESIZE(MCRoleState, roleState_, RoleState); /* 角色状态 */

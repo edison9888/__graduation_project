@@ -7,6 +7,7 @@
 //
 
 #include "MCEnemy.h"
+#include "MCEnemyAI.h"
 
 bool
 MCEnemy::init(MCRoleRace aRoleRace)
@@ -37,6 +38,21 @@ MCEnemy::create(mc_object_id_t anObjectId)
     return enemy;
 }
 
+MCRoleEntity *
+MCEnemy::getEntity()
+{
+    MCRoleEntity *roleEntity = MCRole::getEntity();
+    
+    /* AI */
+    if (ai_ == NULL) {
+        ai_ = MCEnemyAI::create();
+        ai_->retain();
+        ai_->bind(this);
+    }
+    
+    return roleEntity;
+}
+
 CCObject *
 MCEnemy::copy()
 {
@@ -53,6 +69,11 @@ MCEnemy::copy()
     enemy->roleRace_ = roleRace_;
     enemy->hp_ = hp_;
     enemy->pp_ = pp_;
+    enemy->maxHP_ = maxHP_;
+    enemy->maxPP_ = maxPP_;
+    enemy->exhaustion_ = exhaustion_;
+    enemy->tired_ = tired_;
+    enemy->dexterity_ = dexterity_;
     enemy->roleState_ = roleState_;
     enemy->face_ = NULL;
     enemy->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */

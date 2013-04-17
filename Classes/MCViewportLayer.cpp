@@ -83,11 +83,18 @@ MCViewportLayer::draw(void)
                         ccc4f(0.6, 0.6, 0.6, 0.4));
         /* draw viewport */
         if (role->getAI()) {
+#if (MC_COLLISION_USE_OBB == 1)
             MCOBB vpOBB = role->getAI()->getVision()->getOBB();
             CCRect aabb = vpOBB.getAABB();
             aabb.origin = ccpAdd(aabb.origin, mapOffset);
             CCPoint dp = ccp(aabb.origin.x + vpOBB.width,
                              aabb.origin.y + vpOBB.height);
+#else
+            CCRect aabb = role->getAI()->getVision()->getFrame();
+            aabb.origin = ccpAdd(aabb.origin, mapOffset);
+            CCPoint dp = ccp(aabb.origin.x + aabb.size.width,
+                             aabb.origin.y + aabb.size.height);
+#endif
             ccDrawSolidRect(aabb.origin,
                             dp,
                             ccc4f(0.9, 0.2, 0.1, 0.4));

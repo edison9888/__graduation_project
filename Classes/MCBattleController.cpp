@@ -56,6 +56,8 @@ MCBattleController::init()
         multiSelection_->setPosition(ccp(winSize.width - 72, 72));
         addChild(multiSelection_);
         
+        lastTouchedTime_.tv_sec = 0;
+        lastTouchedTime_.tv_usec = 0;
         multiSelectionTouch_ = NULL;
         selectedItem_ = NULL;
         
@@ -101,7 +103,7 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
             teamLayer_->setMultiSeletionMode(true);
             multiSelection_->setScale(1.2f);
             multiSelectionTouch_ = touch;
-            delegate_->controllerDidEnterMultiSelectionMode(delegate_);
+            delegate_->controllerDidEnterMultiSelectionMode(this);
         }
 
     }
@@ -141,7 +143,7 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
     } else if (teamLayer_->getSelectedRoles()->count() == 0) { /* 拖动地图模式 */
         CCTouch *touch = (CCTouch *) pTouches->anyObject();
         CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
-        delegate_->controllerDidDragMap(delegate_, offset);
+        delegate_->controllerDidDragMap(this, offset);
     }
     
     CCLayer::ccTouchesMoved(pTouches, pEvent);
@@ -153,22 +155,38 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     CCTouch *touch = (CCTouch *) pTouches->anyObject();
     bool findPath = true;
     
+    struct cc_timeval touchedTime;
+    CCTime::gettimeofdayCocos2d(&touchedTime, NULL);
+    
     /* 队伍选择 */
     /* tags: #select,#team */
     /* 镜头将移到选中对象身上，若有多个选中对象，则移到队伍第一个角色(在选中的人中序号第一)身上 */
     MCRoleBaseInfo *roleBaseInfo = teamLayer_->roleBaseInfoForTouch(touch);
     if (roleBaseInfo && roleBaseInfo->getTouched()) {
         bool isSelected = roleBaseInfo->isSelected();
+        MCRole *role = roleBaseInfo->getRole();
+        double elapsed = 0;
+        
         findPath = false;
         if (! teamLayer_->isMultiSeletionMode()) {
             teamLayer_->unselectAll();
         }
-        if (isSelected) {
-            teamLayer_->unselectRole(roleBaseInfo->getRole());
-            delegate_->controllerDidUnselectRole(delegate_, roleBaseInfo->getRole());
+        if (lastTouchedTime_.tv_sec != 0) {
+            elapsed = CCTime::timersubCocos2d(&lastTouchedTime_, &touchedTime);
+        }
+        
+        /* 两次点击小于0.5秒则为聚焦人物，并且选中之 */
+        if (elapsed < 500) {
+            lastTouchedTime_.tv_sec = 0;
+            teamLayer_->selectRole(role);
+            delegate_->controllerDidSelectRole(this, role);
+            delegate_->controllerDidFocus(this, role);
+        } else if (isSelected) {
+            teamLayer_->unselectRole(role);
+            delegate_->controllerDidUnselectRole(this, role);
         } else {
-            teamLayer_->selectRole(roleBaseInfo->getRole());
-            delegate_->controllerDidSelectRole(delegate_, roleBaseInfo->getRole());
+            teamLayer_->selectRole(role);
+            delegate_->controllerDidSelectRole(this, role);
         }
         if (teamLayer_->getSelectedRoles()->count() == teamLayer_->size()) { /* 全部选中了 */
             CCMenuItemLabel *menuItem = (CCMenuItemLabel *)selectAllMenu_->getChildren()->objectAtIndex(0);
@@ -177,6 +195,7 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         }
         roleBaseInfo->setTouched(false);
     }
+    lastTouchedTime_ = touchedTime;
     
     /* 行动 */
     /* 行走 */
@@ -235,7 +254,7 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             teamLayer_->setMultiSeletionMode(false);
             multiSelection_->setScale(1.f);
             multiSelectionTouch_ = NULL;
-            delegate_->controllerDidExitMultiSelectionMode(delegate_);
+            delegate_->controllerDidExitMultiSelectionMode(this);
         }
         
     }
@@ -270,17 +289,17 @@ MCBattleController::didSelectAll(CCObject *aSender)
         /* 全选的话，镜头将移到主角身上 */
         /* 已经选择全部了，则全部取消选择 */
         CCARRAY_FOREACH(roles, obj) {
-            delegate_->controllerDidUnselectRole(delegate_, dynamic_cast<MCRole *>(obj));
+            delegate_->controllerDidUnselectRole(this, dynamic_cast<MCRole *>(obj));
         }
         teamLayer_->unselectAll();
         label->setString("全选");
-        delegate_->controllerDidUnselectAll(delegate_, MCTeam::sharedTeam());
+        delegate_->controllerDidUnselectAll(this, MCTeam::sharedTeam());
     } else {
         CCARRAY_FOREACH(roles, obj) {
-            delegate_->controllerDidSelectRole(delegate_, dynamic_cast<MCRole *>(obj));
+            delegate_->controllerDidSelectRole(this, dynamic_cast<MCRole *>(obj));
         }
         teamLayer_->selectAll();
         label->setString("取消");
-        delegate_->controllerDidSelectAll(delegate_, MCTeam::sharedTeam());
+        delegate_->controllerDidSelectAll(this, MCTeam::sharedTeam());
     }
 }

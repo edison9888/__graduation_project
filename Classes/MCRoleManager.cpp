@@ -317,7 +317,7 @@ MCRoleManager::loadEnemyData()
             c_str_m_id[2],
             c_str_m_id[3]
         };
-        JsonBox::Object mercenaryObject = enemiesIterator->second.getObject();
+        JsonBox::Object enemyObject = enemiesIterator->second.getObject();
         MCEnemy *enemy = new MCEnemy;
         /* AI String */
         const char *c_str_ai_id = enemiesIterator->first.c_str();
@@ -332,11 +332,11 @@ MCRoleManager::loadEnemyData()
         enemy->autorelease();
         enemy->setID(m_id);
         /* name String */
-        ccstring = CCString::create(mercenaryObject["name"].getString().c_str());
+        ccstring = CCString::create(enemyObject["name"].getString().c_str());
         enemy->setName(ccstring);
         ccstring->retain();
         /* face String */
-        ccstring = CCString::create(mercenaryObject["face"].getString().c_str());
+        ccstring = CCString::create(enemyObject["face"].getString().c_str());
         enemy->setFace(ccstring);
         ccstring->retain();
         /* build sprite sheet file path */
@@ -347,68 +347,74 @@ MCRoleManager::loadEnemyData()
         enemy->setSpriteSheet(ccstring);
         ccstring->retain();
         /* HP Integer */
-        enemy->setHP(mercenaryObject["HP"].getInt());
+        enemy->setHP(enemyObject["HP"].getInt());
         enemy->setMaxHP(enemy->getHP());
         /* PP Integer */
-        enemy->setPP(mercenaryObject["PP"].getInt());
+        enemy->setPP(enemyObject["PP"].getInt());
         enemy->setMaxPP(enemy->getPP());
+        /* exhaustion Integer */
+        enemy->setExhaustion(enemyObject["exhaustion"].getInt());
+        /* tired Integer */
+        enemy->setTired(enemyObject["tired"].getInt());
+        /* dexterity Integer */
+        enemy->setDexterity(enemyObject["dexterity"].getInt());
         /* AC Integer */
-        enemy->setAC(mercenaryObject["AC"].getInt());
+        enemy->setAC(enemyObject["AC"].getInt());
         /* armor-check-penalty Integer */
-        enemy->setArmorCheckPenalty(mercenaryObject["armor-check-penalty"].getInt());
+        enemy->setArmorCheckPenalty(enemyObject["armor-check-penalty"].getInt());
         /* damage Object */
         /* damage.count Integer */
         /* damage.size Integer */
-        JsonBox::Object damage = mercenaryObject["damage"].getObject();
+        JsonBox::Object damage = enemyObject["damage"].getObject();
         enemy->setDamage(diceMaker->diceWithType(MCMakeDiceType(damage["count"].getInt(),
-                                                                    damage["size"].getInt())));
+                                                                damage["size"].getInt())));
         /* damage-bonus Integer */
-        enemy->setDamageBonus(mercenaryObject["damage-bonus"].getInt());
+        enemy->setDamageBonus(enemyObject["damage-bonus"].getInt());
         /* critical-hit-visible Object */
         /* critical-hit-visible.min Integer */
         /* critical-hit-visible.max Integer */
         /* critical-hit-visible.dice Object */
         /* critical-hit-visible.dice.count Integer */
         /* critical-hit-visible.dice.size Integer */
-        JsonBox::Object diceRange = mercenaryObject["critical-hit-visible"].getObject();
+        JsonBox::Object diceRange = enemyObject["critical-hit-visible"].getObject();
         JsonBox::Object diceRangeDice = diceRange["dice"].getObject();
         enemy->criticalHitVisible_.min = diceRange["min"].getInt();
         enemy->criticalHitVisible_.max = diceRange["max"].getInt();
         enemy->criticalHitVisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                             diceRangeDice["size"].getInt());
+                                                         diceRangeDice["size"].getInt());
         /* critical-hit-invisible Object */
         /* critical-hit-invisible.min Integer */
         /* critical-hit-invisible.max Integer */
         /* critical-hit-invisible.dice Object */
         /* critical-hit-invisible.dice.count Integer */
         /* critical-hit-invisible.dice.size Integer */
-        diceRange = mercenaryObject["critical-hit-invisible"].getObject();
+        diceRange = enemyObject["critical-hit-invisible"].getObject();
         diceRangeDice = diceRange["dice"].getObject();
         enemy->criticalHitInvisible_.min = diceRange["min"].getInt();
         enemy->criticalHitInvisible_.max = diceRange["max"].getInt();
         enemy->criticalHitInvisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                               diceRangeDice["size"].getInt());
+                                                           diceRangeDice["size"].getInt());
         /* critical-hit Double */
-        enemy->setCriticalHit(mercenaryObject["critical-hit"].getDouble());
+        enemy->setCriticalHit(enemyObject["critical-hit"].getDouble());
         /* distance Integer */
-        enemy->setDistance(mercenaryObject["distance"].getInt());
+        enemy->setDistance(enemyObject["distance"].getInt());
 #warning 木有配置技能
         /* effect Integer */
-        enemy->setEffect(mercenaryObject["effect"].getInt());
+        enemy->setEffect(enemyObject["effect"].getInt());
         /* effect-check Object */
         /* effect-check.min Integer */
         /* effect-check.max Integer */
         /* effect-check.dice Object */
         /* effect-check.dice.count Integer */
         /* effect-check.dice.size Integer */
-        diceRange = mercenaryObject["effect-check"].getObject();
+        diceRange = enemyObject["effect-check"].getObject();
         diceRangeDice = diceRange["dice"].getObject();
         enemy->effectCheck_.min = diceRange["min"].getInt();
         enemy->effectCheck_.max = diceRange["max"].getInt();
         enemy->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                       diceRangeDice["size"].getInt());
         /* description String */
-        ccstring = CCString::create(mercenaryObject["description"].getString().c_str());
+        ccstring = CCString::create(enemyObject["description"].getString().c_str());
         enemy->setDescription(ccstring);
         ccstring->retain();
         

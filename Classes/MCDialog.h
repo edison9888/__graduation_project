@@ -22,7 +22,7 @@ enum {
 };
 typedef mc_enum_t MCDialogType;
 
-typedef int (CCObject::*SEL_Dismiss)(void *);
+typedef void (CCObject::*SEL_Dismiss)(void *);
 
 #define dismiss_selector(_SELECTOR) (SEL_Dismiss)(&_SELECTOR)
 

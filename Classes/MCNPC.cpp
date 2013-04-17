@@ -7,6 +7,7 @@
 //
 
 #include "MCNPC.h"
+#include "MCNPCAI.h"
 
 MCNPC::MCNPC()
 {
@@ -38,6 +39,21 @@ MCNPC::create(mc_object_id_t anObjectId)
     return npc;
 }
 
+MCRoleEntity *
+MCNPC::getEntity()
+{
+    MCRoleEntity *roleEntity = MCRole::getEntity();
+    
+    /* AI */
+    if (ai_ == NULL) {
+        ai_ = MCNPCAI::create();
+        ai_->retain();
+        ai_->bind(this);
+    }
+    
+    return roleEntity;
+}
+
 CCObject *
 MCNPC::copy()
 {
@@ -54,6 +70,10 @@ MCNPC::copy()
     npc->roleRace_ = roleRace_;
     npc->hp_ = hp_;
     npc->pp_ = pp_;
+    npc->maxHP_ = maxHP_;
+    npc->maxPP_ = maxPP_;
+    npc->exhaustion_ = exhaustion_;
+    npc->tired_ = tired_;
     npc->roleState_ = roleState_;
     npc->face_ = CCString::create(face_->getCString()); /* 会被释放掉，所以要copy一个 */
     npc->face_->retain();

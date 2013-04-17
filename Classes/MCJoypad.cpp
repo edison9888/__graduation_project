@@ -72,8 +72,7 @@ MCJoypad::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 
     location = CCDirector::sharedDirector()->convertToGL(pTouch->getLocationInView());
     
-    if (! joystick_->isVisible())
-    {
+    if (! joystick_->isVisible()) {
         joystick_->showAtLocation(location);
         joystickPosition_ = location;
         s_pJoystickTrailer.x = location.x;
@@ -110,8 +109,6 @@ MCJoypad::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
         if (s_pJoystickTrailer.equals(prevousLocation)) { //移动joystick的点
             s_pJoystickTrailer.x = location.x;
             s_pJoystickTrailer.y = location.y;
-//            prevousLocation.x = location.x;
-//            prevousLocation.y = location.y;
             offsetX = location.x -= joystickPosition_.x;
             offsetY = location.y -= joystickPosition_.y;
             offset = sqrtf(offsetX * offsetX + offsetY * offsetY);
@@ -162,6 +159,9 @@ MCJoypad::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         __mc_joystick_delta->y = 0;
     }
     isValidControl_ = false;
+    if (delegate_) {
+        delegate_->controllerDidRelease();
+    }
     CCLayer::ccTouchesEnded(pTouches, pEvent);
 }
 
@@ -175,6 +175,8 @@ MCJoypad::onEnter()
 void
 MCJoypad::onExit()
 {
+    joystick_->setVisible(false);
+    isValidControl_ = false;
     unschedule(schedule_selector(MCJoystick::update));
     CCLayer::onExit();
 }
@@ -185,6 +187,6 @@ MCJoypad::update(float dt)
     if (! delegate_ || !isValidControl_) {
         return;
     }
-    delegate_->controllerDidMove(delegate_, *joystickDelta_);
+    delegate_->controllerDidMove(*joystickDelta_);
 }
 

@@ -12,9 +12,9 @@
 
 const char *kMCAStarDidFinishAlgorithmNotification = "kMCAStarDidFinishAlgorithmNotification";
 const char *kMCAStarAlgorithmWillRemoveNotification = "kMCAStarAlgorithmWillRemoveNotification";
-static const mc_byte_t kMCBarrier = 1;
-static const mc_byte_t kMCStartPoint = 5;
-static const mc_byte_t kMCEndPoint = 8;
+static const mc_byte_t kMCBarrier = MCMakeEnum(0);
+static const mc_byte_t kMCStartPoint = MCMakeEnum(1);
+static const mc_byte_t kMCEndPoint = MCMakeEnum(2);
 
 struct __mc_offset {
     int x;
@@ -201,13 +201,13 @@ MCAStarAlgorithm::execute()
 bool
 MCAStarAlgorithm::isBarrier(int x, int y)
 {
-    return mapAltas_[x + y * mapWidth_] == kMCBarrier;
+    return (mapAltas_[x + y * mapWidth_] & kMCBarrier) == kMCBarrier;
 }
 
 bool
 MCAStarAlgorithm::isBarrier(const CCPoint &aPoint)
 {
-    return mapAltas_[(mc_ssize_t) aPoint.x + (mc_ssize_t) aPoint.y * mapWidth_] == kMCBarrier;
+    return (mapAltas_[(mc_ssize_t) aPoint.x + (mc_ssize_t) aPoint.y * mapWidth_] & kMCBarrier) == kMCBarrier;
 }
 
 /**
@@ -223,7 +223,6 @@ MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArra
                                    checkFrameOrigin.y,
                                    obbEdge,
                                    obbEdge); /* 第一个检测矩形 */
-    CCRectLog(checkFrame);
     mc_ssize_t width = (mc_ssize_t) (aMapSize.width / obbEdge) + 1;
     mc_ssize_t height = (mc_ssize_t) (aMapSize.height / obbEdge) + 1;
     mapAltas_ = new mc_byte_t[width * height];
@@ -261,8 +260,8 @@ MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArra
         checkFrame.origin.y += obbEdge;
     }
     
-    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * width] += kMCStartPoint;
-    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * width] += kMCEndPoint;
+    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * width] |= kMCStartPoint;
+    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * width] |= kMCEndPoint;
 //    for (mc_ssize_t y = height - 1; y >= 0; --y) {
 //        for (mc_ssize_t x = 0; x < width; ++x) {
 //            printf("%d ", mapAltas_[x + y * width]);
@@ -270,65 +269,6 @@ MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArra
 //        printf("\n");
 //    }
 }
-//void
-//MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArray *barriers)
-//{
-//    MCOBB obb = aRole->getEntity()->getOBB();
-//    CCPoint origin = obb.getOrigin(); /* OBB的左下角 */
-//    mc_ssize_t obbEdge = obb.width > obb.height ? obb.width : obb.height;
-//    mc_ssize_t offsetX = (mc_ssize_t) origin.x % (mc_ssize_t) obbEdge;
-//    mc_ssize_t offsetY = (mc_ssize_t) origin.y % (mc_ssize_t) obbEdge;
-//    CCPoint checkFrameOrigin = ccp(offsetX > 0 ? offsetX - (mc_ssize_t) obbEdge : 0,
-//                             offsetY > 0 ? offsetY - (mc_ssize_t) obbEdge : 0);
-//    CCRect checkFrame = CCRectMake(checkFrameOrigin.x,
-//                                   checkFrameOrigin.y,
-//                                   obbEdge,
-//                                   obbEdge); /* 第一个检测矩形 */
-//    CCRectLog(checkFrame);
-//    mc_ssize_t width = (mc_ssize_t) (aMapSize.width / obbEdge) + 1;
-//    mc_ssize_t height = (mc_ssize_t) (aMapSize.height / obbEdge) + 1;
-//    mapAltas_ = new mc_byte_t[width * height];
-//    CCObject *obj;
-//    MCBarrier *barrier;
-//    mc_ssize_t collided;
-//    
-//    /* 生成 */
-//    mapWidth_ = width;
-//    mapHeight_ = height;
-//    edge_ = obbEdge;
-//    startPoint_->position_.x = (float) ((mc_ssize_t) startPoint_->position_.x / (mc_ssize_t) obbEdge);
-//    startPoint_->position_.y = (float) ((mc_ssize_t) startPoint_->position_.y / (mc_ssize_t) obbEdge);
-//    endPoint_->position_.x = (float) ((mc_ssize_t) endPoint_->position_.x / (mc_ssize_t) obbEdge);
-//    endPoint_->position_.y = (float) ((mc_ssize_t) endPoint_->position_.y / (mc_ssize_t) obbEdge);
-//    for (mc_ssize_t y = 0; y < height; ++y) {
-//        for (mc_ssize_t x = 0; x < width; ++x) {
-//            collided = 0;
-//            CCARRAY_FOREACH(barriers, obj) {
-//                barrier = dynamic_cast<MCBarrier *>(obj);
-//                CCRect aabb = barrier->getOBB().getAABB();
-//                if (barrier->getOBB().getAABB().intersectsRect(checkFrame)) {
-//                    collided = kMCBarrier;
-//                    break;
-//                }
-//            }
-//            mapAltas_[x + y * width] = collided;
-////            printf("%ld ", collided);
-//            checkFrame.origin.x += obbEdge;
-//        }
-////        printf("\n");
-//        checkFrame.origin.x = checkFrameOrigin.x;
-//        checkFrame.origin.y += obbEdge;
-//    }
-//    
-//    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * width] += kMCStartPoint;
-//    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * width] += kMCEndPoint;
-//    for (mc_ssize_t y = height - 1; y >= 0; --y) {
-//        for (mc_ssize_t x = 0; x < width; ++x) {
-//            printf("%d ", mapAltas_[x + y * width]);
-//        }
-//        printf("\n");
-//    }
-//}
 
 /**
  * 算法执行过程
@@ -455,7 +395,7 @@ MCAStarAlgorithm::process(CCObject *obj)
     if (side != NULL) {
         for (;;) {
             CCPoint target = ccp(side->position_.x * edge_, side->position_.y * edge_);
-            route->push(ccpSub(target, mapOffset_));
+            route->push(target);
             mapAltas_[(mc_ssize_t) side->position_.x + (mc_ssize_t) side->position_.y * mapWidth_] = 7;
             if (side->parent_ != NULL && side->parent_->parent_ == NULL) {
                 break;
@@ -463,6 +403,10 @@ MCAStarAlgorithm::process(CCObject *obj)
             side = side->parent_;
         }
     }
+    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
+          startPoint_->position_.x * edge_, startPoint_->position_.y * edge_,
+          endPoint_->position_.x * edge_, endPoint_->position_.y * edge_);
+    
 //    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * mapWidth_] = kMCStartPoint;
 //    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * mapWidth_] = kMCEndPoint;
 //    for (mc_ssize_t y = mapHeight_ - 1; y >= 0; --y) {
@@ -521,9 +465,6 @@ void
 MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
-    MCOBB obb = aRole->getEntity()->getOBB();
-    CCPoint startPoint = obb.getOrigin();
-    CCPoint endPoint;
     CCPoint mapOffset = map_->getPosition();
     MCAStarAlgorithm *algo;
     CCSize mapSize = map_->getMapSize();
@@ -532,16 +473,12 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
     CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
                                     mapSize.height * tileSize.height / contentScaleFactor);
     
-    startPoint = ccpSub(startPoint, mapOffset);
-    endPoint = ccpSub(aDestinationLocation, mapOffset);
-    CCSizeLog(mapRealSize);
     CCLog("start(%.0f %.0f) end(%.0f %.0f)",
-          startPoint.x, startPoint.y,
-          endPoint.x, endPoint.y);
+          aRole->getEntity()->getOBB().getOrigin().x, aRole->getEntity()->getOBB().getOrigin().y,
+          aDestinationLocation.x, aDestinationLocation.y);
     algo = new MCAStarAlgorithm;
-    algo->init(startPoint, endPoint);
+    algo->init(aRole->getEntity()->getOBB().getOrigin(), aDestinationLocation);
     algo->generateMapAltas(aRole, mapRealSize, barriers_);
-    algo->mapOffset_ = mapOffset;
     algoInstances_->addObject(algo);
     notificatinCenter->addObserver(this,
                                    callfuncO_selector(MCAStar::algorithmWillRemove),
