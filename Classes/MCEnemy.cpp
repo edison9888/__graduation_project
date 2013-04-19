@@ -79,8 +79,22 @@ MCEnemy::copy()
     enemy->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */
     enemy->spriteSheet_->retain();
     enemy->defaultDialogue_ = NULL;
-    enemy->ai_ = ai_;
+    enemy->ac_ =ac_;
+    enemy->armorCheckPenalty_ = armorCheckPenalty_;
+    enemy->damage_ = damage_;
+    enemy->damageBonus_ = damageBonus_;
+    enemy->criticalHitVisible_ = criticalHitVisible_;
+    enemy->criticalHitInvisible_ = criticalHitInvisible_;
+    enemy->criticalHit_ = criticalHit_;
+    enemy->distance_ =distance_;
+    enemy->effect_ = effect_;
+    enemy->effectCheck_ = effectCheck_;
+    if (ai_) {
+        enemy->ai_ = dynamic_cast<MCEnemyAI *>(ai_->copy());
+    }
     enemy->trigger_ = trigger_;
+    
+#warning 木有配置技能
     
     return enemy;
 }

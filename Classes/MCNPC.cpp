@@ -81,7 +81,9 @@ MCNPC::copy()
     npc->spriteSheet_->retain();
     npc->defaultDialogue_ = CCString::create(defaultDialogue_->getCString()); /* 会被释放掉，所以要copy一个 */
     npc->defaultDialogue_->retain();
-    npc->ai_ = ai_;
+    if (ai_) {
+        npc->ai_ = dynamic_cast<MCNPCAI *>(ai_->copy());
+    }
     npc->trigger_ = trigger_;
     
     return npc;

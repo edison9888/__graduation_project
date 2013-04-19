@@ -148,7 +148,7 @@ public:
         detailMenu_->setVisible(true);
     }
     
-    void showDetail();
+    virtual void showDetail();
     
     /* abort task confirm */
     void showAbortTaskConfirm(const char *aMessage);
@@ -157,7 +157,7 @@ public:
 protected:
     bool hasEntrance(const char *anEntranceName);
     
-    void detailDidHide();
+    virtual void detailDidHide();
     
     MCControllerLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */

@@ -80,14 +80,15 @@ MCAI::update(float dt) /* 大脑在转动 */
             if (aiRole) { /* 更新人物的发现时间 */
                 aiRole->foundTimestamp = tv;
             } else { /* 初次发现人物 */
+                bool isEnemy = role->getRoleType() == MCRole::MCEnemy && role_->getRoleType() != MCRole::MCEnemy;
                 aiRole = new MCAIRole;
                 aiRole->autorelease();
                 aiRole->role = role;
                 aiRole->foundTimestamp = tv;
-                aiRole->isEnemy = role->getRoleType() == MCRole::MCEnemy;
+                aiRole->isEnemy = isEnemy;
                 aiRole->aggro = 0;
-                delegate_->roleDidEnterVision(role, aiRole->isEnemy);
-                if (aiRole->isEnemy) {
+                delegate_->roleDidEnterVision(role, isEnemy);
+                if (isEnemy) {
                     enemiesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
                 } else {
                     rolesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
@@ -96,10 +97,7 @@ MCAI::update(float dt) /* 大脑在转动 */
         }
     }
     
-    if (activating_) {
-        return;
-    }
-    AIStateMachineDelegate_->activate(AIState_);
+    changingState();
 }
 
 /* 检查视野中的对象是否还在 */
@@ -143,6 +141,15 @@ MCAI::copy()
     MCAI *ai = new MCAI;
     
     return ai;
+}
+
+void
+MCAI::changingState() /* 状态切换 */
+{
+    if (activating_) {
+        return;
+    }
+    AIStateMachineDelegate_->activate(AIState_);
 }
 
 MCAIRole *

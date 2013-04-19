@@ -31,6 +31,8 @@ static const float kMCActionDuration = 0.1f;
 
 static const char *kMCBackgroundFilepath = "bg.png";
 
+static MCDetail *__default_detail = NULL;
+
 class __MCViewSelectorLayer : public CCLayer {
 public:
     bool initWithTarget(CCObject *target);
@@ -147,6 +149,24 @@ MCDetail::init()
     return false;
 }
 
+MCDetail *
+MCDetail::create()
+{
+    if (__default_detail == NULL) {
+        __default_detail = new MCDetail;
+        if (__default_detail && __default_detail->init()) {
+        } else {
+            CC_SAFE_DELETE(__default_detail);
+            __default_detail = NULL;
+        }
+    }
+    if (__default_detail->m_pParent) {
+        __default_detail->removeFromParentAndCleanup(false);
+    }
+    
+    return __default_detail;
+}
+
 void
 MCDetail::initPosition()
 {
@@ -167,6 +187,12 @@ MCDetail::hide()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
     runAction(CCMoveTo::create(kMCActionDuration, ccp(0, winSize.height)));
+}
+
+void
+MCDetail::onExit()
+{
+    CCLayer::onExit();
 }
 
 void

@@ -19,9 +19,7 @@ MCBattleFieldScene::installController()
     
     CCAssert(scenePackageType != MCUnknownPackage, "unknown scene package type!");
     if (MCBattleFieldScenePackage == scenePackageType) {
-//#warning debug
         if (MCFlagManager::sharedFlagManager()->isTaskStarted()) {
-//        if (false) {
             MCBattleControllerLayer *battleController = MCBattleControllerLayer::create();
             battleController->setJoypadDelegate(objects_);
             battleController->setDelegate(objects_);
@@ -35,4 +33,18 @@ MCBattleFieldScene::installController()
             controller_ = joypadController;
         }
     }
+}
+
+void
+MCBattleFieldScene::showDetail()
+{
+    usingJoypad_ = dynamic_cast<MCBattleControllerLayer *>(controller_)->isJoypadEnable();
+    MCScene::showDetail();
+}
+
+void
+MCBattleFieldScene::detailDidHide()
+{
+    MCScene::detailDidHide();
+    dynamic_cast<MCBattleControllerLayer *>(controller_)->setJoypadEnable(usingJoypad_);
 }

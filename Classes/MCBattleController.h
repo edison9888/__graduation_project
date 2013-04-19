@@ -22,6 +22,14 @@ public:
     
     CCArray *getSelectedRoles();
     
+    inline bool isJoypadEnable() {
+        return isJoypadEnabled_;
+    }
+    
+    inline void setJoypadEnable(bool var) {
+        isJoypadEnabled_ = var;
+    }
+    
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
@@ -35,6 +43,8 @@ private:
     MCActionBar *actionBar_; /* 道具层 */
     
     MCActionBarItem *selectedItem_;
+    
+    bool isJoypadEnabled_;
     
     /* 选择按钮 */
     CCMenu *selectAllMenu_;

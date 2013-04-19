@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCAStar.cpp"
-         timestampString = "387821987.772198"
+         timestampString = "387989708.525442"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "352"
-         endingLineNumber = "352"
+         startingLineNumber = "378"
+         endingLineNumber = "378"
          landmarkName = "MCAStarAlgorithm::process(CCObject *obj)"
          landmarkType = "5">
       </FileBreakpoint>

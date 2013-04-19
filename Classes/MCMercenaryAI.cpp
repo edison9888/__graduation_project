@@ -8,10 +8,15 @@
 
 #include "MCMercenaryAI.h"
 
+#include "MCSimpleGameSceneContextServer.h"
+
 void
-MCMercenaryAI::update(float dt)
+MCMercenaryAI::changingState()
 {
-    MCAI::update(dt);
+    if (activating_) {
+        return;
+    }
+    dynamic_cast<MCMercenaryAIStateMachineDelegate *>(AIStateMachineDelegate_)->activate(AIState_);
 }
 
 #pragma mark -
@@ -20,7 +25,6 @@ MCMercenaryAI::update(float dt)
 void
 MCMercenaryAIStateMachineDelegate::activate(MCAIState anAIState)
 {
-    CCLog("MCMercenaryAIStateMachineDelegate::activate");
     if (anAIState == MCFollowingState) {
         performWhenFollowingState();
     } else if (anAIState == MCFleeState) {

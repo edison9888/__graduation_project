@@ -13,6 +13,8 @@
 
 const char *kMCMultiSelectionFilepath = "UI/bc_multi_selection.png";
 
+const char *kMCPointToParticleFilepath = "particles/point_to.plist";
+
 static bool
 MCActionBarItemIsPotion(MCActionBarItem *anActionBarItem)
 {
@@ -55,6 +57,8 @@ MCBattleController::init()
         multiSelection_ = CCSprite::create(kMCMultiSelectionFilepath);
         multiSelection_->setPosition(ccp(winSize.width - 72, 72));
         addChild(multiSelection_);
+        
+        isJoypadEnabled_ = false;
         
         lastTouchedTime_.tv_sec = 0;
         lastTouchedTime_.tv_usec = 0;
@@ -199,12 +203,19 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     
     /* 行动 */
     /* 行走 */
-    CCArray *selectedRoles = teamLayer_->getSelectedRoles();
-    CCObject *obj;
-    if (findPath && selectedRoles->count() > 0) {
-        CCARRAY_FOREACH(selectedRoles, obj) {
-            MCRole *role = dynamic_cast<MCRole *>(obj);
-            role->getEntity()->findPath(touch->getLocation());
+    if (! isJoypadEnabled_) {
+        CCArray *selectedRoles = teamLayer_->getSelectedRoles();
+        CCObject *obj;
+        if (findPath && selectedRoles->count() > 0) {
+            CCARRAY_FOREACH(selectedRoles, obj) {
+                MCRole *role = dynamic_cast<MCRole *>(obj);
+                CCPoint location = touch->getLocation();
+                /* 来个粒子效果 */
+                CCParticleSystemQuad *pointTo = CCParticleSystemQuad::create(kMCPointToParticleFilepath);
+                pointTo->setPosition(location);
+                addChild(pointTo);
+                role->getEntity()->findPath(location);
+            }
         }
     }
     

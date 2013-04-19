@@ -207,6 +207,7 @@ void
 MCScene::onEnter()
 {
     MCSceneContext *context = new MCSceneContext;
+    context->autorelease();
     context->scene_ = this;
     MCSceneContextManager::sharedSceneContextManager()->pushContext(context);
     
@@ -240,9 +241,7 @@ MCScene::onExit()
     unschedule(schedule_selector(MCScene::update));
     CCScene::onExit();
     
-    MCSceneContext *context = MCSceneContextManager::sharedSceneContextManager()->currentContext();
     MCSceneContextManager::sharedSceneContextManager()->popContext();
-    CC_SAFE_RELEASE(context);
 }
 
 void

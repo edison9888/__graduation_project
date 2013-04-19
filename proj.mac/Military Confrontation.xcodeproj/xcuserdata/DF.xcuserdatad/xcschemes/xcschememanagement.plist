@@ -4,20 +4,30 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Game Scene Context Monitor.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Military Confrontation.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
 		<key>Resource Generator.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>41851B9115B93C32004083E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A3EAAE9B171F21F50005BCB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

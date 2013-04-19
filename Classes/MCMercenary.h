@@ -28,6 +28,33 @@ public:
     
     static MCMercenary *create(mc_object_id_t anObjectId);
     
+    /* MCAIStateMachineDelegate */
+    /**
+     * 空闲状态下回调
+     */
+    void performWhenIdleState();
+    
+    /**
+     * 战斗状态下回调
+     */
+    void performWhenCombatantStatus() { MCRole::performWhenCombatantStatus(); }
+    
+    /**
+     * 休息状态下回调
+     */
+    void performWhenRestingState() { MCRole::performWhenRestingState(); }
+    
+    /**
+     * 攻击状态下回调
+     */
+    void performWhenAttackState() { MCRole::performWhenAttackState(); }
+    
+    /**
+     * 死亡状态下回调
+     */
+    void performWhenDeathState() { MCRole::performWhenDeathState(); }
+    
+    /* MCMercenaryAIStateMachineDelegate */
     /**
      * 跟随状态下回调
      */
@@ -42,6 +69,8 @@ public:
      * 跟随主角
      */
     void follow();
+    
+    void followingDidFinish(CCObject *anObject);
     
     MCRoleEntity *getEntity();
     

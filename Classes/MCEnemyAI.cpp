@@ -9,7 +9,7 @@
 #include "MCEnemyAI.h"
 
 void
-MCEnemyAI::update(float dt)
+MCEnemyAI::changingState()
 {
-    MCAI::update(dt);
+    MCAI::changingState();
 }

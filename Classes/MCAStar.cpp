@@ -214,9 +214,9 @@ MCAStarAlgorithm::isBarrier(const CCPoint &aPoint)
  * 生成对象适用的变形地图
  */
 void
-MCAStarAlgorithm::generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArray *barriers)
+MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMapSize, CCArray *barriers)
 {
-    MCOBB obb = aRole->getEntity()->getOBB();
+    MCOBB obb = aRoleEntity->getOBB();
     mc_ssize_t obbEdge = obb.width; /* width=height */
     CCPoint checkFrameOrigin = CCPointZero;
     CCRect checkFrame = CCRectMake(checkFrameOrigin.x,
@@ -300,7 +300,6 @@ MCAStarAlgorithm::process(CCObject *obj)
     CCObject *tempObject;
     CCArray *openList = CCArray::create();   /* 开放列表，待检验位置的列表 */
     CCArray *closedList = CCArray::create(); /* 关闭列表，已经检验过的位置的列表 */
-    mc_index_t c = 0;
     
     /* 初始化开放列表 */
     CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
@@ -311,11 +310,6 @@ MCAStarAlgorithm::process(CCObject *obj)
         openList->addObject(startPoint_);
     }
     for (;;) {
-#warning debug
-        ++c;
-        if (c > 100000) {
-            break;
-        }
         /* 开放列表为空,表明已无可以添加的新节点,而已检验的节点中没有终点节点则意味着没有找到路径 */
         if (openList->count() == 0) {
             CCLog("虾米都没有！");
@@ -390,7 +384,6 @@ MCAStarAlgorithm::process(CCObject *obj)
         }
     }
     
-    CCLog("end at %dth", c);
     side = CCArrayGetAStarNodeByPoint(openList, endPoint_->position_);
     if (side != NULL) {
         for (;;) {
@@ -462,10 +455,9 @@ MCAStar::create(CCTMXTiledMap *aMap)
 }
 
 void
-MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
+MCAStar::findPath(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
-    CCPoint mapOffset = map_->getPosition();
     MCAStarAlgorithm *algo;
     CCSize mapSize = map_->getMapSize();
     CCSize tileSize = map_->getTileSize();
@@ -474,21 +466,38 @@ MCAStar::findPath(MCRole *aRole, const CCPoint &aDestinationLocation)
                                     mapSize.height * tileSize.height / contentScaleFactor);
     
     CCLog("start(%.0f %.0f) end(%.0f %.0f)",
-          aRole->getEntity()->getOBB().getOrigin().x, aRole->getEntity()->getOBB().getOrigin().y,
+          aRoleEntity->getOBB().getOrigin().x, aRoleEntity->getOBB().getOrigin().y,
           aDestinationLocation.x, aDestinationLocation.y);
     algo = new MCAStarAlgorithm;
-    algo->init(aRole->getEntity()->getOBB().getOrigin(), aDestinationLocation);
-    algo->generateMapAltas(aRole, mapRealSize, barriers_);
+    algo->init(aRoleEntity->getOBB().getOrigin(), aDestinationLocation);
+    algo->generateMapAltas(aRoleEntity, mapRealSize, barriers_);
     algoInstances_->addObject(algo);
     notificatinCenter->addObserver(this,
                                    callfuncO_selector(MCAStar::algorithmWillRemove),
                                    kMCAStarAlgorithmWillRemoveNotification,
                                    algo);
-    notificatinCenter->addObserver(aRole->getEntity(),
-                                   callfuncO_selector(MCRoleEntity::findPathDidFinish),
+    notificatinCenter->addObserver(aRoleEntity,
+                                   callfuncO_selector(MCRoleEntity::pathFindingDidFinish),
                                    kMCAStarDidFinishAlgorithmNotification,
                                    algo);
     algo->execute();
+}
+
+bool
+MCAStar::testPosition(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation)
+{
+    MCAStarAlgorithm *algo;
+    CCSize mapSize = map_->getMapSize();
+    CCSize tileSize = map_->getTileSize();
+    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
+                                    mapSize.height * tileSize.height / contentScaleFactor);
+    
+    algo = new MCAStarAlgorithm;
+    algo->init(aRoleEntity->getOBB().getOrigin(), aDestinationLocation);
+    algo->generateMapAltas(aRoleEntity, mapRealSize, barriers_);
+    
+    return !algo->isBarrier(aDestinationLocation);
 }
 
 /**

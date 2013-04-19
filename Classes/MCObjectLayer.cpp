@@ -14,8 +14,6 @@
 #include "MCDialog.h"
 #include "MCBattleController.h"
 
-#define kMCDuraitonMap   0.025f
-
 #include "MCHero.h"
 #include "MCBarrier.h"
 #include "MCMiscUtil.h"
@@ -190,7 +188,8 @@ MCObjectLayer::onEnter()
             role = dynamic_cast<MCRole *>(obj);
             /* 初始化NPC数据 */
             has = false;
-            if (scenePackageType_ == MCBattleFieldScenePackage) {
+            if (scenePackageType_ == MCBattleFieldScenePackage
+                && role->getRoleType() == MCRole::MCEnemy) {
                 flags = role->getEntityMetadata()->getFlags();
                 CCARRAY_FOREACH(flags, obj) {
                     if (dynamic_cast<MCFlag *>(obj)->isOnState()) {
@@ -498,7 +497,6 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         camera->locate();
         roleEntity->moveBy(ccpNeg(deltaForMap));
     }
-        //    CCPointLog(map_->getPosition());
 }
 
 #if (MC_COLLISION_USE_OBB == 1)

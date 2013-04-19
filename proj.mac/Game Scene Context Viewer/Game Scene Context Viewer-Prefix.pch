@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'Game Scene Context Viewer' target in the 'Game Scene Context Viewer' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

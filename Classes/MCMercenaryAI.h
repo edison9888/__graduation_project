@@ -13,7 +13,7 @@
 
 class MCMercenaryAI : public MCAI {
 public:
-    void update(float dt);
+    void changingState();
     
     CREATE_FUNC(MCMercenaryAI);
 };

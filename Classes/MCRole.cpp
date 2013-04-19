@@ -10,6 +10,11 @@
 #include "MCAI.h"
 #include "MCScript.h"
 
+#if MC_DEBUG_SERVER == 1
+#include "MCSimpleGameSceneContextServer.h"
+static bool __log__ = true;
+#endif
+
 const char *kMCRoleDiedNotification = "kMCRoleDiedNotification";
 
 static const char *__mc_directions[4] = {
@@ -149,7 +154,7 @@ void
 MCRole::roleDidEnterVision(MCRole *aRole, bool isEnermy)
 {
     if (isEnermy) {
-        CCLog("敵(%s)、一人見つけた！", aRole->name_->getCString());
+        MCNetLOG("敵(%s)、一人見つけた！", aRole->name_->getCString());
         ai_->AIState_ = MCCombatantStatus;
     }
 }
@@ -161,7 +166,15 @@ MCRole::roleDidEnterVision(MCRole *aRole, bool isEnermy)
 void
 MCRole::roleDidExitVision(MCRole *aRole, bool isEnermy)
 {
-    CCLog("敵(%s)、一人離れた！", aRole->name_->getCString());
+    if (isEnermy) {
+        MCNetLOG("敵(%s)、一人離れた！", aRole->name_->getCString());
+    } else {
+        MCNetLOG("%s、一人離れた！", aRole->name_->getCString());
+    }
+    /* 敌人消失 */
+    if (ai_->getEnemiesInVision()->count() < 1) {
+        ai_->AIState_ = MCIdleState;
+    }
 }
 
 /**
@@ -170,7 +183,7 @@ MCRole::roleDidExitVision(MCRole *aRole, bool isEnermy)
 void
 MCRole::roleWasAttacked(const MCEffect &anEffect)
 {
-    CCLog("攻撃された");
+    MCNetLOG("攻撃された");
     /* 透支状态时是不会切换的！ */
     if (! exhausted_) {
         ai_->AIState_ = MCCombatantStatus;
@@ -183,6 +196,7 @@ MCRole::roleWasAttacked(const MCEffect &anEffect)
 void
 MCRole::attackDidFinish()
 {
+    ai_->unactivate();
     ai_->AIState_ = MCCombatantStatus;
 }
 
@@ -210,11 +224,18 @@ MCRole::performWhenIdleState()
 void
 MCRole::performWhenCombatantStatus()
 {
-    CCLog("戦え！少年よ！");
-    if (! exhausted_ /* 体力透支以上 */
-        && ai_->getEnemiesInVision()->count() > 1) {
-        ai_->AIState_ = MCAttackState;
+    MCNetLOG("戦え！少年よ！");
+    unsigned int count = ai_->getEnemiesInVision()->count();
+    if (! exhausted_) { /* 体力透支以上 */
+        if (count > 0) {
+            MCNetLOG("MCAttackState");
+            ai_->AIState_ = MCAttackState;
+        } else {
+            MCNetLOG("MCIdleState");
+            ai_->AIState_ = MCIdleState;
+        }
     } else { /* 体力透支，需要休息 */
+        MCNetLOG("MCRestingState");
         ai_->AIState_ = MCRestingState;
     }
 }
@@ -234,8 +255,8 @@ MCRole::performWhenRestingState()
 void
 MCRole::performWhenAttackState()
 {
-    ai_->activating_ = true;
-    CCLog("攻撃せよ！");
+    ai_->activate();
+    MCNetLOG("攻撃せよ！");
     /* 确定攻击对象、攻击方式 */
 #warning not implemented!
 #warning debug
@@ -248,7 +269,7 @@ MCRole::performWhenAttackState()
 void
 MCRole::performWhenDeathState()
 {
-    CCLog("死んだ");
+    MCNetLOG("死んだ");
     /* 死亡动画神马的还是算了 */
     died();
 }

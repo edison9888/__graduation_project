@@ -13,7 +13,7 @@
 
 class MCNPCAI : public MCAI {
 public:
-    void update(float dt);
+    void changingState(); /* 状态切换 */
     
     CREATE_FUNC(MCNPCAI);
 };

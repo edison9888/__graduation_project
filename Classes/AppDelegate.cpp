@@ -7,20 +7,9 @@
 
 #include "MCTestbed.h"
 
-//#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-
-//void Win32KeyHook( UINT message,WPARAM wParam, LPARAM lParam )
-//{
-//	switch (message) {
-//    case WM_KEYDOWN:
-//		MCKeyboardDispatcher::sharedKeyboardDispatcher()->dispatchKeyDownMSG(wParam);
-//        break;
-//    case WM_KEYUP:
-//		MCKeyboardDispatcher::sharedKeyboardDispatcher()->dispatchKeyUpMSG(wParam);
-//		break;
-//	}
-//}
-//#endif //CC_PLATFORM_WIN32 Windows的键盘响应
+#if MC_DEBUG_SERVER == 1
+#include "MCSimpleGameSceneContextServer.h"
+#endif
 
 AppDelegate::AppDelegate() {
 
@@ -117,6 +106,12 @@ bool AppDelegate::applicationDidFinishLaunching() {
     // register lua engine
     CCLuaEngine* pEngine = CCLuaEngine::defaultEngine();
     CCScriptEngineManager::sharedManager()->setScriptEngine(pEngine);
+    
+#if MC_DEBUG_SERVER == 1
+    MCSimpleGameSceneContextServer *server = MCSimpleGameSceneContextServer::defaultSimpleGameSceneContextServer();
+    server->setPort(kMCListeningPort);
+    server->runloop();
+#endif
     
     // run
 //    pDirector->pushScene(MCMainMenuLayer::scene());

@@ -24,14 +24,16 @@ typedef mc_enum_t MCFacade;
 
 class MCShadow;
 class MCRole;
+class MCAStarAlgorithm;
 
-class MCRoleEntityMetadata : public CCSprite {
+class MCRoleEntityMetadata : public CCObject {
     friend class MCRole;
     friend class MCRoleEntity;
 public:
     MCRoleEntityMetadata();
     ~MCRoleEntityMetadata();
     
+private:
     CCString *spriteSheetPath_;
     
     /* 显示相关 */
@@ -54,7 +56,7 @@ public:
     inline float getY() {
         return position_.y;
     }
-    
+
     CC_SYNTHESIZE(CCPoint, position_, Position);
     CC_SYNTHESIZE(CCArray *, flags_, Flags);
 };
@@ -76,32 +78,35 @@ public:
     void face(MCFacade aFacade);
     void walk(MCFacade aFacade);
     void walk(const CCPoint &delta);
-    void walkTo(CCPoint &aDestinationPosition);
     
     /* 坑爹啊！直接moveby居然不行！ */
     void moveBy(const CCPoint &aDelta);
     void drag(const CCPoint &aDelta);
     
-    void walkOnScreen(const CCPoint &aDestinationLocation, const CCPoint &offset);
     bool isWalking();
     void stopWalking();
+    void stopWalkAction();
     
     /**
      * 使用寻路算法
      * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
      */
     void findPath(const CCPoint &aDestinationLocation);
+    void findPath(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL);
+    
+    /**
+     * 测试某个位置是否能站
+     * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
+     */
+    bool testPosition(const CCPoint &aDestinationLocation);
     
     /**
      * 寻路结束
      */
-    void findPathDidFinish(CCObject *obj);
-    
-    void walkEnded();
+    void pathFindingDidFinish(CCObject *obj);
     
 protected:
     void walkWithPathFinding(CCObject *algoObject);
-    void walkPath(CCObject *obj);
     
     void actionEnded(CCObject* anObject);
     void stopAllMoveToActions();
@@ -123,11 +128,18 @@ protected:
     CC_SYNTHESIZE(MCShadow *, shadow_, Shadow); /* 影子 */
     
 private:
+    MCAStarAlgorithm *pathFindingAlgo_; /* 寻路算法实例 */
+    
     CCArray *moveToActions_;
     CCArray *moveToDestinations_; /* 移动目标列表 */
     
     /* 碰撞 */
     CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);    /* OBB */
+    
+    /* path finding callback */
+    CCObject *target_;
+    SEL_CallFuncO pathFindingSelector_;
+    CCObject *pathFindingSelectorUserdata_;
 };
 
 #endif /* defined(__Military_Confrontation__MCRoleEntity__) */

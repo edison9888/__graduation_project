@@ -9,7 +9,6 @@
 #include "MCTestbed.h"
 #include "MCRoleManager.h"
 
-#include "MCTestController.h"
 #include "MCTestLua.h"
 #include "MCTestGame.h"
 #include "MCTestManagers.h"
@@ -70,7 +69,6 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test Trading Props UI", MCTestTradingPropsUI::scene},
     {"Test Enhancing Equipment UI", MCTestEnhancingEquipmentUI::scene},
     {"Test Hiring Mercenary UI", MCTestHiringMercenaryUI::scene},
-    {"Test Controller", MCTestController::scene},
     {"Test Lua", MCTestLua::scene},
     {"Test Flag Manager", MCTestFlagManager::scene},
     {"Test Task Manager", MCTestTaskManager::scene},

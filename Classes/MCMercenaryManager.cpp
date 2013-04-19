@@ -97,15 +97,6 @@ MCMercenaryManager::loadMercenaries()
                                               c_str_m_id + 1);
         mercenary->setSpriteSheet(ccstring);
         ccstring->retain();
-        /* AI String */
-        const char *c_str_ai_id = mercenariesIterator->first.c_str();
-        mc_object_id_t ai_id = {
-            c_str_ai_id[0],
-            c_str_ai_id[1],
-            c_str_ai_id[2],
-            c_str_ai_id[3]
-        };
-            //todo: set ai
         /* cost Integer */
         mercenary->cost_ = mercenaryObject["cost"].getInt();
         /* HP Integer */

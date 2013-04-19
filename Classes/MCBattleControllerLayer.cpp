@@ -72,7 +72,7 @@ MCBattleControllerLayer::setEnabled(bool var)
 }
 
 bool
-MCBattleControllerLayer::getJoypadEnable()
+MCBattleControllerLayer::isJoypadEnable()
 {
     return joypad_->isTouchEnabled();
 }
@@ -82,11 +82,20 @@ MCBattleControllerLayer::setJoypadEnable(bool var)
 {
     joypad_->setVisible(var);
     joypad_->setTouchEnabled(var);
+    controller_->setJoypadEnable(var);
 }
 
+/**
+ * 在这里是切换为Joypad控制的按钮 
+ * 仅能在选中一人的情况下使用摇杆
+ */
 void
-MCBattleControllerLayer::activate(CCObject *aSender) /* 在这里是切换为Joypad控制的按钮 */
+MCBattleControllerLayer::activate(CCObject *aSender)
 {
+    CCArray *selectedRoles = controller_->getSelectedRoles();
+    if (selectedRoles->count() != 1) {
+        return;
+    }
     if (joypad_->isVisible()) {
         setJoypadEnable(false);
         controller_->setVisible(true);
@@ -95,5 +104,7 @@ MCBattleControllerLayer::activate(CCObject *aSender) /* 在这里是切换为Joy
         setJoypadEnable(true);
         controller_->setVisible(false);
         controller_->setTouchEnabled(false);
+        /* 聚焦人物 */
+        controller_->getDelegate()->controllerDidFocus(controller_, dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0)));
     }
 }

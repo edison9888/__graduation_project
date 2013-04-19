@@ -12,6 +12,10 @@
 #include "MCDungeonMaster.h"
 #include "MCFlagManager.h"
 
+#if MC_DEBUG_SERVER == 1
+#include "MCSimpleGameSceneContextServer.h"
+#endif
+
 const char *kMCSceneDidLoadNotification = "kMCSceneDidLoadNotification";
 
 static const char *kMCChangingSceneScriptFilepath = "scripts/changing-scene.lua";
@@ -88,6 +92,7 @@ MCSceneController::requestChangingScene()
 void
 MCSceneController::__loadScene()
 {
+    CCLog("will load scene");
     MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(expectedSceneId_);
     expectedScene_ = newScene;
     CCString *entranceName = newScene->getEntranceName();
@@ -99,6 +104,7 @@ MCSceneController::__loadScene()
         newScene->setEntranceName(entranceName);
         entranceName->retain();
     }
+    CCLog("did load scene");
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCSceneDidLoadNotification);
 }
@@ -137,4 +143,8 @@ MCSceneController::__changeScene()
 //    }
     expectedScene_ = NULL;
     CC_SAFE_RELEASE_NULL(entranceName_);
+    
+#if MC_DEBUG_SERVER == 1
+    MCSimpleGameSceneContextServer::defaultSimpleGameSceneContextServer()->notifySceneDidChange();
+#endif
 }

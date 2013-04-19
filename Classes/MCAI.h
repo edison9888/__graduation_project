@@ -59,8 +59,8 @@ public:
      * 绑定到人物
      * 此方法假定aRole已经实现了MCAIDelegate的代理方法
      */
-    void bind(MCRole *aRole);
-    MCRole *unbind();
+    virtual void bind(MCRole *aRole);
+    virtual MCRole *unbind();
     
     inline void unactivate() {
         activating_ = false;
@@ -72,13 +72,15 @@ public:
     
     void update(float dt); /* 大脑在转动 */
     
-    void checkObjects(float dt); /* 检查视野中的对象是否还在 */
+    virtual void checkObjects(float dt); /* 检查视野中的对象是否还在 */
     
     CCObject *copy();
     
     CREATE_FUNC(MCAI);
     
 protected:
+    virtual void changingState(); /* 状态切换 */
+    
     MCAIRole *roleForObjectId(mc_object_id_t anObjectId);
     
     MCRole *role_;
@@ -92,7 +94,8 @@ protected:
     CC_SYNTHESIZE(MCAIDelegate *, delegate_, Delegate);
     CC_SYNTHESIZE(MCAIStateMachineDelegate *, AIStateMachineDelegate_, AIStateMachineDelegate);
     CC_SYNTHESIZE_READONLY(MCVision *, vision_, Vision); /* 视野 */
-    CC_SYNTHESIZE_READONLY(MCAIState, AIState_, AIState); /* 状态 */
+    
+    CC_SYNTHESIZE(MCAIState, AIState_, AIState); /* 状态 */
 };
 
 class MCAIStateMachineDelegate {

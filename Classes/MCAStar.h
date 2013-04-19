@@ -81,7 +81,7 @@ protected:
     /**
      * 生成对象适用的变形地图
      */
-    void generateMapAltas(MCRole *aRole, const CCSize &aMapSize, CCArray *barriers);
+    void generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMapSize, CCArray *barriers);
     
     /**
      * 坐标(x,y)是否为障碍 
@@ -136,7 +136,9 @@ public:
     
     static MCAStar *create(CCTMXTiledMap *aMap);
     
-    void findPath(MCRole *aRole, const CCPoint &aDestinationLocation);
+    void findPath(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation);
+    
+    bool testPosition(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation);
     
 protected:
     /**

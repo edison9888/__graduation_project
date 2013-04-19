@@ -9,7 +9,7 @@
 #include "MCNPCAI.h"
 
 void
-MCNPCAI::update(float dt)
+MCNPCAI::changingState()
 {
     /* NPC表示神马都不鸟 */
 }

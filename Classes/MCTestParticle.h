@@ -12,11 +12,13 @@
 #include "MCTestLayer.h"
 #include "MCSceneManager.h"
 #include "MCHero.h"
+#include "MCGameState.h"
 
 class MCTestParticle : public MCTestLayer {
 public:
     
     static CCScene *scene() {
+        MCGameState::sharedGameState()->load();
         mc_object_id_t m_id = {
             'M', '0', '0', '1'
         };
@@ -39,6 +41,13 @@ public:
         galaxy->setPosition(ccp(200, 200));
         CCSize s = galaxy->getContentSize();
         addChild(galaxy);
+        
+        std::string file("particles/point_to.plist");
+        CCParticleSystemQuad *pointTo = new CCParticleSystemQuad;
+        pointTo->initWithFile(file.c_str());
+        pointTo->setAutoRemoveOnFinish(false);
+        pointTo->setPosition(ccp(400, 200));
+        addChild(pointTo);
     }
     
     void onExit() {

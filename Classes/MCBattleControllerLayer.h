@@ -22,20 +22,25 @@ public:
     
     bool init();
     
-    CREATE_FUNC(MCBattleControllerLayer);
-    
     bool isEnabled();
     void setEnabled(bool var);
     
-    bool getJoypadEnable();
+    bool isJoypadEnable();
     void setJoypadEnable(bool var);
     
+    MCBattleControllerDelegate *getDelegate();
+    void setDelegate(MCBattleControllerDelegate *aJoypadDelegate);
+    
+    CREATE_FUNC(MCBattleControllerLayer);
+    
 protected:
-    void activate(CCObject *aSender); /* 在这里是切换为Joypad控制的按钮 */
+    /**
+     * 在这里是切换为Joypad控制的按钮
+     * 仅能在选中一人的情况下使用摇杆
+     */
+    void activate(CCObject *aSender);
     
     MCBattleController *controller_;
-    
-    CC_PROPERTY(MCBattleControllerDelegate *, delegate_, Delegate);
 };
 
 #endif /* defined(__Military_Confrontation__MCBattleControllerLayer__) */

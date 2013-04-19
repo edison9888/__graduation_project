@@ -32,12 +32,20 @@ MCHero::init()
         'X', '0', '0', '0'
     };
     setID(o_id);
+    name_ = CCString::create("男猪脚");
+    name_->retain();
     setHP(100);
     setMaxHP(100);
     setPP(100);
     setMaxPP(100);
     
+    exhausted_ = false;
+    exhaustion_ = 20;
+    tired_ = 50;
+    
     roleState_ = 0;
+    spriteSheet_ = NULL;
+    defaultDialogue_ = NULL;
     
     return true;
 }

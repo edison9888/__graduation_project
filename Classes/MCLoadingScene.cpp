@@ -115,6 +115,7 @@ MCLoading::loading(float dt)
 void 
 MCLoading::sceneDidLoad(CCObject *obj)
 {
+    CCLog("sceneDidLoad");
     runAction(CCSequence::create(CCFadeOut::create(kMCActionDuration),
                                  CCCallFunc::create(this, callfunc_selector(MCLoading::didHide)),
                                  NULL));
@@ -126,4 +127,5 @@ MCLoading::didHide()
     unschedule(schedule_selector(MCLoading::loading));
     CCDirector::sharedDirector()->popScene();
     MCSceneController::sharedSceneController()->__changeScene();
+    CCLog("didHide");
 }

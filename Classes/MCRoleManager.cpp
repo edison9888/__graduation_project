@@ -109,14 +109,10 @@ MCRoleManager::loadData()
 MCRole *
 MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 {
-    MCRole *role = (MCRole *) protoRoleForObjectId(anObjectId)->copy();
+    MCRole *role = enemyForObjectId(anObjectId);
     
-    if (role && role->init()) {
-        role->autorelease();
-        role->loadSpriteSheet();
-    } else {
-        CC_SAFE_DELETE(role);
-        role = NULL;
+    if (role == NULL) {
+        role = NPCForObjectId(anObjectId);
     }
     
     return role;
@@ -125,14 +121,18 @@ MCRoleManager::roleForObjectId(mc_object_id_t anObjectId)
 MCNPC *
 MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
 {
-    MCNPC *npc = (MCNPC *) protoNPCForObjectId(anObjectId)->copy();
+    MCNPC *protoNPC = protoNPCForObjectId(anObjectId);
+    MCNPC *npc = NULL;
     
-    if (npc && npc->init()) {
-        npc->autorelease();
-        npc->loadSpriteSheet();
-    } else {
-        CC_SAFE_DELETE(npc);
-        npc = NULL;
+    if (protoNPC) {
+        npc = dynamic_cast<MCNPC *>(protoNPC->copy());
+        if (npc && npc->MCRole::init()) {
+            npc->autorelease();
+            npc->loadSpriteSheet();
+        } else {
+            CC_SAFE_DELETE(npc);
+            npc = NULL;
+        }
     }
     
     return npc;
@@ -141,14 +141,18 @@ MCRoleManager::NPCForObjectId(mc_object_id_t anObjectId)
 MCEnemy *
 MCRoleManager::enemyForObjectId(mc_object_id_t anObjectId)
 {
-    MCEnemy *enemy = (MCEnemy *) protoEnemyForObjectId(anObjectId)->copy();
+    MCEnemy *protoEnemy = protoEnemyForObjectId(anObjectId);
+    MCEnemy *enemy = NULL;
     
-    if (enemy && enemy->MCRole::init()) {
-        enemy->autorelease();
-        enemy->loadSpriteSheet();
-    } else {
-        CC_SAFE_DELETE(enemy);
-        enemy = NULL;
+    if (protoEnemy) {
+        enemy = dynamic_cast<MCEnemy *>(protoEnemy->copy());
+        if (enemy && enemy->MCRole::init()) {
+            enemy->autorelease();
+            enemy->loadSpriteSheet();
+        } else {
+            CC_SAFE_DELETE(enemy);
+            enemy = NULL;
+        }
     }
     
     return enemy;
@@ -327,10 +331,11 @@ MCRoleManager::loadEnemyData()
             c_str_ai_id[2],
             c_str_ai_id[3]
         };
-            //todo: set ai
+        
+        enemy->setID(m_id);
+        /* 敌人的类型由AI的ID那里获取，实际上的AI设置在生成精灵的时候设置 */
         enemy->init(ai_id.index_ == '0' ? MCTerrestrial : MCFlying);
         enemy->autorelease();
-        enemy->setID(m_id);
         /* name String */
         ccstring = CCString::create(enemyObject["name"].getString().c_str());
         enemy->setName(ccstring);

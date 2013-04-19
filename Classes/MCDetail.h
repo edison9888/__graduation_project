@@ -23,12 +23,17 @@ class MCDetail : public CCLayer, public MCConfirmDelegate {
 public:
     bool init();
     
+    static MCDetail *create();
+//    CREATE_FUNC(MCDetail);
+    
     void menuItem_clicked(CCObject* aSender);
     void backward(CCObject* aSender);
     
     void initPosition();
     void show();
     void hide();
+    
+    void onExit();
     
     void showState(); /* 显示状态选项卡 */
     void showProps(); /* 显示道具选项卡 */
@@ -39,8 +44,6 @@ public:
     void showQuitWindow(); /* 显示退出窗口 */
     
     void confirmDidClickYesButton(MCConfirm *aConfirm);
-        
-    CREATE_FUNC(MCDetail);
 private:
     CCMenuItem *lastSelectedMenuItem_;
     MCDetailLayer *lastShownLayer_;

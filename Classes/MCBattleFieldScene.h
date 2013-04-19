@@ -13,7 +13,16 @@
 
 class MCBattleFieldScene : public MCScene {
 public:
+    MCBattleFieldScene()
+    : usingJoypad_(false) {}
+    
     void installController();
+    
+    void showDetail();
+    void detailDidHide();
+    
+protected:
+    bool usingJoypad_;
 };
 
 #endif /* defined(__Military_Confrontation__MCBattleFieldScene__) */
