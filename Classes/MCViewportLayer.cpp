@@ -58,7 +58,7 @@ void
 MCViewportLayer::draw(void)
 {
     CCLayer::draw();
-    if (!1) {
+    if (1) {
     CCObject *obj;
     MCRoleEntity *roleEntity;
     MCRole *role;

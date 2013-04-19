@@ -84,38 +84,6 @@ MCMercenary::performWhenIdleState()
 #pragma mark *** MCAIStateMachineDelegate ***
 
 /**
- * 跟随状态下回调
- */
-void
-MCMercenary::performWhenFollowingState()
-{
-    /* 主角不在自己视野内才触发跟随，不科学是吧= - */
-    CCDictionary *roles = ai_->getRolesInVision();
-    MCRole *hero = MCHero::sharedHero();
-    bool shouldFollow = true;
-    
-    if (roles->count() > 0) {
-        CCDictElement *elem;
-        
-        CCDICT_FOREACH(roles, elem) {
-            if (dynamic_cast<MCAIRole *>(elem->getObject())->role == hero) {
-                shouldFollow = false;
-                break;
-            }
-        }
-    }
-    CCPoint rolePosition = getEntity()->getPosition();
-    CCPoint heroPosition = hero->getEntity()->getPosition();
-    CCSize frameSize = getEntityMetadata()->getFrameSize();
-    
-    /* 距离超过4个身位才跟随 */
-    if (shouldFollow
-        && ccpLength(ccpSub(rolePosition, heroPosition)) > 4 * frameSize.width) {
-        follow();
-    }
-}
-
-/**
  * 逃跑状态下回调
  */
 void
@@ -123,36 +91,6 @@ MCMercenary::performWhenFleeState()
 {
     ai_->activate();
 #warning flee!
-}
-
-void
-MCMercenary::follow()
-{
-    ai_->activate();
-    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
-    MCScene *scene = sceneContext->getScene();
-    MCAStar *aStar = scene->getAStar();
-    MCRoleEntity *heroEntity = MCHero::sharedHero()->getEntity();
-    MCRoleEntity *roleEntity = getEntity();
-    CCPoint heroPosition = heroEntity->getPosition();
-    MCOBB roleOBB = roleEntity->getOBB();
-    
-    /* 测试hero周围的八个位置能否前往 */
-    for (mc_index_t i = 0; i < 8; ++i) {
-        CCPoint checkPosition = ccp(heroPosition.x + __delta[i].x,
-                                    heroPosition.y + __delta[i].y);
-        if (aStar->testPosition(roleEntity, checkPosition)) {
-            roleEntity->findPath(checkPosition, this, callfuncO_selector(MCMercenary::followingDidFinish));
-            break;
-        };
-    }
-}
-
-void
-MCMercenary::followingDidFinish(CCObject *anObject)
-{
-    CCLog("end following");
-    ai_->unactivate();
 }
 
 MCRoleEntity *

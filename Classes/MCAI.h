@@ -23,9 +23,8 @@ enum {
     MCAttackState       = MCMakeEnum(3), /* 攻击状态 */
     
     /* 佣兵附加 */
-    MCFollowingState    = MCMakeEnum(4), /* 跟随状态，跟随主角 */
-    MCFleeState         = MCMakeEnum(5), /* 逃跑状态 */
-    MCDeathState        = MCMakeEnum(6)  /* 死亡状态 */
+    MCFleeState         = MCMakeEnum(4), /* 逃跑状态 */
+    MCDeathState        = MCMakeEnum(5)  /* 死亡状态 */
 };
 typedef mc_enum_t MCAIState;
 

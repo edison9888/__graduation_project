@@ -131,7 +131,6 @@ private:
     MCAStarAlgorithm *pathFindingAlgo_; /* 寻路算法实例 */
     
     CCArray *moveToActions_;
-    CCArray *moveToDestinations_; /* 移动目标列表 */
     
     /* 碰撞 */
     CC_PROPERTY_READONLY_PASS_BY_REF(MCOBB, obb_, OBB);    /* OBB */

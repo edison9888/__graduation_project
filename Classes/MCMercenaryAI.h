@@ -26,11 +26,6 @@ public:
     virtual void activate(MCAIState anAIState);
     
     /**
-     * 跟随状态下回调
-     */
-    virtual void performWhenFollowingState() {}
-    
-    /**
      * 逃跑状态下回调
      */
     virtual void performWhenFleeState() {}

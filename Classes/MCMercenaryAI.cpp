@@ -25,9 +25,7 @@ MCMercenaryAI::changingState()
 void
 MCMercenaryAIStateMachineDelegate::activate(MCAIState anAIState)
 {
-    if (anAIState == MCFollowingState) {
-        performWhenFollowingState();
-    } else if (anAIState == MCFleeState) {
+    if (anAIState == MCFleeState) {
         performWhenFleeState();
     }
     MCAIStateMachineDelegate::activate(anAIState);

@@ -448,7 +448,9 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     MCOBB heroOBB = roleEntity->getOBB();
     /* recal origin */
     heroOBB.setup(deltaForCheck);
-    detectsCollidesWithEntrances(heroOBB);
+    if (roleEntity == hero_) {
+        detectsCollidesWithEntrances(heroOBB);
+    }
     detectsCollidesWithSemiTransparents(heroOBB);
     if (detectsCollision(heroOBB)) {
         deltaForMap = CCPointZero;
@@ -461,7 +463,9 @@ MCObjectLayer::moveTo(const CCPoint &offset)
                                          frameSize.width,frameSize.height);
     CCRect roleFrame(roleCurrentFrame);
     roleFrame.origin = ccpAdd(roleFrame.origin, deltaForCheck);
-    detectsCollidesWithEntrances(roleFrame);
+    if (roleEntity == hero_) {
+        detectsCollidesWithEntrances(roleFrame);
+    }
     detectsCollidesWithSemiTransparents(roleFrame);
 //    deltaForHero = ccpAdd(deltaForHero, feedbackOffset);
 //    deltaForMap = ccpSub(deltaForMap, feedbackOffset);
@@ -489,6 +493,11 @@ MCObjectLayer::moveTo(const CCPoint &offset)
            deltaForMap.x, deltaForMap.y);
 #endif
 #endif
+    
+    if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f
+        && deltaForMap.x == 0.0f && deltaForMap.y == 0.0f) {
+        return;
+    }
     
     roleEntity->walk(offset);
     roleEntity->moveBy(deltaForRole);

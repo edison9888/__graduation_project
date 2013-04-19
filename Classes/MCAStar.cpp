@@ -11,10 +11,10 @@
 #include <bits/stl_algo.h>
 
 const char *kMCAStarDidFinishAlgorithmNotification = "kMCAStarDidFinishAlgorithmNotification";
-const char *kMCAStarAlgorithmWillRemoveNotification = "kMCAStarAlgorithmWillRemoveNotification";
-static const mc_byte_t kMCBarrier = MCMakeEnum(0);
-static const mc_byte_t kMCStartPoint = MCMakeEnum(1);
-static const mc_byte_t kMCEndPoint = MCMakeEnum(2);
+
+const mc_byte_t kMCBarrier = MCMakeEnum(0);
+//const mc_byte_t kMCStartPoint = MCMakeEnum(1);
+//const mc_byte_t kMCEndPoint = MCMakeEnum(2);
 
 struct __mc_offset {
     int x;
@@ -37,11 +37,6 @@ static struct __mc_offset __delta[] = {
 /**
  * Used for sort
  */
-//static int
-//less(const CCObject *p1, const CCObject *p2)
-//{
-//    return dynamic_cast<const MCAStarNode *>(p1)->getF() > dynamic_cast<const MCAStarNode *>(p2)->getF();
-//}
 static int
 less(const void *p1, const void *p2)
 {
@@ -77,197 +72,16 @@ static inline MCAStarNode *
 CCArrayGetAStarNodeByPoint(CCArray *anArray, const CCPoint &aPoint)
 {
     CCObject *obj;
+    int c=0;
+    int s = anArray->count();
+    CC_UNUSED_PARAM((s));
     CCARRAY_FOREACH(anArray, obj) {
-        if (dynamic_cast<MCAStarNode *>(obj)->equals(aPoint)) {
+        if (obj && dynamic_cast<MCAStarNode *>(obj)->equals(aPoint)) {
             return dynamic_cast<MCAStarNode *>(obj);
         }
+        c++;
     }
     return NULL;
-}
-
-/**
- * 根据父位置创建新的MCAStarItem。
- * 若父位置不为NULL，则dx和dy是相对于父位置的位置偏移。
- * 否则dx和dy是地图上的位置。
- */
-MCAStarNode *
-MCAStarNode::createWithParent(MCAStarNode *aParent, float dx, float dy)
-{
-    MCAStarNode *node = new MCAStarNode;
-    
-    if (node) {
-        node->autorelease();
-        if (aParent != NULL) {
-            node->position_.x = aParent->position_.x + dx;
-            node->position_.y = aParent->position_.y + dy;
-            node->g_ = aParent->g_ + ((abs(dx) == 1 && abs(dy) == 1) ? 14 : 10);
-        } else {
-            node->position_.x = dx;
-            node->position_.y = dy;
-            node->g_ = 0;
-        }
-        node->parent_ = aParent;
-        node->h_ = 0;
-        node->f_ = 0;
-    }
-    
-    return node;
-}
-
-void
-MCAStarNode::manhattanMethod(MCAStarNode *aTargetPosition)
-{
-    h_ = 10 * (abs(position_.x - aTargetPosition->position_.x)
-               + abs(position_.y - aTargetPosition->position_.y));
-    f_ = g_ + h_;
-}
-
-CCPoint *
-MCAStarNode::getPosition() const
-{
-    return (CCPoint *)&position_;
-}
-
-MCAStarNode *
-MCAStarNode::getParent()
-{
-    return parent_;
-}
-
-void
-MCAStarNode::setParent(MCAStarNode *var)
-{
-    parent_ = var;
-    g_ = var->g_ + ((abs(position_.x - var->position_.x) == 1 && abs(position_.y - var->position_.y) == 1) ? 14 : 10);
-
-}
-
-#pragma mark -
-#pragma mark *** MCAStarAlgorithm ***
-
-MCAStarAlgorithm::~MCAStarAlgorithm()
-{
-    CC_SAFE_DELETE_ARRAY(mapAltas_);
-//    CC_SAFE_RELEASE(route_);
-    delete route;
-}
-
-bool
-MCAStarAlgorithm::init(const CCPoint &aStartPoint, const CCPoint &anEndPoint)
-{
-    do {
-        mapAltas_ = NULL;
-        
-//        route_ = CCArray::create();
-//        CC_BREAK_IF(!route_);
-//        route_->retain();
-        
-        startPoint_ = MCAStarNode::createWithParent(NULL, aStartPoint.x, aStartPoint.y);
-        endPoint_ = MCAStarNode::createWithParent(NULL, anEndPoint.x, anEndPoint.y);
-        route = new std::stack<CCPoint>;
-        
-        return true;
-    } while (0);
-    
-    return false;
-}
-
-MCAStarAlgorithm *
-MCAStarAlgorithm::create(const CCPoint &aStartPoint, const CCPoint &anEndPoint)
-{
-    MCAStarAlgorithm *algo = new MCAStarAlgorithm;
-    
-    if (algo && algo->init(aStartPoint, anEndPoint)) {
-        algo->autorelease();
-    } else {
-        CC_SAFE_DELETE(algo);
-        algo = NULL;
-    }
-    
-    return algo;
-}
-
-void
-MCAStarAlgorithm::execute()
-{
-//    CCScheduler *scheduler = CCDirector::sharedDirector()->getScheduler();
-//    scheduler->scheduleSelector(schedule_selector(MCAStarAlgorithm::process), this, 0.0f , 0, 0.0f, false);
-    process(NULL);
-}
-
-/**
- * 坐标(x,y)是否为障碍
- */
-bool
-MCAStarAlgorithm::isBarrier(int x, int y)
-{
-    return (mapAltas_[x + y * mapWidth_] & kMCBarrier) == kMCBarrier;
-}
-
-bool
-MCAStarAlgorithm::isBarrier(const CCPoint &aPoint)
-{
-    return (mapAltas_[(mc_ssize_t) aPoint.x + (mc_ssize_t) aPoint.y * mapWidth_] & kMCBarrier) == kMCBarrier;
-}
-
-/**
- * 生成对象适用的变形地图
- */
-void
-MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMapSize, CCArray *barriers)
-{
-    MCOBB obb = aRoleEntity->getOBB();
-    mc_ssize_t obbEdge = obb.width; /* width=height */
-    CCPoint checkFrameOrigin = CCPointZero;
-    CCRect checkFrame = CCRectMake(checkFrameOrigin.x,
-                                   checkFrameOrigin.y,
-                                   obbEdge,
-                                   obbEdge); /* 第一个检测矩形 */
-    mc_ssize_t width = (mc_ssize_t) (aMapSize.width / obbEdge) + 1;
-    mc_ssize_t height = (mc_ssize_t) (aMapSize.height / obbEdge) + 1;
-    mapAltas_ = new mc_byte_t[width * height];
-    CCObject *obj;
-    MCBarrier *barrier;
-    mc_ssize_t collided;
-    
-    /* 生成 */
-    mapWidth_ = width;
-    mapHeight_ = height;
-    edge_ = obbEdge;
-    startPoint_->position_.x = (float) ((mc_ssize_t) startPoint_->position_.x / (mc_ssize_t) obbEdge);
-    startPoint_->position_.y = (float) ((mc_ssize_t) startPoint_->position_.y / (mc_ssize_t) obbEdge);
-    endPoint_->position_.x = (float) ((mc_ssize_t) endPoint_->position_.x / (mc_ssize_t) obbEdge);
-    endPoint_->position_.y = (float) ((mc_ssize_t) endPoint_->position_.y / (mc_ssize_t) obbEdge);
-    for (mc_ssize_t y = 0; y < height; ++y) {
-        for (mc_ssize_t x = 0; x < width; ++x) {
-            collided = 0;
-            CCARRAY_FOREACH(barriers, obj) {
-                barrier = dynamic_cast<MCBarrier *>(obj);
-#if (MC_COLLISION_USE_OBB == 1)
-                CCRect aabb = barrier->getOBB().getAABB();
-#else
-                CCRect aabb = barrier->getFrame();
-#endif
-                if (aabb.intersectsRect(checkFrame)) {
-                    collided = kMCBarrier;
-                    break;
-                }
-            }
-            mapAltas_[x + y * width] = collided;
-            checkFrame.origin.x += obbEdge;
-        }
-        checkFrame.origin.x = checkFrameOrigin.x;
-        checkFrame.origin.y += obbEdge;
-    }
-    
-    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * width] |= kMCStartPoint;
-    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * width] |= kMCEndPoint;
-//    for (mc_ssize_t y = height - 1; y >= 0; --y) {
-//        for (mc_ssize_t x = 0; x < width; ++x) {
-//            printf("%d ", mapAltas_[x + y * width]);
-//        }
-//        printf("\n");
-//    }
 }
 
 /**
@@ -290,26 +104,41 @@ MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMap
  *    * 没有找到目标格，开启列表已经空了。这时候，路径不存在。
  * 3. 保存路径。从目标格开始，沿着每一格的父节点移动直到回到起始格。这就是你的路径。
  */
-void
-MCAStarAlgorithm::process(CCObject *obj)
+static void *
+mc_astar_algorithm_process(void *obj)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
+    MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
+    std::stack<CCPoint> *route = algo->route;
+    mc_byte_t *mapAltas = algo->getMapAltas();
+    mc_size_t edge = algo->getEdge();
+    MCAStarNode *startPoint = algo->getStartPoint();
+    MCAStarNode *endPoint = algo->getEndPoint();
     MCAStarNode *currentPosition;
     MCAStarNode *side;
     MCAStarNode tempNode;
     CCObject *tempObject;
-    CCArray *openList = CCArray::create();   /* 开放列表，待检验位置的列表 */
-    CCArray *closedList = CCArray::create(); /* 关闭列表，已经检验过的位置的列表 */
+    mc_size_t mapWidth = algo->getMapWidth();
+    mc_size_t mapHeight = algo->getMapHeight();
+    CCArray *openList = new CCArray;   /* 开放列表，待检验位置的列表 */
+    CCArray *closedList = new CCArray; /* 关闭列表，已经检验过的位置的列表 */
+    CCPoint currentPositionOrigin;
+    CCPoint destinationPosition = endPoint->getPosition();
     
+    openList->init();
+    closedList->init();
+//    CCLog("start-altas(%d %d) end-altas(%d %d)",
+//          startPoint->getX() * edge, startPoint->getY() * edge,
+//          endPoint->getX() * edge, endPoint->getY() * edge);
+    CCLog("start-altas(%d %d) end-altas(%d %d)",
+          startPoint->getX(), startPoint->getY(),
+          endPoint->getX(), endPoint->getY());
     /* 初始化开放列表 */
-    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
-          startPoint_->position_.x, startPoint_->position_.y,
-          endPoint_->position_.x, endPoint_->position_.y);
     /* 至少终点不能是障碍吧~ */
-    if (! isBarrier(endPoint_->position_)) {
-        openList->addObject(startPoint_);
+    if (! algo->isBarrier(destinationPosition)) {
+        openList->addObject(startPoint);
     }
-    for (;;) {
+    for (;algo->isProcessing();) {
         /* 开放列表为空,表明已无可以添加的新节点,而已检验的节点中没有终点节点则意味着没有找到路径 */
         if (openList->count() == 0) {
             CCLog("虾米都没有！");
@@ -317,10 +146,11 @@ MCAStarAlgorithm::process(CCObject *obj)
         }
         /* 选取开放列表中有最小的F值的位置为当前位置，并加入到关闭列表中 */
         currentPosition = ccArrayGetAStarNodeWithMinF(openList->data);
+        currentPositionOrigin = currentPosition->getPosition();
         /* 当前节点为目标节点，找到目标 */
-        if (mapAltas_[(mc_ssize_t) currentPosition->position_.x
-                        + (mc_ssize_t) currentPosition->position_.y * mapWidth_] == kMCEndPoint) {
-            endPoint_ = currentPosition;
+        if (currentPositionOrigin.x == destinationPosition.x
+            && currentPositionOrigin.y == destinationPosition.y) {
+            endPoint = currentPosition;
             CCLog("有了");
             break;
         }
@@ -333,16 +163,16 @@ MCAStarAlgorithm::process(CCObject *obj)
          */
         for (mc_index_t i = 0; i < 8; ++i) {
             /* 先检查关闭列表中有没此位置 */
-            CCPoint checkPoint = ccp(currentPosition->position_.x + __delta[i].x,
-                                     currentPosition->position_.y + __delta[i].y);
-            if (checkPoint.x < 0 || checkPoint.x > mapWidth_
-                || checkPoint.y < 0 || checkPoint.y > mapHeight_) {
+            CCPoint checkPoint = ccp(currentPositionOrigin.x + __delta[i].x,
+                                     currentPositionOrigin.y + __delta[i].y);
+            if (checkPoint.x < 0 || checkPoint.x > mapWidth
+                || checkPoint.y < 0 || checkPoint.y > mapHeight) {
                 continue;
             }
             tempObject = CCArrayGetAStarNodeByPoint(closedList, checkPoint);
             
             /* 如果它不可通过或者已经在关闭列表中，略过它。反之如下。 */
-            if (tempObject || isBarrier(checkPoint)) {
+            if (tempObject || algo->isBarrier(checkPoint)) {
                 continue;
             }
             
@@ -356,62 +186,255 @@ MCAStarAlgorithm::process(CCObject *obj)
                  * 用G值为参考检查新的路径是否更好。更低的G值意味着更好的路径。
                  * 如果是这样，就把这一格的父节点改成当前格，并且重新计算这一格的G和F值。
                  */
-                tempNode.position_ = side->position_;
+                tempNode.setPosition(side->getPosition());
                 tempNode.setParent(currentPosition);
-                int g = currentPosition->g_
-                        + ((abs(side->position_.x - currentPosition->position_.x) == 1
-                            && abs(side->position_.y - currentPosition->position_.y) == 1) ? 14 : 10);
-                if (g < side->g_) {
+                int g = currentPosition->getG()
+                + ((abs(side->getX() - currentPosition->getX()) == 1
+                    && abs(side->getY() - currentPosition->getY()) == 1) ? 14 : 10);
+                if (g < side->getG()) {
                     side->setParent(currentPosition);
                     side->setG(g);
-                    side->manhattanMethod(endPoint_);
+                    side->manhattanMethod(endPoint);
                 }
-                if (tempNode.g_ < side->g_) {
-                    side->g_ = tempNode.g_;
+                if (tempNode.getG() < side->getG()) {
+                    side->setG(tempNode.getG());
                     side->setParent(currentPosition);
-                    side->manhattanMethod(endPoint_);
+                    side->manhattanMethod(endPoint);
                 }
-            /**
-             * 如果它不在开启列表中，把它添加进去。把当前格作为这一格的父节点。记录这一格的F,G,和H值。
-             */
+                /**
+                 * 如果它不在开启列表中，把它添加进去。把当前格作为这一格的父节点。记录这一格的F,G,和H值。
+                 */
             } else { /* 不在开放列表 */
-                side = MCAStarNode::createWithParent(currentPosition,
-                                                     __delta[i].x,
-                                                     __delta[i].y);
-                side->manhattanMethod(endPoint_);
+                side = new MCAStarNode;
+                side->setup(currentPosition,
+                            __delta[i].x,
+                            __delta[i].y);
+                side->manhattanMethod(endPoint);
                 openList->addObject(side);
+                side->release();
             }
         }
     }
     
-    side = CCArrayGetAStarNodeByPoint(openList, endPoint_->position_);
+    side = CCArrayGetAStarNodeByPoint(openList, endPoint->getPosition());
     if (side != NULL) {
         for (;;) {
-            CCPoint target = ccp(side->position_.x * edge_, side->position_.y * edge_);
+            CCPoint target = ccp(side->getX() * edge, side->getY() * edge);
             route->push(target);
-            mapAltas_[(mc_ssize_t) side->position_.x + (mc_ssize_t) side->position_.y * mapWidth_] = 7;
-            if (side->parent_ != NULL && side->parent_->parent_ == NULL) {
+            mapAltas[(mc_ssize_t) side->getX() + (mc_ssize_t) side->getY() * mapWidth] = 7;
+            side->getParent();
+            if (side->getParent() == NULL
+                || (side->getParent() != NULL && side->getParent()->getParent() == NULL)) {
                 break;
             }
-            side = side->parent_;
+            side = side->getParent();
         }
     }
-    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
-          startPoint_->position_.x * edge_, startPoint_->position_.y * edge_,
-          endPoint_->position_.x * edge_, endPoint_->position_.y * edge_);
+    CC_SAFE_RELEASE(openList);
+    CC_SAFE_RELEASE(closedList);
+//    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
+//          startPoint->getX() * (float) edge, startPoint->getY() * (float) edge,
+//          endPoint->getX() * (float) edge, endPoint->getY() * (float) edge);
     
-//    mapAltas_[(mc_ssize_t) startPoint_->position_.x + (mc_ssize_t) startPoint_->position_.y * mapWidth_] = kMCStartPoint;
-//    mapAltas_[(mc_ssize_t) endPoint_->position_.x + (mc_ssize_t) endPoint_->position_.y * mapWidth_] = kMCEndPoint;
-//    for (mc_ssize_t y = mapHeight_ - 1; y >= 0; --y) {
-//        for (mc_ssize_t x = 0; x < mapWidth_; ++x) {
-//            printf("%d ", mapAltas_[x + y * mapWidth_]);
-//        }
-//        printf("\n");
-//    }
-    
-    /* 不需要反序了，直接当做栈处理 */
     /* 发出算法结束的通知 */
-    notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification);
+    if (algo->isProcessing()) {
+        notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification);
+    }
+    
+    return NULL;
+}
+
+#pragma mark -
+#pragma mark *** MCAStarNode ***
+
+/**
+ * 根据父位置创建新的MCAStarItem。
+ * 若父位置不为NULL，则dx和dy是相对于父位置的位置偏移。
+ * 否则dx和dy是地图上的位置。
+ */
+void
+MCAStarNode::setup(MCAStarNode *aParent, float dx, float dy)
+{
+    if (aParent != NULL) {
+        position_.x = aParent->position_.x + dx;
+        position_.y = aParent->position_.y + dy;
+        g_ = aParent->g_ + ((abs(dx) == 1 && abs(dy) == 1) ? 14 : 10);
+    } else {
+        position_.x = dx;
+        position_.y = dy;
+        g_ = 0;
+    }
+    parent_ = aParent;
+    h_ = 0;
+    f_ = 0;
+}
+
+void
+MCAStarNode::manhattanMethod(MCAStarNode *aTargetPosition)
+{
+    h_ = 10 * (abs(position_.x - aTargetPosition->position_.x)
+               + abs(position_.y - aTargetPosition->position_.y));
+    f_ = g_ + h_;
+}
+
+void
+MCAStarNode::setParent(MCAStarNode *aParent)
+{
+    parent_ = aParent;
+    g_ = aParent->g_ + ((abs(position_.x - aParent->position_.x) == 1 && abs(position_.y - aParent->position_.y) == 1) ? 14 : 10);
+
+}
+
+#pragma mark -
+#pragma mark *** MCAStarAlgorithm ***
+
+MCAStarAlgorithm::~MCAStarAlgorithm()
+{
+    CC_SAFE_RELEASE(startPoint_);
+    CC_SAFE_RELEASE(endPoint_);
+    CC_SAFE_DELETE_ARRAY(mapAltas_);
+    delete route;
+}
+
+bool
+MCAStarAlgorithm::init()
+{
+    do {
+        mapAltas_ = NULL;
+        
+        startPoint_ = new MCAStarNode;
+        endPoint_ = new MCAStarNode;
+        
+        route = new std::stack<CCPoint>;
+        CC_BREAK_IF(route);
+        
+        processing_ = false;
+        
+        return true;
+    } while (0);
+    
+    return false;
+}
+
+void
+MCAStarAlgorithm::setDestination(const CCPoint &aDestinationLocation)
+{
+    CCPoint roleOrigin = roleEntity_->getOBB().getOrigin();
+    startPoint_->setup(NULL,
+                       (float) ((mc_size_t) roleOrigin.x / (mc_size_t) edge_),
+                       (float) ((mc_size_t) roleOrigin.y / (mc_size_t) edge_));
+    endPoint_->setup(NULL,
+                     (float) ((mc_size_t) aDestinationLocation.x / (mc_size_t) edge_),
+                     (float) ((mc_size_t) aDestinationLocation.y / (mc_size_t) edge_));
+}
+
+bool
+MCAStarAlgorithm::testPosition(const CCPoint &aDestinationLocation)
+{
+    return isBarrier(aDestinationLocation);
+}
+
+void
+MCAStarAlgorithm::stopPathFinding() {
+    processing_ = false;
+    
+    /* 貌似很快就找到了，完全没需要停止线程 */
+    if (pid_) {
+        pthread_join(pid_, NULL);
+        pid_ = NULL;
+        
+        std::stack<CCPoint> *oldRoute = route;
+        route = new std::stack<CCPoint>;
+        delete oldRoute;
+    }
+    
+    while (route->size() > 0) {
+        route->pop();
+    }
+}
+
+void
+MCAStarAlgorithm::execute()
+{
+    processing_ = true;
+    
+    /* 创建线程 */
+    pthread_attr_t pthreadAttr;
+    int errCode = pthread_attr_init(&pthreadAttr);
+    if (errCode != 0) {
+        processing_ = false;
+        perror("线程创建失败！");
+        return;
+    }
+    
+    errCode = pthread_attr_setdetachstate(&pthreadAttr, PTHREAD_CREATE_JOINABLE);
+    if (errCode != 0) {
+        pthread_attr_destroy(&pthreadAttr);
+        processing_ = false;
+        perror("线程创建失败！");
+        return;
+    }
+    
+    errCode = pthread_create(&pid_, &pthreadAttr, mc_astar_algorithm_process, this);
+    if (errCode != 0) {
+        processing_ = false;
+        perror("线程创建失败！");
+        return;
+    }
+}
+
+/**
+ * 生成对象适用的变形地图
+ */
+void
+MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMapSize, CCArray *barriers)
+{
+    MCOBB obb = aRoleEntity->getOBB();
+    mc_ssize_t obbEdge = obb.width; /* width=height */
+    CCPoint checkFrameOrigin = CCPointZero;
+    CCRect checkFrame = CCRectMake(checkFrameOrigin.x,
+                                   checkFrameOrigin.y,
+                                   obbEdge,
+                                   obbEdge); /* 第一个检测矩形 */
+    mc_ssize_t width = (mc_ssize_t) (aMapSize.width / obbEdge) + 1;
+    mc_ssize_t height = (mc_ssize_t) (aMapSize.height / obbEdge) + 1;
+    mapAltas_ = new mc_byte_t[width * height];
+    CCObject *obj;
+    MCBarrier *barrier;
+    mc_ssize_t nodeType;
+    
+    /* 生成 */
+    mapWidth_ = width;
+    mapHeight_ = height;
+    edge_ = obbEdge;
+    for (mc_ssize_t y = 0; y < height; ++y) {
+        for (mc_ssize_t x = 0; x < width; ++x) {
+            nodeType = 0;
+            CCARRAY_FOREACH(barriers, obj) {
+                barrier = dynamic_cast<MCBarrier *>(obj);
+#if (MC_COLLISION_USE_OBB == 1)
+                CCRect aabb = barrier->getOBB().getAABB();
+#else
+                CCRect aabb = barrier->getFrame();
+#endif
+                if (aabb.intersectsRect(checkFrame)) {
+                    nodeType = kMCBarrier;
+                    break;
+                }
+            }
+            mapAltas_[x + y * width] = nodeType;
+            checkFrame.origin.x += obbEdge;
+        }
+        checkFrame.origin.x = checkFrameOrigin.x;
+        checkFrame.origin.y += obbEdge;
+    }
+}
+
+void
+MCAStarAlgorithm::pathFindingDidFinish(CCObject *anObject)
+{
+    processing_ = false;
+    pid_ = NULL;
 }
 
 #pragma mark *** MCAStar ***
@@ -422,15 +445,12 @@ MCAStar::MCAStar()
 
 MCAStar::~MCAStar()
 {
-    CC_SAFE_RELEASE(algoInstances_);
 }
 
 bool
 MCAStar::init(CCTMXTiledMap *aMap)
 {
     if (aMap) {
-        algoInstances_ = CCArray::create();
-        algoInstances_->retain();
         map_ = aMap;
         
         return true;
@@ -454,8 +474,8 @@ MCAStar::create(CCTMXTiledMap *aMap)
     return aStar;
 }
 
-void
-MCAStar::findPath(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation)
+MCAStarAlgorithm *
+MCAStar::createAlgoInstance(MCRoleEntity *aRoleEntity)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     MCAStarAlgorithm *algo;
@@ -465,49 +485,18 @@ MCAStar::findPath(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation
     CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
                                     mapSize.height * tileSize.height / contentScaleFactor);
     
-    CCLog("start(%.0f %.0f) end(%.0f %.0f)",
-          aRoleEntity->getOBB().getOrigin().x, aRoleEntity->getOBB().getOrigin().y,
-          aDestinationLocation.x, aDestinationLocation.y);
     algo = new MCAStarAlgorithm;
-    algo->init(aRoleEntity->getOBB().getOrigin(), aDestinationLocation);
+    algo->init();
+    algo->roleEntity_ = aRoleEntity;
     algo->generateMapAltas(aRoleEntity, mapRealSize, barriers_);
-    algoInstances_->addObject(algo);
-    notificatinCenter->addObserver(this,
-                                   callfuncO_selector(MCAStar::algorithmWillRemove),
-                                   kMCAStarAlgorithmWillRemoveNotification,
-                                   algo);
+    notificatinCenter->addObserver(algo,
+                                   callfuncO_selector(MCAStarAlgorithm::pathFindingDidFinish),
+                                   kMCAStarDidFinishAlgorithmNotification,
+                                   NULL);
     notificatinCenter->addObserver(aRoleEntity,
                                    callfuncO_selector(MCRoleEntity::pathFindingDidFinish),
                                    kMCAStarDidFinishAlgorithmNotification,
                                    algo);
-    algo->execute();
-}
-
-bool
-MCAStar::testPosition(MCRoleEntity *aRoleEntity, const CCPoint &aDestinationLocation)
-{
-    MCAStarAlgorithm *algo;
-    CCSize mapSize = map_->getMapSize();
-    CCSize tileSize = map_->getTileSize();
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
-    CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
-                                    mapSize.height * tileSize.height / contentScaleFactor);
     
-    algo = new MCAStarAlgorithm;
-    algo->init(aRoleEntity->getOBB().getOrigin(), aDestinationLocation);
-    algo->generateMapAltas(aRoleEntity, mapRealSize, barriers_);
-    
-    return !algo->isBarrier(aDestinationLocation);
-}
-
-/**
- * 算法结束
- */
-void
-MCAStar::algorithmWillRemove(CCObject *obj)
-{
-    CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
-    
-    notificatinCenter->removeObserver(this, kMCAStarDidFinishAlgorithmNotification);
-    algoInstances_->removeObject(obj);
+    return algo;
 }

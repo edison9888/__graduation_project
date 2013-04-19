@@ -56,21 +56,9 @@ public:
     
     /* MCMercenaryAIStateMachineDelegate */
     /**
-     * 跟随状态下回调
-     */
-    void performWhenFollowingState();
-    
-    /**
      * 逃跑状态下回调
      */
     void performWhenFleeState();
-    
-    /**
-     * 跟随主角
-     */
-    void follow();
-    
-    void followingDidFinish(CCObject *anObject);
     
     MCRoleEntity *getEntity();
     

@@ -413,8 +413,6 @@ MCSimpleGameSceneContextServer::getGameSceneContextData(JsonBox::Object &data)
                 roleObject["ai-state"] = JsonBox::Value("休息状态");
             } else if (AIState == MCAttackState) {
                 roleObject["ai-state"] = JsonBox::Value("攻击状态");
-            } else if (AIState == MCFollowingState) {
-                roleObject["ai-state"] = JsonBox::Value("跟随状态");
             } else if (AIState == MCFleeState) {
                 roleObject["ai-state"] = JsonBox::Value("逃跑状态");
             } else if (AIState == MCDeathState) {
@@ -617,8 +615,6 @@ MCSimpleGameSceneContextServer::getGameSceneContextData(JsonBox::Object &data)
                 roleObject["ai-state"] = JsonBox::Value("休息状态");
             } else if (AIState == MCAttackState) {
                 roleObject["ai-state"] = JsonBox::Value("攻击状态");
-            } else if (AIState == MCFollowingState) {
-                roleObject["ai-state"] = JsonBox::Value("跟随状态");
             } else if (AIState == MCFleeState) {
                 roleObject["ai-state"] = JsonBox::Value("逃跑状态");
             } else if (AIState == MCDeathState) {

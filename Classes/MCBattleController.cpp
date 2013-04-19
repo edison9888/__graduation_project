@@ -206,6 +206,10 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     if (! isJoypadEnabled_) {
         CCArray *selectedRoles = teamLayer_->getSelectedRoles();
         CCObject *obj;
+        
+        /* 随机生成几个位置 */
+#warning mark
+        
         if (findPath && selectedRoles->count() > 0) {
             CCARRAY_FOREACH(selectedRoles, obj) {
                 MCRole *role = dynamic_cast<MCRole *>(obj);
