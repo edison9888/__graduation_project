@@ -109,11 +109,11 @@ MCEntrance::collidesWith(const CCRect &aTargetRect)
 bool
 MCEntrance::contains(const CCRect &aTargetRect)
 {
-    float halfWidth = frame_.size.width;
-    float halfHeight = frame_.size.height;
+    float halfWidth = frame_.size.width / 2;
+    float halfHeight = frame_.size.height / 2;
     CCPoint targetOrigin = aTargetRect.origin;
-    CCPoint center = ccp(targetOrigin.x + halfWidth,
-                         targetOrigin.y + halfHeight);
+    CCPoint center = ccp(frame_.getMidX(),
+                         frame_.getMidY());
     CCPoint centerOffset = ccpSub(targetOrigin, center);
     
     /* p0.x, p3.x */

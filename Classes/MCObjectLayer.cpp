@@ -22,6 +22,8 @@
 #include "MCScene.h"
 #include "MCCamera.h"
 
+#include "MCBarrier.h"
+
 MCObjectLayer *
 MCObjectLayer::create(MCScenePackageType aScenePackageType)
 {
@@ -370,16 +372,10 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     
     MCCamera *camera = getSceneDelegate()->getScene()->getSceneCamera();
     /* screen view */
-    CCPoint heroCurrentPosition = roleEntity->getPosition();
+    CCPoint roleCurrentPosition = roleEntity->getPosition();
     CCPoint mapCurrentPosition = map_->getPosition();
-    CCPoint heroCurrentPositionAtMap = ccpSub(heroCurrentPosition, mapCurrentPosition);
-    CCPoint heroMaybeMoveToPosition;
-    CCPoint heroMaybeMoveToPositionAtMap;
-    CCPoint mapMaybeMoveToPosition;
     CCPoint delta;
-    CCPoint deltaForMap;
     CCPoint deltaForRole;
-    CCPoint deltaForCheck;
     
     /* 障碍物检测用 */
     CCSize spriteSize = roleEntity->getContentSize();
@@ -387,97 +383,21 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     
     /* 以TMX地图为参照 */
     delta = ccpNormalize(offset);
-    CCPointLog(delta);
     delta = ccpMult(delta, 4);
-    deltaForMap = ccpNeg(delta);
     deltaForRole = CCPoint(delta);
-    deltaForCheck = CCPoint(deltaForRole);
+
+    roleEntity->walk(offset);
+    if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f) {
+        return;
+    }
     
-#if (MC_COLLISION_USE_OBB == 1)
-    MCOBB heroOBB = roleEntity->getOBB();
-    
-    /* 地图移动检测用 */
-    int edgeTop = mapHeight_ - winHeight_ / 2 - (int) (offset.y > 0 ? heroOBB.height : 0);
-    int edgeBottom = winHeight_ / 2 + (int) (offset.y < 0 ? heroOBB.height : 0);
-    int edgeLeft = winWidth_ / 2 + (int) (offset.x < 0 ? heroOBB.width : 0);
-    int edgeRight = mapWidth_ - winWidth_ / 2 - (int) (offset.x > 0 ? heroOBB.width : 0);
-#else
     CCSize frameSize = roleEntity->getMetadata()->getFrameSize();
-    
-    /* 地图移动检测用 */
-    int edgeTop = mapHeight_ - winHeight_ / 2 - (int) (offset.y > 0 ? frameSize.height : 0);
-    int edgeBottom = winHeight_ / 2 + (int) (offset.y < 0 ? frameSize.height : 0);
-    int edgeLeft = winWidth_ / 2 + (int) (offset.x < 0 ? frameSize.width : 0);
-    int edgeRight = mapWidth_ - winWidth_ / 2 - (int) (offset.x > 0 ? frameSize.width : 0);
-#endif
-    
-    /* 让移动更平滑~~~~ */
-//    if (deltaForRole.x > -1.5 && deltaForRole.x < 1.5) {
-//        deltaForRole.x = 0;
-//        deltaForCheck.x = deltaForCheck.x > 0 ? -0.5 : 0.5;
-//    }
-//    if (deltaForRole.y > -1.5 && deltaForRole.y < 1.5) {
-//        deltaForRole.y = 0;
-//        deltaForCheck.y = deltaForCheck.y > 0 ? -0.5 : 0.5;
-//    }
-    deltaForCheck = deltaForRole;
-    
-    heroMaybeMoveToPositionAtMap = ccpAdd(heroCurrentPositionAtMap, deltaForRole);
-    
-    if ((int) floorf(heroMaybeMoveToPositionAtMap.x) - frameSize.width > edgeLeft
-        && (int) floorf(heroMaybeMoveToPositionAtMap.x) + frameSize.width < edgeRight) { /* 移动地图 */
-        deltaForRole.x = 0;
-    } else {
-        deltaForMap.x = 0;
-    }
-    
-    if ((int) floorf(heroMaybeMoveToPositionAtMap.y) - frameSize.height > edgeBottom
-        && (int) floorf(heroMaybeMoveToPositionAtMap.y) + frameSize.height < edgeTop) { /* 移动地图 */
-        deltaForRole.y = 0;
-    } else {
-        deltaForMap.y = 0;
-    }
-    
-    heroMaybeMoveToPosition = ccpAdd(heroCurrentPosition, deltaForRole);
-    mapMaybeMoveToPosition = ccpAdd(mapCurrentPosition, deltaForMap);
-    
-    /* tags: #map #offset */
-    /* 检测地图的越界偏移 */
-    CCPoint mapDefultLocation = camera->getLocation();
-    if (mapMaybeMoveToPosition.x < -(mapWidth_ - winWidth_)) { /* 过左 */
-        deltaForMap.x -= mapMaybeMoveToPosition.x - (float) -(mapWidth_ - winWidth_);
-    } else if (mapMaybeMoveToPosition.x > mapDefultLocation.x) { /* 过右 */
-        deltaForMap.x -= mapMaybeMoveToPosition.x - mapDefultLocation.x;
-    }
-    if (mapMaybeMoveToPosition.y < -(mapHeight_ - winHeight_)) { /* 过低 */
-        deltaForMap.y -= (ccpSub(mapMaybeMoveToPosition, mapCurrentPosition)).y;
-    } else if (mapMaybeMoveToPosition.y > mapDefultLocation.y) { /* 过高 */
-        deltaForMap.y -= mapMaybeMoveToPosition.y - mapDefultLocation.y;
-    }
-    
-    /* tags: #collision */
-    /* 矩形框检测方案 */
-    /* 场景切换检测 */
-#if (MC_COLLISION_USE_OBB == 1)
-    /* recal origin */
-    heroOBB.setup(deltaForCheck);
-    if (roleEntity == hero_) {
-        detectsCollidesWithEntrances(heroOBB);
-    }
-    detectsCollidesWithSemiTransparents(heroOBB);
-    if (detectsCollision(heroOBB)) {
-        deltaForMap = CCPointZero;
-        deltaForHero = CCPointZero;
-    }
-#else
-//    CCRect heroCurrentFrame = roleEntity->getOBB().getAABB();
-//    deltaForCheck = deltaForRole;
-    CCRect roleCurrentFrame = CCRectMake(heroCurrentPosition.x - mapCurrentPosition.x,
-                                         heroCurrentPosition.y - mapCurrentPosition.y,
+    CCRect roleCurrentFrame = CCRectMake(roleCurrentPosition.x - mapCurrentPosition.x,
+                                         roleCurrentPosition.y - mapCurrentPosition.y,
                                          frameSize.width,
                                          frameSize.height);
     CCRect roleFrame(roleCurrentFrame);
-    roleFrame.origin = ccpAdd(roleFrame.origin, deltaForCheck);
+    roleFrame.origin = ccpAdd(roleFrame.origin, deltaForRole);
     if (roleEntity == hero_) {
         detectsCollidesWithEntrances(roleFrame);
     }
@@ -485,70 +405,12 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     
     MCBarrier *barrier = detectsCollidesWithBarriers(roleFrame);
     if (barrier) {
-        CCRect barrierFrame = barrier->getFrame();
-        CCPoint intersectsRectMin = ccp(MAX(barrierFrame.getMinX(), roleFrame.getMinX()),
-                                        MAX(barrierFrame.getMinY(), roleFrame.getMinY()));
-        CCPoint intersectsRectMax = ccp(MIN(barrierFrame.getMaxX(), roleFrame.getMaxX()),
-                                        MIN(barrierFrame.getMaxY(), roleFrame.getMaxY()));
-        CCRect intersectsRect = CCRectMake(intersectsRectMin.x,
-                                           intersectsRectMin.y,
-                                           intersectsRectMax.x - intersectsRectMin.x,
-                                           intersectsRectMax.y - intersectsRectMin.y);
-        float offsetX = fabsf(offset.x);
-        float offsetY = fabsf(offset.y);
-        if (offsetX > offsetY) { /* F is x-coor */
-            if (offset.x < 0
-                && barrierFrame.origin.x < roleFrame.origin.x) { /* L and b in L */
-//                deltaForRole.x += intersectsRect.size.width;
-//                deltaForMap.x -= intersectsRect.size.width;
-                deltaForRole.x = 0;
-                deltaForMap.x = 0;
-            } else if (offset.x > 0
-                       && barrierFrame.origin.x > roleFrame.origin.x) { /* R and b in R */
-//                deltaForRole.x -= intersectsRect.size.width;
-//                deltaForMap.x += intersectsRect.size.width;
-                deltaForRole.x = 0;
-                deltaForMap.x = 0;
-            }
-        } else if (offsetX < offsetY) { /* F is y-coor */
-            if (offset.y < 0
-                && barrierFrame.origin.y < roleFrame.origin.y) { /* B and b in B */
-                deltaForRole.y += intersectsRect.size.height;
-//                deltaForMap.y -= intersectsRect.size.height;
-                deltaForRole.y = 0;
-                deltaForMap.y = 0;
-            } else if (offset.y > 0
-                       && barrierFrame.origin.y > roleFrame.origin.y) { /* T and b in T */
-//                deltaForRole.y -= intersectsRect.size.height;
-//                deltaForMap.y += intersectsRect.size.height;
-                deltaForRole.y = 0;
-                deltaForMap.y = 0;
-            }
-        } else {
-            deltaForRole = CCPointZero;
-            deltaForMap = CCPointZero;
-        }
+        /* 没解决平滑问题 */
+        deltaForRole = CCPointZero;
     }
-#endif
 
-    roleEntity->walk(offset);
-    if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f
-        && deltaForMap.x == 0.0f && deltaForMap.y == 0.0f) {
-        return;
-    }
-    printf("R<%.1f %.1f> - ",
-           deltaForRole.x, deltaForRole.y);
-    printf("M<%.1f %.1f> \n",
-           deltaForMap.x, deltaForMap.y);
-    
-//    roleEntity->moveBy(deltaForRole);
     roleEntity->drag(deltaForRole);
-    if (deltaForMap.x != 0.0f || deltaForMap.y != 0.0f) {
-        camera->translate(deltaForMap);
-        camera->locate();
-//        roleEntity->moveBy(ccpNeg(deltaForMap));
-        roleEntity->drag(ccpNeg(deltaForMap));
-    }
+    camera->focus(aSelectedRole);
 }
 
 #if (MC_COLLISION_USE_OBB == 1)
@@ -667,8 +529,7 @@ MCObjectLayer::detectsCollidesWithEntrances(const CCRect &anFrame)
     bool atEntrance = false;
     CCARRAY_FOREACH(entrances_, obj) {
         entrance = (MCEntrance *) obj;
-#warning 暂时使用OBB检测，修改检测是否站在入口的方法之后再改为contains
-        if (entrance->collidesWith(anFrame)) {
+        if (entrance->contains(anFrame)) {
             /* 全部用push */
             if (hero->atEntrance()) {
                 atEntrance = true;
