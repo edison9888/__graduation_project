@@ -1,0 +1,16 @@
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCEnemy.h|37|warning: 木有配置技能 [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCScene.h|164|warning: : todo：记得删除调试用视角层 [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|26|error: out-of-line declaration of a member must be a definition [-Wout-of-line-declaration]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|27|error: expected unqualified-id
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|255|warning: debug [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|629|warning: 暂时使用OBB检测，修改检测是否站在入口的方法之后再改为contains [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|630|warning: 'collidesWith' is deprecated [-Wdeprecated-declarations]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCEntrance.h|26|note: 'collidesWith' declared here
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCEnemy.h|37|warning: 木有配置技能 [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCScene.h|164|warning: : todo：记得删除调试用视角层 [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|26|error: out-of-line declaration of a member must be a definition [-Wout-of-line-declaration]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|27|error: expected unqualified-id
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|255|warning: debug [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|629|warning: 暂时使用OBB检测，修改检测是否站在入口的方法之后再改为contains [-W#warnings]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCObjectLayer.cpp|630|warning: 'collidesWith' is deprecated [-Wdeprecated-declarations]
+/Users/DF/Projects/XCode/Cocos2d-X/__graduation_project/proj.mac/../Classes/MCEntrance.h|26|note: 'collidesWith' declared here

@@ -15,6 +15,8 @@
 #include "MCScene.h"
 #include "MCHero.h"
 
+class MCBarrier;
+
 class MCObjectLayer : public CCLayer, public MCJoypadControllerDelegate, public MCBattleControllerDelegate {
     friend class MCScene;
 public:
@@ -62,7 +64,8 @@ protected:
     virtual void detectsCollidesWithSemiTransparents(const CCRect &anFrame, const CCPoint &anOffset);
     
     virtual CCPoint detectsCollidesWithBarriers(const CCRect &anFrame, const CCPoint &anOffset);
-    virtual bool detectsCollidesWithBarriers(const CCRect &anFrame);
+    virtual CCSize collidedSize(const CCRect &anFrame, const CCPoint &anOffset);
+    virtual MCBarrier *detectsCollidesWithBarriers(const CCRect &anFrame);
 #endif
     /* 人物间不在相撞~~~~ */
 //    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
