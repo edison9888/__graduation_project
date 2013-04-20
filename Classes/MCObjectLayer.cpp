@@ -387,6 +387,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
     
     /* 以TMX地图为参照 */
     delta = ccpNormalize(offset);
+    CCPointLog(delta);
     delta = ccpMult(delta, 4);
     deltaForMap = ccpNeg(delta);
     deltaForRole = CCPoint(delta);
@@ -481,64 +482,55 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         detectsCollidesWithEntrances(roleFrame);
     }
     detectsCollidesWithSemiTransparents(roleFrame);
-//    deltaForHero = ccpAdd(deltaForHero, feedbackOffset);
-//    deltaForMap = ccpSub(deltaForMap, feedbackOffset);
-//    if (/*deltaForHero.x == 0.0f && deltaForHero.y == 0.0f
-//        &&*/ (feedbackOffset.x != 0.0f || feedbackOffset.y != 0.0f)) {
-#if 1
-    CCSize collidedFrameSize = collidedSize(roleCurrentFrame, deltaForCheck);
-    if (!collidedFrameSize.equals(CCSizeZero)) {
-        MCBarrier *barrier = detectsCollidesWithBarriers(roleCurrentFrame);
-        if (barrier) {
-            CCRect barrierFrame = barrier->getFrame();
-            if (fabsf(offset.x) > fabsf(offset.y)) { /* F is x-coor */
-                if (offset.x < 0
-                    && barrierFrame.origin.x < roleCurrentFrame.origin.x) { /* L and b in L */
-                    deltaForRole.x = 0;
-                    deltaForMap.x = 0;
-                } else if (offset.x > 0
-                           && barrierFrame.origin.x > roleCurrentFrame.origin.x) { /* R and b in R */
-                    deltaForRole.x = 0;
-                    deltaForMap.x = 0;
-                }
-            } else { /* F is y-coor */
-                if (offset.y < 0
-                    && barrierFrame.origin.y < roleCurrentFrame.origin.y) { /* B and b in B */
-                    deltaForRole.y = 0;
-                    deltaForMap.y = 0;
-                } else if (offset.y > 0
-                           && barrierFrame.origin.y > roleCurrentFrame.origin.y) { /* T and b in T */
-                    deltaForRole.y = 0;
-                    deltaForMap.y = 0;
-                }
+    
+    MCBarrier *barrier = detectsCollidesWithBarriers(roleFrame);
+    if (barrier) {
+        CCRect barrierFrame = barrier->getFrame();
+        CCPoint intersectsRectMin = ccp(MAX(barrierFrame.getMinX(), roleFrame.getMinX()),
+                                        MAX(barrierFrame.getMinY(), roleFrame.getMinY()));
+        CCPoint intersectsRectMax = ccp(MIN(barrierFrame.getMaxX(), roleFrame.getMaxX()),
+                                        MIN(barrierFrame.getMaxY(), roleFrame.getMaxY()));
+        CCRect intersectsRect = CCRectMake(intersectsRectMin.x,
+                                           intersectsRectMin.y,
+                                           intersectsRectMax.x - intersectsRectMin.x,
+                                           intersectsRectMax.y - intersectsRectMin.y);
+        float offsetX = fabsf(offset.x);
+        float offsetY = fabsf(offset.y);
+        if (offsetX > offsetY) { /* F is x-coor */
+            if (offset.x < 0
+                && barrierFrame.origin.x < roleFrame.origin.x) { /* L and b in L */
+//                deltaForRole.x += intersectsRect.size.width;
+//                deltaForMap.x -= intersectsRect.size.width;
+                deltaForRole.x = 0;
+                deltaForMap.x = 0;
+            } else if (offset.x > 0
+                       && barrierFrame.origin.x > roleFrame.origin.x) { /* R and b in R */
+//                deltaForRole.x -= intersectsRect.size.width;
+//                deltaForMap.x += intersectsRect.size.width;
+                deltaForRole.x = 0;
+                deltaForMap.x = 0;
+            }
+        } else if (offsetX < offsetY) { /* F is y-coor */
+            if (offset.y < 0
+                && barrierFrame.origin.y < roleFrame.origin.y) { /* B and b in B */
+                deltaForRole.y += intersectsRect.size.height;
+//                deltaForMap.y -= intersectsRect.size.height;
+                deltaForRole.y = 0;
+                deltaForMap.y = 0;
+            } else if (offset.y > 0
+                       && barrierFrame.origin.y > roleFrame.origin.y) { /* T and b in T */
+//                deltaForRole.y -= intersectsRect.size.height;
+//                deltaForMap.y += intersectsRect.size.height;
+                deltaForRole.y = 0;
+                deltaForMap.y = 0;
             }
         } else {
-            deltaForMap = CCPointZero;
             deltaForRole = CCPointZero;
+            deltaForMap = CCPointZero;
         }
     }
-#else
-    CCPoint intersetsRectOffset = detectsCollidesWithBarriers(roleCurrentFrame, deltaForCheck);
-    printf("R<%.1f %.1f> - M<%.1f %.1f> - F<%.1f %.1f>\t|\t",
-           deltaForRole.x, deltaForRole.y,
-           deltaForMap.x, deltaForMap.y,
-           intersetsRectOffset.x, intersetsRectOffset.y);
-    deltaForRole = ccpAdd(deltaForRole, intersetsRectOffset);
-//    if (intersetsRectOffset.x != 0.0f || intersetsRectOffset.y != 0.0f) {
-//        deltaForRole = intersetsRectOffset;
-//        deltaForRole = ccpSub(deltaForRole, intersetsRectOffset);
-//    }
-    printf("R<%.1f %.1f> - ",
-           deltaForRole.x, deltaForRole.y);
-    if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f) {
-//    if (deltaForMap.x != 0.0f || deltaForMap.y != 0.0f) {
-       deltaForMap = ccpSub(deltaForMap, intersetsRectOffset);
-    }
-    printf("M<%.1f %.1f> \n",
-           deltaForMap.x, deltaForMap.y);
 #endif
-#endif
-    
+
     roleEntity->walk(offset);
     if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f
         && deltaForMap.x == 0.0f && deltaForMap.y == 0.0f) {
