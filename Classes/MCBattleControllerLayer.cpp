@@ -105,6 +105,8 @@ MCBattleControllerLayer::activate(CCObject *aSender)
         controller_->setVisible(false);
         controller_->setTouchEnabled(false);
         /* 聚焦人物 */
-        controller_->getDelegate()->controllerDidFocus(controller_, dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0)));
+        MCRole *selectedRole = dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0));
+        selectedRole->getEntity()->stopWalking();
+        controller_->getDelegate()->controllerDidFocus(controller_, selectedRole);
     }
 }

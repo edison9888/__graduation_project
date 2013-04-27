@@ -13,29 +13,30 @@ static const NSUInteger kMCIDIndex = 0;
 
 MCDefineIndexAndKey(Name, 1, name);
 MCDefineIndexAndKey(SpriteSheet, 2, sprite-sheet);
-MCDefineIndexAndKey(AI, 3, AI);
-MCDefineIndexAndKey(HP, 4, HP);
-MCDefineIndexAndKey(PP, 5, PP);
-MCDefineIndexAndKey(Exhaustion, 6, exhaustion);
-MCDefineIndexAndKey(Tired, 7, tired);
-MCDefineIndexAndKey(Dexterity, 8, dexterity);
-MCDefineIndexAndKey(AC, 9, AC);
-MCDefineIndexAndKey(ArmorCheckPenalty, 10, armor-check-penalty);
-MCDefineIndexAndKey(Damage, 11, damage);
-MCDefineIndexAndKey(DamageBonus, 14, damage-bonus);
-MCDefineIndexAndKey(CriticalHitVisible, 15, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 16, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 17, critical-hit);
-MCDefineIndexAndKey(Distance, 18, distance);
+MCDefineIndexAndKey(EffectID, 3, effect-id);
+MCDefineIndexAndKey(AI, 4, AI);
+MCDefineIndexAndKey(HP, 5, HP);
+MCDefineIndexAndKey(PP, 6, PP);
+MCDefineIndexAndKey(Exhaustion, 7, exhaustion);
+MCDefineIndexAndKey(Tired, 8, tired);
+MCDefineIndexAndKey(Dexterity, 9, dexterity);
+MCDefineIndexAndKey(AC, 10, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 11, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 12, damage);
+MCDefineIndexAndKey(DamageBonus, 15, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 16, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 17, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 18, critical-hit);
+MCDefineIndexAndKey(Distance, 19, distance);
 
-static const NSUInteger kMCSkillAIndex = 19;
-static const NSUInteger kMCSkillBIndex = 20;
-static const NSUInteger kMCSkillCIndex = 21;
-static const NSUInteger kMCSkillDIndex = 22;
+static const NSUInteger kMCSkillAIndex = 20;
+static const NSUInteger kMCSkillBIndex = 21;
+static const NSUInteger kMCSkillCIndex = 22;
+static const NSUInteger kMCSkillDIndex = 23;
 static const NSString   *kMCSkillsKey = @"skills";
 
-MCDefineIndexAndKey(Effect, 23, effect);
-MCDefineIndexAndKey(EffectCheck, 24, effect-check);
+MCDefineIndexAndKey(Effect, 24, effect);
+MCDefineIndexAndKey(EffectCheck, 25, effect-check);
 
 @implementation MCEnemyHandler
 
@@ -66,6 +67,8 @@ MCDefineIndexAndKey(EffectCheck, 24, effect-check);
     [content setObject:[data objectAtIndex:kMCNameIndex] forKey:kMCNameKey];
     /* sprite-sheet */
     [content setObject:[data objectAtIndex:kMCSpriteSheetIndex] forKey:kMCSpriteSheetKey];
+    /* effect-id */
+    [content setObject:[data objectAtIndex:kMCEffectIDIndex] forKey:kMCEffectIDKey];
     /* AI */
     [content setObject:[data objectAtIndex:kMCAIIndex] forKey:kMCAIKey];
     /* HP */

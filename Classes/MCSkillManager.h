@@ -21,7 +21,6 @@ public:
     
     MCSkill *skillForObjectId(mc_object_id_t anObjectId);
     
-    void saveData();
     void loadData();
     
 private:

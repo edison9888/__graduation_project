@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="70" height="20" tilewidth="16" tileheight="16">
  <properties>
-  <property name="scene-type" value="field"/>
+  <property name="sence-type" value="field"/>
   <property name="sound" value="sounds/desert.mp3"/>
   <property name="tmx" value="maps/M201.tmx"/>
  </properties>
@@ -13,12 +13,12 @@
  </tileset>
  <layer name="background" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3RsQ2AMBDAwJfCBrD/rKRFDHAuUlg3gNfMXLt1/HjvnuNP/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5S9QVRi79Z4BUAAA==
+   H4sIAAAAAAAAC+3RsQ2AMBDAwJfCBrD/rKRFDHAuUlg3gNfMXLt1/HjvnuNP/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5S9QVRi79Z4BUAAA==
   </data>
  </layer>
  <layer name="first" width="70" height="20">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2Yt07DQByHYyQ6CwOdjc5K5w0oL0BZ6WWjFylBIoENFsqT8Ai8QViZkpWJjHyREsmE8zWfY4H4pE9W4vPdLz6f9c8lEsFkvO+fN3AzoG2Stim88oLPV3Id0FaGLIOKJKY0jqYc4bFlJlf4M2zhtsG1d3ivcTQljRmL61ziz3CCpzFkeCk952u4jg/4GEMOP/4MN3iraD+H87iAi44yvJbuywEeOupTNo4O5Tkq8oTPivZLuIwruGqRTcSbxXvRlKxnNk7Uc6QiR9a8w/vyHtCXbJxmbHEX4Qe2a6xgcF8+JG2L/cjOB9GDveaXaSNbY16NmzFc9SOiD/uj615Iq6Pf46ofEWM4Hl33zoh63ZcJ+5yoanARxRo8bflejXrdl5E9J9WaGxFxrGtdqjU3In7Luv7nb5DDfNwhLMiGqGd19kE+sVDxXS3WYT02YCM2WWZQ1atBNbbueRts92LasB07sBO7sNsyg+o/oU2NHRbbvZgBHMQhHMYRHHWYy49JDb6Du7iH+yHGtN2LmcBJnMJpnMHZEDlkmNTgZ3iOF3iJX2ECadzgFQAA
+   H4sIAAAAAAAAC+2Yt07DQByHYyQ6CwOdjc5K5w0oL0BZ6WWjFylBIoENFsqT8Ai8QViZkpWJjHyREsmE8zWfY4H4pE9W4vPdLz6f9c8lEsFkvO+fN3AzoG2Stim88oLPV3Id0FaGLIOKJKY0jqYc4bFlJlf4M2zhtsG1d3ivcTQljRmL61ziz3CCpzFkeCk952u4jg/4GEMOP/4MN3iraD+H87iAi44yvJbuywEeOupTNo4O5Tkq8oTPivZLuIwruGqRTcSbxXvRlKxnNk7Uc6QiR9a8w/vyHtCXbJxmbHEX4Qe2a6xgcF8+JG2L/cjOB9GDveaXaSNbY16NmzFc9SOiD/uj615Iq6Pf46ofEWM4Hl33zoh63ZcJ+5yoanARxRo8bflejXrdl5E9J9WaGxFxrGtdqjU3In7Luv7nb5DDfNwhLMiGqGd19kE+sVDxXS3WYT02YCM2WWZQ1atBNbbueRts92LasB07sBO7sNsyg+o/oU2NHRbbvZgBHMQhHMYRHHWYy49JDb6Du7iH+yHGtN2LmcBJnMJpnMHZEDlkmNTgZ3iOF3iJX2ECadzgFQAA
   </data>
  </layer>
  <objectgroup name="entrances" width="70" height="20">
@@ -43,8 +43,8 @@
   <object type="barrier" x="144" y="48" width="32" height="32"/>
   <object type="barrier" x="176" y="32" width="32" height="32"/>
   <object type="barrier" x="224" y="288" width="32" height="32"/>
-  <object type="barrier" x="0" y="-16" width="1120" height="16"/>
-  <object type="barrier" x="0" y="320" width="1120" height="16"/>
+  <object type="barrier" x="0" y="-176" width="1120" height="176"/>
+  <object type="barrier" x="0" y="320" width="1120" height="160"/>
   <object type="barrier" x="1120" y="-16" width="16" height="352"/>
   <object type="barrier" x="-16" y="-16" width="16" height="352"/>
  </objectgroup>
@@ -58,37 +58,37 @@
   <object x="568" y="126">
    <properties>
     <property name="ID" value="E201"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F211,F203,F202,F213,F207,F209"/>
    </properties>
   </object>
   <object x="489" y="216">
    <properties>
     <property name="ID" value="E203"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F202,F203,F205,F212,F209,F211"/>
    </properties>
   </object>
   <object x="439" y="87">
    <properties>
     <property name="ID" value="E202"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F207,F214,F204,F209,F203,F205"/>
    </properties>
   </object>
   <object x="578" y="186">
    <properties>
     <property name="ID" value="E201"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F211,F208,F209,F205,F207,F212"/>
    </properties>
   </object>
   <object x="598" y="76">
    <properties>
     <property name="ID" value="E201"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F205,F202,F209,F204,F214,F207"/>
    </properties>
   </object>
   <object x="493" y="145">
    <properties>
     <property name="ID" value="E203"/>
-    <property name="flags" value="F201"/>
+    <property name="flags" value="F201,F211,F204,F205,F203,F202,F209"/>
    </properties>
   </object>
  </objectgroup>

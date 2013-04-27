@@ -12,6 +12,7 @@
 #include "MCObject.h"
 
 class MCSkillManager;
+class MCEffect;
 
 class MCSkill : public MCObject {
     friend class MCSkillManager;
@@ -22,7 +23,7 @@ public:
 private:
     void skillDidHit();
     
-    CC_SYNTHESIZE(CCAnimation *, effect_, Effect);
+    CC_SYNTHESIZE(MCEffect *, effect_, Effect);
 };
 
 #endif /* defined(__Military_Confrontation__MCSkill__) */

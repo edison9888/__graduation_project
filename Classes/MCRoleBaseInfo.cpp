@@ -66,7 +66,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         valueBox->setPosition(ccp(faceBox_->getPositionX() + faceBoxSize.width, 0));
         
         /* PP */
-        CCString *ccstring = CCString::createWithFormat("%hu", aRole->getPP());
+        CCString *ccstring = CCString::createWithFormat("%.0f", aRole->getPP());
         ppLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(ppLabel_);
         labelSize = ppLabel_->getContentSize();
@@ -83,7 +83,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         separatorLabel->setPosition(ccp(96 / contentScaleFactor + labelSize.width, y));
         
         labelPosition = separatorLabel->getPosition();
-        ccstring = CCString::createWithFormat("%hu", aRole->getMaxPP());
+        ccstring = CCString::createWithFormat("%.0f", aRole->getMaxPP());
         maxPPLabel_ = CCLabelTTF::create(ccstring->getCString(), "Marker Felt", kMCFontSize);
         addChild(maxPPLabel_);
         maxPPLabel_->setColor(ccc3(240, 240, 240));
@@ -146,15 +146,29 @@ MCRoleBaseInfo::create(MCRole *aRole)
 }
 
 void
-MCRoleBaseInfo::updateInfo()
+MCRoleBaseInfo::updateInfo(float dt)
 {
     CCString *ccstring;
     MCRole *role = role_;
     
     ccstring = CCString::createWithFormat("%hu", role->getHP());
     hpLabel_->setString(ccstring->getCString());
-    ccstring = CCString::createWithFormat("%hu", role->getPP());
+    ccstring = CCString::createWithFormat("%.0f", role->getPP());
     ppLabel_->setString(ccstring->getCString());
+}
+
+void
+MCRoleBaseInfo::onEnter()
+{
+    CCLayer::onEnter();
+    schedule(schedule_selector(MCRoleBaseInfo::updateInfo));
+}
+
+void
+MCRoleBaseInfo::onExit()
+{
+    unschedule(schedule_selector(MCRoleBaseInfo::updateInfo));
+    CCLayer::onExit();
 }
 
 /**
@@ -166,10 +180,8 @@ MCRoleBaseInfo::useActionBarItem(MCActionBarItem *anActionBarItem)
     MCBackpackItem *backpackItem = (MCBackpackItem *) anActionBarItem->getBackpackItem();
     if (backpackItem->use()) { /* 能够使用才执行，已经减去1 */
         MCEffectiveItem *item = (MCEffectiveItem *) backpackItem->item;
-        MCEffect effect = item->getEffect();
-        role_->updateHP(effect.hp);
-        role_->updatePP(effect.pp);
-        updateInfo();
+        role_->updateHP(item->hp);
+        role_->updatePP(item->pp);
         
         return true;
     }

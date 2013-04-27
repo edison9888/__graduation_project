@@ -11,7 +11,7 @@
 
 #include "MCBattle.h"
 
-class MCNormalBattleImpl : public MCBattleProtoacol {
+class MCNormalBattleImpl : public MCBattleProtocol {
 public:
     MCNormalBattleImpl() { };
     

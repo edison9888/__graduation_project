@@ -71,7 +71,8 @@ MCTrap::copy()
     trap->setName(name_);
     trap->setDescription(description_);
     trap->setItemType(itemType_);
-    trap->effect_ = effect_;
+#warning effect_
+//    trap->effect_ = effect_;
     trap->trapType_ = trapType_;
     
     return trap;

@@ -63,11 +63,17 @@ public:
     
     inline void unactivate() {
         activating_ = false;
+        lastActivationTime_ = time(NULL);
     }
     
     inline void activate() {
         activating_ = true;
     }
+    
+    /**
+     * 无敌人则返回NULL
+     */
+    MCRole *roleForMaxAggro();
     
     void update(float dt); /* 大脑在转动 */
     

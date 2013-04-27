@@ -79,9 +79,13 @@ public:
     void walk(MCFacade aFacade);
     void walk(const CCPoint &delta);
     
-    /* 坑爹啊！直接moveby居然不行！ */
-    void moveBy(const CCPoint &aDelta);
     void drag(const CCPoint &aDelta);
+    
+    /**
+     * 积累步数消耗体力，用户战斗中移动
+     * 1点体力/24像素
+     */
+    void move(const CCPoint &aDelta);
     
     bool isWalking();
     void stopWalking();
@@ -94,11 +98,16 @@ public:
     void findPath(const CCPoint &aDestinationLocation);
     void findPath(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL);
     
+    void findPathAtMap(const CCPoint &aDestinationLocation);
+    void findPathAtMap(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL);
+    
     /**
      * 测试某个位置是否能站
      * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
      */
-    bool testPosition(const CCPoint &aDestinationLocation);
+//    bool testPosition(const CCPoint &aDestinationLocation);
+//    
+//    bool testPositionAtMap(const CCPoint &aDestinationLocation);
     
     /**
      * 寻路结束
@@ -110,6 +119,9 @@ protected:
     
     void actionEnded(CCObject* anObject);
     void stopAllMoveToActions();
+    
+    /* 创建A星实例 */
+    MCAStarAlgorithm *pathFindingAlgoInstance();
     
     /* AI */
     void startThinking();
@@ -139,6 +151,8 @@ private:
     CCObject *target_;
     SEL_CallFuncO pathFindingSelector_;
     CCObject *pathFindingSelectorUserdata_;
+    
+    CCAction *walkAction_;
 };
 
 #endif /* defined(__Military_Confrontation__MCRoleEntity__) */

@@ -13,17 +13,17 @@
  </tileset>
  <layer name="background" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3QsQ3AIADAMMRGP6D/H1pe6GakDFF2rznGc1oXfZ/eyy645WxecMvZvOCWs3nBLWfzglvO5gW3nM0LbjmbF9xyNi+45WxecMvZvOCWs3nBLWfzglvO5gW3nM0Lbn//AWR+HeikHwAA
+   H4sIAAAAAAAAC+3QsQ3AIADAMMRGP6D/H1pe6GakDFF2rznGc1oXfZ/eyy645WxecMvZvOCWs3nBLWfzglvO5gW3nM0LbjmbF9xyNi+45WxecMvZvOCWs3nBLWfzglvO5gW3nM0Lbn//AWR+HeikHwAA
   </data>
  </layer>
  <layer name="first" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2SSw6CQBQE56p+LqB4AQTcg589KpyTvkDPbF6ImKqk0quXTCqT0v9ykMcVNpJKXlbYSOhMZwed6eygM50ddKazYyf3aVudT/KcttWZ/0xnB53p7KAznR10prODznR20JnODjrT2UFnOjtqeZWNbDNbwt118hb85l4O8i4fmS3h7p7yFfzmUb7lR34zW8LdTXIOfvMvsQA+HuDMpB8AAA==
+   H4sIAAAAAAAAC+2SSw6CQBQE56p+LqB4AQTcg589KpyTvkDPbF6ImKqk0quXTCqT0v9ykMcVNpJKXlbYSOhMZwed6eygM50ddKazYyf3aVudT/KcttWZ/0xnB53p7KAznR10prODznR20JnODjrT2UFnOjtqeZWNbDNbwt118hb85l4O8i4fmS3h7p7yFfzmUb7lR34zW8LdTXIOfvMvsQA+HuDMpB8AAA==
   </data>
  </layer>
  <layer name="second" width="45" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2VxwrCQBCGl9wtL2AvN3u52cvderfevfj8/kICo4QQyexmJPvBz0SQnS+B2VFKDykkrelsXeSQfNwSP9JAmnFL/MgIGcctYbEYYhq3gHC4d4Wu3ZNBsu4z966g59E+USkgRfeZe1fQ82ifqLSQtvvMvSvoebRPVCbKzJyb6mNJBpx3DSdBXpx3DSdBXpx3DSdBXlLvGqleFovlP5G2B8P4SNuDYXyk7cEwPtL2jTQfnZieS45+pueSo5/pueToZ3oOkjR3FpmUHKXKSIXUKlJzPv/3/l13/M8wTQceXaRHat+nDpChEOcZPObIgtSlT10hayHOG3hskR2pe596QI5CnE/wOCMX5BpQb8hdiPPj6/t6jt570Pd5Mji/AIuvusqkHwAA
+   H4sIAAAAAAAAC+2VxwrCQBCGl9wtL2AvN3u52cvderfevfj8/kICo4QQyexmJPvBz0SQnS+B2VFKDykkrelsXeSQfNwSP9JAmnFL/MgIGcctYbEYYhq3gHC4d4Wu3ZNBsu4z966g59E+USkgRfeZe1fQ82ifqLSQtvvMvSvoebRPVCbKzJyb6mNJBpx3DSdBXpx3DSdBXpx3DSdBXlLvGqleFovlP5G2B8P4SNuDYXyk7cEwPtL2jTQfnZieS45+pueSo5/pueToZ3oOkjR3FpmUHKXKSIXUKlJzPv/3/l13/M8wTQceXaRHat+nDpChEOcZPObIgtSlT10hayHOG3hskR2pe596QI5CnE/wOCMX5BpQb8hdiPPj6/t6jt570Pd5Mji/AIuvusqkHwAA
   </data>
  </layer>
  <objectgroup name="entrances" width="45" height="45">
@@ -35,10 +35,10 @@
   </object>
  </objectgroup>
  <objectgroup name="barriers" width="45" height="45">
-  <object type="barrier" x="144" y="0" width="16" height="720"/>
-  <object type="barrier" x="576" y="0" width="16" height="720"/>
-  <object type="barrier" x="160" y="688" width="112" height="16"/>
-  <object type="barrier" x="464" y="688" width="112" height="16"/>
+  <object type="barrier" x="0" y="0" width="160" height="720"/>
+  <object type="barrier" x="576" y="0" width="160" height="720"/>
+  <object type="barrier" x="160" y="688" width="112" height="80"/>
+  <object type="barrier" x="464" y="688" width="112" height="80"/>
   <object type="barrier" x="272" y="640" width="16" height="80"/>
   <object type="barrier" x="448" y="640" width="16" height="80"/>
   <object type="barrier" x="512" y="192" width="32" height="16"/>
@@ -59,85 +59,85 @@
   <object x="219" y="278">
    <properties>
     <property name="ID" value="E411"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F407,F409,F401,F412,F404"/>
    </properties>
   </object>
   <object x="298" y="281">
    <properties>
     <property name="ID" value="E412"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F401,F408,F409,F405,F412"/>
    </properties>
   </object>
   <object x="389" y="279">
    <properties>
     <property name="ID" value="E413"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F410,F405,F404,F401,F406"/>
    </properties>
   </object>
   <object x="469" y="267">
    <properties>
     <property name="ID" value="E414"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F413,F406,F403,F404,F409"/>
    </properties>
   </object>
   <object x="326" y="216">
    <properties>
     <property name="ID" value="E415"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F411,F408,F402,F412,F410"/>
    </properties>
   </object>
   <object x="257" y="506">
    <properties>
     <property name="ID" value="E416"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F412,F407,F405,F413,F403"/>
    </properties>
   </object>
   <object x="305" y="474">
    <properties>
     <property name="ID" value="E418"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F405,F401,F412,F411,F404"/>
    </properties>
   </object>
   <object x="367" y="437">
    <properties>
     <property name="ID" value="E420"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F404,F402,F408,F413,F406"/>
    </properties>
   </object>
   <object x="384" y="485">
    <properties>
     <property name="ID" value="E491"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F405,F403,F411,F401,F413"/>
    </properties>
   </object>
   <object x="462" y="207">
    <properties>
     <property name="ID" value="E414"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F404,F406,F408,F405,F403"/>
    </properties>
   </object>
   <object x="394" y="208">
    <properties>
     <property name="ID" value="E413"/>
-    <property name="flags" value="F407"/>
+    <property name="flags" value="F407,F407,F402,F404,F405,F401"/>
    </properties>
   </object>
   <object x="481" y="436">
    <properties>
     <property name="ID" value="E420"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F412,F406,F403,F409,F410"/>
    </properties>
   </object>
   <object x="450" y="483">
    <properties>
     <property name="ID" value="E420"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F408,F405,F409,F402,F407"/>
    </properties>
   </object>
   <object x="343" y="555">
    <properties>
     <property name="ID" value="E418"/>
-    <property name="flags" value="F410"/>
+    <property name="flags" value="F410,F404,F402,F405,F409,F410"/>
    </properties>
   </object>
  </objectgroup>

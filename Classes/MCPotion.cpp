@@ -44,7 +44,9 @@ MCPotion::copy()
     potion->setName(name_);
     potion->setDescription(description_);
     potion->setItemType(itemType_);
-    potion->effect_ = effect_;
+    
+#warning effect_
+//    potion->effect_ = effect_;
     
     return potion;
 }

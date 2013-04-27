@@ -8,6 +8,7 @@
 
 #include "MCTestbed.h"
 #include "MCRoleManager.h"
+#include "MCEffectManager.h"
 
 #include "MCTestLua.h"
 #include "MCTestGame.h"
@@ -22,6 +23,7 @@
 #include "MCTestParticle.h"
 #include "MCTestDetail.h"
 #include "MCTestUI.h"
+#include "MCTestEffect.h"
 
 const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
@@ -69,6 +71,7 @@ static struct __mc_test_scene __test_scenes[] = {
     {"Test Trading Props UI", MCTestTradingPropsUI::scene},
     {"Test Enhancing Equipment UI", MCTestEnhancingEquipmentUI::scene},
     {"Test Hiring Mercenary UI", MCTestHiringMercenaryUI::scene},
+    {"Test Effect", MCTestEffect::scene},
     {"Test Lua", MCTestLua::scene},
     {"Test Flag Manager", MCTestFlagManager::scene},
     {"Test Task Manager", MCTestTaskManager::scene},

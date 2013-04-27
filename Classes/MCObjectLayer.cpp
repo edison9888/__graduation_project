@@ -203,6 +203,8 @@ MCObjectLayer::onEnter()
                 has = true;
             }
             if (has) {
+#warning no one
+                break;
                 roles->addObject(role);
             }
         }
@@ -359,18 +361,14 @@ MCObjectLayer::setSceneOffset(const CCPoint &anOffset)
     hero_->drag(anOffset);
 }
 
-void
-MCObjectLayer::moveTo(const CCPoint &offset)
+/**
+ * 返回人物应该移动的值
+ */
+CCPoint
+MCObjectLayer::roleWillMoveBy(MCRole *aRole, const CCPoint &offset)
 {
-    MCRole *aSelectedRole = selectedRole();
+    MCRoleEntity *roleEntity = aRole->getEntity();
     
-    if (aSelectedRole == NULL) {
-        return;
-    }
-    
-    MCRoleEntity *roleEntity = aSelectedRole->getEntity();
-    
-    MCCamera *camera = getSceneDelegate()->getScene()->getSceneCamera();
     /* screen view */
     CCPoint roleCurrentPosition = roleEntity->getPosition();
     CCPoint mapCurrentPosition = map_->getPosition();
@@ -388,7 +386,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
 
     roleEntity->walk(offset);
     if (deltaForRole.x == 0.0f && deltaForRole.y == 0.0f) {
-        return;
+        return CCPointZero;
     }
     
     CCSize frameSize = roleEntity->getMetadata()->getFrameSize();
@@ -409,8 +407,7 @@ MCObjectLayer::moveTo(const CCPoint &offset)
         deltaForRole = CCPointZero;
     }
 
-    roleEntity->drag(deltaForRole);
-    camera->focus(aSelectedRole);
+    return deltaForRole;
 }
 
 #if (MC_COLLISION_USE_OBB == 1)
@@ -717,7 +714,13 @@ MCObjectLayer::detectsCollidesWithBarriers(const CCRect &anFrame)
 void
 MCGameSceneObjectLayer::controllerDidMove(const CCPoint &delta)
 {
-    moveTo(delta);
+    MCRole *aSelectedRole = selectedRole();
+    
+    if (aSelectedRole == NULL) {
+        return;
+    }
+    aSelectedRole->getEntity()->drag(roleWillMoveBy(aSelectedRole, delta));
+    getSceneDelegate()->getScene()->getSceneCamera()->focus(aSelectedRole);
 }
 
 void
@@ -768,10 +771,38 @@ MCGameSceneObjectLayer::dialogDidDismiss(void *anUserdata)
 }
 
 #pragma mark -
-#pragma mark *** MCBattleFieldSceneObjectLayer ***
+#pragma mark *** MCBattleFieldSceneObjectLayer::MCJoypadControllerDelegate ***
+
+void
+MCBattleFieldSceneObjectLayer::controllerDidMove(const CCPoint &delta)
+{
+    MCRole *aSelectedRole = selectedRole();
+    
+    if (aSelectedRole == NULL) {
+        return;
+    }
+    roleWillMoveBy(aSelectedRole, delta);
+    /* 扣体力,一秒钟调度60次，每次调度扣0.1 */
+    mc_pp_t pp = aSelectedRole->getPP();
+    if (pp > 0.0f) {
+        aSelectedRole->getEntity()->move(roleWillMoveBy(aSelectedRole, delta));
+        getSceneDelegate()->getScene()->getSceneCamera()->focus(aSelectedRole);
+    }
+}
+
+void
+MCBattleFieldSceneObjectLayer::controllerDidRelease()
+{
+    MCRole *aSelectedRole = selectedRole();
+    
+    if (aSelectedRole == NULL) {
+        return;
+    }
+    aSelectedRole->getEntity()->stopWalking();
+}
 
 #pragma mark -
-#pragma mark *** MCBattleFieldSceneObjectLayer::控制器 ***
+#pragma mark *** MCBattleFieldSceneObjectLayer::MCBattleControllerDelegate ***
 
 void
 MCBattleFieldSceneObjectLayer::controllerDidSelectRole(MCBattleController *aBattleController, MCRole *aSelectedRole)

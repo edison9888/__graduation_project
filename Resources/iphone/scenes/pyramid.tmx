@@ -1,209 +1,208 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="40" height="123" tilewidth="16" tileheight="16">
+<map height="123" orientation="orthogonal" tileheight="16" tilewidth="16" version="1.0" width="40">
  <properties>
-  <property name="scene-type" value="field"/>
-  <property name="sound" value="sounds/desert.mp3"/>
-  <property name="tmx" value="maps/M205.tmx"/>
+  <property name="scene-type" value="field" />
+  <property name="sound" value="sounds/desert.mp3" />
+  <property name="tmx" value="maps/M205.tmx" />
  </properties>
- <tileset firstgid="1" name="006-Desert01" tilewidth="16" tileheight="16">
-  <image source="006-Desert01.png" width="256" height="608"/>
+ <tileset firstgid="1" name="006-Desert01" tileheight="16" tilewidth="16">
+  <image height="608" source="006-Desert01.png" width="256" />
  </tileset>
- <tileset firstgid="609" name="jinzita" tilewidth="16" tileheight="16">
-  <image source="jinzita.png" width="256" height="864"/>
+ <tileset firstgid="609" name="jinzita" tileheight="16" tilewidth="16">
+  <image height="864" source="jinzita.png" width="256" />
  </tileset>
- <tileset firstgid="1473" name="barrier-mask4" tilewidth="16" tileheight="16">
-  <image source="barrier-mask4.png" width="64" height="64"/>
+ <tileset firstgid="1473" name="barrier-mask4" tileheight="16" tilewidth="16">
+  <image height="64" source="barrier-mask4.png" width="64" />
  </tileset>
- <layer name="background" width="40" height="123">
-  <data encoding="base64" compression="gzip">
+ <layer height="123" name="background" width="40">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3QwQmEUADFwA/agdt/rdrFC+wcQu5znXPuryv65+sX/tqHH7+CEz9+xa99+PErOPHjV/zahx+/ghM/fsWvffjxKzjx41f82ocfv4ITP37Fr3348Ss48eNX/NqHH7+CEz9+xa99+PErOPHjV/zahx+/ghM/fsWvffjxKzjx41f82ocfv4ITP37Fr3348Ss48eNX/NqHH7+CEz9+xa99+P233wsGnhJ44EwAAA==
   </data>
  </layer>
- <layer name="first" width="40" height="123">
-  <data encoding="base64" compression="gzip">
+ <layer height="123" name="first" width="40">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3VR5BUVRSAYaSnjShGUAyomBXMObsxbEQ3qBsEBmZICioZF6JktAoYFAED0QSCgajAGMBENiCKgjlnxRy+WVHVVNdrpp9vdf6qr25Vp3v7zOs37Ro2aNCeDlTSkU5UUU1nutCVbnQny3ra7yZu5hZ60Zs+9KUf/RnAQG7N+Hy32W8Qt3MHgxnCUIYxnBGMZBR3cleGZxxtrzGMpYZx3M09jOdeJjCRSdzH/TzAgxmcc7I9pjCVaUxnBg/xMI/wKI8xk1k8zmzmZHC+J+zxJE/xNHOZx3wWsJBFPMOzLGYJS6mt+x553yOfvBYr6fnn7PE8L/Aiy1jOS7zMK7zKa6xgJatYzZq67+GzF+ST12IlPb/WHut4nTd4k7dYz9ts4B3eZSPv8T6b2FzC37fc+X1gjw/5iI/5hE/5jM/5gi/5iq/5hm/5ju9LOF+58/vBHj/yEz/zC1v4ld/4nT/4k7/4m3/4t+5sueTzlTu/HezRkBwV5NmRndiZXdiV3WjE7uxBY/Ys4Xzlzm8ve+zNPuzLfjShKftzAM04kIM4mENozqEZzO8wexxOC47gSI7iaI7hWI7jeE6gJa04kZMymN/J9jiFUzmN0zmDMzmLszmHczmP87mAC7koV/r9r773x4vtcQmjvWYMY6nhUo9dxuVcwawK/zeYzRyu9FjrXOn3v/reH6+yx9VM9popTGUabTx2DddyHYudaQlLqaWtx67PlX99JdXOHu3pQCUd6UQV1XSmC13pRndu4EZ65Mq/vpKa7r0z8lvXXvbsTR/60o/+DGBgbtvX/9/zm+u98/Jb18HOMIShDGM4IxjJqNy2r89qfoW/p2JzKnw+q/kV/p6Kzanw+ayvv+1dS51ffe9/hXPa3rXU+dX3/lfu/ArX1e6NayrSW8udX+G6yWdurkhvTbquiv2ek+aXVknXVbHfc9L80irt6yXt+aV9vaQ9vyiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoiiKoihKs/8ANQcwveBMAAA=
   </data>
  </layer>
- <layer name="second" width="40" height="123">
-  <data encoding="base64" compression="gzip">
+ <layer height="123" name="second" width="40">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3aQU4CMRiG4XGtN9CNbmWjW72NbmALG7iNyAXQE+gN9AYiB+FbzGIy6ZRpgf7t8D7JF2aSkpa/7YQmU1UAAAAAAAAAgKG5VK6sB+FxrdxYD6IwzOnpuGqbU71dtS253scSOkep5zR0jphToExvylJ5b2TV8zOmbai18qF8xvy4BL6Ub+tBePwov9aD8MixfvfKqL7uql+zTWpPynN93TW+ZhtLOc5vE/vjMLnX70/ZKP91tidOqNuLqrpTXpSxJxPltXUfk1AP+s6jMlXmniyUWes+JgAAoHyW56Q+cjkn9WVdz339W9fTun+kY70X9mmvRcZ7XOx1AACA8zTk/6k5vc/nUvq7Xxb1dfXZtYYt6uvqc+hnrSE/Q9pi1nzK+sSs+VzWJ8/rMNQLwLnYASKQvf3gTAAA
   </data>
  </layer>
- <objectgroup name="barriers" width="40" height="123">
-  <object type="barrier" x="0" y="432" width="352" height="32"/>
-  <object type="barrier" x="320" y="368" width="32" height="64"/>
-  <object type="barrier" x="352" y="368" width="288" height="32"/>
-  <object type="barrier" x="0" y="128" width="96" height="128"/>
-  <object type="barrier" x="160" y="128" width="96" height="128"/>
-  <object type="barrier" x="64" y="256" width="32" height="48"/>
-  <object type="barrier" x="160" y="256" width="32" height="48"/>
-  <object type="barrier" x="0" y="64" width="256" height="64"/>
-  <object type="barrier" x="192" y="800" width="448" height="224"/>
-  <object type="barrier" x="640" y="0" width="32" height="1984"/>
-  <object type="barrier" x="-32" y="0" width="32" height="1984"/>
-  <object type="barrier" x="-32" y="-32" width="704" height="32"/>
-  <object type="barrier" x="-32" y="1968" width="704" height="32"/>
+ <objectgroup height="123" name="barriers" width="40">
+  <object height="32" type="barrier" width="352" x="0" y="432" />
+  <object height="64" type="barrier" width="32" x="320" y="368" />
+  <object height="32" type="barrier" width="288" x="352" y="368" />
+  <object height="128" type="barrier" width="96" x="0" y="128" />
+  <object height="128" type="barrier" width="96" x="160" y="128" />
+  <object height="48" type="barrier" width="32" x="64" y="256" />
+  <object height="48" type="barrier" width="32" x="160" y="256" />
+  <object height="64" type="barrier" width="256" x="0" y="64" />
+  <object height="224" type="barrier" width="448" x="192" y="800" />
+  <object height="1984" type="barrier" width="32" x="640" y="0" />
+  <object height="1984" type="barrier" width="32" x="-32" y="0" />
+  <object height="32" type="barrier" width="704" x="-32" y="-32" />
+  <object height="32" type="barrier" width="704" x="-32" y="1968" />
  </objectgroup>
- <objectgroup name="semi-transparents" width="40" height="123">
-  <object type="semi-transparent" x="0" y="0" width="256" height="64"/>
+ <objectgroup height="123" name="semi-transparents" width="40">
+  <object height="64" type="semi-transparent" width="256" x="0" y="0" />
  </objectgroup>
- <objectgroup name="entrances" width="40" height="123">
-  <object name="pyramid-east-5" type="entrance" x="608" y="0" width="32" height="368">
+ <objectgroup height="123" name="entrances" width="40">
+  <object height="368" name="pyramid-east-5" type="entrance" width="32" x="608" y="0">
    <properties>
-    <property name="ID" value="M202"/>
-    <property name="dest" value="desert-2-west-2"/>
+    <property name="ID" value="M202" />
+    <property name="dest" value="desert-2-west-2" />
    </properties>
   </object>
-  <object name="pyramid-centre" type="entrance" x="96" y="128" width="64" height="32">
+  <object height="32" name="pyramid-centre" type="entrance" width="64" x="96" y="128">
    <properties>
-    <property name="ID" value="M309"/>
-    <property name="dest" value="dungeon-0-north"/>
+    <property name="ID" value="M309" />
+    <property name="dest" value="dungeon-0-north" />
    </properties>
   </object>
-  <object name="pyramid-east-1" type="entrance" x="608" y="1664" width="32" height="320">
+  <object height="320" name="pyramid-east-1" type="entrance" width="32" x="608" y="1664">
    <properties>
-    <property name="ID" value="M203"/>
-    <property name="dest" value="desert-3-west-1"/>
+    <property name="ID" value="M203" />
+    <property name="dest" value="desert-3-west-1" />
    </properties>
   </object>
-  <object name="pyramid-east-2" type="entrance" x="608" y="1344" width="32" height="320">
+  <object height="320" name="pyramid-east-2" type="entrance" width="32" x="608" y="1344">
    <properties>
-    <property name="ID" value="M203"/>
-    <property name="dest" value="desert-3-west-2"/>
+    <property name="ID" value="M203" />
+    <property name="dest" value="desert-3-west-2" />
    </properties>
   </object>
-  <object name="pyramid-east-3" type="entrance" x="608" y="1024" width="32" height="320">
+  <object height="320" name="pyramid-east-3" type="entrance" width="32" x="608" y="1024">
    <properties>
-    <property name="ID" value="M203"/>
-    <property name="dest" value="desert-3-west-3"/>
+    <property name="ID" value="M203" />
+    <property name="dest" value="desert-3-west-3" />
    </properties>
   </object>
-  <object name="pyramid-east-4" type="entrance" x="608" y="400" width="32" height="400">
+  <object height="400" name="pyramid-east-4" type="entrance" width="32" x="608" y="400">
    <properties>
-    <property name="ID" value="M202"/>
-    <property name="dest" value="desert-2-west-1"/>
+    <property name="ID" value="M202" />
+    <property name="dest" value="desert-2-west-1" />
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="objects" width="40" height="123">
+ <objectgroup height="123" name="objects" width="40">
   <object x="333" y="534">
    <properties>
-    <property name="ID" value="E210"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E210" />
+    <property name="flags" value="F208,F202,F209,F213,F201,F207,F214" />
    </properties>
   </object>
   <object x="400" y="556">
    <properties>
-    <property name="ID" value="E211"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E211" />
+    <property name="flags" value="F208,F203,F214,F206,F201,F204,F209" />
    </properties>
   </object>
   <object x="361" y="632">
    <properties>
-    <property name="ID" value="E212"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E212" />
+    <property name="flags" value="F208,F213,F206,F211,F202,F209,F205" />
    </properties>
   </object>
   <object x="286" y="582">
    <properties>
-    <property name="ID" value="E213"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E213" />
+    <property name="flags" value="F208,F206,F203,F209,F201,F205,F213" />
    </properties>
   </object>
   <object x="236" y="523">
    <properties>
-    <property name="ID" value="E214"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E214" />
+    <property name="flags" value="F208,F207,F201,F211,F212,F204,F202" />
    </properties>
   </object>
   <object x="282" y="1293">
    <properties>
-    <property name="ID" value="E215"/>
-    <property name="flags" value="F209"/>
+    <property name="ID" value="E215" />
+    <property name="flags" value="F209,F210,F213,F214,F202,F205,F208" />
    </properties>
   </object>
   <object x="353" y="1332">
    <properties>
-    <property name="ID" value="E216"/>
-    <property name="flags" value="F209"/>
+    <property name="ID" value="E216" />
+    <property name="flags" value="F209,F210,F214,F203,F206,F211,F202" />
    </properties>
   </object>
   <object x="294" y="1684">
    <properties>
-    <property name="ID" value="E203"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E203" />
+    <property name="flags" value="F210,F208,F214,F202,F204,F209,F212" />
    </properties>
   </object>
   <object x="362" y="1744">
    <properties>
-    <property name="ID" value="E204"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E204" />
+    <property name="flags" value="F210,F205,F206,F214,F209,F204,F213" />
    </properties>
   </object>
   <object x="326" y="1823">
    <properties>
-    <property name="ID" value="E205"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E205" />
+    <property name="flags" value="F210,F206,F212,F201,F213,F205,F202" />
    </properties>
   </object>
   <object x="222" y="1769">
    <properties>
-    <property name="ID" value="E291"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E291" />
+    <property name="flags" value="F210,F213,F204,F203,F209,F211,F208" />
    </properties>
   </object>
   <object x="208" y="670">
    <properties>
-    <property name="ID" value="E213"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E213" />
+    <property name="flags" value="F208,F213,F214,F207,F209,F211,F204" />
    </properties>
   </object>
   <object x="402" y="457">
    <properties>
-    <property name="ID" value="E210"/>
-    <property name="flags" value="F208"/>
+    <property name="ID" value="E210" />
+    <property name="flags" value="F208,F212,F204,F211,F203,F201,F207" />
    </properties>
   </object>
   <object x="244" y="1348">
    <properties>
-    <property name="ID" value="E215"/>
-    <property name="flags" value="F209"/>
+    <property name="ID" value="E215" />
+    <property name="flags" value="F209,F207,F206,F204,F211,F212,F210" />
    </properties>
   </object>
   <object x="355" y="1238">
    <properties>
-    <property name="ID" value="E216"/>
-    <property name="flags" value="F209"/>
+    <property name="ID" value="E216" />
+    <property name="flags" value="F209,F212,F202,F211,F213,F203,F201" />
    </properties>
   </object>
   <object x="446" y="1699">
    <properties>
-    <property name="ID" value="E204"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E204" />
+    <property name="flags" value="F210,F202,F206,F209,F207,F214,F211" />
    </properties>
   </object>
   <object x="439" y="1804">
    <properties>
-    <property name="ID" value="E204"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E204" />
+    <property name="flags" value="F210,F211,F214,F203,F201,F208,F212" />
    </properties>
   </object>
   <object x="262" y="1871">
    <properties>
-    <property name="ID" value="E205"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E205" />
+    <property name="flags" value="F210,F212,F211,F207,F213,F201,F204" />
    </properties>
   </object>
   <object x="384" y="1923">
    <properties>
-    <property name="ID" value="E205"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E205" />
+    <property name="flags" value="F210,F214,F201,F207,F212,F202,F208" />
    </properties>
   </object>
   <object x="176" y="1680">
    <properties>
-    <property name="ID" value="E203"/>
-    <property name="flags" value="F210"/>
+    <property name="ID" value="E203" />
+    <property name="flags" value="F210,F207,F201,F203,F214,F202,F212" />
    </properties>
   </object>
  </objectgroup>

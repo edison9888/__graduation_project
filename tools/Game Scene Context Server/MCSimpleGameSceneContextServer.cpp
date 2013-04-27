@@ -494,7 +494,9 @@ MCSimpleGameSceneContextServer::getGameSceneContextData(JsonBox::Object &data)
                     roleObject["effect-check"] = JsonBox::Value(effectCheckJSON);
                 }
                 
-                roleObject["dying"] = JsonBox::Value(mercenary->getDying());
+                roleObject["dying"] = mercenary->getMercenaryType() == MCMercenary::MCNervousMercenary
+                                        ? JsonBox::Value(dynamic_cast<MCNervousMercenary *>(mercenary)->getDying())
+                                        : JsonBox::Value(-1);
                 roleObject["cost"] = JsonBox::Value(mercenary->getCost());
             }
             

@@ -24,7 +24,7 @@
  字段            | 字段说明      | 解释
  ----------------|--------------|--------------------------------------------------------------------
  icon           | 道具图标      | 道具图标的路径，需要后缀名
- path           | 效果路径      | 效果精灵表的路径，不需要后缀名
+ effect-id      | 效果路径      | 效果精灵的ID
  price          | 价格         | 购买所需的金钱
  radius         | 效果半径      | 效果行程的圆的半径
  active-time    | 完成所需时间   | 从使用到使用完毕所经过的时间
@@ -60,12 +60,8 @@
                         ? @""
                         : object)
                 forKey:@"icon"];
-    /* path */
-    object = [data objectAtIndex:3];
-    [content setObject:([(NSString *) object compare:@"-"] == NSOrderedSame
-                        ? @""
-                        : object)
-                forKey:@"path"];
+    /* effect-id */
+    [content setObject:[data objectAtIndex:3] forKey:@"effect-id"];
     /* price */
     [content setObject:@([[data objectAtIndex:4] integerValue]) forKey:@"price"];
     /* radius */

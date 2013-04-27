@@ -6,10 +6,7 @@
   <property name="tmx" value="maps/M101"/>
  </properties>
  <tileset firstgid="1" name="forest" tilewidth="16" tileheight="16">
-  <image source="forest.png" trans="ffffff" width="1024" height="1312"/>
- </tileset>
- <tileset firstgid="5249" name="barrier-mask4" tilewidth="16" tileheight="16">
-  <image source="barrier-mask4.png" width="64" height="64"/>
+  <image source="forest.png" width="1024" height="1312"/>
  </tileset>
  <layer name="background" width="64" height="128">
   <data encoding="base64" compression="gzip">
@@ -32,29 +29,22 @@
   </data>
  </layer>
  <objectgroup name="barriers" width="64" height="128">
-  <object type="barrier" x="336" y="304" width="32" height="32">
-   <properties>
-    <property name="barrier-type" value="1"/>
-   </properties>
-  </object>
-  <object type="barrier" x="160" y="496" width="288" height="64"/>
+  <object type="barrier" x="0" y="496" width="448" height="64"/>
   <object type="barrier" x="176" y="80" width="64" height="32"/>
-  <object type="barrier" x="16" y="0" width="64" height="320"/>
-  <object type="barrier" x="784" y="704" width="240" height="304"/>
+  <object type="barrier" x="0" y="0" width="80" height="304"/>
+  <object type="barrier" x="784" y="688" width="240" height="320"/>
   <object type="barrier" x="512" y="496" width="48" height="64"/>
-  <object type="barrier" x="160" y="288" width="464" height="16"/>
+  <object type="barrier" x="80" y="288" width="544" height="16"/>
   <object type="barrier" x="608" y="304" width="16" height="192"/>
   <object type="barrier" x="80" y="256" width="112" height="32"/>
-  <object type="barrier" x="64" y="560" width="128" height="32"/>
-  <object type="barrier" x="64" y="592" width="32" height="144"/>
-  <object type="barrier" x="96" y="704" width="48" height="368"/>
+  <object type="barrier" x="0" y="560" width="192" height="32"/>
+  <object type="barrier" x="0" y="592" width="96" height="112"/>
+  <object type="barrier" x="0" y="704" width="144" height="752"/>
   <object type="barrier" x="144" y="784" width="48" height="32"/>
-  <object type="barrier" x="144" y="1040" width="144" height="32"/>
-  <object type="barrier" x="208" y="1072" width="80" height="48"/>
-  <object type="barrier" x="208" y="1120" width="48" height="240"/>
-  <object type="barrier" x="256" y="1232" width="48" height="32"/>
-  <object type="barrier" x="144" y="1328" width="64" height="32"/>
-  <object type="barrier" x="64" y="1360" width="96" height="96"/>
+  <object type="barrier" x="144" y="1040" width="144" height="80"/>
+  <object type="barrier" x="144" y="1120" width="128" height="240"/>
+  <object type="barrier" x="272" y="1232" width="32" height="32"/>
+  <object type="barrier" x="144" y="1360" width="16" height="96"/>
   <object type="barrier" x="0" y="1456" width="32" height="112"/>
   <object type="barrier" x="32" y="1456" width="48" height="48"/>
   <object type="barrier" x="208" y="1904" width="96" height="32"/>
@@ -62,12 +52,10 @@
   <object type="barrier" x="352" y="1840" width="192" height="128"/>
   <object type="barrier" x="304" y="1904" width="48" height="64"/>
   <object type="barrier" x="352" y="1824" width="16" height="16"/>
-  <object type="barrier" x="992" y="1072" width="32" height="672"/>
+  <object type="barrier" x="992" y="1104" width="32" height="528"/>
   <object type="barrier" x="768" y="960" width="128" height="48"/>
-  <object type="barrier" x="800" y="1072" width="192" height="48"/>
+  <object type="barrier" x="800" y="1072" width="224" height="48"/>
   <object type="barrier" x="864" y="1008" width="160" height="64"/>
-  <object type="barrier" x="832" y="704" width="192" height="16"/>
-  <object type="barrier" x="944" y="688" width="80" height="16"/>
   <object type="barrier" x="864" y="304" width="64" height="80"/>
   <object type="barrier" x="992" y="304" width="32" height="80"/>
   <object type="barrier" x="864" y="96" width="16" height="208"/>
@@ -78,9 +66,9 @@
   <object type="barrier" x="784" y="2032" width="176" height="16"/>
   <object type="barrier" x="800" y="2016" width="32" height="16"/>
   <object type="barrier" x="912" y="2016" width="32" height="16"/>
-  <object type="barrier" x="0" y="320" width="336" height="16"/>
+  <object type="barrier" x="0" y="304" width="368" height="32"/>
   <object type="barrier" x="0" y="384" width="336" height="32"/>
-  <object type="barrier" x="288" y="416" width="32" height="80"/>
+  <object type="barrier" x="0" y="416" width="320" height="80"/>
   <object type="barrier" x="816" y="1776" width="128" height="32"/>
   <object type="barrier" x="816" y="1744" width="208" height="48"/>
   <object type="barrier" x="752" y="1712" width="48" height="48"/>
@@ -172,145 +160,145 @@
   <object x="424" y="1631">
    <properties>
     <property name="ID" value="E101"/>
-    <property name="flags" value="F101,F102"/>
+    <property name="flags" value="F101,F102,F105,F106,F110,F111,F112,F113,F116"/>
    </properties>
   </object>
   <object x="321" y="1542">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F102"/>
+    <property name="flags" value="F102,F103,F106,F107,F109,F110,F113,F115"/>
    </properties>
   </object>
   <object x="854" y="1372">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F103"/>
+    <property name="flags" value="F103,F102,F104,F107,F108,F111,F113,F114,F116"/>
    </properties>
   </object>
   <object x="854" y="1372">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F103"/>
+    <property name="flags" value="F103,F102,F105,F106,F108,F110,F112,F115"/>
    </properties>
   </object>
   <object x="786" y="1460">
    <properties>
     <property name="ID" value="E103"/>
-    <property name="flags" value="F103,F104"/>
+    <property name="flags" value="F103,F104,F103,F106,F107,F109,F112,F114,F116"/>
    </properties>
   </object>
   <object x="909" y="1472">
    <properties>
     <property name="ID" value="E104"/>
-    <property name="flags" value="F103,F104"/>
+    <property name="flags" value="F103,F104,F105,F107,F108,F110,F111,F113,F114"/>
    </properties>
   </object>
   <object x="896" y="1274">
    <properties>
     <property name="ID" value="E105"/>
-    <property name="flags" value="F104"/>
+    <property name="flags" value="F104,F102,F103,F106,F109,F110,F112,F114,F115"/>
    </properties>
   </object>
   <object x="380" y="730">
    <properties>
     <property name="ID" value="E105"/>
-    <property name="flags" value="F105"/>
+    <property name="flags" value="F105,F106,F107,F108,F109,F111,F112,F113,F114,F116"/>
    </properties>
   </object>
   <object x="401" y="584">
    <properties>
     <property name="ID" value="E104"/>
-    <property name="flags" value="F105"/>
+    <property name="flags" value="F105,F102,F103,F104,F109,F110,F113,F115"/>
    </properties>
   </object>
   <object x="258" y="638">
    <properties>
     <property name="ID" value="E106"/>
-    <property name="flags" value="F105"/>
+    <property name="flags" value="F105,F104,F105,F106,F108,F111,F112,F114,F116"/>
    </properties>
   </object>
   <object x="552" y="685">
    <properties>
     <property name="ID" value="E107"/>
-    <property name="flags" value="F105"/>
+    <property name="flags" value="F105,F102,F103,F104,F107,F109,F110,F115"/>
    </properties>
   </object>
   <object x="447" y="657">
    <properties>
     <property name="ID" value="E108"/>
-    <property name="flags" value="F105"/>
+    <property name="flags" value="F105,F104,F106,F108,F110,F112,F113,F114,F116"/>
    </properties>
   </object>
   <object x="514" y="100">
    <properties>
     <property name="ID" value="E108"/>
-    <property name="flags" value="F106"/>
+    <property name="flags" value="F106,F102,F103,F107,F109,F111,F113,F115"/>
    </properties>
   </object>
   <object x="325" y="81">
    <properties>
     <property name="ID" value="E106"/>
-    <property name="flags" value="F106"/>
+    <property name="flags" value="F106,F104,F105,F108,F110,F111,F112,F114,F116"/>
    </properties>
   </object>
   <object x="447" y="173">
    <properties>
     <property name="ID" value="E105"/>
-    <property name="flags" value="F106"/>
+    <property name="flags" value="F106,F102,F103,F107,F109,F110,F113,F115"/>
    </properties>
   </object>
   <object x="619" y="128">
    <properties>
     <property name="ID" value="E107"/>
-    <property name="flags" value="F106"/>
+    <property name="flags" value="F106,F104,F105,F106,F108,F109,F112,F114,F116"/>
    </properties>
   </object>
   <object x="472" y="1595">
    <properties>
     <property name="ID" value="E101"/>
-    <property name="flags" value="F101,F102"/>
+    <property name="flags" value="F101,F102,F103,F105,F107,F110,F111,F114"/>
    </properties>
   </object>
   <object x="439" y="1536">
    <properties>
     <property name="ID" value="E101"/>
-    <property name="flags" value="F101,F102"/>
+    <property name="flags" value="F101,F102,F106,F108,F109,F110,F112,F113,F115,F116"/>
    </properties>
   </object>
   <object x="342" y="1618">
    <properties>
     <property name="ID" value="E101"/>
-    <property name="flags" value="F102"/>
+    <property name="flags" value="F101,F102,F103,F104,F106,F107,F109,F111,F114"/>
    </properties>
   </object>
   <object x="378" y="1520">
    <properties>
     <property name="ID" value="E101"/>
-    <property name="flags" value="F102"/>
+    <property name="flags" value="F101,F102,F105,F107,F108,F110,F111,F112,F115,F116"/>
    </properties>
   </object>
   <object x="306" y="1489">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F102"/>
+    <property name="flags" value="F102,F103,F104,F105,F106,F109,F112,F113"/>
    </properties>
   </object>
   <object x="268" y="1544">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F102"/>
+    <property name="flags" value="F102,F108,F109,F110,F112,F114,F115,F116"/>
    </properties>
   </object>
   <object x="797" y="1397">
    <properties>
     <property name="ID" value="E103"/>
-    <property name="flags" value="F103,F104"/>
+    <property name="flags" value="F103,F104,F106,F109,F111,F112,F113,F116"/>
    </properties>
   </object>
   <object x="904" y="1370">
    <properties>
     <property name="ID" value="E102"/>
-    <property name="flags" value="F103"/>
+    <property name="flags" value="F103,F105,F107,F108,F109,F110,F114,F115"/>
    </properties>
   </object>
  </objectgroup>

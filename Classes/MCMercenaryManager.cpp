@@ -16,6 +16,7 @@ using namespace std;
 #include "MCDice.h"
 #include "MCHero.h"
 #include "MCGameState.h"
+#include "MCEffectManager.h"
 
 static const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
 static const char *kMCMercenariesFilepath = "M000.jpkg";
@@ -55,6 +56,7 @@ MCMercenaryManager::loadMercenaries()
     JsonBox::Object::iterator mercenariesIterator;
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
+    MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCMercenariesFilepath);
@@ -70,15 +72,25 @@ MCMercenaryManager::loadMercenaries()
     for (mercenariesIterator = mercenaries.begin();
          mercenariesIterator != mercenaries.end();
          ++mercenariesIterator) {
-        const char *c_str_m_id = mercenariesIterator->first.c_str();
+        const char *c_str_o_id = mercenariesIterator->first.c_str();
         mc_object_id_t m_id = {
-            c_str_m_id[0],
-            c_str_m_id[1],
-            c_str_m_id[2],
-            c_str_m_id[3]
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
         };
         JsonBox::Object mercenaryObject = mercenariesIterator->second.getObject();
-        MCMercenary *mercenary = new MCMercenary;
+        MCMercenary *mercenary;
+        
+        if (m_id.sub_class_ == '9') {
+            mercenary = new MCMercenary;
+        } else if (m_id.sub_class_ == '8') {
+            mercenary = new MCNervousMercenary;
+        } else {
+            CCAssert(false, "数据错误！");
+            continue;
+        }
+        
         mercenary->init();
         mercenary->autorelease();
         mercenary->setID(m_id);
@@ -93,17 +105,30 @@ MCMercenaryManager::loadMercenaries()
         /* build sprite sheet file path */
         ccstring = CCString::createWithFormat("%s/%c-%s",
                                               kMCSpriteSheetBaseDirectory,
-                                              c_str_m_id[0] | 32,
-                                              c_str_m_id + 1);
+                                              c_str_o_id[0] | 32,
+                                              c_str_o_id + 1);
         mercenary->setSpriteSheet(ccstring);
         ccstring->retain();
+        /* effect-id */
+        c_str_o_id = mercenaryObject["effect-id"].getString().c_str();
+        mc_object_id_t e_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        MCEffect *effect = effectManager->effectForObjectId(e_id);
+        mercenary->setAttackEffect(effect);
+        effect->retain();
         /* cost Integer */
         mercenary->cost_ = mercenaryObject["cost"].getInt();
         /* HP Integer */
         mercenary->setHP(mercenaryObject["HP"].getInt());
         mercenary->setMaxHP(mercenary->getHP());
-        /* dying Integer */
-        mercenary->setDying(mercenaryObject["dying"].getInt());
+        /* dying Integer 胆怯佣兵独有 */
+        if (mercenary->mercenaryType_ == MCMercenary::MCNervousMercenary) {
+            dynamic_cast<MCNervousMercenary *>(mercenary)->setDying(mercenaryObject["dying"].getInt());
+        }
         /* PP Integer */
         mercenary->setPP(mercenaryObject["PP"].getInt());
         mercenary->setMaxPP(mercenary->getPP());

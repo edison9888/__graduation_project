@@ -109,7 +109,7 @@ mc_astar_algorithm_process(void *obj)
 {
     CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
-    std::stack<CCPoint> *route = algo->route;
+    std::stack<CCPoint> &route = algo->route;
     mc_byte_t *mapAltas = algo->getMapAltas();
     mc_size_t edge = algo->getEdge();
     MCAStarNode *startPoint = algo->getStartPoint();
@@ -130,9 +130,9 @@ mc_astar_algorithm_process(void *obj)
 //    CCLog("start-altas(%d %d) end-altas(%d %d)",
 //          startPoint->getX() * edge, startPoint->getY() * edge,
 //          endPoint->getX() * edge, endPoint->getY() * edge);
-    CCLog("start-altas(%d %d) end-altas(%d %d)",
-          startPoint->getX(), startPoint->getY(),
-          endPoint->getX(), endPoint->getY());
+//    CCLog("start-altas(%d %d) end-altas(%d %d)",
+//          startPoint->getX(), startPoint->getY(),
+//          endPoint->getX(), endPoint->getY());
     /* 初始化开放列表 */
     /* 至少终点不能是障碍吧~ */
     if (! algo->isBarrier(destinationPosition)) {
@@ -141,7 +141,7 @@ mc_astar_algorithm_process(void *obj)
     for (;algo->isProcessing();) {
         /* 开放列表为空,表明已无可以添加的新节点,而已检验的节点中没有终点节点则意味着没有找到路径 */
         if (openList->count() == 0) {
-            CCLog("虾米都没有！");
+//            CCLog("虾米都没有！");
             break;
         }
         /* 选取开放列表中有最小的F值的位置为当前位置，并加入到关闭列表中 */
@@ -151,7 +151,7 @@ mc_astar_algorithm_process(void *obj)
         if (currentPositionOrigin.x == destinationPosition.x
             && currentPositionOrigin.y == destinationPosition.y) {
             endPoint = currentPosition;
-            CCLog("有了");
+//            CCLog("有了");
             break;
         }
         closedList->addObject(currentPosition);
@@ -220,7 +220,7 @@ mc_astar_algorithm_process(void *obj)
     if (side != NULL) {
         for (;;) {
             CCPoint target = ccp(side->getX() * edge, side->getY() * edge);
-            route->push(target);
+            route.push(target);
             mapAltas[(mc_ssize_t) side->getX() + (mc_ssize_t) side->getY() * mapWidth] = 7;
             side->getParent();
             if (side->getParent() == NULL
@@ -238,7 +238,8 @@ mc_astar_algorithm_process(void *obj)
     
     /* 发出算法结束的通知 */
     if (algo->isProcessing()) {
-        notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification);
+//        notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification, algo);
+        algo->notifyPathFindingDidFinish();
     }
     
     return NULL;
@@ -293,7 +294,6 @@ MCAStarAlgorithm::~MCAStarAlgorithm()
     CC_SAFE_RELEASE(startPoint_);
     CC_SAFE_RELEASE(endPoint_);
     CC_SAFE_DELETE_ARRAY(mapAltas_);
-    delete route;
 }
 
 bool
@@ -304,9 +304,6 @@ MCAStarAlgorithm::init()
         
         startPoint_ = new MCAStarNode;
         endPoint_ = new MCAStarNode;
-        
-        route = new std::stack<CCPoint>;
-        CC_BREAK_IF(route);
         
         processing_ = false;
         
@@ -341,15 +338,11 @@ MCAStarAlgorithm::stopPathFinding() {
     /* 貌似很快就找到了，完全没需要停止线程 */
     if (pid_) {
         pthread_join(pid_, NULL);
-        pid_ = NULL;
-        
-        std::stack<CCPoint> *oldRoute = route;
-        route = new std::stack<CCPoint>;
-        delete oldRoute;
+        pid_ = 0;
     }
     
-    while (route->size() > 0) {
-        route->pop();
+    while (route.size() > 0) {
+        route.pop();
     }
 }
 
@@ -433,8 +426,13 @@ MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMap
 void
 MCAStarAlgorithm::pathFindingDidFinish(CCObject *anObject)
 {
+    if (anObject != this) {
+        /* 不是自己结束算法的 */
+        return;
+    }
     processing_ = false;
-    pid_ = NULL;
+    pid_ = 0;
+    roleEntity_->pathFindingDidFinish(this);
 }
 
 #pragma mark *** MCAStar ***
@@ -493,10 +491,6 @@ MCAStar::createAlgoInstance(MCRoleEntity *aRoleEntity)
                                    callfuncO_selector(MCAStarAlgorithm::pathFindingDidFinish),
                                    kMCAStarDidFinishAlgorithmNotification,
                                    NULL);
-    notificatinCenter->addObserver(aRoleEntity,
-                                   callfuncO_selector(MCRoleEntity::pathFindingDidFinish),
-                                   kMCAStarDidFinishAlgorithmNotification,
-                                   algo);
     
     return algo;
 }

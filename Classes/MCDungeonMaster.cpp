@@ -38,6 +38,28 @@ MCDungeonMaster::speak(const char *aMessage)
     dmDialog->attach(CCDirector::sharedDirector()->getRunningScene());
 }
 
+/**
+ * aRole将要攻击aTarget
+ *
+ * 攻击评分=攻击伤害预测值(即为攻击的最大值)+采取攻击之后的体力剩余值。（若采取攻击之后的体力剩余值为负，则忽略之）
+ *
+ * 攻击判定方式：
+ * 若有范围攻击方式，则收集范围类攻击的评分。
+ * 然后跟普通攻击评分对比。
+ * 若更佳则采用范围攻击，否则采用单体。
+ *
+ * 攻击方式判定：
+ * 自身体力值——收集所有攻击手段，若采取之，体力会在什么状态。若气绝则1分，若不则4分。
+ * 对方状态——若有异常状态则4分，若没则1分。
+ */
+void
+MCDungeonMaster::roleWillAttack(MCRole *aRole, MCRole *aTarget)
+{
+    /* 攻击方式判定 */
+    /* 通常攻击评分 */
+    /* 技能攻击评分 */
+}
+
 void
 MCDungeonMaster::destroyGameWorld()
 {

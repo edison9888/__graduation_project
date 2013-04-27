@@ -59,6 +59,7 @@ MCBattleController::init()
         addChild(multiSelection_);
         
         isJoypadEnabled_ = false;
+        isDragging_ = false;
         
         lastTouchedTime_.tv_sec = 0;
         lastTouchedTime_.tv_usec = 0;
@@ -140,6 +141,7 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
                 CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
                 selectedItem_->setPosition(ccpAdd(selectedItem_->getPosition(), offset));
                 selectedItem_->touchedPoint = touch->getLocation();
+                isDragging_ = true;
                 break;
             }
         }
@@ -203,7 +205,8 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     
     /* 行动 */
     /* 行走 */
-    if (! isJoypadEnabled_) {
+    if (!isJoypadEnabled_
+        && !isDragging_) {
         CCArray *selectedRoles = teamLayer_->getSelectedRoles();
         CCObject *obj;
         
@@ -271,8 +274,9 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             multiSelectionTouch_ = NULL;
             delegate_->controllerDidExitMultiSelectionMode(this);
         }
-        
     }
+    
+    isDragging_ = false;
     
     CCLayer::ccTouchesEnded(pTouches, pEvent);
 }
@@ -289,6 +293,7 @@ MCBattleController::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
     teamLayer_->setMultiSeletionMode(false);
     multiSelection_->setScale(1.f);
     multiSelectionTouch_ = NULL;
+    isDragging_ = false;
     CCLayer::ccTouchesCancelled(pTouches, pEvent);
 }
 

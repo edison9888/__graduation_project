@@ -34,7 +34,7 @@ MCBattle::sharedBattle()
     return __shared_battle;
 }
 
-MCBattleProtoacol *
+MCBattleProtocol *
 MCBattle::battleWithType(MCBattleType type)
 {
     if (type == MCNormalBattle) {

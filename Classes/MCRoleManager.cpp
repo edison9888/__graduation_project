@@ -12,6 +12,7 @@
 #include "MCEnemy.h"
 #include "MCDice.h"
 #include "MCScript.h"
+#include "MCEffectManager.h"
 
 static const char *kMCNPCResourceFilePath = "N000.jpkg";
 static const char *kMCEnemyResourceFilePath = "E400.jpkg";
@@ -299,6 +300,7 @@ MCRoleManager::loadEnemyData()
     JsonBox::Object::iterator enemiesIterator;
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
+    MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEnemyResourceFilePath);
@@ -324,12 +326,12 @@ MCRoleManager::loadEnemyData()
         JsonBox::Object enemyObject = enemiesIterator->second.getObject();
         MCEnemy *enemy = new MCEnemy;
         /* AI String */
-        const char *c_str_ai_id = enemiesIterator->first.c_str();
+        const char *c_str_o_id = enemiesIterator->first.c_str();
         mc_object_id_t ai_id = {
-            c_str_ai_id[0],
-            c_str_ai_id[1],
-            c_str_ai_id[2],
-            c_str_ai_id[3]
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
         };
         
         enemy->setID(m_id);
@@ -351,6 +353,18 @@ MCRoleManager::loadEnemyData()
                                               c_str_m_id + 1);
         enemy->setSpriteSheet(ccstring);
         ccstring->retain();
+        /* effect-id */
+        c_str_o_id = enemyObject["effect-id"].getString().c_str();
+        mc_object_id_t e_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        MCEffect *effect = effectManager->effectForObjectId(e_id);
+        enemy->setAttackEffect(effect);
+        effect->retain();
+        
         /* HP Integer */
         enemy->setHP(enemyObject["HP"].getInt());
         enemy->setMaxHP(enemy->getHP());

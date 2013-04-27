@@ -28,6 +28,11 @@ public:
     
     void speak(const char *aMessage);
     
+    /**
+     * aRole将要攻击aTarget
+     */
+    void roleWillAttack(MCRole *aRole, MCRole *aTarget);
+    
     void destroyGameWorld();
     
     void saveSpawnPoint();

@@ -1,83 +1,82 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="55" height="55" tilewidth="16" tileheight="16">
+<map height="55" orientation="orthogonal" tileheight="16" tilewidth="16" version="1.0" width="55">
  <properties>
-  <property name="scene-type" value="field"/>
-  <property name="sound" value="sounds/dungeon.mp3"/>
-  <property name="tmx" value="maps/M405.tmx"/>
+  <property name="scene-type" value="field" />
+  <property name="sound" value="sounds/dungeon.mp3" />
+  <property name="tmx" value="maps/M405.tmx" />
  </properties>
- <tileset firstgid="1" name="firecave" tilewidth="16" tileheight="16">
-  <image source="firecave.png" width="256" height="1344"/>
+ <tileset firstgid="1" name="firecave" tileheight="16" tilewidth="16">
+  <image height="1344" source="firecave.png" width="256" />
  </tileset>
- <layer name="background" width="55" height="55">
-  <data encoding="base64" compression="gzip">
+ <layer height="55" name="background" width="55">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3RsQ3AMBADsd8fcDZIZo1LjyAZLITrxTUzz966sO/ed2kT/uXGjVt/E/7lxo1bfxP+5caNW38T/uXGjVt/E/7lxo1bfxP+5caNW38T/uXGjVt/E/7lxo1bfxP+5caNW38T/uXGjVt/E/7lxu3sD2wouXVELwAA
   </data>
  </layer>
- <layer name="first" width="55" height="55">
-  <data encoding="base64" compression="gzip">
+ <layer height="55" name="first" width="55">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+2YMU4CURRF34RpFKFHwF5dgbICUKAWBGp0BegSB9yAQgsJYgsJYDgFFZkpIJn85HNPcjJ5yfx3c/O7H5nZEEf4hZFH8zf+4Bgnns1z/MUF/nk2r3GDW/z3bM4GZleYw3zg11zEEpbxxrM5iYvQ7BKzYfI/aRKXP82YzTLH7XnmfB0b2NzvKvC9xqKjbnH5S3qtjuz2yvkOdrG333XL9w7vHXU7zD/lzpJ4YOcjVhx1O8w/5c6SqLKzhk+OuqWZ/8LOFrYddUszv8/ON3x31C3N/AE7P/DTUTfX+UIIIYQQQvhM3FuJL8S9lQghhBBCCCGEEEIIIYQQ58gOTrVstUQvAAA=
   </data>
  </layer>
- <layer name="second" width="55" height="55">
-  <data encoding="base64" compression="gzip">
+ <layer height="55" name="second" width="55">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3YR2wTQRSA4cVec6feqQlI9JKARC8JSPSSgAQMnSudCyB6kQDRiwQshBSQIAKnwWlTKbdUyo3Olc6RHyMr1oJZe3fWhmWe9GmsyDszb9+btR1N+zV66JrWE73QG33QFxnI1H9zQUzsCmrabuzBXuzDfhzAQRzC4eCf5/gRb3nPu6DzfcSLIVw3FMMwHCMwElnIjjNndC/HcQIncQqncQZncQ7ncSGB3L7ynm/B5PdhFxO4biImYTKmYCpykBtnzuheruAqCnANhShCMUpwHTdicoveE1n7sIs5XDcX8/T2tRfyOg/5NnPe5r13EEYZylGBSlThLu7F5BK9J3b7mI8FeuL7iBfLuW4FVurta6/h9Vqss5mzmvfWoBZ1qEcD7uMBHuJRAj1p3ccqrNYT30e8WM91G7ARm7AZW7AV22zmbGTfTWhGC1rRhsd4gqd4lkBuAzAQgzBYS34fXkZBgPOGQhShGCWBxK8fg7EYh/FJrLudnHdgp4e5h8mjDOWoQCWqkshtBmZiFmYnse4RcjqKYx7m5rZuS7AUyyCSWPciOV3C5b+4bk7jJjndQmmc3DKQiX7o73ANt3VzGnY9mYVsjMJoh2ukq252PZmDXEzDdIdrpKtudj2Zh3wswmKHa6Srbv/Cc9JppCI3VTf5oermLlTd5Mf/Ujf2YHCPDdljNXPXoBZ1qEeDHqmdIEfhxWjNjXtr0DuG7LGRuZvQjBa0ok2P9KaghsKL0ZobPWNwJgzZ43PmfoGXeIXXeKNHzp6gR4UXozU3/m7wd0P2+J65P+AjPuEzvuiRZ4sgf+HFaM2NehrU05A9dghpWgBB6AihYyjy7BT0rfBitObGOTQ4h4bssRN5dEYXdEU3dA9FPhsEzxvhxWjNzasgR5MamvSoSc+Y3FuTPZjerfgzUvE/BWpn0psmZ8/kLJj0jBlOQW52v99khKqb/PBz3VLxLElX3VLRk6pu8sPPdUvFs0TVTX74uW7q+6S7UN9L5IefP9/8fN5U3dyFqpv8UHVzF36um59zUz0pP1Td3IWqm/yI/Y3zHVJ9ighELwAA
   </data>
  </layer>
- <objectgroup name="entrances" width="55" height="55">
-  <object name="fire-cave" type="entrance" x="368" y="848" width="64" height="32">
+ <objectgroup height="55" name="entrances" width="55">
+  <object height="32" name="fire-cave" type="entrance" width="64" x="368" y="848">
    <properties>
-    <property name="ID" value="M403"/>
-    <property name="dest" value="freeze-3-cave"/>
+    <property name="ID" value="M403" />
+    <property name="dest" value="freeze-3-cave" />
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="barriers" width="55" height="55">
-  <object type="barrier" x="0" y="0" width="880" height="96"/>
-  <object type="barrier" x="832" y="96" width="48" height="784"/>
-  <object type="barrier" x="0" y="880" width="896" height="16"/>
-  <object type="barrier" x="-32" y="0" width="32" height="896"/>
-  <object type="barrier" x="80" y="192" width="64" height="32"/>
-  <object type="barrier" x="608" y="96" width="64" height="48"/>
-  <object type="barrier" x="352" y="336" width="96" height="96"/>
+ <objectgroup height="55" name="barriers" width="55">
+  <object height="96" type="barrier" width="880" x="0" y="0" />
+  <object height="784" type="barrier" width="48" x="832" y="96" />
+  <object height="16" type="barrier" width="896" x="0" y="880" />
+  <object height="896" type="barrier" width="32" x="-32" y="0" />
+  <object height="32" type="barrier" width="64" x="80" y="192" />
+  <object height="48" type="barrier" width="64" x="608" y="96" />
+  <object height="96" type="barrier" width="96" x="352" y="336" />
  </objectgroup>
- <objectgroup name="semi-transparents" width="55" height="55">
-  <object type="semi-transparent" x="80" y="160" width="64" height="32"/>
+ <objectgroup height="55" name="semi-transparents" width="55">
+  <object height="32" type="semi-transparent" width="64" x="80" y="160" />
  </objectgroup>
- <objectgroup name="objects" width="55" height="55">
+ <objectgroup height="55" name="objects" width="55">
   <object x="412" y="445">
    <properties>
-    <property name="ID" value="E392"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E392" />
+    <property name="flags" value="F313,F306,F302,F311,F310,F315,F304" />
    </properties>
   </object>
   <object x="489" y="463">
    <properties>
-    <property name="ID" value="E307"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E307" />
+    <property name="flags" value="F313,F305,F306,F311,F304,F301,F314" />
    </properties>
   </object>
   <object x="335" y="469">
    <properties>
-    <property name="ID" value="E316"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E316" />
+    <property name="flags" value="F313,F305,F310,F312,F311,F304,F315" />
    </properties>
   </object>
   <object x="247" y="363">
    <properties>
-    <property name="ID" value="E316"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E316" />
+    <property name="flags" value="F313,F307,F314,F310,F312,F302,F304" />
    </properties>
   </object>
   <object x="386" y="334">
    <properties>
-    <property name="ID" value="E392"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E392" />
+    <property name="flags" value="F313,F312,F306,F305,F308,F310,F309" />
    </properties>
   </object>
   <object x="557" y="350">
    <properties>
-    <property name="ID" value="E307"/>
-    <property name="flags" value="F313"/>
+    <property name="ID" value="E307" />
+    <property name="flags" value="F313,F302,F306,F310,F312,F308,F301" />
    </properties>
   </object>
  </objectgroup>

@@ -6,6 +6,8 @@ LOCAL_MODULE := MC_shared
 
 LOCAL_MODULE_FILENAME := libMC
 
+LOCAL_CFLAGS += -DMC_ASTAR_USING_PTHREAD=1
+
 LOCAL_SRC_FILES := main.cpp \
 					../../Classes/AppDelegate.cpp \
 					../../Classes/MCActionBar.cpp \
@@ -26,12 +28,12 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCDetail.cpp \
 					../../Classes/MCDetailLayer.cpp \
 					../../Classes/MCDialog.cpp \
-					../../Classes/MCDialogue.cpp \
 					../../Classes/MCDice.cpp \
 					../../Classes/MCDungeonMaster.cpp \
 					../../Classes/MCEffect.cpp \
 					../../Classes/MCEffectiveItem.cpp \
 					../../Classes/MCEnemy.cpp \
+					../../Classes/MCEnemyAI.cpp \
 					../../Classes/MCEnhancingEquipmentUI.cpp \
 					../../Classes/MCEntrance.cpp \
 					../../Classes/MCEquipment.cpp \
@@ -56,11 +58,13 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCLuaCocos2d.cpp \
 					../../Classes/MCMainMenuScene.cpp \
 					../../Classes/MCMercenary.cpp \
+					../../Classes/MCMercenaryAI.cpp \
 					../../Classes/MCMercenaryManager.cpp \
 					../../Classes/MCMiscUtil.cpp \
 					../../Classes/MCMutiplayerBattleImpl.cpp \
 					../../Classes/MCNormalBattleImpl.cpp \
 					../../Classes/MCNPC.cpp \
+					../../Classes/MCNPCAI.cpp \
 					../../Classes/MCOBB.cpp \
 					../../Classes/MCObjectLayer.cpp \
 					../../Classes/MCOre.cpp \
@@ -99,7 +103,6 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestAStar.cpp \
 					../../Classes/MCTestBattleController.cpp \
 					../../Classes/MCTestbed.cpp \
-					../../Classes/MCTestController.cpp \
 					../../Classes/MCTestDetail.cpp \
 					../../Classes/MCTestGameScene.cpp \
 					../../Classes/MCTestLua.cpp \
@@ -114,7 +117,6 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTradingPropsUI.cpp \
 					../../Classes/MCTrap.cpp \
 					../../Classes/MCTrigger.cpp \
-					../../Classes/MCViewport.cpp \
 					../../Classes/MCViewportLayer.cpp \
 					../../Classes/MCVision.cpp \
 					../../Classes/MCWeaponSelector.cpp \

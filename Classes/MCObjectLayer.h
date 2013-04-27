@@ -40,7 +40,10 @@ protected:
      */
     void setSceneOffset(const CCPoint &anOffset);
     
-    virtual void moveTo(const CCPoint &delta);
+    /**
+     * 返回人物应该移动的值
+     */
+    virtual CCPoint roleWillMoveBy(MCRole *role, const CCPoint &delta);
 #if (MC_COLLISION_USE_OBB == 1)
     virtual void detectsCollidesWithEntrances(const MCOBB &anOBB);
     virtual void detectsCollidesWithEntrances(const MCOBB &anOBB, const CCPoint &anOffset);
@@ -117,6 +120,13 @@ protected:
 
 class MCBattleFieldSceneObjectLayer : public MCGameSceneObjectLayer {
 public:
+    /**
+     * 控制器回调
+     */
+    void controllerDidMove(const CCPoint &delta);
+    
+    void controllerDidRelease();
+    
     /**
      * 选择了人物。
      */

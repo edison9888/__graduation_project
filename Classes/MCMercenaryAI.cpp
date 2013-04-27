@@ -8,8 +8,6 @@
 
 #include "MCMercenaryAI.h"
 
-#include "MCSimpleGameSceneContextServer.h"
-
 void
 MCMercenaryAI::changingState()
 {

@@ -1,209 +1,208 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="70" height="70" tilewidth="16" tileheight="16">
+<map height="70" orientation="orthogonal" tileheight="16" tilewidth="16" version="1.0" width="70">
  <properties>
-  <property name="scene-type" value="field"/>
-  <property name="sound" value="sounds/desert.mp3"/>
-  <property name="tmx" value="maps/M203.tmx"/>
+  <property name="scene-type" value="field" />
+  <property name="sound" value="sounds/desert.mp3" />
+  <property name="tmx" value="maps/M203.tmx" />
  </properties>
- <tileset firstgid="1" name="006-Desert01" tilewidth="16" tileheight="16">
-  <image source="006-Desert01.png" width="256" height="608"/>
+ <tileset firstgid="1" name="006-Desert01" tileheight="16" tilewidth="16">
+  <image height="608" source="006-Desert01.png" width="256" />
  </tileset>
- <layer name="background" width="70" height="70">
-  <data encoding="base64" compression="gzip">
+ <layer height="70" name="background" width="70">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3RsQ2AMBDAwJfCBrD/rKRFDHAuUlg3gNfMXLt1/HjvnuNP/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5SVX+pqr9U1V+q6i9V9Zeq+ktV/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5SVX+pqr9U1V+q6i9V9Zeq+ktV/aWq/lJVf6mqv1TVX6rqL1X1l6r6S1X9par+UlV/qaq/VNVfquovVfWXqvpLVf2lqv5SVX+pqr9UfQG1GLUskEwAAA==
   </data>
  </layer>
- <layer name="first" width="70" height="70">
-  <data encoding="base64" compression="gzip">
+ <layer height="70" name="first" width="70">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3WzW0CMRAG0N1z6CC5RdAASlqADuAKHUBxlJAOQgOE1JG5cEMr7x87Qe9J32ltyzsaW66qcZ1GXv+/+mr49hKZtVyvy5yMzg3fXiNvLdfrMiejprqUGqJHsvVZ0zkqNUSPZOuzIfrl2XxX09alz9m5jJSfyDXy23Ffbd2rQZ+z816XZRfZF469ZR5Z1P3+t9TQ98eyLsshciwce8tH5PNBdXmkVWQ99SYS2kS2U2+ih2xvliyyvVkgO3fJfe4SAAAAAAAAAAAAAAAAAIDn9AfOAHlskEwAAA==
   </data>
  </layer>
- <layer name="second" width="70" height="70">
-  <data encoding="base64" compression="gzip">
+ <layer height="70" name="second" width="70">
+  <data compression="gzip" encoding="base64">
    H4sIAAAAAAAAA+3Yuw0CUQwEQKADyuLTAJ9qqIp2iKADCHFI4JMI0Nl3zEibO7H89i0WAADAp01kG9lF9sWzdHKIHCOnyLl4FoCpG7o198ijZKIehm7NM/IqmQgAetBTc3oqc3dZVk8A83Vtsl///g8wxD9AH7cmuwIdfdvT1qtx5umic09zd3PuLsD0+T/OdX6XANCPe5rrfk91/ZyuD8DUeIvlur/FGFfVnnTfz6o9sZ+/pdvldDug2hsWyIvckEwAAA==
   </data>
  </layer>
- <objectgroup name="barriers" width="70" height="70">
-  <object type="barrier" x="0" y="0" width="400" height="160">
+ <objectgroup height="70" name="barriers" width="70">
+  <object height="160" type="barrier" width="400" x="0" y="0">
    <properties>
-    <property name="barrier-type" value="1"/>
+    <property name="barrier-type" value="1" />
    </properties>
   </object>
-  <object type="barrier" x="0" y="-16" width="1120" height="16"/>
-  <object type="barrier" x="0" y="1120" width="1120" height="16"/>
-  <object type="barrier" x="1120" y="-16" width="16" height="1152"/>
-  <object type="barrier" x="-16" y="-16" width="16" height="1152"/>
+  <object height="16" type="barrier" width="1120" x="0" y="-16" />
+  <object height="16" type="barrier" width="1120" x="0" y="1120" />
+  <object height="1152" type="barrier" width="16" x="1120" y="-16" />
+  <object height="1152" type="barrier" width="16" x="-16" y="-16" />
  </objectgroup>
- <objectgroup name="semi-transparents" width="70" height="70"/>
- <objectgroup name="entrances" width="70" height="70">
-  <object name="desert-3-north-3" type="entrance" x="912" y="0" width="208" height="32">
+ <objectgroup height="70" name="semi-transparents" width="70" />
+ <objectgroup height="70" name="entrances" width="70">
+  <object height="32" name="desert-3-north-3" type="entrance" width="208" x="912" y="0">
    <properties>
-    <property name="ID" value="M202"/>
-    <property name="dest" value="desert-2-south-3"/>
+    <property name="ID" value="M202" />
+    <property name="dest" value="desert-2-south-3" />
    </properties>
   </object>
-  <object name="desert-3-north-2" type="entrance" x="656" y="0" width="256" height="32">
+  <object height="32" name="desert-3-north-2" type="entrance" width="256" x="656" y="0">
    <properties>
-    <property name="ID" value="M202"/>
-    <property name="dest" value="desert-2-south-2"/>
+    <property name="ID" value="M202" />
+    <property name="dest" value="desert-2-south-2" />
    </properties>
   </object>
-  <object name="desert-3-north-1" type="entrance" x="400" y="0" width="256" height="32">
+  <object height="32" name="desert-3-north-1" type="entrance" width="256" x="400" y="0">
    <properties>
-    <property name="ID" value="M202"/>
-    <property name="dest" value="desert-2-south-1"/>
+    <property name="ID" value="M202" />
+    <property name="dest" value="desert-2-south-1" />
    </properties>
   </object>
-  <object name="desert-3-west-1" type="entrance" x="0" y="800" width="32" height="320">
+  <object height="320" name="desert-3-west-1" type="entrance" width="32" x="0" y="800">
    <properties>
-    <property name="ID" value="M205"/>
-    <property name="dest" value="pyramid-east-1"/>
+    <property name="ID" value="M205" />
+    <property name="dest" value="pyramid-east-1" />
    </properties>
   </object>
-  <object name="desert-3-west-2" type="entrance" x="0" y="480" width="32" height="320">
+  <object height="320" name="desert-3-west-2" type="entrance" width="32" x="0" y="480">
    <properties>
-    <property name="ID" value="M205"/>
-    <property name="dest" value="pyramid-east-2"/>
+    <property name="ID" value="M205" />
+    <property name="dest" value="pyramid-east-2" />
    </properties>
   </object>
-  <object name="desert-3-west-3" type="entrance" x="0" y="160" width="32" height="320">
+  <object height="320" name="desert-3-west-3" type="entrance" width="32" x="0" y="160">
    <properties>
-    <property name="ID" value="M205"/>
-    <property name="dest" value="pyramid-east-3"/>
+    <property name="ID" value="M205" />
+    <property name="dest" value="pyramid-east-3" />
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="objects" width="70" height="70">
+ <objectgroup height="70" name="objects" width="70">
   <object x="252" y="335">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F211"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F211,F213,F210,F203,F201,F209,F206" />
    </properties>
   </object>
   <object x="329" y="370">
    <properties>
-    <property name="ID" value="E293"/>
-    <property name="flags" value="F211"/>
+    <property name="ID" value="E293" />
+    <property name="flags" value="F211,F205,F208,F210,F202,F209,F204" />
    </properties>
   </object>
   <object x="603" y="681">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F212"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F212,F211,F205,F214,F207,F209,F206" />
    </properties>
   </object>
   <object x="609" y="755">
    <properties>
-    <property name="ID" value="E293"/>
-    <property name="flags" value="F212"/>
+    <property name="ID" value="E293" />
+    <property name="flags" value="F212,F210,F213,F202,F211,F214,F203" />
    </properties>
   </object>
   <object x="716" y="763">
    <properties>
-    <property name="ID" value="E294"/>
-    <property name="flags" value="F212"/>
+    <property name="ID" value="E294" />
+    <property name="flags" value="F212,F207,F208,F201,F210,F205,F203" />
    </properties>
   </object>
   <object x="883" y="380">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F213,F206,F204,F209,F210,F203,F205" />
    </properties>
   </object>
   <object x="993" y="377">
    <properties>
-    <property name="ID" value="E294"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E294" />
+    <property name="flags" value="F213,F208,F205,F204,F201,F209,F210" />
    </properties>
   </object>
   <object x="948" y="464">
    <properties>
-    <property name="ID" value="E295"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E295" />
+    <property name="flags" value="F213,F208,F206,F204,F211,F214,F203" />
    </properties>
   </object>
   <object x="886" y="940">
    <properties>
-    <property name="ID" value="E215"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E215" />
+    <property name="flags" value="F214,F201,F209,F211,F204,F207,F210" />
    </properties>
   </object>
   <object x="1000" y="980">
    <properties>
-    <property name="ID" value="E216"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E216" />
+    <property name="flags" value="F214,F203,F209,F206,F204,F213,F208" />
    </properties>
   </object>
   <object x="934" y="1066">
    <properties>
-    <property name="ID" value="E295"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E295" />
+    <property name="flags" value="F214,F206,F201,F209,F204,F202,F212" />
    </properties>
   </object>
   <object x="294" y="275">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F211"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F211,F201,F213,F208,F205,F214,F209" />
    </properties>
   </object>
   <object x="389" y="319">
    <properties>
-    <property name="ID" value="E293"/>
-    <property name="flags" value="F211"/>
+    <property name="ID" value="E293" />
+    <property name="flags" value="F211,F205,F213,F210,F203,F208,F212" />
    </properties>
   </object>
   <object x="687" y="631">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F212"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F212,F209,F208,F211,F204,F203,F207" />
    </properties>
   </object>
   <object x="530" y="810">
    <properties>
-    <property name="ID" value="E293"/>
-    <property name="flags" value="F212"/>
+    <property name="ID" value="E293" />
+    <property name="flags" value="F212,F207,F206,F211,F210,F214,F203" />
    </properties>
   </object>
   <object x="849" y="303">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F213,F212,F209,F214,F205,F202,F210" />
    </properties>
   </object>
   <object x="1045" y="452">
    <properties>
-    <property name="ID" value="E294"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E294" />
+    <property name="flags" value="F213,F209,F212,F203,F201,F208,F207" />
    </properties>
   </object>
   <object x="948" y="303">
    <properties>
-    <property name="ID" value="E292"/>
-    <property name="flags" value="F213"/>
+    <property name="ID" value="E292" />
+    <property name="flags" value="F213,F208,F214,F204,F207,F205,F203" />
    </properties>
   </object>
   <object x="1064" y="910">
    <properties>
-    <property name="ID" value="E216"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E216" />
+    <property name="flags" value="F214,F203,F211,F213,F209,F207,F201" />
    </properties>
   </object>
   <object x="979" y="896">
    <properties>
-    <property name="ID" value="E216"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E216" />
+    <property name="flags" value="F214,F202,F204,F212,F211,F208,F207" />
    </properties>
   </object>
   <object x="792" y="980">
    <properties>
-    <property name="ID" value="E215"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E215" />
+    <property name="flags" value="F214,F209,F204,F211,F206,F202,F201" />
    </properties>
   </object>
   <object x="856" y="1025">
    <properties>
-    <property name="ID" value="E215"/>
-    <property name="flags" value="F214"/>
+    <property name="ID" value="E215" />
+    <property name="flags" value="F214,F210,F206,F207,F212,F209,F203" />
    </properties>
   </object>
  </objectgroup>

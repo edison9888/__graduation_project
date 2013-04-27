@@ -9,6 +9,7 @@
 #include "MCGameState.h"
 
 #include "MCBackpack.h"
+#include "MCEffectManager.h"
 #include "MCEquipmentManager.h"
 #include "MCFlagManager.h"
 #include "MCTaskManager.h"
@@ -81,7 +82,6 @@ MCGameState::save()
     MCMercenaryManager::sharedMercenaryManager()->saveData();
     MCFlagManager::sharedFlagManager()->saveAllFlags();
     MCTaskManager::sharedTaskManager()->saveData();
-    MCSkillManager::sharedSkillManager()->saveData();
     MCDungeonMaster::sharedDungeonMaster()->saveSpawnPoint();
     
     /* 写入磁盘 */

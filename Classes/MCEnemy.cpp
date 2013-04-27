@@ -8,6 +8,12 @@
 
 #include "MCEnemy.h"
 #include "MCEnemyAI.h"
+#include "MCScene.h"
+
+MCEnemy::~MCEnemy()
+{
+    CC_SAFE_RELEASE(attackEffect_);
+}
 
 bool
 MCEnemy::init(MCRoleRace aRoleRace)
@@ -16,6 +22,7 @@ MCEnemy::init(MCRoleRace aRoleRace)
     setRoleRace(aRoleRace);
     face_ = NULL;
     defaultDialogue_ = NULL;
+    center_ = CCPointZero;
     
     return true;
 }
@@ -38,6 +45,28 @@ MCEnemy::create(mc_object_id_t anObjectId)
     return enemy;
 }
 
+#pragma mark -
+#pragma mark *** MCMercenary::MCAIStateMachineDelegate ***
+
+/**
+ * 空闲状态下回调
+ */
+void
+MCEnemy::performWhenIdleState()
+{
+    MCRole::performWhenIdleState();
+    
+    time_t lastActivationTime = ai_->lastActivationTime_;
+    time_t now = time(NULL);
+    
+    /* 停4秒 */
+    if ((lastActivationTime != 0
+        && now - lastActivationTime > 4)
+        || lastActivationTime == 0) {
+        round();
+    }
+}
+
 MCRoleEntity *
 MCEnemy::getEntity()
 {
@@ -51,6 +80,30 @@ MCEnemy::getEntity()
     }
     
     return roleEntity;
+}
+
+/* 巡逻 */
+void
+MCEnemy::round()
+{
+    ai_->activate();
+    
+    MCRoleEntity *entity = getEntity();
+    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    
+    if (center_.equals(CCPointZero)) {
+        MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+        MCScene *scene = sceneContext->getScene();
+        center_ = ccpSub(entity->getPosition(), scene->getMapOffset());
+    }
+    
+    /* 大概4个基本身位的半径范围内随便走 */
+    float dx = (rand() % 4 * 24 / contentScaleFactor) * (rand() % 2 == 1 ? 1 : -1);
+    float dy = (rand() % 4 * 24 / contentScaleFactor) * (rand() % 2 == 1 ? 1 : -1);
+    
+    entity->findPathAtMap(ccpAdd(center_, ccp(dx, dy)),
+                          this,
+                          callfuncO_selector(MCEnemy::roundDidFinish));
 }
 
 CCObject *
@@ -89,6 +142,7 @@ MCEnemy::copy()
     enemy->distance_ =distance_;
     enemy->effect_ = effect_;
     enemy->effectCheck_ = effectCheck_;
+    enemy->attackEffect_ = dynamic_cast<MCEffect *>(attackEffect_->copy());
     if (ai_) {
         enemy->ai_ = dynamic_cast<MCEnemyAI *>(ai_->copy());
     }
@@ -97,4 +151,10 @@ MCEnemy::copy()
 #warning 木有配置技能
     
     return enemy;
+}
+
+void
+MCEnemy::roundDidFinish(CCObject *anObject)
+{
+    ai_->unactivate();
 }

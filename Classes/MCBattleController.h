@@ -45,6 +45,7 @@ private:
     MCActionBarItem *selectedItem_;
     
     bool isJoypadEnabled_;
+    bool isDragging_;
     
     /* 选择按钮 */
     CCMenu *selectAllMenu_;

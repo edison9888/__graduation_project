@@ -22,7 +22,14 @@ class MCMercenaryManager;
 class MCMercenary : public MCEnemy, public MCMercenaryAIStateMachineDelegate {
     friend class MCMercenaryManager;
 public:
+    MCMercenary();
     ~MCMercenary();
+    
+    enum {
+        MCNormalMercenary,
+        MCNervousMercenary
+    };
+    typedef mc_enum_t MCMercenaryType;
     
     bool init();
     
@@ -49,10 +56,21 @@ public:
      */
     void performWhenAttackState() { MCRole::performWhenAttackState(); }
     
-    /**
-     * 死亡状态下回调
-     */
-    void performWhenDeathState() { MCRole::performWhenDeathState(); }
+    MCRoleEntity *getEntity();
+    
+    CCObject *copy();
+    
+    CC_SYNTHESIZE_READONLY(MCMercenaryType, mercenaryType_, MercenaryType); /* 佣兵类型 */
+    CC_SYNTHESIZE_READONLY(mc_cost_t, cost_, Cost); /* 雇佣所需费用 */
+};
+
+class MCNervousMercenary : public MCMercenary {
+    friend class MCMercenaryManager;
+public:
+    MCNervousMercenary();
+    ~MCNervousMercenary();
+    
+    static MCNervousMercenary *create(mc_object_id_t anObjectId);
     
     /* MCMercenaryAIStateMachineDelegate */
     /**
@@ -60,12 +78,9 @@ public:
      */
     void performWhenFleeState();
     
-    MCRoleEntity *getEntity();
-    
     CCObject *copy();
     
     CC_SYNTHESIZE(mc_hp_t, dying_, Dying); /* 生命垂危线 */
-    CC_SYNTHESIZE_READONLY(mc_cost_t, cost_, Cost); /* 雇佣所需费用 */
 };
 
 #endif /* defined(__Military_Confrontation__MCMercenary__) */

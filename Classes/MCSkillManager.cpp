@@ -14,7 +14,7 @@ static MCSkillManager *__shared_skill_manager = NULL;
 MCSkillManager::MCSkillManager()
 {
     skills_ = CCDictionary::create();
-    skills_->release();
+    skills_->retain();
 }
 
 MCSkillManager::~MCSkillManager()
@@ -31,12 +31,6 @@ MCSkillManager::sharedSkillManager()
     }
     
     return __shared_skill_manager;
-}
-
-void
-MCSkillManager::saveData()
-{
-    
 }
 
 void

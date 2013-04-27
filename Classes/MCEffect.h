@@ -9,21 +9,47 @@
 #ifndef __Military_Confrontation__MCEffect__
 #define __Military_Confrontation__MCEffect__
 
-#include "MCRoleProperty.h"
+#include "MCType.h"
 
-typedef mc_short_t mc_hp_change_value_t;
-typedef mc_short_t mc_pp_change_value_t;
-typedef float mc_lasting_time_t;
+#include <cocos2d.h>
+USING_NS_CC;
 
-struct MCEffect {
-    mc_hp_change_value_t hp;             /* HP变化值 */
-    mc_pp_change_value_t pp;             /* PP变化值 */
-    MCRoleState          positive_state; /* 会增加的状态 */
-    MCRoleState          negative_state; /* 会消除的状态 */
-    mc_hp_change_value_t adjusted_hp;    /* 一次调度后hp的变化值 */
-    mc_hp_change_value_t adjusted_pp;    /* 一次调度后pp的变化值 */
-    mc_lasting_time_t    lasting_time;   /* 效果时间 */
+class MCEffect : public CCSprite {
+    friend class MCEffectManager;
+public:
+    MCEffect()
+    : id_(NULLObjectId)
+    , effect_(NULL)
+    , animation_(NULL)
+    , implType_(MCUnknownEffectImplType) {}
     
+    ~MCEffect();
+
+    enum {
+        MCUnknownEffectImplType,
+        MCSpriteSheet,
+        MCPList
+    };
+    typedef mc_enum_t MCEffectImplType;
+    
+    void attach(CCNode *aParent);
+    
+    CCObject *copy();
+    
+protected:
+    void runEffect();
+    
+    void detach();
+    
+    CC_SYNTHESIZE_READONLY(mc_object_id_t, id_, ID);
+    
+    /* MCSpriteSheet时为动画贴图的第一帧的名字，MCPList时为粒子效果的路径 */
+    CC_SYNTHESIZE_READONLY(CCString *, effect_, Effect);
+    
+    /* MCSpriteSheet */
+    CCAnimation *animation_;
+    
+    CC_SYNTHESIZE_READONLY(MCEffectImplType, implType_, ImplType);
 };
 
 #endif /* defined(__Military_Confrontation__MCEffect__) */

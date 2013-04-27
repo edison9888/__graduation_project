@@ -32,7 +32,7 @@ bool
 MCAI::init()
 {
     activating_ = false;
-    lastActivationTime_ = LONG_MIN;
+    lastActivationTime_ = 0;
     
     return true;
 }
@@ -59,6 +59,30 @@ MCAI::unbind()
     role_ = NULL;
     
     return temp;
+}
+
+/**
+ * 无敌人则返回NULL
+ */
+MCRole *
+MCAI::roleForMaxAggro()
+{
+    MCAIRole *aiRole;
+    MCAIRole *maxAggroAIRole = NULL;
+    CCDictionary *roles = enemiesInVision_;
+    CCDictElement *rolesElement;
+    
+    /* 搜集视野内人物 */
+    CCDICT_FOREACH(roles, rolesElement) {
+        aiRole = dynamic_cast<MCAIRole *>(rolesElement->getObject());
+        if (maxAggroAIRole == NULL) {
+            maxAggroAIRole = aiRole;
+        } else if (aiRole->aggro > maxAggroAIRole->aggro) {
+            maxAggroAIRole = aiRole;
+        }
+    }
+    
+    return maxAggroAIRole ? maxAggroAIRole->role : NULL;
 }
 
 void
@@ -139,6 +163,9 @@ CCObject *
 MCAI::copy()
 {
     MCAI *ai = new MCAI;
+    
+    ai->init();
+    ai->lastActivationTime_ = 0;
     
     return ai;
 }

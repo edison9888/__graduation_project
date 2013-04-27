@@ -18,6 +18,7 @@
 #import "MCFlagHandler.h"
 #import "MCTaskHandler.h"
 #import "MCRegionHandler.h"
+#import "MCEffectHandler.h"
 
 #import "MCScenePackageGenerator.h"
 #import "MCTMXGenerator.h"
@@ -104,6 +105,14 @@ int main(int argc, const char * argv[])
             
             /* 区域 */
             handler = [[MCRegionHandler alloc] init];
+            handler.startLine = 1;
+            handler.ignoreLine = 0;
+            [convertor setHandler:handler];
+            [convertor convert];
+            [handler release];
+            
+            /* 效果 */
+            handler = [[MCEffectHandler alloc] init];
             handler.startLine = 1;
             handler.ignoreLine = 0;
             [convertor setHandler:handler];

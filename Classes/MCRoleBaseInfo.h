@@ -44,7 +44,10 @@ public:
         return faceBox_;
     }
     
-    void updateInfo();
+    void updateInfo(float dt);
+    
+    void onEnter();
+    void onExit();
     
     /**
      * 使用成功返回true，否则false

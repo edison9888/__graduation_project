@@ -11,7 +11,7 @@
 
 #include "MCObject.h"
 #include "MCRoleEntity.h"
-#include "MCEffect.h"
+#include "MCRoleProperty.h"
 #include "MCAI.h"
 
 extern const char *kMCRoleDiedNotification;

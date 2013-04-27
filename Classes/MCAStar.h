@@ -140,12 +140,16 @@ public:
     
     void execute();
     
+    inline void notifyPathFindingDidFinish() {
+        pathFindingDidFinish(this);
+    }
+    
 protected:
     /**
      * 生成对象适用的变形地图
      */
     void generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMapSize, CCArray *barriers);
-    
+
     void pathFindingDidFinish(CCObject *anObject);
     
 private:
@@ -164,7 +168,7 @@ private:
     CC_SYNTHESIZE_READONLY(MCRoleEntity *, roleEntity_, RoleEntity);
 
 public:
-    std::stack<CCPoint> *route; /* 寻路结果 */
+    std::stack<CCPoint> route; /* 寻路结果 */
 };
 
 class MCAStar : public CCObject {

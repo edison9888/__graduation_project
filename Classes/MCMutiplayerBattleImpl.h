@@ -11,7 +11,7 @@
 
 #include "MCBattle.h"
 
-class MCMutiplayerBattleImpl : public MCBattleProtoacol {
+class MCMutiplayerBattleImpl : public MCBattleProtocol {
 public:
     MCMutiplayerBattleImpl() { };
     

@@ -23,7 +23,7 @@ enum {
 };
 typedef unsigned int MCBattleType;
 
-class MCBattleProtoacol;
+class MCBattleProtocol;
 
 class MCBattle : public CCObject {
 private:
@@ -34,14 +34,14 @@ private:
 public:
     static MCBattle *sharedBattle();
     
-    MCBattleProtoacol *battleWithType(MCBattleType type);
+    MCBattleProtocol *battleWithType(MCBattleType type);
 };
 
-class MCBattleProtoacol : public CCObject {
+class MCBattleProtocol : public CCObject {
 public:
 };
 
-class MCOffensiveProtoacol : public CCObject {
+class MCOffensiveProtocol : public CCObject {
 public:
     /**
      * 重击判断

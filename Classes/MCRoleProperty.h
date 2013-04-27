@@ -18,7 +18,7 @@ USING_NS_CC;
  * MCRole 角色属性类型
  */
 typedef mc_ushort_t mc_hp_t;   /* 生命值类型 */
-typedef mc_ushort_t mc_pp_t;   /* 体力值类型 */
+typedef float mc_pp_t;   /* 体力值类型 */
 
 /**
  * 角色种族

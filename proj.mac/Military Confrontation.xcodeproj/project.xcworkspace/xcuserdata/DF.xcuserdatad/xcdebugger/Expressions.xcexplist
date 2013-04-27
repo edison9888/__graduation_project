@@ -3,7 +3,41 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCObject::release():CCObject.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCEnemy::copy():MCEnemy.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCEffect::copy():MCEffect.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCScenePackage::loadObjects(JsonBox::Object&amp;):MCScenePackage.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(MCRole *)role">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(cocos2d::CCAction *)walkAction">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

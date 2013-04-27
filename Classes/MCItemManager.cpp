@@ -64,14 +64,17 @@ MCItemManager::itemForObjectId(mc_object_id_t anObjectId)
 MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEquipmentItem *meta = protoEquipmentItemForObjectId(anObjectId);
-    MCEquipmentItem *equipmentItem = dynamic_cast<MCEquipmentItem *>(meta->copy());
+    MCEquipmentItem *proto = protoEquipmentItemForObjectId(anObjectId);
+    MCEquipmentItem *equipmentItem;
 
-    if (equipmentItem) {
-        equipmentItem->autorelease();
-    } else {
-        CC_SAFE_DELETE(equipmentItem);
-        equipmentItem = NULL;
+    if (proto) {
+        equipmentItem = dynamic_cast<MCEquipmentItem *>(proto->copy());
+        if (equipmentItem) {
+            equipmentItem->autorelease();
+        } else {
+            CC_SAFE_DELETE(equipmentItem);
+            equipmentItem = NULL;
+        }
     }
     
     return equipmentItem;
@@ -80,14 +83,17 @@ MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 MCEffectiveItem *
 MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
 {
-    MCEffectiveItem *meta = protoEffectiveItemForObjectId(anObjectId);
-    MCEffectiveItem *effectiveItem = dynamic_cast<MCEffectiveItem *>(meta->copy());
+    MCEffectiveItem *proto = protoEffectiveItemForObjectId(anObjectId);
+    MCEffectiveItem *effectiveItem = NULL;
     
-    if (effectiveItem) {
-        effectiveItem->autorelease();
-    } else {
-        CC_SAFE_DELETE(effectiveItem);
-        effectiveItem = NULL;
+    if (proto) {
+        effectiveItem = dynamic_cast<MCEffectiveItem *>(proto->copy());
+        if (effectiveItem) {
+            effectiveItem->autorelease();
+        } else {
+            CC_SAFE_DELETE(effectiveItem);
+            effectiveItem = NULL;
+        }
     }
     
     return effectiveItem;
@@ -294,11 +300,12 @@ MCItemManager::loadEffectiveItems()
         ccstring->retain();
         item->setPrice(object["price"].getInt());
         item->setRadius(object["radius"].getInt());
-        item->effect_.hp = object["hp"].getInt();
-        item->effect_.pp = object["pp"].getInt();
-        item->effect_.positive_state = object["positive-state"].getInt();
-        item->effect_.negative_state = object["negative-state"].getInt();
-        item->effect_.lasting_time = object["lasting-time"].getDouble();
+        item->hp = object["hp"].getInt();
+        item->pp = object["pp"].getInt();
+        item->positive_state = object["positive-state"].getInt();
+        item->negative_state = object["negative-state"].getInt();
+        item->lasting_time = object["lasting-time"].getDouble();
+        
         effectiveItems_->setObject(item, MCObjectIdToDickKey(o_id));
     }
 }

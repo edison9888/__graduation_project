@@ -13,15 +13,16 @@ static const NSUInteger kMCIDIndex = 0;
 
 MCDefineIndexAndKey(Name, 1, name);
 MCDefineIndexAndKey(Icon, 2, icon);
-MCDefineIndexAndKey(Price, 3, price);
-MCDefineIndexAndKey(Damage, 4, damage);
-MCDefineIndexAndKey(CriticalHitVisible, 7, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 8, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 9, critical-hit);
-MCDefineIndexAndKey(Distance, 12, distance);
-MCDefineIndexAndKey(Effect, 13, effect);
-MCDefineIndexAndKey(EffectCheck, 14, effect-check);
-MCDefineIndexAndKey(Dexterity, 15, dexterity);
+MCDefineIndexAndKey(EffectID, 3, effect-id);
+MCDefineIndexAndKey(Price, 4, price);
+MCDefineIndexAndKey(Damage, 5, damage);
+MCDefineIndexAndKey(CriticalHitVisible, 8, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 9, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 10, critical-hit);
+MCDefineIndexAndKey(Distance, 13, distance);
+MCDefineIndexAndKey(Effect, 14, effect);
+MCDefineIndexAndKey(EffectCheck, 15, effect-check);
+MCDefineIndexAndKey(Dexterity, 16, dexterity);
 
 @implementation MCWeaponHandler
 
@@ -73,6 +74,8 @@ MCDefineIndexAndKey(Dexterity, 15, dexterity);
                         ? @""
                         : object)
                 forKey:kMCIconKey];
+    /* effect-id */
+    [content setObject:[data objectAtIndex:kMCEffectIDIndex] forKey:kMCEffectIDKey];
     /* price */
     [content setObject:@([[data objectAtIndex:kMCPriceIndex] integerValue]) forKey:kMCPriceKey];
     /* damage */

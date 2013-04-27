@@ -12,6 +12,7 @@
 #include "MCType.h"
 #include "MCDice.h"
 #include "MCEquipmentProperty.h"
+#include "MCRoleProperty.h"
 #include "MCEffect.h"
 
 typedef mc_enum_t MCEquipmentType;
@@ -43,6 +44,8 @@ public:
     mc_distance_t distance; /* 攻击距离，单位为资源缩放值*32像素 */
     MCRoleState effect; /* 附带效果 */
     MCDiceRange effectCheck; /* 效果判定 */
+    
+    MCEffect *actionEffect; /* 攻击效果 */
 };
 
 
