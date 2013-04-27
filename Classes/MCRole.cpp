@@ -11,7 +11,7 @@
 #include "MCScript.h"
 #include "MCDungeonMaster.h"
 
-#define MCPPPerSecond(sec) ((sec) * 1000.0)
+#define MCPPPerSecond(sec) ((sec) / 1000.0)
 
 const char *kMCRoleDiedNotification = "kMCRoleDiedNotification";
 

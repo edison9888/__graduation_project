@@ -19,7 +19,11 @@ static const float kMCActionDuration = 0.2f;
 
 MCTeamLayer::~MCTeamLayer()
 {
+#if MC_SELECT_ALL_SUPPORT == 1
     CC_SAFE_RELEASE(selectedRoles_);
+#else
+    CC_SAFE_RELEASE(selectedRole_);
+#endif
 }
 
 bool
@@ -46,21 +50,20 @@ MCTeamLayer::init()
         menu->setPosition(ccp(0, winSize.height - frameSize_.height));
         toggleButton_ = menu;
         
+#if MC_SELECT_ALL_SUPPORT == 1
         selectedRoles_ = CCArray::create();
         selectedRoles_->retain();
-        isMultiSeletionMode_ = false;
+#else
+        selectedRole_ = NULL;
+#endif
+
         return true;
     }
     
     return false;
 }
 
-void
-MCTeamLayer::selectFirstRole()
-{
-    selectRole(dynamic_cast<MCRoleBaseInfo *>(group_->infoList_->objectAtIndex(0))->getRole());
-}
-
+#if MC_SELECT_ALL_SUPPORT == 1
 void
 MCTeamLayer::selectAll()
 {
@@ -87,6 +90,7 @@ MCTeamLayer::unselectAll()
         info->getRole()->getEntity()->getShadow()->unselected();
     }
 }
+#endif
 
 void
 MCTeamLayer::selectRole(MCRole *aRole)
@@ -100,7 +104,11 @@ MCTeamLayer::selectRole(MCRole *aRole)
         if (role == aRole) {
             info->selected();
             role->getEntity()->getShadow()->selected();
+#if MC_SELECT_ALL_SUPPORT == 1
             selectedRoles_->addObject(role);
+#else
+            selectedRole_ = role;
+#endif
             break;
         }
     }
@@ -118,7 +126,11 @@ MCTeamLayer::unselectRole(MCRole *aRole)
         if (role == aRole) {
             info->unselected();
             role->getEntity()->getShadow()->unselected();
+#if MC_SELECT_ALL_SUPPORT == 1
             selectedRoles_->removeObject(role);
+#else
+            selectedRole_ = NULL;
+#endif
             break;
         }
     }

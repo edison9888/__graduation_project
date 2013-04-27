@@ -30,6 +30,10 @@ public:
     
     MCBattleControllerDelegate *getDelegate();
     void setDelegate(MCBattleControllerDelegate *aJoypadDelegate);
+
+    void onEnter();
+    void onExit();
+    bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
     
     CREATE_FUNC(MCBattleControllerLayer);
     

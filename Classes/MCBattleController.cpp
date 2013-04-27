@@ -31,7 +31,6 @@ bool
 MCBattleController::init()
 {
     if (CCLayer::init()) {
-        CCSize winSize = CCDirectorGetWindowsSize();
         teamLayer_ = MCTeamLayer::create();
         addChild(teamLayer_);
         
@@ -40,6 +39,7 @@ MCBattleController::init()
         actionBar_ = MCActionBar::create();
         addChild(actionBar_);
         
+#if MC_SELECT_ALL_SUPPORT == 1
         CCMenu *menu;
         CCMenuItemLabel *menuItem;
         CCLabelTTF *label;
@@ -53,17 +53,13 @@ MCBattleController::init()
         
         addChild(menu);
         selectAllMenu_ = menu;
-        
-        multiSelection_ = CCSprite::create(kMCMultiSelectionFilepath);
-        multiSelection_->setPosition(ccp(winSize.width - 72, 72));
-        addChild(multiSelection_);
+#endif
         
         isJoypadEnabled_ = false;
         isDragging_ = false;
         
         lastTouchedTime_.tv_sec = 0;
         lastTouchedTime_.tv_usec = 0;
-        multiSelectionTouch_ = NULL;
         selectedItem_ = NULL;
         
         return true;
@@ -72,10 +68,25 @@ MCBattleController::init()
     return false;
 }
 
+#if MC_SELECT_ALL_SUPPORT == 1
 CCArray *
 MCBattleController::getSelectedRoles()
 {
     return teamLayer_->getSelectedRoles();
+}
+#else
+MCRole *
+MCBattleController::getSelectedRole()
+{
+    return teamLayer_->getSelectedRole();
+}
+#endif
+
+/* 选中敌人 */
+void
+MCBattleController::selectTarget(MCRole *aRole)
+{
+    CCLog("select target: %s", aRole->getName()->getCString());
 }
 
 void
@@ -95,43 +106,12 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
         selectedItem_->setOpacity(kMCDraggingActionBarItemOpacity);
     }
     
-    /* tag: #multi #selection */
-    /* 检测多选模式 */
-    CCPoint origin = multiSelection_->getPosition();
-    CCSize size = multiSelection_->getContentSize();
-    CCRect r = CCRectMake(origin.x - size.width / 2, origin.y - size.height / 2, size.width, size.height);
-    for (CCSetIterator iterator = pTouches->begin();
-         iterator != pTouches->end();
-         ++iterator) {
-        CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
-        if (r.containsPoint(touch->getLocation())) {
-            teamLayer_->setMultiSeletionMode(true);
-            multiSelection_->setScale(1.2f);
-            multiSelectionTouch_ = touch;
-            delegate_->controllerDidEnterMultiSelectionMode(this);
-        }
-
-    }
-    
     CCLayer::ccTouchesBegan(pTouches, pEvent);
 }
 
 void
 MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    /* tags: #multi #selection #enter */
-    /* 检测多选模式 */
-    if (multiSelectionTouch_) {
-        CCPoint origin = multiSelection_->getPosition();
-        CCSize size = multiSelection_->getContentSize();
-        CCRect r = CCRectMake(origin.x - size.width / 2, origin.y - size.height / 2, size.width, size.height);
-        if (! r.containsPoint(multiSelectionTouch_->getLocation())) {
-            teamLayer_->setMultiSeletionMode(false);
-            multiSelection_->setScale(1.0f);
-            multiSelectionTouch_ = NULL;
-        }
-    }
-    
     if (selectedItem_) {
         for (CCSetIterator iterator = pTouches->begin();
              iterator != pTouches->end();
@@ -146,7 +126,11 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
             }
         }
         teamLayer_->acceptActionBarItem(selectedItem_);
+#if MC_SELECT_ALL_SUPPORT == 1
     } else if (teamLayer_->getSelectedRoles()->count() == 0) { /* 拖动地图模式 */
+#else
+    } else if (teamLayer_->getSelectedRole() == NULL) { /* 拖动地图模式 */
+#endif
         CCTouch *touch = (CCTouch *) pTouches->anyObject();
         CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
         delegate_->controllerDidDragMap(this, offset);
@@ -174,9 +158,6 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         double elapsed = 0;
         
         findPath = false;
-        if (! teamLayer_->isMultiSeletionMode()) {
-            teamLayer_->unselectAll();
-        }
         if (lastTouchedTime_.tv_sec != 0) {
             elapsed = CCTime::timersubCocos2d(&lastTouchedTime_, &touchedTime);
         }
@@ -194,11 +175,13 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             teamLayer_->selectRole(role);
             delegate_->controllerDidSelectRole(this, role);
         }
+#if MC_SELECT_ALL_SUPPORT == 1
         if (teamLayer_->getSelectedRoles()->count() == teamLayer_->size()) { /* 全部选中了 */
             CCMenuItemLabel *menuItem = (CCMenuItemLabel *)selectAllMenu_->getChildren()->objectAtIndex(0);
             CCLabelTTF *label = (CCLabelTTF *) menuItem->getLabel();
             label->setString("取消");
         }
+#endif
         roleBaseInfo->setTouched(false);
     }
     lastTouchedTime_ = touchedTime;
@@ -207,15 +190,20 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     /* 行走 */
     if (!isJoypadEnabled_
         && !isDragging_) {
+#if MC_SELECT_ALL_SUPPORT == 1
         CCArray *selectedRoles = teamLayer_->getSelectedRoles();
         CCObject *obj;
         
         /* 随机生成几个位置 */
-#warning mark
+#warning todo: 随机生成几个位置
         
         if (findPath && selectedRoles->count() > 0) {
             CCARRAY_FOREACH(selectedRoles, obj) {
                 MCRole *role = dynamic_cast<MCRole *>(obj);
+#else
+        MCRole *role = teamLayer_->getSelectedRole();
+        if (findPath && role) {
+#endif
                 CCPoint location = touch->getLocation();
                 /* 来个粒子效果 */
                 CCParticleSystemQuad *pointTo = CCParticleSystemQuad::create(kMCPointToParticleFilepath);
@@ -223,7 +211,9 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
                 addChild(pointTo);
                 role->getEntity()->findPath(location);
             }
+#if MC_SELECT_ALL_SUPPORT == 1
         }
+#endif
     }
     
     /* tags: #item,#use */
@@ -258,24 +248,6 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         selectedItem_ = NULL;
     }
     
-    /* todo: 木有测试 */
-    /* tags: #multi #selection #exit */
-    /* 退出多选模式检测 */
-    CCPoint origin = multiSelection_->getPosition();
-    CCSize size = multiSelection_->getContentSize();
-    CCRect r = CCRectMake(origin.x - size.width / 2, origin.y - size.height / 2, size.width, size.height);
-    for (CCSetIterator iterator = pTouches->begin();
-         iterator != pTouches->end();
-         ++iterator) {
-        CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
-        if (r.containsPoint(touch->getLocation())) {
-            teamLayer_->setMultiSeletionMode(false);
-            multiSelection_->setScale(1.f);
-            multiSelectionTouch_ = NULL;
-            delegate_->controllerDidExitMultiSelectionMode(this);
-        }
-    }
-    
     isDragging_ = false;
     
     CCLayer::ccTouchesEnded(pTouches, pEvent);
@@ -290,13 +262,11 @@ MCBattleController::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
         selectedItem_ = NULL;
     }
     
-    teamLayer_->setMultiSeletionMode(false);
-    multiSelection_->setScale(1.f);
-    multiSelectionTouch_ = NULL;
     isDragging_ = false;
     CCLayer::ccTouchesCancelled(pTouches, pEvent);
 }
 
+#if MC_SELECT_ALL_SUPPORT == 1
 void
 MCBattleController::didSelectAll(CCObject *aSender)
 {
@@ -323,3 +293,4 @@ MCBattleController::didSelectAll(CCObject *aSender)
         delegate_->controllerDidSelectAll(this, MCTeam::sharedTeam());
     }
 }
+#endif

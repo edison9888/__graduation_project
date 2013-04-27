@@ -20,7 +20,14 @@ public:
     
     CREATE_FUNC(MCBattleController);
     
+#if MC_SELECT_ALL_SUPPORT == 1
     CCArray *getSelectedRoles();
+#else
+    MCRole *getSelectedRole();
+#endif
+    
+    /* 选中敌人 */
+    void selectTarget(MCRole *aRole);
     
     inline bool isJoypadEnable() {
         return isJoypadEnabled_;
@@ -36,9 +43,13 @@ public:
     void ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent);
     
 protected:
+#if MC_SELECT_ALL_SUPPORT == 1
     void didSelectAll(CCObject *aSender);
     
-private:
+    /* 选择按钮 */
+    CCMenu *selectAllMenu_;
+#endif
+    
     MCTeamLayer *teamLayer_; /* 队伍层 */
     MCActionBar *actionBar_; /* 道具层 */
     
@@ -46,11 +57,6 @@ private:
     
     bool isJoypadEnabled_;
     bool isDragging_;
-    
-    /* 选择按钮 */
-    CCMenu *selectAllMenu_;
-    CCSprite *multiSelection_;
-    CCTouch *multiSelectionTouch_;
     
     struct cc_timeval lastTouchedTime_;
     

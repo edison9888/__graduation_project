@@ -27,19 +27,12 @@ public:
     mc_size_t size();
     
     /* 选择控制 */
-    void selectFirstRole();
+#if MC_SELECT_ALL_SUPPORT == 1
     void selectAll();
     void unselectAll();
+#endif
     void selectRole(MCRole *aRole);
     void unselectRole(MCRole *aRole);
-    
-    inline bool isMultiSeletionMode() {
-        return isMultiSeletionMode_;
-    }
-    
-    inline void setMultiSeletionMode(bool var) {
-        isMultiSeletionMode_ = var;
-    }
     
     inline MCTeam *getTeam() {
         return group_->team_;
@@ -64,11 +57,15 @@ private:
     void toggle();
     
     MCRoleBaseInfoGroup *group_;
-    bool isMultiSeletionMode_;
     
     CCMenu *toggleButton_;
     
+#if MC_SELECT_ALL_SUPPORT == 1
     CC_SYNTHESIZE_READONLY(CCArray *, selectedRoles_, SelectedRoles);
+#else
+    CC_SYNTHESIZE_READONLY(MCRole *, selectedRole_, SelectedRole);
+#endif
+    
     CC_PROPERTY_READONLY_PASS_BY_REF(CCSize, frameSize_, FrameSize);
 };
 

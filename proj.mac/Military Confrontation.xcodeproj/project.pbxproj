@@ -2632,6 +2632,7 @@
 					"MC_DEBUG_SERVER=1",
 					"MC_COLLISION_USE_OBB=0",
 					"MC_ASTAR_USING_PTHREAD=1",
+					"MC_SELECT_ALL_SUPPORT=0",
 					"DEBUG=1",
 					USE_FILE32API,
 					"$(inherited)",

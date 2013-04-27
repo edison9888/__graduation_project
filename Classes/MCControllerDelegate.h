@@ -55,16 +55,6 @@ public:
     virtual void controllerDidUnselectAll(MCBattleController *aBattleController, MCTeam *aTeam) {}
     
     /**
-     * 进入多选模式
-     */
-    virtual void controllerDidEnterMultiSelectionMode(MCBattleController *aBattleController) {}
-    
-    /**
-     * 退出多选模式
-     */
-    virtual void controllerDidExitMultiSelectionMode(MCBattleController *aBattleController) {}
-    
-    /**
      * 聚焦人物
      */
     virtual void controllerDidFocus(MCBattleController *aBattleController, MCRole *aRole) {}

@@ -204,8 +204,10 @@ MCObjectLayer::onEnter()
             }
             if (has) {
 #warning no one
-                break;
+//                break;
                 roles->addObject(role);
+#warning just one
+                break;
             }
         }
         
@@ -936,9 +938,13 @@ MCBattleFieldSceneObjectLayer::controllerDidAttach(MCBattleController *aBattleCo
 MCRole *
 MCBattleFieldSceneObjectLayer::selectedRole()
 {
+#if MC_SELECT_ALL_SUPPORT == 1
     CCArray *selectedRoles = controller_->getSelectedRoles();
     
     return selectedRoles->count() > 0
-    ? dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0))
-    : NULL;
+            ? dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0))
+            : NULL;
+#else
+    return controller_->getSelectedRole();
+#endif
 }
