@@ -28,6 +28,12 @@ public:
     void onExit();
     void update(float fDelta);
     
+    inline void resetJoystick() {
+        isValidControl_ = false;
+        joystick_->hide();
+        joystickDelta_->setPoint(0.0f, 0.0f);
+    }
+    
 private:
     bool isValidControl_;
     CCTouch *controlTouch_;

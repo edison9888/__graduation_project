@@ -19,11 +19,11 @@ USING_NS_CC_EXT;
 bool
 MCStateLayer::init()
 {
-    if (MCDetailLayer::init()) {
+    if (MCBaseInfoLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *label;
         CCScale9Sprite *line;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         float fontSize = 36 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90;

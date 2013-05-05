@@ -76,6 +76,7 @@ MCJoypadControllerLayer::isEnabled()
 void
 MCJoypadControllerLayer::setEnabled(bool var)
 {
+    joypad_->resetJoystick();
     joypad_->setVisible(var);
     joypad_->setTouchEnabled(var);
     actionButton_->setVisible(var);

@@ -18,8 +18,8 @@ public:
     
     void installController();
     
-    void showDetail();
-    void detailDidHide();
+    void showPlayerInfo();
+    void playerInfoDidHide();
     
 protected:
     bool usingJoypad_;

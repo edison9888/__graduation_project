@@ -54,8 +54,6 @@ MCSceneController::loadSpawnScene()
     
     pushExpectedScene(dm->getSpawnPointID(), NULL);
     loadSpawnScene_ = true;
-#warning need?
-//    MCFlagManager::sharedFlagManager()->spawn();
     requestChangingScene();
 }
 
@@ -138,8 +136,8 @@ MCSceneController::__changeScene()
 //        currentScene_ = tmp; /* lastScene_ */
 //    } else {
         CCDirector::sharedDirector()->replaceScene(expectedScene_);
-        lastScene_ = currentScene_;
-        currentScene_ = expectedScene_;
+//        lastScene_ = currentScene_;
+//        currentScene_ = expectedScene_;
 //    }
     expectedScene_ = NULL;
     CC_SAFE_RELEASE_NULL(entranceName_);

@@ -10,6 +10,30 @@
 
 static MCDiceMaker *__shared_dice_maker = NULL;
 
+bool
+MCDiceRangeCheck(const MCDiceRange &aDiceRange)
+{
+    MCDice *dice = MCDiceMaker::sharedDiceMaker()->diceWithType(aDiceRange.dice);
+    mc_dice_unit_t roll = dice->roll();
+    bool result = roll >= aDiceRange.min && roll <= aDiceRange.max;
+    
+#if MC_BATTLE_INFO_LEVEL == 1
+    if (roll >= aDiceRange.min) {
+        printf("[%hi] >= %hi ", roll, aDiceRange.min);
+    }
+    if (roll <= aDiceRange.max) {
+        printf("%hi <= [%hi] ", aDiceRange.max, roll);
+    }
+    if (result) {
+        printf("bingo!\n");
+    } else {
+        printf("\n");
+    }
+#endif
+    
+    return result;
+}
+
 /* 初始化 */
 bool
 MCDice::init()

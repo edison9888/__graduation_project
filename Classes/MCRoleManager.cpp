@@ -13,6 +13,7 @@
 #include "MCDice.h"
 #include "MCScript.h"
 #include "MCEffectManager.h"
+#include "MCSkillManager.h"
 
 static const char *kMCNPCResourceFilePath = "N000.jpkg";
 static const char *kMCEnemyResourceFilePath = "E400.jpkg";
@@ -94,7 +95,7 @@ MCRoleManager::loadData()
     /* tags: #frame #cache */
     /* 加载进缓存图片 */
     CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     CCRect kMCShadowFrame = CCRectMake(0,
                                        0,
                                        32 / contentScaleFactor,
@@ -301,6 +302,7 @@ MCRoleManager::loadEnemyData()
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
     MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
+    MCSkillManager *skillManager = MCSkillManager::sharedSkillManager();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEnemyResourceFilePath);
@@ -316,25 +318,25 @@ MCRoleManager::loadEnemyData()
     for (enemiesIterator = enemies.begin();
          enemiesIterator != enemies.end();
          ++enemiesIterator) {
-        const char *c_str_m_id = enemiesIterator->first.c_str();
-        mc_object_id_t m_id = {
-            c_str_m_id[0],
-            c_str_m_id[1],
-            c_str_m_id[2],
-            c_str_m_id[3]
-        };
-        JsonBox::Object enemyObject = enemiesIterator->second.getObject();
-        MCEnemy *enemy = new MCEnemy;
-        /* AI String */
         const char *c_str_o_id = enemiesIterator->first.c_str();
-        mc_object_id_t ai_id = {
+        mc_object_id_t enemy_id = {
             c_str_o_id[0],
             c_str_o_id[1],
             c_str_o_id[2],
             c_str_o_id[3]
         };
+        JsonBox::Object enemyObject = enemiesIterator->second.getObject();
+        MCEnemy *enemy = new MCEnemy;
         
-        enemy->setID(m_id);
+        enemy->setID(enemy_id);
+        /* AI String */
+        const char *c_str_ai_id = enemyObject["AI"].getString().c_str();
+        mc_object_id_t ai_id = {
+            c_str_ai_id[0],
+            c_str_ai_id[1],
+            c_str_ai_id[2],
+            c_str_ai_id[3]
+        };
         /* 敌人的类型由AI的ID那里获取，实际上的AI设置在生成精灵的时候设置 */
         enemy->init(ai_id.index_ == '0' ? MCTerrestrial : MCFlying);
         enemy->autorelease();
@@ -349,8 +351,8 @@ MCRoleManager::loadEnemyData()
         /* build sprite sheet file path */
         ccstring = CCString::createWithFormat("%s/%c-%s",
                                               kMCSpriteSheetBaseDirectory,
-                                              c_str_m_id[0] | 32,
-                                              c_str_m_id + 1);
+                                              c_str_o_id[0] | 32,
+                                              c_str_o_id + 1);
         enemy->setSpriteSheet(ccstring);
         ccstring->retain();
         /* effect-id */
@@ -364,13 +366,16 @@ MCRoleManager::loadEnemyData()
         MCEffect *effect = effectManager->effectForObjectId(e_id);
         enemy->setAttackEffect(effect);
         effect->retain();
-        
         /* HP Integer */
         enemy->setHP(enemyObject["HP"].getInt());
         enemy->setMaxHP(enemy->getHP());
         /* PP Integer */
         enemy->setPP(enemyObject["PP"].getInt());
         enemy->setMaxPP(enemy->getPP());
+        /* consume Double */
+        enemy->setConsume(enemyObject["consume"].isDouble()
+                          ? (float) enemyObject["consume"].getDouble()
+                          : (float) enemyObject["consume"].getInt());
         /* exhaustion Integer */
         enemy->setExhaustion(enemyObject["exhaustion"].getInt());
         /* tired Integer */
@@ -414,29 +419,78 @@ MCRoleManager::loadEnemyData()
         enemy->criticalHitInvisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                            diceRangeDice["size"].getInt());
         /* critical-hit Double */
-        enemy->setCriticalHit(enemyObject["critical-hit"].getDouble());
+        float floatValue = enemyObject["critical-hit"].isDouble()
+                            ? (float) enemyObject["critical-hit"].getDouble()
+                            : (float) enemyObject["critical-hit"].getInt();
+        enemy->setCriticalHit(floatValue);
         /* distance Integer */
         enemy->setDistance(enemyObject["distance"].getInt());
-#warning 木有配置技能
+
+        /* skills Object */
+        JsonBox::Object skillsObject = enemyObject["skills"].getObject();
+        if (skillsObject["A"].isString()) {
+            const char *c_str_s_id = skillsObject["A"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            enemy->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        if (skillsObject["B"].isString()) {
+            const char *c_str_s_id = skillsObject["B"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            enemy->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }if (skillsObject["C"].isString()) {
+            const char *c_str_s_id = skillsObject["C"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            enemy->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        if (skillsObject["D"].isString()) {
+            const char *c_str_s_id = skillsObject["D"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            enemy->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        
         /* effect Integer */
-        enemy->setEffect(enemyObject["effect"].getInt());
-        /* effect-check Object */
-        /* effect-check.min Integer */
-        /* effect-check.max Integer */
-        /* effect-check.dice Object */
-        /* effect-check.dice.count Integer */
-        /* effect-check.dice.size Integer */
-        diceRange = enemyObject["effect-check"].getObject();
-        diceRangeDice = diceRange["dice"].getObject();
-        enemy->effectCheck_.min = diceRange["min"].getInt();
-        enemy->effectCheck_.max = diceRange["max"].getInt();
-        enemy->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+        if (enemyObject["effect"].isInteger()) {
+            enemy->setEffect(enemyObject["effect"].getInt());
+            /* effect-check Object */
+            /* effect-check.min Integer */
+            /* effect-check.max Integer */
+            /* effect-check.dice Object */
+            /* effect-check.dice.count Integer */
+            /* effect-check.dice.size Integer */
+            diceRange = enemyObject["effect-check"].getObject();
+            diceRangeDice = diceRange["dice"].getObject();
+            enemy->effectCheck_.min = diceRange["min"].getInt();
+            enemy->effectCheck_.max = diceRange["max"].getInt();
+            enemy->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                       diceRangeDice["size"].getInt());
+        } else {
+            enemy->effect_ = MCNormalState;
+        }
         /* description String */
         ccstring = CCString::create(enemyObject["description"].getString().c_str());
         enemy->setDescription(ccstring);
         ccstring->retain();
         
-        enemies_->setObject(enemy, MCObjectIdToDickKey(m_id));
+        enemies_->setObject(enemy, MCObjectIdToDickKey(enemy_id));
     }
 }

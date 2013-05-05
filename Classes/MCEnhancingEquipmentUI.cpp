@@ -41,7 +41,7 @@ MCEnhancingEquipmentUI::init()
         CCMenu *menu;
         CCMenuItem *menuItem;
         CCLabelTTF *label;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         float fontSize = 21 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90;
@@ -470,7 +470,7 @@ MCEnhancingEquipmentUI::tableCellAtIndex(CCTableView *table, unsigned int idx)
     if (! cell) {
         cell = MCTableViewTextFieldCell::create(equipmentItem->getName()->getCString(),
                                                 "Helvetica",
-                                                18.0f / CCDirectorGetContentScaleFactor());
+                                                18.0f / CC_CONTENT_SCALE_FACTOR());
     } else {
         dynamic_cast<MCTableViewTextFieldCell *>(cell)->setString(equipmentItem->getName()->getCString());
     }
@@ -570,7 +570,7 @@ MCEnhancingEquipmentUI::loadWeapon(MCEquipmentItem *aWeapon)
     /* icon */
     spriteFrame = cache->spriteFrameByName(aWeapon->getName()->getCString()); /* 名字为key */
     if (! spriteFrame) {
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         CCRect spriteFrameRect = CCRectMake(0, 0,
                                             64 / contentScaleFactor,
                                             64 / contentScaleFactor);
@@ -662,7 +662,7 @@ MCEnhancingEquipmentUI::loadArmor(MCEquipmentItem *anArmor)
     /* icon */
     spriteFrame = cache->spriteFrameByName(anArmor->getName()->getCString()); /* 名字为key */
     if (! spriteFrame) {
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         CCRect spriteFrameRect = CCRectMake(0, 0,
                                             64 / contentScaleFactor,
                                             64 / contentScaleFactor);

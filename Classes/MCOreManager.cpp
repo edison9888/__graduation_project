@@ -95,7 +95,7 @@ MCOreManager::loadAllOres()
         ccstring->retain();
         ore->setDamage(oreValueRoot["damage"].getInt());
         JsonBox::Value criticalHit = oreValueRoot["critical-hit"];
-        ore->setCriticalHit(criticalHit.isInteger() ? criticalHit.getInt() : criticalHit.getDouble());
+        ore->setCriticalHit((float) (criticalHit.isInteger() ? criticalHit.getInt() : criticalHit.getDouble()));
         ore->setWeaponDexterity(oreValueRoot["weapon-dexterity"].getInt());
         ore->setArmorDexterity(oreValueRoot["armor-dexterity"].getInt());
         ore->setArmorCheckPenalty(oreValueRoot["armor-check-penalty"].getInt());

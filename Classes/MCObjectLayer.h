@@ -66,15 +66,12 @@ protected:
     virtual void detectsCollidesWithSemiTransparents(const CCRect &anFrame);
     virtual void detectsCollidesWithSemiTransparents(const CCRect &anFrame, const CCPoint &anOffset);
     
+    virtual void detectsCollidesWithSemiTransparents(MCRole *aRole);
+    
     virtual CCPoint detectsCollidesWithBarriers(const CCRect &anFrame, const CCPoint &anOffset);
     virtual CCSize collidedSize(const CCRect &anFrame, const CCPoint &anOffset);
     virtual MCBarrier *detectsCollidesWithBarriers(const CCRect &anFrame);
 #endif
-    /* 人物间不在相撞~~~~ */
-//    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB);
-//    virtual bool detectsCollidesWithObjects(const MCOBB &anOBB, const CCPoint &anOffset);
-//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB) { return false; }
-//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset) { return false; }
     
 protected:
     MCRoleEntity *hero_;
@@ -84,7 +81,6 @@ protected:
     CC_SYNTHESIZE_READONLY(CCArray *, barriers_, barriers); /* 障碍物 */
     CCArray *semiTransparents_;  /* 半透明 */
     CCArray *entrances_;         /* 入口 */
-//    CCArray *objects_;
     
     CC_SYNTHESIZE(MCSceneDelegate *, sceneDelegate_, SceneDelegate);
     
@@ -198,10 +194,6 @@ public:
     
 protected:
     MCBattleController *controller_;
-    
-    /* 人物间不在相撞~~~~ */
-//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB);
-//    virtual bool detectsCollidesWithMercenaries(const MCOBB &anOBB, const CCPoint &anOffset);
 };
 
 #endif /* defined(__Military_Confrontation__MCObjectLayer__) */

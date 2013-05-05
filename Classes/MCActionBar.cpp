@@ -127,12 +127,13 @@ MCActionBar::init()
         CCMenuItemImage *closed = CCMenuItemImage::create(kMCActionBarItemClosedFilepath,
                                                           kMCActionBarItemClosedSelectedFilepath);
         CCMenuItemToggle *toggleButton = CCMenuItemToggle::createWithTarget(this,
-                                                                             menu_selector(MCActionBar::toggle),
-                                                                             opened, closed, NULL);
+                                                                            menu_selector(MCActionBar::toggle),
+                                                                            opened,
+                                                                            closed,
+                                                                            NULL);
         toggleButton_ = CCMenu::createWithItem(toggleButton);
         addChild(toggleButton_);
         toggleButton->setAnchorPoint(anchorPoint);
-        toggleButton_->setAnchorPoint(anchorPoint);
         
         align();
         

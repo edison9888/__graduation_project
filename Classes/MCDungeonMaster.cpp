@@ -9,6 +9,8 @@
 #include "MCDungeonMaster.h"
 #include "MCBase64.h"
 #include "MCGameState.h"
+#include "MCScene.h"
+#include "MCEffectManager.h"
 
 const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码没有最后的= */
 const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
@@ -58,6 +60,45 @@ MCDungeonMaster::roleWillAttack(MCRole *aRole, MCRole *aTarget)
     /* 攻击方式判定 */
     /* 通常攻击评分 */
     /* 技能攻击评分 */
+}
+
+/**
+ * aRole攻击aTarget
+ */
+void
+MCDungeonMaster::roleAttackTarget(MCRole *aRole, MCRole *aTarget)
+{
+    /* 攻击效果 */
+    MCScene *scene = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene();
+    aRole->effectForNormalAttack()->attach(scene, aTarget);
+    
+    /* 命中判定 */
+    bool hit = aRole->attackCheckHit(aRole->getOffensive(), aTarget->getAC());
+    
+    if (hit) {
+        /* 重击判定 */
+        /* 视野范围内？ */
+        MCDiceRange diceRange = aRole->getCriticalHitRange(aTarget->roleInVision(aRole));
+        bool isCriticalHit = aRole->attackCheckCriticalHit(diceRange);
+        
+        /* 决定伤害值 */
+        mc_damage_t damage = aRole->attackGetDamage(aRole->getOffensiveDamage(), aTarget->getArmorCheckPenalty());
+        if (isCriticalHit) {
+            damage *= aRole->getCriticalHit();
+        }
+#if MC_BATTLE_INFO_LEVEL == 1
+        printf("伤害值: %hi\n", damage);
+#endif
+        
+        mc_effect_t effect = {
+            -damage,
+            aRole->attackWithState(), /* 某些有特殊效果的普通攻击 */
+            0.0f
+        };
+        aTarget->roleWasAttacked(effect);
+    } else {
+        MCEffectManager::sharedEffectManager()->missEffect()->attach(scene, aTarget);
+    }
 }
 
 void

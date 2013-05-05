@@ -134,8 +134,10 @@ MCTask::copy()
     
     task->id_ = id_;
     task->tag_ = tag_;
-    task->name_ = name_;
-    task->description_ = description_;
+    task->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
+    task->name_->retain();
+    task->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
+    task->description_->retain();
     
     task->trapType_ = trapType_;
     task->trapWideMaxSize_ = trapWideMaxSize_;

@@ -19,6 +19,7 @@ typedef float mc_lasting_time_t;
 typedef mc_short_t mc_radius_t;
 
 class MCItemManager;
+class MCEffect;
 
 class MCEffectiveItem : public MCItem {
     friend class MCItemManager;
@@ -33,13 +34,13 @@ public:
     mc_hp_change_value_t hp;             /* HP变化值 */
     mc_pp_change_value_t pp;             /* PP变化值 */
     MCRoleState          positive_state; /* 会增加的状态 */
-    MCRoleState          negative_state; /* 会消除的状态 */
-    mc_hp_change_value_t adjusted_hp;    /* 一次调度后hp的变化值 */
-    mc_hp_change_value_t adjusted_pp;    /* 一次调度后pp的变化值 */
+    /* 实际上并无消除状态的效果 */
+//    MCRoleState          negative_state; /* 会消除的状态 */
     mc_lasting_time_t    lasting_time;   /* 效果时间 */
     
-    CC_SYNTHESIZE(mc_radius_t, radius_, Radius); /* 效果区域半径 */
-    CC_SYNTHESIZE(CCString *, path_, Path); /* 效果路径 */
+    mc_radius_t radius; /* 效果区域半径 */
+    
+    MCEffect *effect; /* 效果 */
 };
 
 #endif /* defined(__Military_Confrontation__MCEffectiveItem__) */

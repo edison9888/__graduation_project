@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Mon Apr 15 12:54:55 2013.
+** Generated automatically by tolua++-1.0.92 on Sun May  5 13:37:26 2013.
 */
 
 /****************************************************************************
@@ -455,36 +455,36 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTintTo");
  tolua_usertype(tolua_S,"CCRGBAProtocol");
  tolua_usertype(tolua_S,"CCTransitionCrossFade");
+ tolua_usertype(tolua_S,"MCMezzanine");
  tolua_usertype(tolua_S,"CCActionEase");
- tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"CCParallaxNode");
  tolua_usertype(tolua_S,"CCRotateTo");
+ tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"MCTaskManager");
  tolua_usertype(tolua_S,"CCTransitionSlideInR");
- tolua_usertype(tolua_S,"MCTradingPropsUI");
  tolua_usertype(tolua_S,"CCShakyTiles3D");
- tolua_usertype(tolua_S,"MCEnhancingEquipmentUI");
+ tolua_usertype(tolua_S,"MCTradingPropsUI");
  tolua_usertype(tolua_S,"CCNode");
+ tolua_usertype(tolua_S,"MCEnhancingEquipmentUI");
  tolua_usertype(tolua_S,"CCTableView");
  tolua_usertype(tolua_S,"CCParticleMeteor");
- tolua_usertype(tolua_S,"CCSplitRows");
  tolua_usertype(tolua_S,"CCBezierTo");
  tolua_usertype(tolua_S,"CCDeccelAmplitude");
+ tolua_usertype(tolua_S,"CCSplitRows");
  tolua_usertype(tolua_S,"CCRotateBy");
- tolua_usertype(tolua_S,"MCToast");
  tolua_usertype(tolua_S,"MCCamera");
+ tolua_usertype(tolua_S,"MCToast");
  tolua_usertype(tolua_S,"MCSceneContext");
  tolua_usertype(tolua_S,"MCSceneContextManager");
  tolua_usertype(tolua_S,"CCTransitionFadeTR");
  tolua_usertype(tolua_S,"CCTransitionProgressOutIn");
  tolua_usertype(tolua_S,"MCScenePackage");
  tolua_usertype(tolua_S,"ccV2F_C4F_T2F");
- tolua_usertype(tolua_S,"CCDirector");
  tolua_usertype(tolua_S,"CCMoveBy");
- tolua_usertype(tolua_S,"CCStopGrid");
+ tolua_usertype(tolua_S,"CCDirector");
  tolua_usertype(tolua_S,"CCCamera");
  tolua_usertype(tolua_S,"CCSequence");
- tolua_usertype(tolua_S,"MCTrigger");
+ tolua_usertype(tolua_S,"CCStopGrid");
  tolua_usertype(tolua_S,"MCScene");
  tolua_usertype(tolua_S,"mc_object_id_t");
  tolua_usertype(tolua_S,"CCHide");
@@ -55322,72 +55322,6 @@ static int tolua_Cocos2d_MCScene_installController00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: installTrigger of class  MCScene */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_installTrigger00
-static int tolua_Cocos2d_MCScene_installTrigger00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"MCScene",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"MCTrigger",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  MCScene* self = (MCScene*)  tolua_tousertype(tolua_S,1,0);
-  MCTrigger* aTrigger = ((MCTrigger*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'installTrigger'", NULL);
-#endif
-  {
-   self->installTrigger(aTrigger);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'installTrigger'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: uninstallTrigger of class  MCScene */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_uninstallTrigger00
-static int tolua_Cocos2d_MCScene_uninstallTrigger00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"MCScene",0,&tolua_err) ||
-     !tolua_isusertype(tolua_S,2,"MCTrigger",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  MCScene* self = (MCScene*)  tolua_tousertype(tolua_S,1,0);
-  MCTrigger* aTrigger = ((MCTrigger*)  tolua_tousertype(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'uninstallTrigger'", NULL);
-#endif
-  {
-   self->uninstallTrigger(aTrigger);
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'uninstallTrigger'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: gotoScene of class  MCScene */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_gotoScene00
 static int tolua_Cocos2d_MCScene_gotoScene00(lua_State* tolua_S)
@@ -55420,37 +55354,6 @@ static int tolua_Cocos2d_MCScene_gotoScene00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'gotoScene'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: goOut of class  MCScene */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_goOut00
-static int tolua_Cocos2d_MCScene_goOut00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"MCScene",0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,2,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  MCScene* self = (MCScene*)  tolua_tousertype(tolua_S,1,0);
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'goOut'", NULL);
-#endif
-  {
-   self->goOut();
-  }
- }
- return 0;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'goOut'.",&tolua_err);
  return 0;
 #endif
 }
@@ -55647,9 +55550,9 @@ static int tolua_Cocos2d_MCScene_resumeInput00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: showDetail of class  MCScene */
-#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_showDetail00
-static int tolua_Cocos2d_MCScene_showDetail00(lua_State* tolua_S)
+/* method: mezzanine of class  MCScene */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_mezzanine00
+static int tolua_Cocos2d_MCScene_mezzanine00(lua_State* tolua_S)
 {
 #ifndef TOLUA_RELEASE
  tolua_Error tolua_err;
@@ -55663,16 +55566,48 @@ static int tolua_Cocos2d_MCScene_showDetail00(lua_State* tolua_S)
  {
   MCScene* self = (MCScene*)  tolua_tousertype(tolua_S,1,0);
 #ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'showDetail'", NULL);
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'mezzanine'", NULL);
 #endif
   {
-   self->showDetail();
+   MCMezzanine* tolua_ret = (MCMezzanine*)  self->mezzanine();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCMezzanine");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'mezzanine'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: showPlayerInfo of class  MCScene */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCScene_showPlayerInfo00
+static int tolua_Cocos2d_MCScene_showPlayerInfo00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCScene* self = (MCScene*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'showPlayerInfo'", NULL);
+#endif
+  {
+   self->showPlayerInfo();
   }
  }
  return 0;
 #ifndef TOLUA_RELEASE
  tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'showDetail'.",&tolua_err);
+ tolua_error(tolua_S,"#ferror in function 'showPlayerInfo'.",&tolua_err);
  return 0;
 #endif
 }
@@ -62826,17 +62761,15 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"onExit",tolua_Cocos2d_MCScene_onExit00);
    tolua_function(tolua_S,"update",tolua_Cocos2d_MCScene_update00);
    tolua_function(tolua_S,"installController",tolua_Cocos2d_MCScene_installController00);
-   tolua_function(tolua_S,"installTrigger",tolua_Cocos2d_MCScene_installTrigger00);
-   tolua_function(tolua_S,"uninstallTrigger",tolua_Cocos2d_MCScene_uninstallTrigger00);
    tolua_function(tolua_S,"gotoScene",tolua_Cocos2d_MCScene_gotoScene00);
-   tolua_function(tolua_S,"goOut",tolua_Cocos2d_MCScene_goOut00);
    tolua_function(tolua_S,"moveSceneToLocation",tolua_Cocos2d_MCScene_moveSceneToLocation00);
    tolua_function(tolua_S,"getScene",tolua_Cocos2d_MCScene_getScene00);
    tolua_function(tolua_S,"pauseScene",tolua_Cocos2d_MCScene_pauseScene00);
    tolua_function(tolua_S,"resumeScene",tolua_Cocos2d_MCScene_resumeScene00);
    tolua_function(tolua_S,"pauseInput",tolua_Cocos2d_MCScene_pauseInput00);
    tolua_function(tolua_S,"resumeInput",tolua_Cocos2d_MCScene_resumeInput00);
-   tolua_function(tolua_S,"showDetail",tolua_Cocos2d_MCScene_showDetail00);
+   tolua_function(tolua_S,"mezzanine",tolua_Cocos2d_MCScene_mezzanine00);
+   tolua_function(tolua_S,"showPlayerInfo",tolua_Cocos2d_MCScene_showPlayerInfo00);
    tolua_function(tolua_S,"showAbortTaskConfirm",tolua_Cocos2d_MCScene_showAbortTaskConfirm00);
    tolua_function(tolua_S,"confirmDidClickYesButton",tolua_Cocos2d_MCScene_confirmDidClickYesButton00);
    tolua_function(tolua_S,"getEntranceName",tolua_Cocos2d_MCScene_getEntranceName00);

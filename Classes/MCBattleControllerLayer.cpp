@@ -74,6 +74,11 @@ MCBattleControllerLayer::onExit()
 bool
 MCBattleControllerLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent)
 {
+    /* 选中了控制器的item，不拦截 */
+    if (controller_->isItemTouchedForTouch(pTouch)) {
+        return false;
+    }
+    
     /* 在已经选中了人物的情况下需要检查是否命中选中敌人 */
 #if MC_SELECT_ALL_SUPPORT == 1
     if (controller_->getSelectedRoles()->count() > 0) {

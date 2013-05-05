@@ -20,26 +20,27 @@ MCDefineIndexAndKey(Cost, 6, cost);
 MCDefineIndexAndKey(HP, 7, HP);
 MCDefineIndexAndKey(Dying, 8, dying);
 MCDefineIndexAndKey(PP, 9, PP);
-MCDefineIndexAndKey(Exhaustion, 10, exhaustion);
-MCDefineIndexAndKey(Tired, 11, tired);
-MCDefineIndexAndKey(Dexterity, 12, dexterity);
-MCDefineIndexAndKey(AC, 13, AC);
-MCDefineIndexAndKey(ArmorCheckPenalty, 14, armor-check-penalty);
-MCDefineIndexAndKey(Damage, 15, damage);
-MCDefineIndexAndKey(DamageBonus, 18, damage-bonus);
-MCDefineIndexAndKey(CriticalHitVisible, 19, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 20, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 21, critical-hit);
-MCDefineIndexAndKey(Distance, 22, distance);
+MCDefineIndexAndKey(Consume, 10, consume);
+MCDefineIndexAndKey(Exhaustion, 11, exhaustion);
+MCDefineIndexAndKey(Tired, 12, tired);
+MCDefineIndexAndKey(Dexterity, 13, dexterity);
+MCDefineIndexAndKey(AC, 14, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 15, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 16, damage);
+MCDefineIndexAndKey(DamageBonus, 19, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 20, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 21, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 22, critical-hit);
+MCDefineIndexAndKey(Distance, 23, distance);
 
-static const NSUInteger kMCSkillAIndex = 23;
-static const NSUInteger kMCSkillBIndex = 24;
-static const NSUInteger kMCSkillCIndex = 25;
-static const NSUInteger kMCSkillDIndex = 26;
+static const NSUInteger kMCSkillAIndex = 24;
+static const NSUInteger kMCSkillBIndex = 25;
+static const NSUInteger kMCSkillCIndex = 26;
+static const NSUInteger kMCSkillDIndex = 27;
 static const NSString   *kMCSkillsKey = @"skills";
 
-MCDefineIndexAndKey(Effect, 27, effect);
-MCDefineIndexAndKey(EffectCheck, 28, effect-check);
+MCDefineIndexAndKey(Effect, 28, effect);
+MCDefineIndexAndKey(EffectCheck, 29, effect-check);
 
 @implementation MCMercenaryHandler
 
@@ -84,6 +85,8 @@ MCDefineIndexAndKey(EffectCheck, 28, effect-check);
     [content setObject:@([[data objectAtIndex:kMCDyingIndex] integerValue]) forKey:kMCDyingKey];
     /* PP */
     [content setObject:@([[data objectAtIndex:kMCPPIndex] integerValue]) forKey:kMCPPKey];
+    /* consume */
+    [content setObject:@([[data objectAtIndex:kMCConsumeIndex] floatValue]) forKey:kMCConsumeKey];
     /* exhaustion */
     [content setObject:@([[data objectAtIndex:kMCExhaustionIndex] integerValue]) forKey:kMCExhaustionKey];
     /* tired */

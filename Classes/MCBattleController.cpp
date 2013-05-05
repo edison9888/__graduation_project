@@ -11,9 +11,12 @@
 #include "MCTaskManager.h"
 #include "MCBattleController.h"
 
-const char *kMCMultiSelectionFilepath = "UI/bc_multi_selection.png";
+#if MC_SELECT_ALL_SUPPORT == 1
+static const char *kMCMultiSelectionFilepath = "UI/bc_multi_selection.png";
+#endif
 
-const char *kMCPointToParticleFilepath = "particles/point_to.plist";
+static const char *kMCPointToParticleFilepath = "particles/point_to.plist";
+static const char *kMCSkillBarItemSelectedEffectFilepath = "particles/skill-selected.plist";
 
 static bool
 MCActionBarItemIsPotion(MCActionBarItem *anActionBarItem)
@@ -27,6 +30,11 @@ MCActionBarItemIsPotion(MCActionBarItem *anActionBarItem)
             || backpackItem == taskContext->getPhysicalPotion();
 }
 
+MCBattleController::~MCBattleController()
+{
+    CC_SAFE_RELEASE(skillBarItemSelectedEffect_);
+}
+
 bool
 MCBattleController::init()
 {
@@ -34,10 +42,11 @@ MCBattleController::init()
         teamLayer_ = MCTeamLayer::create();
         addChild(teamLayer_);
         
-        CCSizeLog(teamLayer_->getFrameSize());
-        
         actionBar_ = MCActionBar::create();
         addChild(actionBar_);
+        
+        skillBar_ = MCSkillBar::create();
+        addChild(skillBar_);
         
 #if MC_SELECT_ALL_SUPPORT == 1
         CCMenu *menu;
@@ -60,7 +69,12 @@ MCBattleController::init()
         
         lastTouchedTime_.tv_sec = 0;
         lastTouchedTime_.tv_usec = 0;
-        selectedItem_ = NULL;
+        selectedActionBarItem_ = NULL;
+        selectedSkillBarItem_ = NULL;
+        lastSelectedSkillBarItem_ = NULL;
+        
+        skillBarItemSelectedEffect_ = new CCParticleSystemQuad;
+        skillBarItemSelectedEffect_->initWithFile(kMCSkillBarItemSelectedEffectFilepath);
         
         return true;
     }
@@ -86,7 +100,46 @@ MCBattleController::getSelectedRole()
 void
 MCBattleController::selectTarget(MCRole *aRole)
 {
-    CCLog("select target: %s", aRole->getName()->getCString());
+    /* 选中敌人！干之！ */
+    MCRole *selectedRole = getSelectedRole();
+    
+    /* 检测是否选中技能 */
+    MCSkill *skill = lastSelectedSkillBarItem_ ? lastSelectedSkillBarItem_->getSkill() : NULL;
+    
+    /* 选中了技能，但是不能使用的话，不做处理 */
+    if (skill) {
+        /* 技能攻击 */
+        if (skill->canRoleUse(selectedRole)) {
+            selectedRole->attackTargetWithSkill(aRole, skill);
+        }
+    } else {
+        /* 普通攻击 */
+        selectedRole->attackTarget(aRole);
+    }
+}
+
+bool
+MCBattleController::isItemTouchedForTouch(CCTouch *aTouch)
+{
+    return teamLayer_->roleBaseInfoForTouch(aTouch)
+            || actionBar_->itemForTouch(aTouch)
+            || skillBar_->itemForTouch(aTouch);
+}
+
+void
+MCBattleController::onEnter()
+{
+    CCLayer::onEnter();
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(MCBattleController::skillBarVisibleDidChange),
+                                                                  kMCSkillBarVisibleDidChangeNotification,
+                                                                  NULL);
+}
+
+void
+MCBattleController::onExit()
+{
+    CCLayer::onExit();
 }
 
 void
@@ -99,11 +152,17 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
         info->setTouched(true);
     }
     
-    /* item操作 */
-    selectedItem_ = actionBar_->itemForTouch(touch);
-    if (selectedItem_ && selectedItem_->getBackpackItem()->count > 0) {
-        selectedItem_->touchedPoint = touch->getLocation();
-        selectedItem_->setOpacity(kMCDraggingActionBarItemOpacity);
+    /* action bar item操作 */
+    selectedActionBarItem_ = actionBar_->itemForTouch(touch);
+    if (selectedActionBarItem_ && selectedActionBarItem_->getBackpackItem()->count > 0) {
+        selectedActionBarItem_->touchedPoint = touch->getLocation();
+        selectedActionBarItem_->setOpacity(kMCDraggingActionBarItemOpacity);
+    }
+    /* skill bar item操作 */
+    if (selectedActionBarItem_ == NULL) { /* action bar item都被选中了，再检测skill bar item也没意义 */
+        selectedSkillBarItem_ = skillBar_->itemForTouch(touch);
+    } else {
+        selectedSkillBarItem_ = NULL;
     }
     
     CCLayer::ccTouchesBegan(pTouches, pEvent);
@@ -112,20 +171,31 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 void
 MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (selectedItem_) {
+    if (selectedActionBarItem_) {
         for (CCSetIterator iterator = pTouches->begin();
              iterator != pTouches->end();
              ++iterator) {
             CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
-            if (selectedItem_->touchedPoint.equals(touch->getPreviousLocation())) {
+            if (selectedActionBarItem_->touchedPoint.equals(touch->getPreviousLocation())) {
                 CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
-                selectedItem_->setPosition(ccpAdd(selectedItem_->getPosition(), offset));
-                selectedItem_->touchedPoint = touch->getLocation();
+                selectedActionBarItem_->setPosition(ccpAdd(selectedActionBarItem_->getPosition(), offset));
+                selectedActionBarItem_->touchedPoint = touch->getLocation();
                 isDragging_ = true;
                 break;
             }
         }
-        teamLayer_->acceptActionBarItem(selectedItem_);
+        teamLayer_->acceptActionBarItem(selectedActionBarItem_);
+    } else if (selectedSkillBarItem_) {
+        bool out = true;
+        for (CCSetIterator iterator = pTouches->begin();
+             iterator != pTouches->end();
+             ++iterator) {
+            CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
+            out = selectedSkillBarItem_ != skillBar_->itemForTouch(touch);
+        }
+        if (out) {
+            selectedSkillBarItem_ = NULL;
+        }
 #if MC_SELECT_ALL_SUPPORT == 1
     } else if (teamLayer_->getSelectedRoles()->count() == 0) { /* 拖动地图模式 */
 #else
@@ -166,13 +236,19 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         if (elapsed < 500) {
             lastTouchedTime_.tv_sec = 0;
             teamLayer_->selectRole(role);
+            skillBar_->showSkillsForRole(role);
+            skillBarItemSelectedEffect_->setVisible(true);
             delegate_->controllerDidSelectRole(this, role);
             delegate_->controllerDidFocus(this, role);
         } else if (isSelected) {
             teamLayer_->unselectRole(role);
+            skillBar_->showSkillsForRole(NULL);
+            skillBarItemSelectedEffect_->setVisible(false);
             delegate_->controllerDidUnselectRole(this, role);
         } else {
             teamLayer_->selectRole(role);
+            skillBar_->showSkillsForRole(role);
+            skillBarItemSelectedEffect_->setVisible(true);
             delegate_->controllerDidSelectRole(this, role);
         }
 #if MC_SELECT_ALL_SUPPORT == 1
@@ -186,6 +262,68 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     }
     lastTouchedTime_ = touchedTime;
     
+    /* tags: #item,#use */
+    for (CCSetIterator iterator = pTouches->begin();
+         iterator != pTouches->end();
+         ++iterator) {
+        CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
+        MCRoleBaseInfo *selectedRoleBaseInfo;
+        MCActionBarItem *touchedActionBarItem = actionBar_->itemForTouch(touch);
+        
+        if (selectedActionBarItem_ != NULL
+            && selectedActionBarItem_ == touchedActionBarItem) {
+            findPath = false;
+            if (selectedActionBarItem_->getItemPosition().equals(selectedActionBarItem_->getPosition())) {
+                /* 直接点击使用道具 */
+                if (MCActionBarItemIsPotion(selectedActionBarItem_)) { /* 是药品才能使用 */
+                    teamLayer_->selectedRolesUseActionBarItem(selectedActionBarItem_);
+                    selectedActionBarItem_->updateCount();
+                }
+            } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedActionBarItem_))) {
+                /* 拖动使用道具 */
+                selectedRoleBaseInfo->setOpacity(255);
+                selectedRoleBaseInfo->useActionBarItem(selectedActionBarItem_);
+                /* 物品效果 */
+                dynamic_cast<MCEffectiveItem *>(selectedActionBarItem_->getBackpackItem()->item)->effect->attach(this,
+                                                                                                        selectedRoleBaseInfo->getRole());
+                selectedActionBarItem_->updateCount();
+            }
+        }
+        
+        MCSkillBarItem *touchedSkillBarItem = skillBar_->itemForTouch(touch);
+        if (selectedSkillBarItem_ != NULL
+            && selectedSkillBarItem_ == touchedSkillBarItem) {
+            
+            findPath = false;
+            if (touchedSkillBarItem->isSelected()) {
+                skillBarItemSelectedEffect_->removeFromParentAndCleanup(false);
+                touchedSkillBarItem->unselected();
+                touchedSkillBarItem = NULL;
+            } else {
+                if (! skillBarItemSelectedEffect_->getParent()) {
+                    addChild(skillBarItemSelectedEffect_);
+                }
+                skillBarItemSelectedEffect_->setPosition(touchedSkillBarItem->getPosition());
+                touchedSkillBarItem->selected();
+            }
+            if (lastSelectedSkillBarItem_) {
+                lastSelectedSkillBarItem_->unselected();
+            }
+            lastSelectedSkillBarItem_ = touchedSkillBarItem;
+            selectedSkillBarItem_ = NULL;
+        }
+    }
+    
+    if (selectedActionBarItem_) {
+        selectedActionBarItem_->resetPosition();
+        if (selectedActionBarItem_->getBackpackItem()->count > 0) {
+            selectedActionBarItem_->setOpacity(kMCNormalActionBarItemOpacity);
+        } else {
+            selectedActionBarItem_->setOpacity(kMCInvalidActionBarItemOpacity);
+        }
+        selectedActionBarItem_ = NULL;
+    }
+    
     /* 行动 */
     /* 行走 */
     if (!isJoypadEnabled_
@@ -195,58 +333,26 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         CCObject *obj;
         
         /* 随机生成几个位置 */
-#warning todo: 随机生成几个位置
         
         if (findPath && selectedRoles->count() > 0) {
             CCARRAY_FOREACH(selectedRoles, obj) {
                 MCRole *role = dynamic_cast<MCRole *>(obj);
 #else
-        MCRole *role = teamLayer_->getSelectedRole();
-        if (findPath && role) {
+                MCRole *role = teamLayer_->getSelectedRole();
+                if (findPath && role) {
 #endif
-                CCPoint location = touch->getLocation();
-                /* 来个粒子效果 */
-                CCParticleSystemQuad *pointTo = CCParticleSystemQuad::create(kMCPointToParticleFilepath);
-                pointTo->setPosition(location);
-                addChild(pointTo);
-                role->getEntity()->findPath(location);
-            }
-#if MC_SELECT_ALL_SUPPORT == 1
-        }
-#endif
-    }
-    
-    /* tags: #item,#use */
-    for (CCSetIterator iterator = pTouches->begin();
-         iterator != pTouches->end();
-         ++iterator) {
-        CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
-        MCRoleBaseInfo *selectedRoleBaseInfo;
-        if (selectedItem_ != NULL
-            && selectedItem_ == actionBar_->itemForTouch(touch)) {
-            if (selectedItem_->getItemPosition().equals(selectedItem_->getPosition())) {
-                /* 直接点击使用道具 */
-                if (MCActionBarItemIsPotion(selectedItem_)) { /* 是药品才能使用 */
-                    teamLayer_->selectedRolesUseActionBarItem(selectedItem_);
-                    selectedItem_->updateCount();
+                    CCPoint location = touch->getLocation();
+                    /* 来个粒子效果 */
+                    CCParticleSystemQuad *pointTo = CCParticleSystemQuad::create(kMCPointToParticleFilepath);
+                    pointTo->setAutoRemoveOnFinish(true);
+                    pointTo->setPosition(location);
+                    addChild(pointTo);
+                    role->getEntity()->findPath(location);
                 }
-            } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedItem_))) {
-                /* 拖动使用道具 */
-                selectedRoleBaseInfo->setOpacity(255);
-                selectedRoleBaseInfo->useActionBarItem(selectedItem_);
-                selectedItem_->updateCount();
+#if MC_SELECT_ALL_SUPPORT == 1
             }
+#endif
         }
-    }
-    if (selectedItem_) {
-        selectedItem_->resetPosition();
-        if (selectedItem_->getBackpackItem()->count > 0) {
-            selectedItem_->setOpacity(kMCNormalActionBarItemOpacity);
-        } else {
-            selectedItem_->setOpacity(kMCInvalidActionBarItemOpacity);
-        }
-        selectedItem_ = NULL;
-    }
     
     isDragging_ = false;
     
@@ -256,10 +362,10 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 void
 MCBattleController::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
-    if (selectedItem_) {
-        selectedItem_->resetPosition();
-        selectedItem_->setOpacity(255);
-        selectedItem_ = NULL;
+    if (selectedActionBarItem_) {
+        selectedActionBarItem_->resetPosition();
+        selectedActionBarItem_->setOpacity(255);
+        selectedActionBarItem_ = NULL;
     }
     
     isDragging_ = false;
@@ -294,3 +400,10 @@ MCBattleController::didSelectAll(CCObject *aSender)
     }
 }
 #endif
+    
+void
+MCBattleController::skillBarVisibleDidChange(CCObject *anObject)
+{
+    /* 由于是改变前的状态，所以隐藏了即为未隐藏 */
+    skillBarItemSelectedEffect_->setVisible(skillBar_->isHidden());
+}

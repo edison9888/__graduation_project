@@ -11,13 +11,15 @@
 
 #include "MCScenePackage.h"
 
-//#include "MCObjectLayer.h"
 #include "MCBackgroundLayer.h"
 
+#if MC_DEBUG_NON_VISUAL_OBJECTS == 1
 #include "MCViewportLayer.h"
+#endif
+
 #include "MCControllerLayer.h"
 #include "MCSceneManager.h"
-#include "MCDetail.h"
+#include "MCPlayerInfo.h"
 #include "MCConfirm.h"
 
 class MCScene;
@@ -26,6 +28,7 @@ class MCTrigger;
 class MCRoleEntity;
 class MCAStar;
 class MCObjectLayer;
+class MCMezzanine;
 
 class MCSceneContext : public CCObject {
     friend class MCScene;
@@ -34,6 +37,8 @@ public:
     MCSceneContext();
     ~MCSceneContext();
     
+    void enemyWasDied(MCRole *aRole); /* 敌方人物挂了 */
+        
     CC_SYNTHESIZE_READONLY(CCArray *, objects_, Objects); /* 场景对象 */
     CC_SYNTHESIZE_READONLY(MCScene *, scene_, Scene);
     CC_SYNTHESIZE_READONLY(bool, inited_, Inited); /* 是否初始化过场景对象 */
@@ -56,16 +61,22 @@ private:
 };
 
 class MCScene : public CCScene, public MCSceneDelegate, public MCConfirmDelegate {
+    friend class MCSceneContext;
     friend class MCSceneManager;
     friend class MCSceneController;
 public:
     MCScene()
     : controller_(NULL)
     , objects_(NULL)
+    , mezzanine_(NULL)
+#if MC_DEBUG_NON_VISUAL_OBJECTS == 1
     , viewport_(NULL)
+#endif
     , background_(NULL)
     , entranceName_(NULL)
-    , trigger_(NULL) { }
+    , trigger_(NULL)
+    , context_(NULL)
+    , abortTaskConfirm_(NULL) { }
     
     ~MCScene();
     
@@ -101,26 +112,11 @@ public:
     virtual void installController() {}
     
     /**
-     * 安装触发器
-     */
-    void installTrigger(MCTrigger *aTrigger);
-    
-    /**
-     * 卸载触发器
-     */
-    void uninstallTrigger(MCTrigger *aTrigger);
-    
-    /**
      * 移动到场景
      * aSceneId(in): 场景ID
      * anEntranceName(in): 场景入口名
      */
     void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false);
-    
-    /**
-     * 从内部场景(比如房子、商店)出去
-     */
-    void goOut();
     
     void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false);
     
@@ -129,49 +125,59 @@ public:
     inline void pauseScene() {
         pauseSchedulerAndActions();
         controller_->setEnabled(false);
-        detailMenu_->setVisible(false);
+        playerInfoMenu_->setVisible(false);
     }
     
     inline void resumeScene() {
-        detailMenu_->setVisible(true);
+        playerInfoMenu_->setVisible(true);
         controller_->setEnabled(true);
         resumeSchedulerAndActions();
     }
     
     inline void pauseInput() {
         controller_->setEnabled(false);
-        detailMenu_->setVisible(false);
+        playerInfoMenu_->setVisible(false);
     }
     
     inline void resumeInput() {
         controller_->setEnabled(true);
-        detailMenu_->setVisible(true);
+        playerInfoMenu_->setVisible(true);
     }
     
-    virtual void showDetail();
+    inline MCMezzanine *mezzanine() {
+        return mezzanine_;
+    }
+    
+    virtual void showPlayerInfo();
+    
+    virtual void detectsCollidesWithSemiTransparents(MCRole *aRole);
     
     /* abort task confirm */
     void showAbortTaskConfirm(const char *aMessage);
     void confirmDidClickYesButton(MCConfirm *aConfirm);
+    void confirmDidClickNoButton(MCConfirm *aConfirm);
     
 protected:
     bool hasEntrance(const char *anEntranceName);
     
-    virtual void detailDidHide();
+    virtual void playerInfoDidHide();
     
     MCControllerLayer *controller_; /* 控制层 */
     MCObjectLayer *objects_; /* 对象层 */
-#warning: todo：记得删除调试用视角层
+    MCMezzanine *mezzanine_; /* 夹层世界 */
+#if MC_DEBUG_NON_VISUAL_OBJECTS == 1
     MCViewportLayer *viewport_; /* 调试用的视角层 */
+#endif
     MCBackgroundLayer *background_; /* 背景层 */
     
     CCArray *scenes_; /* 场景地图ID数组 */
-    CCArray *triggers_; /* 触发器 */
     
-    MCDetail *detail_; /* 状态界面 */
-    CCMenu *detailMenu_;
+    MCPlayerInfo *playerInfo_; /* 状态界面 */
+    CCMenu *playerInfoMenu_;
     
     MCScript *trigger_; /* 若存在则进入场景后执行 */
+    
+    MCConfirm *abortTaskConfirm_;
     
     /**
      * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。
@@ -183,7 +189,7 @@ protected:
     CC_SYNTHESIZE_READONLY(CCPoint, defaultLocation_, DefaultLocation);
     CC_SYNTHESIZE_READONLY(MCAStar *, aStar_, AStar); /* A*算法实现 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, entrances_, Entrances);
-    CC_SYNTHESIZE_READONLY(MCSceneContext *, context, Context);
+    CC_SYNTHESIZE_READONLY(MCSceneContext *, context_, Context);
     CC_SYNTHESIZE_READONLY(MCScenePackage *, scenePackage_, ScenePackage);
 };
 

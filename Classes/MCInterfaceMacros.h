@@ -51,44 +51,9 @@ inline mc_size_t sell##Var(mc_size_t aValue) {  \
 }
 
 /**
- * 使用接口，返回是否成功使用。
- */
-typedef mc_size_t (*MCUsingItemFunction)();
-#define MCDefineUseInterface(var, Var) \
-inline mc_size_t use##Var() {          \
-    bool used = false;                 \
-    if (var->count > 0) {              \
-        var->count -= 1;               \
-        used = true;                   \
-    }                                  \
-    return used;                       \
-}
-
-/**
  * 定义操作接口
  */
 #define MCDefineInterface(var, Var) \
     MCDefineBuyInterface(var, Var)  \
-
-#define MCDefineLevelUpInterface(var, Var)                          \
-inline mc_ssize_t levelUp##Var() {                                  \
-    MCOre *currentOre = var->getOre();                              \
-    MCOre *nextLevelOre = currentOre->getNextLevel();               \
-    MCBackpack *backpack = MCBackpack::sharedBackpack();            \
-    mc_price_t money = backpack->getMoney();                        \
-    if (nextLevelOre) {                                             \
-        if (nextLevelOre->getPrice() + var->getPrice() > money) {   \
-            return kMCNotEnoughMoney;                               \
-        }                                                           \
-        money -= (nextLevelOre->getPrice() + var->getPrice());      \
-        backpack->setMoney(money);                                  \
-        var->setOre(nextLevelOre);                                  \
-        var->ac_ = -1;                                              \
-        /* 重置计算 */                                               \
-        var->attackCheck_ = -1;                                     \
-        return kMCHandleSucceed;                                    \
-    }                                                               \
-    return kMCFullLevel;                                            \
-}
 
 #endif

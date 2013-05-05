@@ -47,7 +47,7 @@ MCMainMenu::init()
                                        this,
                                        menu_selector(MCMainMenu::playGame_clicked));
         menu->addChild(item);
-    
+#if MC_MULTIPLAYER_SUPPORT == 1
         /* multiplayer */
         label = CCLabelTTF::create("multiplayer", "Marker Felt", kMCNormalFontSize);
         label->setColor(ccc3(64, 128, 216));
@@ -55,7 +55,7 @@ MCMainMenu::init()
                                        this,
                                        menu_selector(MCMainMenu::multiplayer_clicked));
         menu->addChild(item);
-        
+#endif
         menu->alignItemsVerticallyWithPadding(12);
         addChild(menu);
         
@@ -125,11 +125,13 @@ MCMainMenu::playGame_clicked(CCObject *aSender)    /* 单人游戏 */
     }
 }
 
+#if MC_MULTIPLAYER_SUPPORT == 1
 void
 MCMainMenu::multiplayer_clicked(CCObject *aSender) /* 多人对战 */
 {
     
 }
+#endif
 
 void
 MCMainMenu::about_clicked(CCObject *aSender)       /* 关于 */

@@ -17,7 +17,7 @@
 #include "MCMercenaryManager.h"
 #include "MCBackpack.h"
 #include "MCTaskManager.h"
-#include "MCDetail.h"
+#include "MCPlayerInfo.h"
 #include "MCEquipmentManager.h"
 
 class MCTestDetail : public MCTestLayer {
@@ -74,7 +74,7 @@ public:
     
     void onEnter() {
         MCTestLayer::onEnter();
-        scene_->showDetail();
+        scene_->showPlayerInfo();
     }
     
     void onExit() {

@@ -9,9 +9,9 @@
 #ifndef __Military_Confrontation__MCPropsLayer__
 #define __Military_Confrontation__MCPropsLayer__
 
-#include "MCDetailLayer.h"
+#include "MCBaseInfoLayer.h"
 
-class MCPropsLayer : public MCDetailLayer {
+class MCPropsLayer : public MCBaseInfoLayer {
 public:
     bool init();
     

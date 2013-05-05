@@ -97,8 +97,10 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
 {
     int key = MCObjectIdToDickKey(anObjectId);
     MCScene *scene = (MCScene *) scenes_->objectForKey(key);
+    CCLog("scene: %p", scene);
     if (scene) {
         scenes_->removeObjectForKey(key);
+        scene->cleanup();
     }
 }
 

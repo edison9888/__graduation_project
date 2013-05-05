@@ -1,17 +1,17 @@
 //
-//  MCDetailLayer.cpp
+//  MCBaseInfoLayer.cpp
 //  Military Confrontation
 //
 //  Created by 江宇英 on 13-1-30.
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 #include "AppMacros.h"
-#include "MCDetailLayer.h"
+#include "MCBaseInfoLayer.h"
 
 static const float kMCActionDuration = 0.1f;
 
 void
-MCDetailLayer::onEnter()
+MCBaseInfoLayer::onEnter()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
     
@@ -20,14 +20,14 @@ MCDetailLayer::onEnter()
 }
 
 void
-MCDetailLayer::show()
+MCBaseInfoLayer::show()
 {
     loadData();
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }
 
 void
-MCDetailLayer::hide()
+MCBaseInfoLayer::hide()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
     runAction(CCMoveTo::create(kMCActionDuration, ccp(winSize.width, 0)));

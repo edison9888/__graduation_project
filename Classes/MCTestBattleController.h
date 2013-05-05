@@ -29,14 +29,13 @@ public:
             'M', '0', '0', '2'
         };
 
-        mc_ssize_t ret;
         m_id.sub_class_ = '9';
         m_id.sub_index_ = '1';
         
         MCHero *hero = MCHero::sharedHero();
         hero->setHP(40);
         hero->setPP(80);
-//        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+//        mc_ssize_t ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
 //        MCRole *role = MCTeam::sharedTeam()->lastRole();
 //        role->setHP(40);
 //        role->setPP(40);

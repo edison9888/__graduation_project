@@ -52,11 +52,6 @@ public:
     virtual void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false) = 0;
     
     /**
-     * 从内部场景(比如房子、商店)出去
-     */
-    virtual void goOut() = 0;
-    
-    /**
      * 移动场景
      */
     virtual void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false) = 0;

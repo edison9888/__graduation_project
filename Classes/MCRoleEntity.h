@@ -11,6 +11,7 @@
 
 #include "MCObject.h"
 #include "MCOBB.h"
+#include "MCEquipmentProperty.h"
 
 /* 角色朝向 */
 enum {
@@ -87,6 +88,19 @@ public:
      */
     void move(const CCPoint &aDelta);
     
+    /* 施法期间不给移动 */
+    inline bool isPositionLocked() {
+        return lockPosition_;
+    }
+    
+    inline void lockPosition() {
+        lockPosition_ = true;
+    }
+    
+    inline void unlockPosition() {
+        lockPosition_ = false;
+    }
+    
     bool isWalking();
     void stopWalking();
     void stopWalkAction();
@@ -101,13 +115,13 @@ public:
     void findPathAtMap(const CCPoint &aDestinationLocation);
     void findPathAtMap(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL);
     
-    /**
-     * 测试某个位置是否能站
-     * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
-     */
-//    bool testPosition(const CCPoint &aDestinationLocation);
-//    
-//    bool testPositionAtMap(const CCPoint &aDestinationLocation);
+    void approachTarget(MCRole *aTarget);
+    void approachTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL);
+    void approachTargetAndKeepDistance(MCRole *aTarget, mc_distance_t aDistance=1);
+    void approachTargetAndKeepDistance(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata=NULL, mc_distance_t aDistance=1);
+    
+    void stopPathFinding();
+    void destroyPathFindingAlgorithmInstance();
     
     /**
      * 寻路结束
@@ -141,6 +155,8 @@ protected:
     
 private:
     MCAStarAlgorithm *pathFindingAlgo_; /* 寻路算法实例 */
+    
+    bool lockPosition_;
     
     CCArray *moveToActions_;
     

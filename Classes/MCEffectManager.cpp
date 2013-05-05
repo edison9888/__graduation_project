@@ -11,7 +11,10 @@
 
 static MCEffectManager *__shared_effect_manager = NULL;
 
-const char *kMCEffectFilepath = "E700.jpkg";
+static mc_object_id_t kMCMissEffectId = {'M', 'I', 'S', 'S'};
+static mc_object_id_t kMCLaunchingEffectId = {'L', 'N', 'I', 'N'};
+
+static const char *kMCEffectFilepath = "E700.jpkg";
 
 static const char *
 __basename(const char *path)
@@ -70,6 +73,22 @@ MCEffectManager::protoEffectForObjectId(mc_object_id_t anObjectId)
     return dynamic_cast<MCEffect *>(effects_->objectForKey(MCObjectIdToDickKey(anObjectId)));
 }
 
+MCEffect *
+MCEffectManager::missEffect()
+{
+    return effectForObjectId(kMCMissEffectId);
+}
+
+MCEffect *
+MCEffectManager::launchingEffect()
+{
+    MCEffect *launchingEffect = effectForObjectId(kMCLaunchingEffectId);
+    
+    launchingEffect->isReleaseEffect_ = true;
+    
+    return launchingEffect;
+}
+
 void
 MCEffectManager::loadEffects()
 {
@@ -104,18 +123,20 @@ MCEffectManager::loadEffects()
         
         effect = new MCEffect;
         
-        effect->init();
         effect->id_ = e_id;
         
         effect->implType_ = effectValueRoot["type"].getInt();
+        effect->duration_ = effectValueRoot["duration"].isDouble()
+                                ? (float) effectValueRoot["duration"].getDouble()
+                                : (float) effectValueRoot["duration"].getInt();
         
         if (effect->implType_ == MCEffect::MCSpriteSheet) {
             std::string path = effectValueRoot["path"].getString();
             const char *cpath = path.c_str();
             const char *basename = __basename(cpath);
             effect->effect_ = CCString::createWithFormat("%s-0", basename);
-            effect->animation_ = loadAnimation(cpath);
-            effect->animation_->retain();
+            effect->animation_ = loadAnimation(cpath); /* non autorelease */
+            effect->animation_->setDelayPerUnit(effect->duration_ / effect->animation_->getFrames()->count());
         } else if (effect->implType_ == MCEffect::MCPList) {
             effect->effect_ = CCString::create(effectValueRoot["path"].getString().c_str());
         }
@@ -126,6 +147,7 @@ MCEffectManager::loadEffects()
         effect->effect_->retain();
         
         effects_->setObject(effect, MCObjectIdToDickKey(e_id));
+        effect->release();
     }
 }
 
@@ -148,7 +170,8 @@ MCEffectManager::loadAnimation(const char *aPath)
         animFrames->addObject(frame);
     }
     
-    CCAnimation *animation = CCAnimation::createWithSpriteFrames(animFrames);
+    CCAnimation *animation = new CCAnimation;
+    animation->initWithSpriteFrames(animFrames);
     animation->setDelayPerUnit(1.0 / animFrames->count());
     
     return animation;

@@ -9,9 +9,11 @@
 #include "MCEnemy.h"
 #include "MCEnemyAI.h"
 #include "MCScene.h"
+#include "MCSkill.h"
 
 MCEnemy::~MCEnemy()
 {
+    CC_SAFE_RELEASE(skills_);
     CC_SAFE_RELEASE(attackEffect_);
 }
 
@@ -23,6 +25,8 @@ MCEnemy::init(MCRoleRace aRoleRace)
     face_ = NULL;
     defaultDialogue_ = NULL;
     center_ = CCPointZero;
+    skills_ = CCArray::create();
+    skills_->retain();
     
     return true;
 }
@@ -89,7 +93,7 @@ MCEnemy::round()
     ai_->activate();
     
     MCRoleEntity *entity = getEntity();
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     
     if (center_.equals(CCPointZero)) {
         MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
@@ -106,11 +110,134 @@ MCEnemy::round()
                           callfuncO_selector(MCEnemy::roundDidFinish));
 }
 
+#pragma mark -
+#pragma mark *** MCOffensiveProtocol ***
+
+/**
+ * 重击范围
+ */
+MCDiceRange
+MCEnemy::getCriticalHitRange(bool inVision)
+{
+    MCDiceRange diceRance = inVision ? criticalHitVisible_ : criticalHitInvisible_;
+    
+#if MC_BATTLE_INFO_LEVEL == 1
+    printf("%s在视野范围内，重击范围(%s%s%hu)\n",
+           inVision ? "" : "不",
+           diceRance.min == diceRance.max
+           ? ""
+           : CCString::createWithFormat("%hu", diceRance.min)->getCString(),
+           diceRance.min == diceRance.max
+           ? ""
+           : "-",
+           diceRance.max);
+#endif
+    
+    return diceRance;
+}
+
+/**
+ * 重击倍数
+ */
+mc_critical_hit_t
+MCEnemy::getCriticalHit()
+{
+    return criticalHit_;
+}
+
+/**
+ * 己方攻击判定
+ */
+mc_offensive_t
+MCEnemy::getOffensive()
+{
+    return MCDiceMaker::sharedDiceMaker()->attackCheck() + dexterity_;
+}
+
+/**
+ * 己方防御等级
+ */
+mc_ac_t
+MCEnemy::getAC()
+{
+    return ac_;
+}
+
+/**
+ * 攻击伤害
+ * 武器伤害值
+ */
+mc_damage_t
+MCEnemy::getOffensiveDamage()
+{
+    return damage_->roll() + damageBonus_;
+}
+
+/**
+ * 防具检定减值
+ */
+mc_armor_check_penalty_t
+MCEnemy::getArmorCheckPenalty()
+{
+    return armorCheckPenalty_;
+}
+
+/**
+ * 攻击附带效果
+ */
+MCRoleState
+MCEnemy::attackWithState()
+{
+    MCRoleState state = MCNormalState;
+    
+    if (effect_ != state) {
+#if MC_BATTLE_INFO_LEVEL == 1
+        printf("攻击附带状态检测: ");
+#endif
+        if (MCDiceRangeCheck(effectCheck_)) {
+#if MC_BATTLE_INFO_LEVEL == 1
+            printf("附带上[%s]状态\n", MCRoleStateGetName(effect_));
+#endif
+            state |= effect_;
+        }
+    }
+    
+    return state;
+}
+
+/**
+ * 普通攻击效果
+ */
+MCEffect *
+MCEnemy::effectForNormalAttack()
+{
+    return attackEffect_;
+}
+
+/**
+ * 死亡
+ */
+void
+MCEnemy::died()
+{
+    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+    sceneContext->enemyWasDied(this);
+    
+    MCRoleEntity *roleEntity = getEntity();
+    roleEntity->stopPathFinding();
+    roleEntity->stopWalking();
+    roleEntity->getSpriteSheet()->removeFromParentAndCleanup(true);
+    entity_ = NULL;
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification,
+                                                                       this);
+}
+
 CCObject *
 MCEnemy::copy()
 {
     MCEnemy *enemy = new MCEnemy;
     
+    enemy->init(roleRace_);
     enemy->id_ = id_;
     enemy->tag_ = tag_;
     enemy->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
@@ -122,6 +249,7 @@ MCEnemy::copy()
     enemy->roleRace_ = roleRace_;
     enemy->hp_ = hp_;
     enemy->pp_ = pp_;
+    enemy->consume_ = consume_;
     enemy->maxHP_ = maxHP_;
     enemy->maxPP_ = maxPP_;
     enemy->exhaustion_ = exhaustion_;
@@ -148,7 +276,10 @@ MCEnemy::copy()
     }
     enemy->trigger_ = trigger_;
     
-#warning 木有配置技能
+    CCObject *obj;
+    CCARRAY_FOREACH(skills_, obj) {
+        enemy->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
+    }
     
     return enemy;
 }

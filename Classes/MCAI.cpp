@@ -99,7 +99,7 @@ MCAI::update(float dt) /* 大脑在转动 */
     CCARRAY_FOREACH(roles, obj) {
         role = dynamic_cast<MCRole *>(obj);
         if (vision_->collideWith(role->getEntity())) {
-            aiRole = roleForObjectId(role->getID());
+            aiRole = roleInVision(role);
             CCTime::gettimeofdayCocos2d(&tv, NULL);
             if (aiRole) { /* 更新人物的发现时间 */
                 aiRole->foundTimestamp = tv;
@@ -180,17 +180,30 @@ MCAI::changingState() /* 状态切换 */
 }
 
 MCAIRole *
-MCAI::roleForObjectId(mc_object_id_t anObjectId)
+MCAI::roleInVision(MCRole *aRole)
 {
-    CCObject *obj;
-    int key = MCObjectIdToDickKey(anObjectId);
+    MCAIRole *aiRole;
+    CCDictionary *roles;
+    CCDictElement *rolesElement;
+    CCDictElement *enemiesElement;
     
-    obj = rolesInVision_->objectForKey(key);
-    if (! obj) {
-        obj = enemiesInVision_->objectForKey(key);
+    roles = enemiesInVision_;
+    CCDICT_FOREACH(roles, enemiesElement) {
+        aiRole = dynamic_cast<MCAIRole *>(enemiesElement->getObject());
+        if (aiRole->role == aRole) {
+            return aiRole;
+        }
     }
     
-    return dynamic_cast<MCAIRole *>(obj);
+    roles = rolesInVision_;
+    CCDICT_FOREACH(roles, rolesElement) {
+        aiRole = dynamic_cast<MCAIRole *>(rolesElement->getObject());
+        if (aiRole->role == aRole) {
+            return aiRole;
+        }
+    }
+    
+    return NULL;
 }
 
 #pragma mark -

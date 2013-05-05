@@ -10,7 +10,6 @@
 #define __Military_Confrontation__MCVision__
 
 #include "MCRoleEntity.h"
-#include "MCGeometry.h"
 
 class MCOBB;
 

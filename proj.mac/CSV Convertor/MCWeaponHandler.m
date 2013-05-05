@@ -22,7 +22,8 @@ MCDefineIndexAndKey(CriticalHit, 10, critical-hit);
 MCDefineIndexAndKey(Distance, 13, distance);
 MCDefineIndexAndKey(Effect, 14, effect);
 MCDefineIndexAndKey(EffectCheck, 15, effect-check);
-MCDefineIndexAndKey(Dexterity, 16, dexterity);
+MCDefineIndexAndKey(Consume, 16, consume);
+MCDefineIndexAndKey(Dexterity, 17, dexterity);
 
 @implementation MCWeaponHandler
 
@@ -150,6 +151,8 @@ MCDefineIndexAndKey(Dexterity, 16, dexterity);
         [content setObject:[NSNull null] forKey:kMCEffectKey];
         [content setObject:[NSNull null] forKey:kMCEffectCheckKey];
     }
+    /* consume */
+    [content setObject:@([[data objectAtIndex:kMCConsumeIndex] floatValue]) forKey:kMCConsumeKey];
     /* dexterity */
     [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
     

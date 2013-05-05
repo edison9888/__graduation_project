@@ -13,6 +13,7 @@
 #include "JsonBox.h"
 #include "MCBackpack.h"
 #include "MCOreManager.h"
+#include "MCEffectManager.h"
 
 static const char *kMCEquipmentItemWeaponFilepath = "E001.jpkg";
 static const char *kMCEquipmentItemArmorFilepath = "E002.jpkg";
@@ -65,7 +66,7 @@ MCEquipmentItem *
 MCItemManager::equipmentItemForObjectId(mc_object_id_t anObjectId)
 {
     MCEquipmentItem *proto = protoEquipmentItemForObjectId(anObjectId);
-    MCEquipmentItem *equipmentItem;
+    MCEquipmentItem *equipmentItem = NULL;
 
     if (proto) {
         equipmentItem = dynamic_cast<MCEquipmentItem *>(proto->copy());
@@ -181,7 +182,22 @@ MCItemManager::loadEquipmentItems()
         ccstring->retain();
         item->setPrice(object["price"].getInt());
         JsonBox::Object damage = object["damage"].getObject();
+        
         MCWeapon *equipment = dynamic_cast<MCWeapon *>(item->equipment_);
+        
+        /* effect-id */
+        c_str_o_id = object["effect-id"].getString().c_str();
+        mc_object_id_t e_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
+        MCEffect *effect = effectManager->effectForObjectId(e_id);
+        equipment->attackEffect = effect;
+        effect->retain();
+        
         equipment->damage = MCMakeDiceType(damage["count"].getInt(), damage["size"].getInt());
         equipment->criticalHit = object["critical-hit"].getInt();
         JsonBox::Object diceRange = object["critical-hit-visible"].getObject();
@@ -205,7 +221,14 @@ MCItemManager::loadEquipmentItems()
             equipment->effectCheck.max = diceRange["max"].getInt();
             equipment->effectCheck.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                           diceRangeDice["size"].getInt());
+        } else {
+            equipment->effect = MCNormalState;
         }
+        
+        /* consume Double */
+        equipment->consume = object["consume"].isDouble()
+                              ? (float) object["consume"].getDouble()
+                              : (float) object["consume"].getInt();
         equipment->dexterity = object["dexterity"].getInt();
         /* 读取默认矿石，加载背包的时候更新为正确矿石 */
         item->ore_ = oreManager->defaultOre();
@@ -246,6 +269,7 @@ MCItemManager::loadEquipmentItems()
         item->setIcon(ccstring);
         ccstring->retain();
         item->setPrice(object["price"].getInt());
+        
         MCArmor *equipment = dynamic_cast<MCArmor *>(item->equipment_);
         equipment->defense = object["defense"].getInt();
         equipment->dexterity = object["dexterity"].getInt();
@@ -295,16 +319,28 @@ MCItemManager::loadEffectiveItems()
         ccstring = CCString::create(object["icon"].getString().c_str());
         item->setIcon(ccstring);
         ccstring->retain();
-        ccstring = CCString::create(object["path"].getString().c_str());
-        item->setPath(ccstring);
-        ccstring->retain();
+        
+        /* effect-id */
+        c_str_o_id = object["effect-id"].getString().c_str();
+        mc_object_id_t e_id = {
+            c_str_o_id[0],
+            c_str_o_id[1],
+            c_str_o_id[2],
+            c_str_o_id[3]
+        };
+        MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
+        MCEffect *effect = effectManager->effectForObjectId(e_id);
+        item->effect = effect;
+        effect->retain();
+        
         item->setPrice(object["price"].getInt());
-        item->setRadius(object["radius"].getInt());
+        item->radius = object["radius"].getInt();
         item->hp = object["hp"].getInt();
         item->pp = object["pp"].getInt();
         item->positive_state = object["positive-state"].getInt();
-        item->negative_state = object["negative-state"].getInt();
-        item->lasting_time = object["lasting-time"].getDouble();
+        item->lasting_time = object["lasting-time"].isDouble()
+                                ? (float) object["lasting-time"].getDouble()
+                                : (float) object["lasting-time"].getInt();
         
         effectiveItems_->setObject(item, MCObjectIdToDickKey(o_id));
     }

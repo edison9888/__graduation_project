@@ -8,6 +8,9 @@
 
 #include "MCHero.h"
 #include "MCAI.h"
+#include "MCEquipmentManager.h"
+#include "MCSkill.h"
+#include "MCDungeonMaster.h"
 
 static MCHero *__shared_hero = NULL;
 const char *kMCHeroFacePath = "faces/x-000.png";
@@ -112,6 +115,98 @@ MCHero::roleOfFront()
     return nearest;
 }
 
+/* 动作 */
+/* 普通攻击 */
+void
+MCHero::attackTarget(MCRole *aTarget)
+{
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    
+    if (weapon->consume > pp_) {
+        /* 不够体力 */
+        return;
+    }
+    
+    MCRole::attackTarget(aTarget);
+    
+    /* 检测攻击距离 */
+    MCRoleEntity *selfEntity = getEntity();
+    MCOBB targetOBB = aTarget->getEntity()->getOBB();
+    MCOBB selfOBB = selfEntity->getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    float distance = ccpLength(offset) / selfOBB.width - 1;
+    
+    if (distance > (float) weapon->distance) { /* 太远了干不了，需要走过去 */
+        /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
+//        selfEntity->approachTargetAndKeepDistance(aTarget,
+//                                                  this,
+//                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
+//                                                  aTarget,
+//                                                  weapon->distance);
+        selfEntity->approachTarget(aTarget,
+                                   this,
+                                   callfuncO_selector(MCHero::roleDidApproachTarget),
+                                   aTarget);
+        return;
+    }
+    /* 进入攻击判断 */
+    printf("进入攻击判断\n");
+    pp_ -= weapon->consume;
+    MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTarget);
+}
+
+/* 技能攻击 */
+void
+MCHero::attackTargetWithSkill(MCRole *aTarget, MCSkill *aSkill)
+{
+    MCRole::attackTargetWithSkill(aTarget, aSkill);
+    
+    /* 检测攻击距离 */
+    MCRoleEntity *selfEntity = getEntity();
+    MCRoleEntity *targetEntity = aTarget->getEntity();
+    
+    MCOBB targetOBB = targetEntity->getOBB();
+    MCOBB selfOBB = selfEntity->getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    float distance = ccpLength(offset) / selfOBB.width - 1;
+    
+    if (distance > (float) aSkill->distance) { /* 太远了干不了，需要走过去 */
+        aTarget->setUserData(aSkill);
+        /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
+//        selfEntity->approachTargetAndKeepDistance(aTarget,
+//                                                  this,
+//                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
+//                                                  aTarget,
+//                                                  aSkill->distance);
+        selfEntity->approachTarget(aTarget,
+                                   this,
+                                   callfuncO_selector(MCHero::roleDidApproachTarget),
+                                   aTarget);
+        return;
+    }
+    
+    /* 进入攻击判断 */
+    printf("进入技能攻击判断\n");
+    aSkill->setLauncher(this);
+    CCPoint center = selfEntity->getPosition();
+    center.x += selfOBB.extents.width;
+    center.y += selfOBB.extents.height;
+    aSkill->use(center, ccpToAngle(offset));
+}
+
+void
+MCHero::roleDidApproachTarget(CCObject *anObject)
+{
+    MCRole *target = dynamic_cast<MCRole *>(anObject);
+    MCSkill *skill = dynamic_cast<MCSkill *>(target->getUserData());
+    
+    if (skill) {
+        target->setUserData(NULL);
+        attackTargetWithSkill(target, skill);
+    } else {
+        attackTarget(target);
+    }
+}
 /**
  * 死亡状态下回调
  */
@@ -121,4 +216,118 @@ MCHero::died()
     MCRoleEntity *roleEntity = getEntity();
     roleEntity->removeFromParentAndCleanup(false);
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification);
+}
+
+#pragma mark -
+#pragma mark *** MCOffensiveProtocol ***
+
+/**
+ * 重击范围
+ */
+MCDiceRange
+MCHero::getCriticalHitRange(bool inVision)
+{
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    MCDiceRange diceRance = inVision ? weapon->criticalHitVisible : weapon->criticalHitInvisible;
+    
+#if MC_BATTLE_INFO_LEVEL == 1
+    printf("%s在视野范围内，重击范围(%s%s%hu)\n",
+           inVision ? "" : "不",
+           diceRance.min == diceRance.max
+           ? ""
+           : CCString::createWithFormat("%hu", diceRance.min)->getCString(),
+           diceRance.min == diceRance.max
+           ? ""
+           : "-",
+           diceRance.max);
+#endif
+    
+    return diceRance;
+}
+
+/**
+ * 重击倍数
+ */
+mc_critical_hit_t
+MCHero::getCriticalHit()
+{
+    MCEquipmentItem *weapon = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon();
+    
+    return weapon->getCriticalHit();
+}
+
+/**
+ * 己方攻击判定
+ */
+mc_offensive_t
+MCHero::getOffensive()
+{
+    MCEquipmentItem *weapon = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon();
+    
+    return weapon->getAttackCheck();
+}
+
+/**
+ * 己方防御等级
+ */
+mc_ac_t
+MCHero::getAC()
+{
+    return MCEquipmentManager::sharedEquipmentManager()->getAC();
+}
+
+/**
+ * 攻击伤害
+ * 武器伤害值
+ */
+mc_damage_t
+MCHero::getOffensiveDamage()
+{
+    MCEquipmentItem *weapon = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon();
+    
+    return weapon->getDamage();
+}
+
+/**
+ * 防具检定减值
+ */
+mc_armor_check_penalty_t
+MCHero::getArmorCheckPenalty()
+{
+    return MCEquipmentManager::sharedEquipmentManager()->getArmorCheckPenalty();
+}
+
+/**
+ * 攻击附带效果
+ */
+MCRoleState
+MCHero::attackWithState()
+{
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    MCRoleState state = MCNormalState;
+    
+    if (weapon->effect != state) {
+#if MC_BATTLE_INFO_LEVEL == 1
+        printf("攻击附带状态检测: ");
+#endif
+        if (MCDiceRangeCheck(weapon->effectCheck)) {
+#if MC_BATTLE_INFO_LEVEL == 1
+            printf("附带上[%s]状态\n", MCRoleStateGetName(weapon->effect));
+#endif
+            state |= weapon->effect;
+        }
+    }
+    
+    return state;
+}
+
+/**
+ * 普通攻击效果
+ */
+MCEffect *
+MCHero::effectForNormalAttack()
+{
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    
+    return weapon->attackEffect;
 }

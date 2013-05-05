@@ -55,6 +55,8 @@ MCRoleEntity::MCRoleEntity()
     shadow_ = NULL;
     
     walkAction_ = NULL;
+    
+    lockPosition_ = false;
 }
 
 MCRoleEntity::~MCRoleEntity()
@@ -82,8 +84,22 @@ MCRoleEntity::onExit()
 void
 MCRoleEntity::update(float dt)
 {
-    //warning: search roles
-//    MCRole *role = role_;
+    CCSprite::update(dt);
+    
+    /* 更新效果影响 */
+    for (std::vector<mc_effect_t>::iterator iterator = role_->effects_.begin();
+         iterator != role_->effects_.end();
+         ++iterator) {
+        role_->hp_ += iterator->hp;
+        if (role_->hp_ < 0) {
+            role_->died();
+        }
+        iterator->remaining_time -= dt;
+        if (iterator->remaining_time < 0) {
+            role_->roleState_ &= ~iterator->positive_state;
+            role_->effects_.erase(iterator);
+        }
+    }
 }
 
 const MCOBB &
@@ -232,7 +248,8 @@ void
 MCRoleEntity::move(const CCPoint &aDelta)
 {
     /* 疲惫ing，不接受命令 */
-    if (role_->exhausted_) {
+    if (role_->exhausted_
+        || lockPosition_) {
         return;
     }
     
@@ -240,7 +257,7 @@ MCRoleEntity::move(const CCPoint &aDelta)
     
     setPosition(ccpAdd(m_obPosition, aDelta));
     
-    role_->pp_ -= length / (36 / CCDirector::sharedDirector()->getContentScaleFactor());
+    role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
 }
 
 bool
@@ -354,7 +371,8 @@ void
 MCRoleEntity::findPath(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata)
 {
     /* 疲惫ing，不接受命令 */
-    if (role_->exhausted_) {
+    if (role_->exhausted_
+        || lockPosition_) {
         return;
     }
     
@@ -383,7 +401,8 @@ void
 MCRoleEntity::findPathAtMap(const CCPoint &aDestinationLocation, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata)
 {
     /* 疲惫ing，不接受命令 */
-    if (role_->exhausted_) {
+    if (role_->exhausted_
+        || lockPosition_) {
         return;
     }
     
@@ -400,27 +419,63 @@ MCRoleEntity::findPathAtMap(const CCPoint &aDestinationLocation, CCObject *aTarg
     pathFindingAlgo->execute();
 }
 
-///**
-// * 测试某个位置是否能站
-// * aDestinationLocation为屏幕上的坐标，所以要加上地图偏移
-// */
-//bool
-//MCRoleEntity::testPosition(const CCPoint &aDestinationLocation)
-//{
-//    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
-//    MCScene *scene = sceneContext->getScene();
-//    MCAStarAlgorithm *pathFindingAlgo = pathFindingAlgoInstance();
-//    
-//    return pathFindingAlgo && pathFindingAlgo->testPosition(ccpSub(aDestinationLocation, scene->getMapOffset()));
-//}
-//
-//bool
-//MCRoleEntity::testPositionAtMap(const CCPoint &aDestinationLocation)
-//{
-//    MCAStarAlgorithm *pathFindingAlgo = pathFindingAlgoInstance();
-//    
-//    return pathFindingAlgo && pathFindingAlgo->testPosition(aDestinationLocation);
-//}
+void
+MCRoleEntity::approachTarget(MCRole *aTarget)
+{
+    approachTarget(aTarget, NULL, NULL);
+}
+
+void
+MCRoleEntity::approachTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata)
+{
+    MCRoleEntity *targetEntity = aTargetRole->getEntity();
+    MCOBB targetOBB = targetEntity->getOBB();
+    MCOBB selfOBB = getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    CCPoint targetPosition = ccp(targetOBB.center.x + selfOBB.width * (offset.x > 0 ? -1 : 1),
+                                 targetOBB.center.y + selfOBB.height * (offset.y > 0 ? -1 : 1));
+    
+    findPathAtMap(targetPosition, aTarget, aSelector, anUserdata);
+}
+
+void
+MCRoleEntity::approachTargetAndKeepDistance(MCRole *aTarget, mc_distance_t aDistance)
+{
+    approachTargetAndKeepDistance(aTarget, NULL, NULL);
+}
+
+void
+MCRoleEntity::approachTargetAndKeepDistance(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata, mc_distance_t aDistance)
+{
+    MCRoleEntity *targetEntity = aTargetRole->getEntity();
+    MCOBB targetOBB = targetEntity->getOBB();
+    MCOBB selfOBB = getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    float distance = ccpLength(offset) / selfOBB.width - 1;
+    
+    if (distance > (float) aDistance) {
+        offset = ccpMult(offset, (distance - (float) aDistance) / distance);
+    }
+    CCPoint targetPosition = ccp(targetOBB.center.x + selfOBB.width * (offset.x > 0 ? -1 : 1),
+                                 targetOBB.center.y + selfOBB.height * (offset.y > 0 ? -1 : 1));
+    
+    findPathAtMap(targetPosition, aTarget, aSelector, anUserdata);
+}
+
+void
+MCRoleEntity::stopPathFinding()
+{
+    MCAStarAlgorithm *pathFindingAlgo = pathFindingAlgoInstance();
+    pathFindingAlgo->stopPathFinding();
+}
+
+void
+MCRoleEntity::destroyPathFindingAlgorithmInstance()
+{
+    if (pathFindingAlgo_) {
+        CC_SAFE_RELEASE_NULL(pathFindingAlgo_);
+    }
+}
 
 /**
  * 寻路结束
@@ -449,7 +504,7 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
         moveToActions_->addObject(action);
         action->release();
         runAction(action);
-        role_->pp_ -= length / (36 / CCDirector::sharedDirector()->getContentScaleFactor());
+        role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
     } else {
         if (target_ && pathFindingSelector_) {
             (target_->*pathFindingSelector_)(pathFindingSelectorUserdata_ ? pathFindingSelectorUserdata_ : this);

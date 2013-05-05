@@ -13,13 +13,18 @@
 #include "MCRoleEntity.h"
 #include "MCRoleProperty.h"
 #include "MCAI.h"
+#include "MCBattle.h"
 
 extern const char *kMCRoleDiedNotification;
 
+USING_NS_CC;
+USING_NS_MC_BATTLE;
+
 class MCScript;
+class MCSkill;
 
 /* 基础角色 */
-class MCRole : public MCObject, public MCAIDelegate, public MCAIStateMachineDelegate {
+class MCRole : public MCObject, public MCAIDelegate, public MCAIStateMachineDelegate, public MCOffensiveProtocol {
     friend class MCRoleEntity;
     friend class MCAI;
 public:
@@ -43,6 +48,11 @@ public:
     void loadSpriteSheet();
     void loadSpriteSheet(const char *aSpritesheetPath);
     
+    /**
+     * aRole在视野中
+     */
+    bool roleInVision(MCRole *aRole);
+    
     /* MCAIDelegate */
     /**
      * 某人进入视野
@@ -59,7 +69,7 @@ public:
     /**
      * 被攻击
      */
-    void roleWasAttacked(const MCEffect &anEffect);
+    void roleWasAttacked(const mc_effect_t &anEffect);
     
     /**
      * 攻击结束
@@ -97,12 +107,65 @@ public:
      */
     void performWhenDeathState();
     
+    /* 动作 */
+    /* 普通攻击 */
+    virtual void attackTarget(MCRole *aTarget)  {
+        ai_->activate();
+    }
+    
+    /* 技能攻击 */
+    virtual void attackTargetWithSkill(MCRole *aTarget, MCSkill *aSkill) {
+        ai_->activate();
+    }
+    
+    virtual void roleDidApproachTarget(CCObject *anObject) {}
+        
+    /* MCOffensiveProtocol */
+    /**
+     * 重击判断
+     * 投掷D20的骰子，命中范围后，再投掷第二次依然命中，则重击
+     */
+    bool attackCheckCriticalHit(MCDiceRange aRange);
+    
+    /**
+     * 命中判断
+     * 命中=己方攻击判定>=防御等级
+     * 己方攻击判定= D20+武器敏捷调整值
+     * 对方防御等级=10+最大防御加值+敏捷调整值"
+     */
+    bool attackCheckHit(mc_offensive_t anOffensive, mc_ac_t anAC) {
+#if MC_BATTLE_INFO_LEVEL == 1
+        printf("攻击对抗：%hu %s %hu => %s\n",
+               anOffensive,
+               anOffensive >= anAC ? ">=" : "<",
+               anAC,
+               anOffensive >= anAC ? "命中！" : "未命中！");
+#endif
+        return anOffensive >= anAC;
+    }
+    
+    /**
+     * 伤害判定
+     * 无论结果为神马，最小值为1
+     * D10+攻击伤害+防具检定减值
+     */
+    mc_damage_t attackGetDamage(mc_damage_t anOffensiveDamage, mc_armor_check_penalty_t anArmorCheckPenalty);
+    
     /**
      * 死亡
      */
     virtual void died();
     
     virtual CCObject *copy() = 0;
+    
+    inline bool isEnemy(MCRole *aRole) {
+        if ((roleType_ == MCRole::MCEnemy && aRole->roleType_ != MCRole::MCEnemy)
+            || (roleType_ != MCRole::MCEnemy && aRole->roleType_ == MCRole::MCEnemy)) {
+            return true;
+        }
+        
+        return false;
+    }
     
     inline mc_hp_t updateHP(mc_hp_t var) {
         hp_ += var;
@@ -130,6 +193,9 @@ public:
         return exhausted_;
     }
     
+protected:
+    std::vector<mc_effect_t> effects_;
+    
     /* 角色属性 */
     CC_SYNTHESIZE(MCRoleType, roleType_, RoleType); /* 角色类型 */
     CC_SYNTHESIZE(MCRoleRace, roleRace_, RoleRace); /* 角色种族 */
@@ -156,6 +222,8 @@ public:
     
     /* 点击活动键触发 */
     CC_SYNTHESIZE(MCScript *, trigger_, Trigger);
+    
+    CC_SYNTHESIZE_RETAIN(CCObject *, userdata_, UserData);
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

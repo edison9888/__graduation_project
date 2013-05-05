@@ -23,6 +23,9 @@ public:
     MCEffect *effectForObjectId(mc_object_id_t anObjectId);
     MCEffect *protoEffectForObjectId(mc_object_id_t anObjectId);
     
+    MCEffect *missEffect();
+    MCEffect *launchingEffect();
+    
 private:
     void loadEffects();
     

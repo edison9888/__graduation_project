@@ -11,7 +11,6 @@
 #include "MCScene.h"
 #include "MCCamera.h"
 #include "MCControllerLayer.h"
-#include "MCDetail.h"
 #include "MCEntrance.h"
 #include "MCAStar.h"
 #include "MCTeam.h"
@@ -19,6 +18,9 @@
 #include "MCObjectLayer.h"
 #include "MCTaskManager.h"
 #include "MCScript.h"
+#include "MCMezzanine.h"
+#include "MCTaskContext.h"
+#include "MCTaskTarget.h"
 
 MCSceneContext::MCSceneContext()
 {
@@ -30,6 +32,38 @@ MCSceneContext::MCSceneContext()
 MCSceneContext::~MCSceneContext()
 {
     CC_SAFE_RELEASE(objects_);
+}
+
+/* 敌方人物挂了 */
+void
+MCSceneContext::enemyWasDied(MCRole *aRole)
+{
+    MCTaskContext *taskContext = MCTaskManager::sharedTaskManager()->getCurrentTask()->getTaskContext();
+    CCArray *targets = taskContext->getTask()->getTargets();
+    CCObject *obj;
+    MCTaskTarget *target;
+    mc_object_id_t enemyId = aRole->getID();
+    bool done = true;
+    
+    objects_->removeObject(aRole);
+    CCARRAY_FOREACH(targets, obj) {
+        target = dynamic_cast<MCTaskTarget *>(obj);
+        if (MCObjectIdIsEqualsTo(target->objectID, enemyId)) {
+            if (target->remaining > 0) {
+                --target->remaining;
+            }
+            /* 检查任务是否完成 */
+            if (target->remaining != 0) {
+                done = false;
+            }
+        }
+    }
+    
+    if (done) {
+        /* 任务完成! */
+#warning todo: 任务完成!
+        CCLog("任务完成!");
+    }
 }
 
 #pragma mark *** MCSceneContextManager ***
@@ -82,6 +116,7 @@ MCSceneContextManager::currentContext()
 
 MCScene::~MCScene()
 {
+    CC_SAFE_RELEASE(context_);
     CC_SAFE_RELEASE(trigger_);
     CC_SAFE_DELETE(sceneCamera_);
     CC_SAFE_RELEASE(aStar_);
@@ -129,6 +164,7 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         aStar_->init(background_->getMap());
         aStar_->setBarriers(objects_->getbarriers());
         
+        /* 顺便也会添加夹层世界 */
         installController();
         
         /* entrances */
@@ -139,26 +175,27 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         addChild(detailMenu);
         CCMenuItemImage *detailMenuItem = CCMenuItemImage::create(kMCDetailButtonFilepath,
                                                                   kMCDetailButtonPressedFilepath);
-        detailMenuItem->setTarget(this, menu_selector(MCScene::showDetail));
+        detailMenuItem->setTarget(this, menu_selector(MCScene::showPlayerInfo));
         detailMenu->addChild(detailMenuItem);
         detailMenu->alignItemsHorizontally();
         CCSize buttonSize = detailMenuItem->getContentSize();
         detailMenu->setPosition(ccp(winSize.width - buttonSize.width,
                                     winSize.height - buttonSize.height));
-        detailMenu_ = detailMenu;
+        playerInfoMenu_ = detailMenu;
         
-        detail_ = MCDetail::create();
-        detail_->initPosition();
-        addChild(detail_);
+        playerInfo_ = MCPlayerInfo::create();
+        playerInfo_->initPosition();
+        addChild(playerInfo_);
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                      callfuncO_selector(MCScene::detailDidHide),
-                                                                      kMCDetailDidHideNotification,
+                                                                      callfuncO_selector(MCScene::playerInfoDidHide),
+                                                                      kMCPlayerInfoDidHideNotification,
                                                                       NULL);
         
-#warning MCViewportLayer
+#if MC_DEBUG_NON_VISUAL_OBJECTS == 1
         viewport_ = MCViewportLayer::create();
         addChild(viewport_);
         viewport_->map = background_->getMap();
+#endif
         
         return true;
     }
@@ -206,10 +243,11 @@ MCScene::getSceneSize() const
 void
 MCScene::onEnter()
 {
-    MCSceneContext *context = new MCSceneContext;
-    context->autorelease();
-    context->scene_ = this;
-    MCSceneContextManager::sharedSceneContextManager()->pushContext(context);
+    if (context_ == NULL) {
+        context_ = new MCSceneContext;
+        context_->scene_ = this;
+    }
+    MCSceneContextManager::sharedSceneContextManager()->pushContext(context_);
     
     CCScene::onEnter();
     
@@ -221,11 +259,15 @@ MCScene::onEnter()
     background_->loadEnemies(objects_->objects());
     background_->loadTeam(MCTeam::sharedTeam());
     
-#warning MCViewportLayer
-    viewport_->loadObjects(objects_->objects());
+#if MC_DEBUG_NON_VISUAL_OBJECTS == 1
+    viewport_->objects = objects_->objects();
     viewport_->loadBarriers(objects_->barriers_);
     viewport_->loadSemis(objects_->semiTransparents_);
     viewport_->loadEntrances(objects_->entrances_);
+    if (mezzanine_) {
+        viewport_->loadMezzanine(mezzanine_);
+    }
+#endif
     
     /* 设置地图位置 */
     sceneCamera_->restore();
@@ -252,28 +294,6 @@ MCScene::update(float dt)
 }
 
 /**
- * 安装触发器
- */
-void
-MCScene::installTrigger(MCTrigger *aTrigger)
-{
-    CCObject *object = (CCObject *)aTrigger;
-    if (! triggers_->containsObject(object)) {
-        triggers_->addObject(object);
-    }
-}
-
-/**
- * 卸载触发器
- */
-void
-MCScene::uninstallTrigger(MCTrigger *aTrigger)
-{
-    CCObject *object = (CCObject *)aTrigger;
-    triggers_->removeObject(object);
-}
-
-/**
  * 移动到场景
  * aSceneId(in): 场景ID
  * anEntranceName(in): 场景入口名
@@ -287,19 +307,6 @@ MCScene::gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isI
                                        anEntranceName,
                                        MCReplaceScene);
     sceneController->requestChangingScene();
-}
-
-/**
- * 从内部场景(比如房子、商店)出去
- */
-void
-MCScene::goOut()
-{
-//    if (isInternalScene_) {
-//        MCSceneController *sceneController = MCSceneController::sharedSceneController();
-//        sceneController->pushExpectedScene(NULL, NULL, MCPopScene);
-//        sceneController->requestChangingScene();
-//    }
 }
 
 void
@@ -322,17 +329,26 @@ MCScene::getScene()
 }
 
 void
-MCScene::showDetail()
+MCScene::showPlayerInfo()
 {
     pauseInput();
-    detail_->show();
+    playerInfo_->show();
+}
+
+void
+MCScene::detectsCollidesWithSemiTransparents(MCRole *aRole)
+{
+    objects_->detectsCollidesWithSemiTransparents(aRole);
 }
 
 void
 MCScene::showAbortTaskConfirm(const char *aMessage)
 {
+    if (abortTaskConfirm_) {
+        return;
+    }
     pauseInput();
-    MCConfirm::confirm(this, this, aMessage);
+    abortTaskConfirm_ = MCConfirm::confirm(this, this, aMessage);
 }
 
 void
@@ -342,11 +358,20 @@ MCScene::confirmDidClickYesButton(MCConfirm *aConfirm)
     
     taskManager->abortCurrentTask();
     resumeInput();
+    abortTaskConfirm_ = NULL;
     MCSceneController::sharedSceneController()->requestChangingScene();
 }
 
 void
-MCScene::detailDidHide()
+MCScene::confirmDidClickNoButton(MCConfirm *aConfirm)
+{
+    MCHero::sharedHero()->getEntity()->stopWalking();
+    resumeInput();
+    abortTaskConfirm_ = NULL;
+}
+
+void
+MCScene::playerInfoDidHide()
 {
     resumeInput();
 }

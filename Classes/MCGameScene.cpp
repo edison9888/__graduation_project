@@ -17,4 +17,7 @@ MCGameScene::installController()
     controller->setJoypadDelegate(objects_);
     addChild(controller);
     controller_ = controller;
+    
+    /* 一般场景不需要夹层世界 */
+    mezzanine_ = NULL;
 }

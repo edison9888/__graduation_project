@@ -11,6 +11,15 @@
 
 #include "MCSkill.h"
 
+enum {
+    MCSwordSkill = 1,
+    MCHammerSkill,
+    MCAxeSkill,
+    MCSpearSkill,
+    MCBowSkill
+};
+typedef mc_enum_t MCSkillType;
+
 class MCSkillManager {
 private:
     MCSkillManager();
@@ -20,13 +29,35 @@ public:
     static MCSkillManager *sharedSkillManager();
     
     MCSkill *skillForObjectId(mc_object_id_t anObjectId);
+    MCSkill *protoSkillForObjectId(mc_object_id_t anObjectId);
+    
+    CCArray *skillsForSkillType(MCSkillType aSkillType);
     
     void loadData();
+    void saveData();
+    
+    void improveProficiency(MCSkillType aSkillType);
     
 private:
+    void loadSkills();
     
 private:
     CCDictionary *skills_;
+    
+    /* 技能列表 */
+    CCArray *swordSkills_;
+    CCArray *hammerSkills_;
+    CCArray *axeSkills_;
+    CCArray *spearSkills_;
+    CCArray *bowSkills_;
+    CCArray *otherSkills_; /* 佣兵和敌人的技能 */
+    
+    /* 熟练度 */
+    mc_proficiency_t swordProficiency_;
+    mc_proficiency_t hammerProficiency_;
+    mc_proficiency_t axeProficiency_;
+    mc_proficiency_t spearProficiency_;
+    mc_proficiency_t bowProficiency_;
 };
 
 #endif /* defined(__Military_Confrontation__MCSkillManager__) */

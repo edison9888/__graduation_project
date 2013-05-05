@@ -82,6 +82,7 @@ MCGameState::save()
     MCMercenaryManager::sharedMercenaryManager()->saveData();
     MCFlagManager::sharedFlagManager()->saveAllFlags();
     MCTaskManager::sharedTaskManager()->saveData();
+    MCSkillManager::sharedSkillManager()->saveData();
     MCDungeonMaster::sharedDungeonMaster()->saveSpawnPoint();
     
     /* 写入磁盘 */

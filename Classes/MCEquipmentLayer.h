@@ -9,12 +9,12 @@
 #ifndef __Military_Confrontation__MCEquipmentLayer__
 #define __Military_Confrontation__MCEquipmentLayer__
 
-#include "MCDetailLayer.h"
+#include "MCBaseInfoLayer.h"
 #include "MCWeaponSelector.h"
 
 class MCEquipmentItem;
 
-class MCEquipmentLayer : public MCDetailLayer, public MCWeaponSelectorDelegate {
+class MCEquipmentLayer : public MCBaseInfoLayer, public MCWeaponSelectorDelegate {
 public:
     bool init();
     

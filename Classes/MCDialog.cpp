@@ -132,7 +132,7 @@ __mc_npc_dialog::init()
 {
     if (MCDialog::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
-        float contentScaleFactor = CCDirectorGetContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         
         CCRect skinRect = CCRectMake(0, 0, 128, 128);
         CCRect skinCapInsets = CCRectMake(0, 0, 128, 128);
@@ -195,7 +195,7 @@ __mc_dm_dialog::init()
 {
     if (MCDialog::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
-        float contentScaleFactor = CCDirectorGetContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         
         CCRect skinRect = CCRectMake(0, 0, 128, 128);
         CCRect skinCapInsets = CCRectMake(0, 0, 128, 128);

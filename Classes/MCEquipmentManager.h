@@ -49,6 +49,10 @@ public:
         return helmet_->getAC() + armor_->getAC() + shinGuard_->getAC();
     }
     
+    inline mc_ac_t getArmorCheckPenalty() {
+        return helmet_->getAC() + armor_->getAC() + shinGuard_->getAC();
+    }
+    
     inline void changeWeaponTo(MCEquipmentItem *aWeapon) {
         currentWeapon_ = aWeapon;
     }

@@ -17,6 +17,7 @@ using namespace std;
 #include "MCHero.h"
 #include "MCGameState.h"
 #include "MCEffectManager.h"
+#include "MCSkillManager.h"
 
 static const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
 static const char *kMCMercenariesFilepath = "M000.jpkg";
@@ -57,6 +58,7 @@ MCMercenaryManager::loadMercenaries()
     MCDiceMaker *diceMaker = MCDiceMaker::sharedDiceMaker();
     CCString *ccstring;
     MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
+    MCSkillManager *skillManager = MCSkillManager::sharedSkillManager();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCMercenariesFilepath);
@@ -132,6 +134,10 @@ MCMercenaryManager::loadMercenaries()
         /* PP Integer */
         mercenary->setPP(mercenaryObject["PP"].getInt());
         mercenary->setMaxPP(mercenary->getPP());
+        /* consume Double */
+        mercenary->setConsume(mercenaryObject["consume"].isDouble()
+                              ? (float) mercenaryObject["consume"].getDouble()
+                              : (float) mercenaryObject["consume"].getInt());
         /* exhaustion Integer */
         mercenary->setExhaustion(mercenaryObject["exhaustion"].getInt());
         /* tired Integer */
@@ -175,24 +181,73 @@ MCMercenaryManager::loadMercenaries()
         mercenary->criticalHitInvisible_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
                                                                diceRangeDice["size"].getInt());
         /* critical-hit Double */
-        mercenary->setCriticalHit(mercenaryObject["critical-hit"].getDouble());
+        float floatValue = mercenaryObject["critical-hit"].isDouble()
+                            ? (float) mercenaryObject["critical-hit"].getDouble()
+                            : (float) mercenaryObject["critical-hit"].getInt();
+        mercenary->setCriticalHit(floatValue);
         /* distance Integer */
         mercenary->setDistance(mercenaryObject["distance"].getInt());
-#warning 木有配置技能
+        
+        /* skills Object */
+        JsonBox::Object skillsObject = mercenaryObject["skills"].getObject();
+        if (skillsObject["A"].isString()) {
+            const char *c_str_s_id = skillsObject["A"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            mercenary->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        if (skillsObject["B"].isString()) {
+            const char *c_str_s_id = skillsObject["B"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            mercenary->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }if (skillsObject["C"].isString()) {
+            const char *c_str_s_id = skillsObject["C"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            mercenary->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        if (skillsObject["D"].isString()) {
+            const char *c_str_s_id = skillsObject["D"].getString().c_str();
+            mc_object_id_t s_id = {
+                c_str_s_id[0],
+                c_str_s_id[1],
+                c_str_s_id[2],
+                c_str_s_id[3]
+            };
+            mercenary->skills_->addObject(skillManager->skillForObjectId(s_id));
+        }
+        
         /* effect Integer */
-        mercenary->setEffect(mercenaryObject["effect"].getInt());
-        /* effect-check Object */
-        /* effect-check.min Integer */
-        /* effect-check.max Integer */
-        /* effect-check.dice Object */
-        /* effect-check.dice.count Integer */
-        /* effect-check.dice.size Integer */
-        diceRange = mercenaryObject["effect-check"].getObject();
-        diceRangeDice = diceRange["dice"].getObject();
-        mercenary->effectCheck_.min = diceRange["min"].getInt();
-        mercenary->effectCheck_.max = diceRange["max"].getInt();
-        mercenary->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
-                                                      diceRangeDice["size"].getInt());
+        if (mercenaryObject["effect"].isInteger()) {
+            mercenary->setEffect(mercenaryObject["effect"].getInt());
+            /* effect-check Object */
+            /* effect-check.min Integer */
+            /* effect-check.max Integer */
+            /* effect-check.dice Object */
+            /* effect-check.dice.count Integer */
+            /* effect-check.dice.size Integer */
+            diceRange = mercenaryObject["effect-check"].getObject();
+            diceRangeDice = diceRange["dice"].getObject();
+            mercenary->effectCheck_.min = diceRange["min"].getInt();
+            mercenary->effectCheck_.max = diceRange["max"].getInt();
+            mercenary->effectCheck_.dice = MCMakeDiceType(diceRangeDice["count"].getInt(),
+                                                          diceRangeDice["size"].getInt());
+        } else {
+            mercenary->setEffect(MCNormalState);
+        }
         /* description String */
         ccstring = CCString::create(mercenaryObject["description"].getString().c_str());
         mercenary->setDescription(ccstring);

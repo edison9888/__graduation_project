@@ -12,7 +12,6 @@
 #include <cocos2d.h>
 USING_NS_CC;
 #include "MCType.h"
-#include "MCGeometry.h"
 #include "MCBarrier.h"
 #include <stack>
 

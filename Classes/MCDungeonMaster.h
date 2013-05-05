@@ -30,8 +30,14 @@ public:
     
     /**
      * aRole将要攻击aTarget
+     * 由AI调用
      */
     void roleWillAttack(MCRole *aRole, MCRole *aTarget);
+    
+    /**
+     * aRole攻击aTarget
+     */
+    void roleAttackTarget(MCRole *aRole, MCRole *aTarget);
     
     void destroyGameWorld();
     

@@ -320,7 +320,7 @@ MCBackpack::loadIcons()
     /* 道具图片加进缓存 */
     CCSpriteFrameCache *cache = CCSpriteFrameCache::sharedSpriteFrameCache();
     CCSpriteFrame *pobFrame;
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     CCRect iconRect = CCRectMake(0, 0, 64 / contentScaleFactor, 64 / contentScaleFactor);
     
     pobFrame = CCSpriteFrame::create(healthPotion_->item->getIcon()->getCString(),

@@ -35,7 +35,7 @@ MCTradingPropsUI::init()
     if (CCLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCMenu *menu;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         float fontSize = 21 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90;
@@ -414,7 +414,7 @@ MCTradingPropsUI::tableCellAtIndex(CCTableView *table, unsigned int idx)
     if (! cell) {
         cell = MCTableViewTextFieldCell::create(effectiveItem->getName()->getCString(),
                                                 "Helvetica",
-                                                18.0f / CCDirectorGetContentScaleFactor());
+                                                18.0f / CC_CONTENT_SCALE_FACTOR());
     } else {
         dynamic_cast<MCTableViewTextFieldCell *>(cell)->setString(effectiveItem->getName()->getCString());
     }

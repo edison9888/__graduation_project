@@ -20,7 +20,7 @@ local function main()
     local sceneController = MCSceneController:sharedSceneController()
     local taskManager = MCTaskManager:sharedTaskManager()
     local shouldChangingScene = true
-
+    CCLuaLog("changing scene")
     -- 检测是否已经接收任务
     if taskManager:isTaskAccepted() then --已经接受任务的情况
         local currentTask = taskManager:getCurrentTask()

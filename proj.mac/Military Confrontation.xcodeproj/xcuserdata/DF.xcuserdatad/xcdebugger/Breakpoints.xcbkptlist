@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCItemManager.cpp"
-         timestampString = "388597438.067158"
+         timestampString = "388849411.026704"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "85"
-         endingLineNumber = "85"
+         startingLineNumber = "86"
+         endingLineNumber = "86"
          landmarkName = "MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -27,6 +27,19 @@
          startingLineNumber = "35"
          endingLineNumber = "35"
          landmarkName = "MCCamera::locate()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "../Classes/MCBattleController.cpp"
+         timestampString = "389436823.689662"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "348"
+         endingLineNumber = "348"
+         landmarkName = "MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

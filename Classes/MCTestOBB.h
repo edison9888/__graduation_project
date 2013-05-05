@@ -68,7 +68,7 @@ public:
         a->setRotation(a->getRotation() + 1);
         b->setAnchorPoint(ccp(0.5, 0.5));
         b->setRotation(b->getRotation() + -1);
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         
         obbA.setup(a->getPosition(), 72 / contentScaleFactor, 24 / contentScaleFactor, CC_DEGREES_TO_RADIANS(a->getRotation()));
         obbB.setup(b->getPosition(), 72 / contentScaleFactor, 24 / contentScaleFactor, CC_DEGREES_TO_RADIANS(b->getRotation()));

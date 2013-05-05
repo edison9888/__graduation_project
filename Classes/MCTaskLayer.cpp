@@ -24,10 +24,10 @@ MCTaskLayer::~MCTaskLayer()
 bool
 MCTaskLayer::init()
 {
-    if (MCDetailLayer::init()) {
+    if (MCBaseInfoLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *label;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         float fontSize = 21 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90 / contentScaleFactor;
@@ -263,7 +263,7 @@ MCTaskLayer::create()
     MCTaskLayer *layer = new MCTaskLayer;
     
     if (layer && layer->init()) {
-        layer->MCDetailLayer::autorelease();
+        layer->MCBaseInfoLayer::autorelease();
     } else {
         CC_SAFE_DELETE(layer);
         layer = NULL;

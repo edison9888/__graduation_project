@@ -1,12 +1,12 @@
 //
-//  MCDetail.cpp
+//  MCPlayerInfo.cpp
 //  Military Confrontation
 //
 //  Created by 江宇英 on 13-1-29.
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 #include "AppMacros.h"
-#include "MCDetail.h"
+#include "MCPlayerInfo.h"
 #include "MCStateLayer.h"
 #include "MCPropsLayer.h"
 #include "MCTaskLayer.h"
@@ -26,12 +26,12 @@ enum __detail_scene_Tags {
     kMCTagQuit,
 };
 
-const char *kMCDetailDidHideNotification = "kMCDetailDidHideNotification";
+const char *kMCPlayerInfoDidHideNotification = "kMCPlayerInfoDidHideNotification";
 static const float kMCActionDuration = 0.1f;
 
 static const char *kMCBackgroundFilepath = "bg.png";
 
-static MCDetail *__default_detail = NULL;
+static MCPlayerInfo *__default_detail = NULL;
 
 class __MCViewSelectorLayer : public CCLayer {
 public:
@@ -53,11 +53,11 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
     if (CCLayer::init()) {
         CCMenuItem *menuItem;
         CCMenu *menu;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         
         CCSize winSize = CCDirectorGetWindowsSize();
         CCMenuItemImage *backwardMenuItem = CCMenuItemImage::create("back.png", "back_pressed.png");
-        backwardMenuItem->setTarget(target, menu_selector(MCDetail::backward));
+        backwardMenuItem->setTarget(target, menu_selector(MCPlayerInfo::backward));
         menu = CCMenu::create();
         addChild(menu);
         menu->addChild(backwardMenuItem);
@@ -71,37 +71,37 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
         menu->addChild(menuItem);
         defaultMenuItem_ = menuItem;
         menuItem->setTag(kMCTagState);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("props.png", "props_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagProps);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("equipment.png", "equipment_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagEquipment);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("tasks.png", "tasks_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagTask);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("skills.png", "skills_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagSkills);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("mercenary.png", "mercenary_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagMercenary);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menuItem = CCMenuItemImage::create("quit.png", "quit_selected.png");
         menu->addChild(menuItem);
         menuItem->setTag(kMCTagQuit);
-        menuItem->setTarget(target, menu_selector(MCDetail::menuItem_clicked));
+        menuItem->setTarget(target, menu_selector(MCPlayerInfo::menuItem_clicked));
         
         menu->alignItemsVerticallyWithPadding(0);
         menu->setPosition(ccp(menuItem->getContentSize().width / 2, menu->getPosition().y));
@@ -115,7 +115,7 @@ __MCViewSelectorLayer::initWithTarget(CCObject *target)
 }
 
 bool
-MCDetail::init()
+MCPlayerInfo::init()
 {
     if (CCLayer::init()) {
         CCSprite *bg = CCSprite::create(kMCBackgroundFilepath);
@@ -149,11 +149,11 @@ MCDetail::init()
     return false;
 }
 
-MCDetail *
-MCDetail::create()
+MCPlayerInfo *
+MCPlayerInfo::create()
 {
     if (__default_detail == NULL) {
-        __default_detail = new MCDetail;
+        __default_detail = new MCPlayerInfo;
         if (__default_detail && __default_detail->init()) {
         } else {
             CC_SAFE_DELETE(__default_detail);
@@ -168,7 +168,7 @@ MCDetail::create()
 }
 
 void
-MCDetail::initPosition()
+MCPlayerInfo::initPosition()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
     setAnchorPoint(ccp(0, 0));
@@ -176,34 +176,34 @@ MCDetail::initPosition()
 }
 
 void
-MCDetail::show()
+MCPlayerInfo::show()
 {
     menuItem_clicked(((__MCViewSelectorLayer *) viewSelector_)->getDefaultMenuItem());
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }
 
 void
-MCDetail::hide()
+MCPlayerInfo::hide()
 {
     CCSize winSize = CCDirectorGetWindowsSize();
     runAction(CCMoveTo::create(kMCActionDuration, ccp(0, winSize.height)));
 }
 
 void
-MCDetail::onExit()
+MCPlayerInfo::onExit()
 {
     CCLayer::onExit();
 }
 
 void
-MCDetail::showState() /* 显示状态选项卡 */
+MCPlayerInfo::showState() /* 显示状态选项卡 */
 {
     stateLayer_->show();
     lastShownLayer_ = stateLayer_;
 }
 
 void
-MCDetail::showProps() /* 显示道具选项卡 */
+MCPlayerInfo::showProps() /* 显示道具选项卡 */
 {
     propsLayer_->clickFirstItem();
     propsLayer_->show();
@@ -211,37 +211,37 @@ MCDetail::showProps() /* 显示道具选项卡 */
 }
 
 void
-MCDetail::showTask() /* 显示任务选项卡 */
+MCPlayerInfo::showTask() /* 显示任务选项卡 */
 {
     taskLayer_->show();
     lastShownLayer_ = taskLayer_;
 }
 
 void
-MCDetail::showEquipment() /* 显示装备选项卡 */
+MCPlayerInfo::showEquipment() /* 显示装备选项卡 */
 {
     equipmentLayer_->show();
     lastShownLayer_ = equipmentLayer_;
 }
 
 void
-MCDetail::showSkills() /* 显示技能选项卡 */
+MCPlayerInfo::showSkills() /* 显示技能选项卡 */
 {
 }
 
 void
-MCDetail::showMercenary() /* 显示佣兵选项卡 */
+MCPlayerInfo::showMercenary() /* 显示佣兵选项卡 */
 {
 }
 
 void
-MCDetail::showQuitWindow() /* 显示退出窗口 */
+MCPlayerInfo::showQuitWindow() /* 显示退出窗口 */
 {
     MCConfirm::confirm(this, this, "确定退出？");
 }
 
 void
-MCDetail::confirmDidClickYesButton(MCConfirm *aConfirm)
+MCPlayerInfo::confirmDidClickYesButton(MCConfirm *aConfirm)
 {
     MCGameState::sharedGameState()->save();
     CCDirector::sharedDirector()->end();
@@ -252,14 +252,14 @@ MCDetail::confirmDidClickYesButton(MCConfirm *aConfirm)
 }
 
 void
-MCDetail::backward(CCObject* aSender)
+MCPlayerInfo::backward(CCObject* aSender)
 {
     hide();
-    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCDetailDidHideNotification);
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCPlayerInfoDidHideNotification);
 }
 
 void
-MCDetail::menuItem_clicked(CCObject* aSender)
+MCPlayerInfo::menuItem_clicked(CCObject* aSender)
 {
     CCMenuItemImage *menuItem = (CCMenuItemImage *)aSender;
     int tag = menuItem->getTag();

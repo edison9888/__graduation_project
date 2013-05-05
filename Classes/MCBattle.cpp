@@ -7,42 +7,8 @@
 //
 
 #include "MCBattle.h"
-#include "MCNormalBattleImpl.h"
-#include "MCMutiplayerBattleImpl.h"
 
-static MCBattle *__shared_battle = NULL;
+USING_NS_MC_BATTLE;
 
-bool
-MCBattle::_init()
-{
-    return true;
-}
 
-MCBattle *
-MCBattle::sharedBattle()
-{
-    if (__shared_battle == NULL) {
-        __shared_battle = new MCBattle;
-        if (__shared_battle && __shared_battle->_init()) {
-            __shared_battle->autorelease();
-        } else {
-            delete __shared_battle;
-            __shared_battle = NULL;
-        }
-    }
-    
-    return __shared_battle;
-}
-
-MCBattleProtocol *
-MCBattle::battleWithType(MCBattleType type)
-{
-    if (type == MCNormalBattle) {
-        return MCNormalBattleImpl::sharedBattleImplInstance();
-    } else if (type == MCMutiplayerBattle) {
-        return MCMutiplayerBattleImpl::sharedBattleImplInstance();
-    }
-    
-    return NULL;
-}
 

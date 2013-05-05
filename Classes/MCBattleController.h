@@ -12,10 +12,12 @@
 #include "MCTeamLayer.h"
 #include "MCControllerDelegate.h"
 #include "MCActionBar.h"
+#include "MCSkillBar.h"
 
 class MCBattleController : public CCLayer {
-    
+    void pointToEnded(CCObject *obj);
 public:
+    ~MCBattleController();
     bool init();
     
     CREATE_FUNC(MCBattleController);
@@ -37,6 +39,11 @@ public:
         isJoypadEnabled_ = var;
     }
     
+    bool isItemTouchedForTouch(CCTouch *aTouch);
+    
+    void onEnter();
+    void onExit();
+    
     void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
     void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
@@ -49,11 +56,17 @@ protected:
     /* 选择按钮 */
     CCMenu *selectAllMenu_;
 #endif
+    void skillBarVisibleDidChange(CCObject *anObject);
     
     MCTeamLayer *teamLayer_; /* 队伍层 */
-    MCActionBar *actionBar_; /* 道具层 */
+    MCActionBar *actionBar_; /* 道具栏 */
+    MCSkillBar *skillBar_; /* 道具栏 */
     
-    MCActionBarItem *selectedItem_;
+    MCActionBarItem *selectedActionBarItem_;
+    
+    MCSkillBarItem *selectedSkillBarItem_;
+    CCParticleSystemQuad *skillBarItemSelectedEffect_;
+    MCSkillBarItem *lastSelectedSkillBarItem_;
     
     bool isJoypadEnabled_;
     bool isDragging_;

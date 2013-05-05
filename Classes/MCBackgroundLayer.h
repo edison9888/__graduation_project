@@ -13,6 +13,7 @@
 USING_NS_CC;
 
 class MCTeam;
+class MCRole;
 
 class MCBackgroundLayer : public CCLayer {
     
@@ -37,6 +38,7 @@ public:
     
     void loadEnemies(CCArray *objects);
     void loadTeam(MCTeam *aTeam);
+    void roleWasDied(CCObject *aRoleObject);
     
     inline bool isPlayBackgroundMusicImmediately() {
         return isPlayBackgroundMusicImmediately_;

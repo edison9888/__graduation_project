@@ -40,12 +40,18 @@ MCWeapon::MCWeapon()
     effectCheck.dice = 0;
 }
 
+MCWeapon::~MCWeapon()
+{
+    CC_SAFE_RELEASE(attackEffect);
+}
+
 CCObject *
 MCWeapon::copy()
 {
     MCWeapon *weapon = new MCWeapon;
     
     weapon->type = type;
+    weapon->consume = consume;
     weapon->dexterity = dexterity;
     weapon->damage = damage;
     weapon->criticalHit = criticalHit;
@@ -54,6 +60,7 @@ MCWeapon::copy()
     weapon->distance = distance;
     weapon->effect = effect;
     weapon->effectCheck = effectCheck;
+    weapon->attackEffect = dynamic_cast<MCEffect *>(attackEffect->copy());
     
     return weapon;
 }

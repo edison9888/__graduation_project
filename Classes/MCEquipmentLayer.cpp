@@ -23,10 +23,10 @@ static const CCRect kMCDetailBackgroundInsetRect = CCRectMake(13, 13, 387, 387);
 bool
 MCEquipmentLayer::init()
 {
-    if (MCDetailLayer::init()) {
+    if (MCBaseInfoLayer::init()) {
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *label;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         float fontSize = 24 / contentScaleFactor;
         float valueFontSize = 24 / contentScaleFactor;
         float contentHeight = winSize.height - 90 / contentScaleFactor;
@@ -401,7 +401,7 @@ MCEquipmentLayer::showWeapon()
     /* icon */
     spriteFrame = cache->spriteFrameByName(weapon->getName()->getCString()); /* 名字为key */
     if (! spriteFrame) {
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         CCRect spriteFrameRect = CCRectMake(0, 0,
                                             64 / contentScaleFactor,
                                             64 / contentScaleFactor);
@@ -480,7 +480,7 @@ MCEquipmentLayer::showArmor(MCEquipmentItem *anArmor)
     /* icon */
     spriteFrame = cache->spriteFrameByName(anArmor->getName()->getCString()); /* 名字为key */
     if (! spriteFrame) {
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         CCRect spriteFrameRect = CCRectMake(0, 0,
                                             64 / contentScaleFactor,
                                             64 / contentScaleFactor);

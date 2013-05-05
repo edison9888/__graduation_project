@@ -25,7 +25,6 @@
  */
 
 #define CCDirectorGetWindowsSize() CCDirector::sharedDirector()->getWinSize()
-#define CCDirectorGetContentScaleFactor() CCDirector::sharedDirector()->getContentScaleFactor()
 
 #define DESIGN_RESOLUTION_480X320    0
 #define DESIGN_RESOLUTION_800X480    1

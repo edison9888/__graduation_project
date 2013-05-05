@@ -14,6 +14,7 @@ static const NSUInteger kMCIDIndex = 0;
 MCDefineIndexAndKey(Name, 1, name);
 MCDefineIndexAndKey(Path, 2, path);
 MCDefineIndexAndKey(Type, 3, type);
+MCDefineIndexAndKey(Duration, 4, duration);
 
 @implementation MCEffectHandler
 
@@ -34,7 +35,7 @@ MCDefineIndexAndKey(Type, 3, type);
 - (void)handleLine:(NSString *)aLine
 {
     NSArray *data = [aLine componentsSeparatedByString:@","];
-    if ([data count] != 4 || [[data objectAtIndex:2] length] < 1) {
+    if ([data count] != 5 || [[data objectAtIndex:2] length] < 1) {
         return;
     }
     NSMutableDictionary *content = [[NSMutableDictionary alloc] initWithCapacity:7];
@@ -48,6 +49,8 @@ MCDefineIndexAndKey(Type, 3, type);
     [content setObject:[data objectAtIndex:kMCPathIndex] forKey:kMCPathKey];
     /* type */
     [content setObject:@([[data objectAtIndex:kMCTypeIndex] integerValue]) forKey:kMCTypeKey];
+    /* duration */
+    [content setObject:@([[data objectAtIndex:kMCDurationIndex] floatValue]) forKey:kMCDurationKey];
     
     [self setObject:content forKey:ID];
 }

@@ -11,6 +11,7 @@
 #include "MCScene.h"
 #include "MCEntrance.h"
 #include "MCAStar.h"
+#include "MCSkill.h"
 
 MCMercenary::MCMercenary()
 {
@@ -25,9 +26,8 @@ MCMercenary::~MCMercenary()
 bool
 MCMercenary::init()
 {
-    MCNPC::init();
+    MCEnemy::init(MCTerrans);
     roleType_ = MCRole::MCMercenary;
-    setRoleRace(MCTerrans);
     defaultDialogue_ = NULL;
     
     return true;
@@ -206,6 +206,7 @@ MCNervousMercenary::copy()
     mercenary->roleRace_ = roleRace_;
     mercenary->hp_ = hp_;
     mercenary->pp_ = pp_;
+    mercenary->consume_ = consume_;
     mercenary->maxHP_ = maxHP_;
     mercenary->maxPP_ = maxPP_;
     mercenary->dying_ = dying_;
@@ -234,6 +235,11 @@ MCNervousMercenary::copy()
         mercenary->ai_ = dynamic_cast<MCMercenaryAI *>(ai_->copy());
     }
     mercenary->trigger_ = trigger_;
+    
+    CCObject *obj;
+    CCARRAY_FOREACH(skills_, obj) {
+        mercenary->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
+    }
     
     return mercenary;
 }

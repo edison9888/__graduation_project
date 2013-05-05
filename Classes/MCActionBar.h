@@ -10,8 +10,8 @@
 #define __Military_Confrontation__MCActionBar__
 
 #include "MCBackpack.h"
-#include <cocos-ext.h>
-USING_NS_CC_EXT;
+#include <cocos2d.h>
+USING_NS_CC;
 
 extern const GLubyte kMCInvalidActionBarItemOpacity;
 extern const GLubyte kMCDraggingActionBarItemOpacity;
@@ -31,9 +31,6 @@ public:
     void updateCount();
     
 private:
-    CC_SYNTHESIZE_READONLY(CCScale9Sprite *, itemBox_, ItemBox);
-    CC_SYNTHESIZE_READONLY(CCSprite *, icon_, Icon);
-    
     CC_SYNTHESIZE_READONLY(CCLabelTTF *, count_, Count);
     
     CC_SYNTHESIZE_READONLY(MCBackpackItem *, backpackItem_, BackpackItem);

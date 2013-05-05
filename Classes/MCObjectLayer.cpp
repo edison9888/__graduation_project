@@ -74,7 +74,7 @@ void
 MCObjectLayer::setTMXTiledMap(CCTMXTiledMap *aMap)
 {
     CCSize winSize = CCDirectorGetWindowsSize();
-    float contentScaleFactor = CCDirectorGetContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     
     map_ = aMap;
     
@@ -207,7 +207,7 @@ MCObjectLayer::onEnter()
 //                break;
                 roles->addObject(role);
 #warning just one
-                break;
+//                break;
             }
         }
         
@@ -266,7 +266,7 @@ MCObjectLayer::onEnter()
     }
     hero->setAtEntrance(atEntrance);
     hero_->setPosition(rolePosition);
-    CCPointLog(hero_->getPosition());
+    printf("%s(%d): <%.1f %.f1>\n", __FUNCTION__, __LINE__, hero_->getPosition().x, hero_->getPosition().y);
     
     /* mercenaries */
     mercenaries_->removeAllObjects();
@@ -291,21 +291,33 @@ MCObjectLayer::onExit()
     CCArray *objects = context->objects_;
     /* remove all roles */
     CCObject *obj;
+    MCRole *role;
     MCRoleEntity *entity;
     /* hero */
-    hero_->getSpriteSheet()->removeFromParent();
+    hero_->getSpriteSheet()->removeFromParentAndCleanup(false);
     hero_->face(MCFacingDown);
+    hero_->stopWalking();
+    hero_->stopPathFinding();
+    /* 销毁寻路算法实例 */
+    hero_->destroyPathFindingAlgorithmInstance();
     /* objects */
     CCARRAY_FOREACH(objects, obj) {
         entity = ((MCRole *) obj)->getEntity();
         entity->getSpriteSheet()->removeFromParentAndCleanup(true);
         entity->face(MCFacingDown);
+        entity->stopWalking();
+        entity->stopPathFinding();
     }
     /* mercenaries */
     CCARRAY_FOREACH(mercenaries_, obj) {
-        entity = ((MCRole *) obj)->getEntity();
+        role = dynamic_cast<MCRole *>(obj);
+        entity = role->getEntity();
         entity->getSpriteSheet()->removeFromParentAndCleanup(true);
         entity->face(MCFacingDown);
+        entity->stopWalking();
+        entity->stopPathFinding();
+        /* 销毁寻路算法实例 */
+        entity->destroyPathFindingAlgorithmInstance();
     }
     
     CCLayer::onExit();
@@ -524,8 +536,10 @@ MCObjectLayer::detectsCollidesWithEntrances(const CCRect &anFrame)
 {
     CCObject *obj;
     MCEntrance *entrance;
+    MCEntrance *entranceForChangingScene = NULL;
     MCHero *hero = dynamic_cast<MCHero *>(hero_->getPrototype());
     bool atEntrance = false;
+    
     CCARRAY_FOREACH(entrances_, obj) {
         entrance = (MCEntrance *) obj;
         if (entrance->contains(anFrame)) {
@@ -534,12 +548,15 @@ MCObjectLayer::detectsCollidesWithEntrances(const CCRect &anFrame)
                 atEntrance = true;
                 break;
             }
-            sceneDelegate_->gotoScene(entrance->getID(), entrance->getDestination()->getCString());
+            entranceForChangingScene = entrance;
             break;
         }
     }
     if (hero->atEntrance() && !atEntrance) {
         hero->setAtEntrance(false);
+    }
+    if (entranceForChangingScene) {
+        sceneDelegate_->gotoScene(entrance->getID(), entrance->getDestination()->getCString());
     }
 }
 
@@ -597,6 +614,25 @@ MCObjectLayer::detectsCollidesWithSemiTransparents(const CCRect &anFrame, const 
     frame.origin = ccpAdd(frame.origin, anOffset);
     
     detectsCollidesWithSemiTransparents(frame);
+}
+
+void
+MCObjectLayer::detectsCollidesWithSemiTransparents(MCRole *aRole)
+{
+    MCRoleEntity *roleEntity = aRole->getEntity();
+    CCRect roleFrame = roleEntity->getOBB().getAABB();
+    
+    CCObject *obj;
+    MCSemiTransparent *semiTransparent;
+    bool shouldBeTransparent = false;
+    CCARRAY_FOREACH(semiTransparents_, obj) {
+        semiTransparent = (MCSemiTransparent *) obj;
+        if (semiTransparent->collidesWith(roleFrame)) {
+            shouldBeTransparent = true;
+            break;
+        }
+    }
+    roleEntity->setOpacity(shouldBeTransparent ? 160 : 255);
 }
 
 CCPoint
@@ -783,7 +819,6 @@ MCBattleFieldSceneObjectLayer::controllerDidMove(const CCPoint &delta)
     if (aSelectedRole == NULL) {
         return;
     }
-    roleWillMoveBy(aSelectedRole, delta);
     /* 扣体力,一秒钟调度60次，每次调度扣0.1 */
     mc_pp_t pp = aSelectedRole->getPP();
     if (pp > 0.0f) {

@@ -34,9 +34,11 @@ public:
 class MCWeapon : public MCEquipment {
 public:
     MCWeapon();
+    ~MCWeapon();
     
     CCObject *copy();
     
+    mc_pp_t consume; /* 攻击体力消耗 */
     mc_dice_unit_t damage; /* 伤害值 */
     mc_critical_hit_t criticalHit; /* 重击倍数 */
     MCDiceRange criticalHitVisible; /* 可视区域内重击范围 */
@@ -45,7 +47,7 @@ public:
     MCRoleState effect; /* 附带效果 */
     MCDiceRange effectCheck; /* 效果判定 */
     
-    MCEffect *actionEffect; /* 攻击效果 */
+    MCEffect *attackEffect; /* 攻击效果 */
 };
 
 

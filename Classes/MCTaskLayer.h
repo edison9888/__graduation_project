@@ -9,10 +9,10 @@
 #ifndef __Military_Confrontation__MCTaskLayer__
 #define __Military_Confrontation__MCTaskLayer__
 
-#include "MCDetailLayer.h"
+#include "MCBaseInfoLayer.h"
 #include "MCConfirm.h"
 
-class MCTaskLayer : public MCDetailLayer, public MCConfirmDelegate {
+class MCTaskLayer : public MCBaseInfoLayer, public MCConfirmDelegate {
 public:
     ~MCTaskLayer();
     bool init();

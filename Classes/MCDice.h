@@ -30,13 +30,15 @@ enum {
     MC2D8Dice   = MCMakeDiceType(2, 8),  /* 2个8面骰子 */
 };
 typedef mc_ushort_t MCDiceType;
-typedef mc_ushort_t mc_dice_unit_t;
+typedef mc_short_t mc_dice_unit_t;
 
 typedef struct {
     mc_ushort_t    min;
     mc_ushort_t    max;
     mc_dice_unit_t dice;
 } MCDiceRange;
+
+bool MCDiceRangeCheck(const MCDiceRange &aDiceRange);
 
 class MCDice : public CCObject {
 public:

@@ -7,10 +7,11 @@
 //
 
 #include "MCEffectiveItem.h"
+#include "MCEffect.h"
 
 MCEffectiveItem::~MCEffectiveItem()
 {
-    CC_SAFE_RELEASE(path_);
+    CC_SAFE_RELEASE(effect);
 }
 
 bool
@@ -20,7 +21,6 @@ MCEffectiveItem::init()
         hp = 0;
         pp = 0;
         positive_state = 0;
-        negative_state = 0;
         
         return true;
     }
@@ -48,17 +48,13 @@ MCEffectiveItem::copy()
     effectiveItem->itemType_ = itemType_;
     effectiveItem->icon_ = CCString::create(icon_->getCString()); /* 会被释放掉，所以要copy一个 */
     effectiveItem->icon_->retain();
-    effectiveItem->radius_ = radius_;
-    effectiveItem->path_ = CCString::create(path_->getCString()); /* 会被释放掉，所以要copy一个 */
-    effectiveItem->path_->retain();
+    effectiveItem->radius = radius;
+    effectiveItem->effect = dynamic_cast<MCEffect *>(effect->copy());
     
     /* effect */
     effectiveItem->hp = hp;             /* HP变化值 */
     effectiveItem->pp = pp;             /* PP变化值 */
     effectiveItem->positive_state = positive_state; /* 会增加的状态 */
-    effectiveItem->negative_state = negative_state; /* 会消除的状态 */
-    effectiveItem->adjusted_hp = adjusted_hp;    /* 一次调度后hp的变化值 */
-    effectiveItem->adjusted_pp = adjusted_pp;    /* 一次调度后pp的变化值 */
     effectiveItem->lasting_time = lasting_time;   /* 效果时间 */
     
     return effectiveItem;

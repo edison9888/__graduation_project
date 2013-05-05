@@ -1,0 +1,319 @@
+//
+//  MCSkillBar.cpp
+//  Military Confrontation
+//
+//  Created by 江宇英 on 13-4-30.
+//  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
+//
+
+#include "AppMacros.h"
+#include "MCSkillBar.h"
+#include "MCRole.h"
+#include "MCEquipmentManager.h"
+#include "MCSkillManager.h"
+#include "MCMercenary.h"
+#include "MCTeam.h"
+
+/* extern */
+const GLubyte kMCSkillBarItemInvalidOpacity      = 140;
+const GLubyte kMCSkillBarItemPassiveSkillOpacity = 140;
+const GLubyte kMCSkillBarItemActiveSkillOpacity  = 140;
+
+const char *kMCSkillBarVisibleDidChangeNotification = "kMCSkillBarVisibleDidChangeNotification";
+
+static const char *kMCInvalidSkillIconFilepath = "icons/x-000.png";
+
+static const char *kMCSkillBarItemOpenedFilepath = "UI/abi_closed.png";
+static const char *kMCSkillBarItemOpenedSelectedFilepath = "UI/abi_closed_selected.png";
+static const char *kMCSkillBarItemClosedFilepath = "UI/abi_opened.png";
+static const char *kMCSkillBarItemClosedSelectedFilepath = "UI/abi_opened_selected.png";
+
+static const float kMCActionDuration = 0.2f;
+
+#pragma mark *** MCSkillBarItem ***
+
+bool
+MCSkillBarItem::init(MCSkill *aSkill)
+{
+    CCString *icon = aSkill ? aSkill->getIcon() : NULL;
+    
+    if (CCSprite::initWithFile(icon ? icon->getCString() : kMCInvalidSkillIconFilepath)) {
+        CCPoint anchorPoint = ccp(0.5f, 0.0f);
+        
+        if (aSkill == NULL) {
+            setOpacity(kMCSkillBarItemInvalidOpacity);
+        } else {
+            pp_ = CCLabelTTF::create(CCString::createWithFormat("%.0f", aSkill->consume)->getCString(),
+                                     "",
+                                     24);
+            addChild(pp_);
+            pp_->setAnchorPoint(anchorPoint);
+            pp_->setColor(ccc3(32, 32, 32));
+            pp_->setPosition(ccp(this->getContentSize().width / 2, 2));
+        }
+    
+        skill_ = aSkill;
+        isSelected_ = false;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+MCSkillBarItem *
+MCSkillBarItem::create(MCSkill *aSkill)
+{
+    MCSkillBarItem *item = new MCSkillBarItem;
+    
+    if (item && item->init(aSkill)) {
+        item->autorelease();
+    } else {
+        CC_SAFE_DELETE(item);
+        item = NULL;
+    }
+    
+    return item;
+}
+
+#pragma mark -
+#pragma mark *** MCSkillBarItemGroup ***
+
+MCSkillBarItemGroup::~MCSkillBarItemGroup()
+{
+    CC_SAFE_RELEASE(skillBarItemA_);
+    CC_SAFE_RELEASE(skillBarItemB_);
+    CC_SAFE_RELEASE(skillBarItemC_);
+    CC_SAFE_RELEASE(skillBarItemD_);
+}
+
+void
+MCSkillBarItemGroup::init(MCRole *aRole)
+{
+    MCSkill *skillA = NULL;
+    MCSkill *skillB = NULL;
+    MCSkill *skillC = NULL;
+    MCSkill *skillD = NULL;
+    CCArray *skills;
+    mc_size_t count;
+    
+    if (aRole->getRoleType() == MCRole::MCHero) { /* 主角 */
+        MCEquipmentManager *equipmentManager = MCEquipmentManager::sharedEquipmentManager();
+        MCSkillType skillType = equipmentManager->getCurrentWeapon()->getID().class_;
+        
+        skills = MCSkillManager::sharedSkillManager()->skillsForSkillType(skillType);
+    } else { /* 佣兵 */
+        MCMercenary *mercenary = dynamic_cast<MCMercenary *>(aRole);
+        
+        skills = mercenary->getSkills();
+    }
+    
+    count = skills->count();
+    /* 主角和佣兵都至少有1个技能 */
+    /* skill A */
+    skillA = dynamic_cast<MCSkill *>(skills->objectAtIndex(0));
+    /* skill B */
+    if (count > 1) {
+        skillB = dynamic_cast<MCSkill *>(skills->objectAtIndex(1));
+    }
+    /* skill C */
+    if (count > 2) {
+        skillC = dynamic_cast<MCSkill *>(skills->objectAtIndex(2));
+    }
+    /* skill D */
+    if (count > 3) {
+        skillD = dynamic_cast<MCSkill *>(skills->objectAtIndex(3));
+    }
+    
+    skillBarItemA_ = new MCSkillBarItem;
+    skillBarItemA_->init(skillA);
+    skillBarItemB_ = new MCSkillBarItem;
+    skillBarItemB_->init(skillB);
+    skillBarItemC_ = new MCSkillBarItem;
+    skillBarItemC_->init(skillC);
+    skillBarItemD_ = new MCSkillBarItem;
+    skillBarItemD_->init(skillD);
+}
+
+MCSkillBarItemGroup *
+MCSkillBarItemGroup::create(MCRole *aRole)
+{
+    MCSkillBarItemGroup *group = new MCSkillBarItemGroup;
+    
+    if (group) {
+        group->init(aRole);
+        group->autorelease();
+    }
+    
+    return group;
+}
+
+#pragma mark -
+#pragma mark *** MCSkillBar ***
+
+MCSkillBar::~MCSkillBar()
+{
+    CC_SAFE_RELEASE(skillBarItemGroups_);
+}
+
+bool
+MCSkillBar::init()
+{
+    if (CCLayer::init()) {
+        CCPoint anchorPoint = ccp(0.5f, 0.0f);
+        
+        CCArray *roles = MCTeam::sharedTeam()->getRoles();
+        CCObject *obj;
+        MCRole *role;
+        mc_tag_t tag = 0x13;
+        
+        skillBarItemGroups_ = CCDictionary::create();
+        skillBarItemGroups_->retain();
+        CCARRAY_FOREACH(roles, obj) {
+            role = dynamic_cast<MCRole *>(obj);
+            role->setTag(tag++);
+            skillBarItemGroups_->setObject(MCSkillBarItemGroup::create(role),
+                                           role->getTag());
+        }
+        
+        CCMenuItemImage *opened = CCMenuItemImage::create(kMCSkillBarItemOpenedFilepath,
+                                                          kMCSkillBarItemOpenedSelectedFilepath);
+        CCMenuItemImage *closed = CCMenuItemImage::create(kMCSkillBarItemClosedFilepath,
+                                                          kMCSkillBarItemClosedSelectedFilepath);
+        CCMenuItemToggle *toggleButton = CCMenuItemToggle::createWithTarget(this,
+                                                                            menu_selector(MCSkillBar::toggle),
+                                                                            opened,
+                                                                            closed,
+                                                                            NULL);
+        toggleButton_ = CCMenu::createWithItem(toggleButton);
+        addChild(toggleButton_);
+        toggleButton->setAnchorPoint(anchorPoint);
+        
+        currentSkillBarItemGroup_ = NULL;
+        
+        align();
+        
+        return true;
+    }
+    
+    return false;
+}
+
+void
+MCSkillBar::toggle()
+{
+    if (! currentSkillBarItemGroup_) {
+        return;
+    }
+    
+    CCSize size = currentSkillBarItemGroup_->skillBarItemA_->getContentSize();
+    CCPoint offset = ccp(0, -size.height * 2);
+
+    if (currentSkillBarItemGroup_->skillBarItemA_->getPositionY() <= CCDirectorGetWindowsSize().height) { /* 将要隐藏 */
+        offset.y = -offset.y;
+    }
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCSkillBarVisibleDidChangeNotification);
+    currentSkillBarItemGroup_->skillBarItemA_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    currentSkillBarItemGroup_->skillBarItemB_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    currentSkillBarItemGroup_->skillBarItemC_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+    currentSkillBarItemGroup_->skillBarItemD_->runAction(CCMoveBy::create(kMCActionDuration, offset));
+}
+
+bool
+MCSkillBar::isHidden()
+{
+    return !(currentSkillBarItemGroup_
+             && currentSkillBarItemGroup_->skillBarItemA_->getPositionY() <= CCDirectorGetWindowsSize().height);
+}
+
+void
+MCSkillBar::showSkillsForRole(MCRole *aRole)
+{
+    currentSkillBarItemGroup_ = aRole
+                                ? dynamic_cast<MCSkillBarItemGroup *>(skillBarItemGroups_->objectForKey(aRole->getTag()))
+                                : NULL;
+    align();
+}
+
+MCSkillBarItem *
+MCSkillBar::itemForTouch(CCTouch *pTouch)
+{
+    if (! currentSkillBarItemGroup_) {
+        return NULL;
+    }
+    
+    CCPoint touchLocation = pTouch->getLocation();
+    MCSkillBarItem *item = currentSkillBarItemGroup_->skillBarItemA_;
+    
+    /* skillBarItemA_ */
+    CCPoint local = item->convertToNodeSpace(touchLocation);
+    CCSize s = item->getContentSize();
+    CCRect r = CCRectMake(0, 0, s.width, s.height);
+    if (r.containsPoint(local)) {
+        return item;
+    }
+    /* skillBarItemB_ */
+    item = currentSkillBarItemGroup_->skillBarItemB_;
+    local = item->convertToNodeSpace(touchLocation);
+    s = item->getContentSize();
+    r = CCRectMake(0, 0, s.width, s.height);
+    if (r.containsPoint(local)) {
+        return item;
+    }
+    /* skillBarItemC_ */
+    item = currentSkillBarItemGroup_->skillBarItemC_;
+    local = item->convertToNodeSpace(touchLocation);
+    s = item->getContentSize();
+    r = CCRectMake(0, 0, s.width, s.height);
+    if (r.containsPoint(local)) {
+        return item;
+    }
+    /* skillBarItemD_ */
+    item = currentSkillBarItemGroup_->skillBarItemD_;
+    local = item->convertToNodeSpace(touchLocation);
+    s = item->getContentSize();
+    r = CCRectMake(0, 0, s.width, s.height);
+    if (r.containsPoint(local)) {
+        return item;
+    }
+    
+    return NULL;
+}
+
+void
+MCSkillBar::align()
+{
+    if (currentSkillBarItemGroup_) {
+        CCSize winSize = CCDirectorGetWindowsSize();
+        CCSize itemSize = currentSkillBarItemGroup_->skillBarItemA_->getContentSize();
+        CCPoint centerPoint = ccp(winSize.width / 2, winSize.height - itemSize.height / 2);
+        CCPoint itemPosition = ccp(centerPoint.x - itemSize.width * 1.5, centerPoint.y);
+        
+        currentSkillBarItemGroup_->skillBarItemA_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemA_->setPosition(itemPosition);
+        addChild(currentSkillBarItemGroup_->skillBarItemA_);
+        
+        itemPosition = ccp(centerPoint.x - itemSize.width * 0.5, centerPoint.y);
+        currentSkillBarItemGroup_->skillBarItemB_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemB_->setPosition(itemPosition);
+        addChild(currentSkillBarItemGroup_->skillBarItemB_);
+        
+        itemPosition = ccp(centerPoint.x + itemSize.width * 0.5, centerPoint.y);
+        currentSkillBarItemGroup_->skillBarItemC_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemC_->setPosition(itemPosition);
+        addChild(currentSkillBarItemGroup_->skillBarItemC_);
+        
+        itemPosition = ccp(centerPoint.x + itemSize.width * 1.5, centerPoint.y);
+        currentSkillBarItemGroup_->skillBarItemD_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemD_->setPosition(itemPosition);
+        addChild(currentSkillBarItemGroup_->skillBarItemD_);
+        
+        itemPosition = ccp(centerPoint.x + itemSize.width * 2.5, centerPoint.y - 32);
+        toggleButton_->setPosition(itemPosition);
+        
+        setVisible(true);
+    } else {
+        dynamic_cast<CCMenuItemToggle *>(toggleButton_->getChildren()->objectAtIndex(0))->setSelectedIndex(0);
+        setVisible(false);
+    }
+}

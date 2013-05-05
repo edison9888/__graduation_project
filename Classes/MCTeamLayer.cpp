@@ -9,6 +9,7 @@
 #include "MCTeamLayer.h"
 #include "MCActionBar.h"
 #include "MCShadow.h"
+#include "MCEffect.h"
 
 static const char *kMCTeamLayerItemOpenedFilepath = "UI/tl_opened.png";
 static const char *kMCTeamLayerItemOpenedSelectedFilepath = "UI/tl_opened_selected.png";
@@ -312,6 +313,9 @@ MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
             if (! info->useActionBarItem(anActionBarItem)) {
                 break; /* 已经不够了，不必继续下去 */
             }
+            /* 物品效果 */
+            CCLog("item effect");
+            dynamic_cast<MCEffectiveItem *>(anActionBarItem->getBackpackItem()->item)->effect->attach(this, info->getRole());
         }
     }
 }

@@ -7,6 +7,8 @@
 //
 
 #include "MCEffect.h"
+#include "MCCallbackableParticleSystemQuad.h"
+#include "MCRole.h"
 
 MCEffect::~MCEffect()
 {
@@ -15,9 +17,65 @@ MCEffect::~MCEffect()
 }
 
 void
-MCEffect::attach(CCNode *aParent)
+MCEffect::attach(CCNode *aParent, MCRole *aRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
 {
-    aParent->addChild(this);
+    target_ = aTarget;
+    selector_ = aSelector;
+    userObject_ = anUserObject;
+    if (implType_ == MCEffect::MCSpriteSheet) {
+        CCAnimate *animate = CCAnimate::create(animation_);
+        animation_->retain();
+        CCSprite *effectSprite = CCSprite::createWithSpriteFrameName(effect_->getCString());
+        MCRoleEntity *entity = aRole->getEntity();
+        CCPoint center = entity->getPosition();
+        CCSize size = entity->getContentSize();
+        
+        center.x += size.width / 2;
+        center.y += size.height / 2;
+        effectSprite->setAnchorPoint(ccp(0.5f, 0.5f));
+        effectSprite->setPosition(center);
+        aParent->addChild(effectSprite);
+        effectSprite->runAction(CCSequence::createWithTwoActions(animate,
+                                                                 CCCallFuncO::create(this,
+                                                                                     callfuncO_selector(MCEffect::detach),
+                                                                                     effectSprite)));
+    } else if (implType_ == MCEffect::MCPList) {
+        MCCallbackableParticleSystemQuad *particleEffect = MCCallbackableParticleSystemQuad::create(effect_->getCString());
+        MCRoleEntity *entity = aRole->getEntity();
+        CCPoint center = entity->getPosition();
+        CCSize size = entity->getContentSize();
+        
+        center.x += size.width / 2;
+        center.y += size.height / 2;
+        particleEffect->setAnchorPoint(ccp(0.5f, 0.5f));
+        particleEffect->setPosition(center);
+        particleEffect->setAutoRemoveOnFinish(true);
+        particleEffect->setCallback(this, callfuncO_selector(MCEffect::detachParticles));
+        if (binding_) {
+//            if (isReleaseEffect_) {
+                particleEffect->setLifeVar(binding_->releaseTime); /* 时间相当长啊 */
+//            } else {
+//                particleEffect->setDuration(binding_->activeTime);
+//            }
+        }
+        aParent->addChild(particleEffect);
+    }
+}
+
+void
+MCEffect::bind(MCSkill *aSkill)
+{
+    binding_ = aSkill;
+}
+
+MCSkill *
+MCEffect::unbind()
+{
+    MCSkill *binding = binding_;
+    
+    binding_ = NULL;
+    
+    return binding;
 }
 
 CCObject *
@@ -25,8 +83,8 @@ MCEffect::copy()
 {
     MCEffect *effect = new MCEffect;
     
-    effect->init();
     effect->id_ = id_;
+    effect->implType_ = implType_;
     effect->effect_ = CCString::create(effect_->getCString()); /* 会被释放掉，所以要copy一个 */
     effect->effect_->retain();
     if (implType_ == MCEffect::MCSpriteSheet
@@ -34,17 +92,32 @@ MCEffect::copy()
         effect->animation_ = animation_;
         animation_->retain();
     }
+    effect->duration_ = duration_;
     
     return effect;
 }
 
 void
-MCEffect::runEffect()
+MCEffect::detach(CCObject *anObject)
 {
+    CCNode *node = dynamic_cast<CCNode *>(anObject);
+    
+    if (binding_) {
+        binding_->getLauncher()->getEntity()->unlockPosition();
+    }
+    node->removeFromParentAndCleanup(true);
+    if (target_) {
+        (target_->*selector_)(userObject_ ? userObject_ : this);
+    }
 }
 
 void
-MCEffect::detach()
+MCEffect::detachParticles(CCObject *anObject)
 {
-    
+    if (binding_) {
+        binding_->getLauncher()->getEntity()->unlockPosition();
+    }
+    if (target_) {
+        (target_->*selector_)(userObject_ ? userObject_ : this);
+    }
 }

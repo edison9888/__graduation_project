@@ -49,11 +49,59 @@ public:
     /* 巡逻 */
     void round();
     
+    /* MCOffensiveProtocol */
+    /**
+     * 重击范围
+     */
+    MCDiceRange getCriticalHitRange(bool inVision=true);
+    
+    /**
+     * 重击倍数
+     */
+    mc_critical_hit_t getCriticalHit();
+    
+    /**
+     * 己方攻击判定
+     */
+    mc_offensive_t getOffensive();
+    
+    /**
+     * 己方防御等级
+     */
+    mc_ac_t getAC();
+    
+    /**
+     * 攻击伤害
+     * 武器伤害值
+     */
+    mc_damage_t getOffensiveDamage();
+    
+    /**
+     * 防具检定减值
+     */
+    mc_armor_check_penalty_t getArmorCheckPenalty();
+    
+    /**
+     * 攻击附带效果
+     */
+    MCRoleState attackWithState();
+    
+    /**
+     * 普通攻击效果
+     */
+    MCEffect *effectForNormalAttack();
+    
+    /**
+     * 死亡
+     */
+    void died();
+    
     CCObject *copy();
     
 protected:
     void roundDidFinish(CCObject *anObject);
     
+    CC_SYNTHESIZE(mc_pp_t, consume_, Consume); /* 攻击体力消耗 */
     CC_SYNTHESIZE(mc_dexterity_t, dexterity_, Dexterity); /* 敏捷调整值 */
     CC_SYNTHESIZE(mc_ac_t, ac_, AC); /* 防御等级 */
     CC_SYNTHESIZE(mc_armor_check_penalty_t, armorCheckPenalty_, ArmorCheckPenalty); /* 防具检定减值 */
@@ -63,7 +111,7 @@ protected:
     CC_SYNTHESIZE(MCDiceRange, criticalHitInvisible_, CriticalHitInvisible); /* 非可视区域重击范围 */
     CC_SYNTHESIZE(mc_critical_hit_t, criticalHit_, CriticalHit); /* 重击倍数 */
     CC_SYNTHESIZE(mc_distance_t, distance_, Distance); /* 攻击距离 */
-#warning 木有配置技能
+    CC_SYNTHESIZE(CCArray *, skills_, Skills); /* 技能，最多4个 */
     CC_SYNTHESIZE(MCRoleState, effect_, Effect); /* 附带效果 */
     CC_SYNTHESIZE(MCDiceRange, effectCheck_, EffectCheck); /* 附带效果判定 */
     

@@ -29,7 +29,7 @@ MCRoleBaseInfo::init(MCRole *aRole)
         CCPoint labelPosition;
         CCLabelTTF *separatorLabel;
         float y;
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         
         CCSize faceBoxSize = CCSizeMake(72 / contentScaleFactor,
                                         72 / contentScaleFactor);
@@ -249,7 +249,7 @@ MCRoleBaseInfoGroup::align()
     CCObject *obj;
     MCRoleBaseInfo *info;
     float y = winSize.height;
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     CCPoint anchorPoint = ccp(0, 1);
     CCARRAY_FOREACH(infoList_, obj) {
         info = (MCRoleBaseInfo *) obj;

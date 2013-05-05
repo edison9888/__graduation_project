@@ -31,26 +31,11 @@ class MCScene {
     void installController();
     
     /**
-     * 安装触发器
-     */
-    void installTrigger(MCTrigger *aTrigger);
-    
-    /**
-     * 卸载触发器
-     */
-    void uninstallTrigger(MCTrigger *aTrigger);
-    
-    /**
      * 移动到场景
      * aSceneId(in): 场景ID
      * anEntranceName(in): 场景入口名
      */
     void gotoScene(mc_object_id_t aSceneId, const char *anEntranceName, bool isInternal = false);
-    
-    /**
-     * 从内部场景(比如房子、商店)出去
-     */
-    void goOut();
     
     void moveSceneToLocation(const CCPoint &aLocation, bool adjusted = false);
     
@@ -62,7 +47,9 @@ class MCScene {
     pauseInput();
     resumeInput();
     
-    void showDetail();
+    MCMezzanine *mezzanine();
+    
+    void showPlayerInfo();
     
     void showAbortTaskConfirm(const char *aMessage);
     void confirmDidClickYesButton(MCConfirm *aConfirm);

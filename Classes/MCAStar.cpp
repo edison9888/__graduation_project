@@ -107,7 +107,6 @@ CCArrayGetAStarNodeByPoint(CCArray *anArray, const CCPoint &aPoint)
 static void *
 mc_astar_algorithm_process(void *obj)
 {
-    CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
     std::stack<CCPoint> &route = algo->route;
     mc_byte_t *mapAltas = algo->getMapAltas();
@@ -238,7 +237,6 @@ mc_astar_algorithm_process(void *obj)
     
     /* 发出算法结束的通知 */
     if (algo->isProcessing()) {
-//        notificatinCenter->postNotification(kMCAStarDidFinishAlgorithmNotification, algo);
         algo->notifyPathFindingDidFinish();
     }
     
@@ -426,10 +424,6 @@ MCAStarAlgorithm::generateMapAltas(MCRoleEntity *aRoleEntity, const CCSize &aMap
 void
 MCAStarAlgorithm::pathFindingDidFinish(CCObject *anObject)
 {
-    if (anObject != this) {
-        /* 不是自己结束算法的 */
-        return;
-    }
     processing_ = false;
     pid_ = 0;
     roleEntity_->pathFindingDidFinish(this);
@@ -475,11 +469,10 @@ MCAStar::create(CCTMXTiledMap *aMap)
 MCAStarAlgorithm *
 MCAStar::createAlgoInstance(MCRoleEntity *aRoleEntity)
 {
-    CCNotificationCenter *notificatinCenter = CCNotificationCenter::sharedNotificationCenter();
     MCAStarAlgorithm *algo;
     CCSize mapSize = map_->getMapSize();
     CCSize tileSize = map_->getTileSize();
-    float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
     CCSize mapRealSize = CCSizeMake(mapSize.width * tileSize.width / contentScaleFactor,
                                     mapSize.height * tileSize.height / contentScaleFactor);
     
@@ -487,10 +480,6 @@ MCAStar::createAlgoInstance(MCRoleEntity *aRoleEntity)
     algo->init();
     algo->roleEntity_ = aRoleEntity;
     algo->generateMapAltas(aRoleEntity, mapRealSize, barriers_);
-    notificatinCenter->addObserver(algo,
-                                   callfuncO_selector(MCAStarAlgorithm::pathFindingDidFinish),
-                                   kMCAStarDidFinishAlgorithmNotification,
-                                   NULL);
     
     return algo;
 }

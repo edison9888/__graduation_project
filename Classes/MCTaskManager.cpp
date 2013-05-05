@@ -14,7 +14,7 @@
 #include "MCGameState.h"
 using namespace std;
 
-const char *kMCTaskPackageFilepath = "T000.jpkg";
+static const char *kMCTaskPackageFilepath = "T000.jpkg";
 const char *kMCTaskDidFinishNotification = "kMCTaskDidFinishNotification";
 
 static const char *kMCCurrentTaskKey = "Y3VycmVudC10YXNr"; /* current-task的BASE64编码 */
@@ -156,7 +156,9 @@ MCTaskManager::abortCurrentTask()
 {
     if (currentTask_) {
         currentTask_->setTaskStatus(MCTaskUncompleted);
-        MCFlagManager::sharedFlagManager()->setTaskStarted(false);
+        MCFlagManager *flagManager = MCFlagManager::sharedFlagManager();
+        flagManager->setTaskStarted(false);
+        flagManager->setSpawnFlagOff();
         currentTask_ = NULL;
     }
 }

@@ -79,14 +79,14 @@ public:
     
     virtual void checkObjects(float dt); /* 检查视野中的对象是否还在 */
     
+    MCAIRole *roleInVision(MCRole *aRole);
+    
     CCObject *copy();
     
     CREATE_FUNC(MCAI);
     
 protected:
     virtual void changingState(); /* 状态切换 */
-    
-    MCAIRole *roleForObjectId(mc_object_id_t anObjectId);
     
     MCRole *role_;
     bool activating_; /* 执行动作中 */

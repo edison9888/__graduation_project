@@ -11,6 +11,7 @@
 #include "MCJoypadControllerLayer.h"
 #include "MCBattleControllerLayer.h"
 #include "MCObjectLayer.h"
+#include "MCMezzanine.h"
 
 void
 MCBattleFieldScene::installController()
@@ -33,18 +34,21 @@ MCBattleFieldScene::installController()
             controller_ = joypadController;
         }
     }
+    
+    mezzanine_ = MCMezzanine::create();
+    addChild(mezzanine_);
 }
 
 void
-MCBattleFieldScene::showDetail()
+MCBattleFieldScene::showPlayerInfo()
 {
     usingJoypad_ = dynamic_cast<MCBattleControllerLayer *>(controller_)->isJoypadEnable();
-    MCScene::showDetail();
+    MCScene::showPlayerInfo();
 }
 
 void
-MCBattleFieldScene::detailDidHide()
+MCBattleFieldScene::playerInfoDidHide()
 {
-    MCScene::detailDidHide();
+    MCScene::playerInfoDidHide();
     dynamic_cast<MCBattleControllerLayer *>(controller_)->setJoypadEnable(usingJoypad_);
 }

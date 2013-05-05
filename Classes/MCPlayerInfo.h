@@ -1,30 +1,29 @@
 //
-//  MCDetail.h
+//  MCPlayerInfo.h
 //  Military Confrontation
 //
 //  Created by 江宇英 on 13-1-29.
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
-#ifndef __Military_Confrontation__MCDetailScene__
-#define __Military_Confrontation__MCDetailScene__
+#ifndef __Military_Confrontation__MCPlayerInfo__
+#define __Military_Confrontation__MCPlayerInfo__
 
 #include "MCConfirm.h"
 
-extern const char *kMCDetailDidHideNotification;
+extern const char *kMCPlayerInfoDidHideNotification;
 
-class MCDetailLayer;
+class MCBaseInfoLayer;
 class MCStateLayer;
 class MCPropsLayer;
 class MCTaskLayer;
 class MCEquipmentLayer;
 
-class MCDetail : public CCLayer, public MCConfirmDelegate {
+class MCPlayerInfo : public CCLayer, public MCConfirmDelegate {
 public:
     bool init();
     
-    static MCDetail *create();
-//    CREATE_FUNC(MCDetail);
+    static MCPlayerInfo *create();
     
     void menuItem_clicked(CCObject* aSender);
     void backward(CCObject* aSender);
@@ -46,7 +45,7 @@ public:
     void confirmDidClickYesButton(MCConfirm *aConfirm);
 private:
     CCMenuItem *lastSelectedMenuItem_;
-    MCDetailLayer *lastShownLayer_;
+    MCBaseInfoLayer *lastShownLayer_;
     
     MCStateLayer     *stateLayer_;
     MCPropsLayer     *propsLayer_;
@@ -56,4 +55,4 @@ private:
     CCLayer *viewSelector_;
 };
 
-#endif /* defined(__Military_Confrontation__MCDetailScene__) */
+#endif /* defined(__Military_Confrontation__MCPlayerInfo__) */

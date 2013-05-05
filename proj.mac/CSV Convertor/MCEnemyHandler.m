@@ -17,26 +17,27 @@ MCDefineIndexAndKey(EffectID, 3, effect-id);
 MCDefineIndexAndKey(AI, 4, AI);
 MCDefineIndexAndKey(HP, 5, HP);
 MCDefineIndexAndKey(PP, 6, PP);
-MCDefineIndexAndKey(Exhaustion, 7, exhaustion);
-MCDefineIndexAndKey(Tired, 8, tired);
-MCDefineIndexAndKey(Dexterity, 9, dexterity);
-MCDefineIndexAndKey(AC, 10, AC);
-MCDefineIndexAndKey(ArmorCheckPenalty, 11, armor-check-penalty);
-MCDefineIndexAndKey(Damage, 12, damage);
-MCDefineIndexAndKey(DamageBonus, 15, damage-bonus);
-MCDefineIndexAndKey(CriticalHitVisible, 16, critical-hit-visible);
-MCDefineIndexAndKey(CriticalHitInvisible, 17, critical-hit-invisible);
-MCDefineIndexAndKey(CriticalHit, 18, critical-hit);
-MCDefineIndexAndKey(Distance, 19, distance);
+MCDefineIndexAndKey(Consume, 7, consume);
+MCDefineIndexAndKey(Exhaustion, 8, exhaustion);
+MCDefineIndexAndKey(Tired, 9, tired);
+MCDefineIndexAndKey(Dexterity, 10, dexterity);
+MCDefineIndexAndKey(AC, 11, AC);
+MCDefineIndexAndKey(ArmorCheckPenalty, 12, armor-check-penalty);
+MCDefineIndexAndKey(Damage, 13, damage);
+MCDefineIndexAndKey(DamageBonus, 16, damage-bonus);
+MCDefineIndexAndKey(CriticalHitVisible, 17, critical-hit-visible);
+MCDefineIndexAndKey(CriticalHitInvisible, 18, critical-hit-invisible);
+MCDefineIndexAndKey(CriticalHit, 19, critical-hit);
+MCDefineIndexAndKey(Distance, 20, distance);
 
-static const NSUInteger kMCSkillAIndex = 20;
-static const NSUInteger kMCSkillBIndex = 21;
-static const NSUInteger kMCSkillCIndex = 22;
-static const NSUInteger kMCSkillDIndex = 23;
+static const NSUInteger kMCSkillAIndex = 21;
+static const NSUInteger kMCSkillBIndex = 22;
+static const NSUInteger kMCSkillCIndex = 23;
+static const NSUInteger kMCSkillDIndex = 24;
 static const NSString   *kMCSkillsKey = @"skills";
 
-MCDefineIndexAndKey(Effect, 24, effect);
-MCDefineIndexAndKey(EffectCheck, 25, effect-check);
+MCDefineIndexAndKey(Effect, 25, effect);
+MCDefineIndexAndKey(EffectCheck, 26, effect-check);
 
 @implementation MCEnemyHandler
 
@@ -75,6 +76,8 @@ MCDefineIndexAndKey(EffectCheck, 25, effect-check);
     [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
     /* PP */
     [content setObject:@([[data objectAtIndex:kMCPPIndex] integerValue]) forKey:kMCPPKey];
+    /* consume */
+    [content setObject:@([[data objectAtIndex:kMCConsumeIndex] floatValue]) forKey:kMCConsumeKey];
     /* exhaustion */
     [content setObject:@([[data objectAtIndex:kMCExhaustionIndex] integerValue]) forKey:kMCExhaustionKey];
     /* tired */
@@ -144,8 +147,8 @@ MCDefineIndexAndKey(EffectCheck, 25, effect-check);
                              @"D":[skillD compare:@"-"] == NSOrderedSame ? [NSNull null] : skillD};
     [content setObject:skills forKey:kMCSkillsKey];
     /* effect */
-    id effect = [data objectAtIndex:kMCEffectIndex];
-    if ([(NSString *) effect compare:@"-"] != NSOrderedSame) {
+    NSString *effect = [data objectAtIndex:kMCEffectIndex];
+    if ([effect compare:@"-"] != NSOrderedSame) {
         [content setObject:effect forKey:kMCEffectKey];
         /* effect-check */
         object = [data objectAtIndex:kMCEffectCheckIndex];

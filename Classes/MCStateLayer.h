@@ -9,9 +9,9 @@
 #ifndef __Military_Confrontation__MCStatusLayer__
 #define __Military_Confrontation__MCStatusLayer__
 
-#include "MCDetailLayer.h"
+#include "MCBaseInfoLayer.h"
 
-class MCStateLayer : public MCDetailLayer {
+class MCStateLayer : public MCBaseInfoLayer {
 public:
     bool init();
     

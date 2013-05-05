@@ -7,6 +7,7 @@
 //
 
 #include "MCEquipmentItem.h"
+#include "MCSkillManager.h"
 
 MCEquipmentItem::~MCEquipmentItem()
 {
@@ -24,9 +25,11 @@ MCEquipmentItem::init(MCEquipmentType aEquipmentType)
         } else {
             equipment_ = new MCEquipment;
         }
-        equipment_->autorelease();
-        equipment_->retain();
         
+        damage_ = -1;
+        armorCheckPenalty_ = -1;
+        criticalHit_ = -1;
+
         attackCheck_ = -1;
         ac_ = -1;
         
@@ -51,13 +54,19 @@ MCEquipmentItem::create(MCEquipmentType aEquipmentType)
     return equipmentItem;
 }
 
+
+CCArray *
+MCEquipmentItem::skills()
+{
+    return MCSkillManager::sharedSkillManager()->skillsForSkillType(id_.sub_class_);
+}
+
 CCObject *
 MCEquipmentItem::copy()
 {
     MCEquipmentItem *equipmentItem = new MCEquipmentItem;
     
-    equipmentItem->attackCheck_ = -1;
-    equipmentItem->ac_ = -1;
+    equipmentItem->init(equipment_->type);
     equipmentItem->id_ = id_;
     equipmentItem->tag_ = tag_;
     equipmentItem->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
@@ -82,8 +91,8 @@ MCEquipmentItem::copy()
 }
 
 /**
-* 若非武器则返回-1
-*/
+ * 若非武器则返回-1
+ */
 mc_dice_unit_t
 MCEquipmentItem::getAttackCheck()
 {
@@ -95,6 +104,39 @@ MCEquipmentItem::getAttackCheck()
     }
     
     return attackCheck_ + MCDiceMaker::sharedDiceMaker()->attackCheck();
+}
+
+/**
+ * 若非武器则返回-1
+ */
+mc_damage_t
+MCEquipmentItem::getDamage()
+{
+    if (equipment_->type != MCEquipment::MCWeapon) {
+        return -1;
+    }
+    if (damage_ == -1) {
+        damage_ = ore_->getDamage();
+    }
+    MCDice *damageDice = MCDiceMaker::sharedDiceMaker()->diceWithType(dynamic_cast<MCWeapon *>(equipment_)->damage);
+    
+    return damage_ + damageDice->roll();
+}
+
+/**
+ * 若非武器则返回-1
+ */
+mc_critical_hit_t
+MCEquipmentItem::getCriticalHit()
+{
+    if (equipment_->type != MCEquipment::MCWeapon) {
+        return -1;
+    }
+    if (criticalHit_ == -1) {
+        criticalHit_ = ore_->getCriticalHit() + dynamic_cast<MCWeapon *>(equipment_)->criticalHit;
+    }
+    
+    return criticalHit_;
 }
 
 /**
@@ -111,5 +153,21 @@ MCEquipmentItem::getAC()
     }
     
     return ac_;
+}
+
+/**
+ * 若非防具则返回-1
+ */
+mc_ac_t
+MCEquipmentItem::getArmorCheckPenalty()
+{
+    if (equipment_->type != MCEquipment::MCArmor) {
+        return -1;
+    }
+    if (armorCheckPenalty_ == -1) {
+        armorCheckPenalty_ = ore_->getArmorCheckPenalty() + dynamic_cast<MCArmor *>(equipment_)->armorCheckPenalty;
+    }
+    
+    return armorCheckPenalty_;
 }
 

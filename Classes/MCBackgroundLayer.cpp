@@ -25,7 +25,7 @@ bool
 MCBackgroundLayer::init(const char *aMapFilePath, const char *aBackgroundMusicFilePath)
 {
     if (CCLayer::init()) {
-        float contentScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         map_ = CCTMXTiledMap::create(aMapFilePath);
         if (!map_) {
             return false;
@@ -70,6 +70,10 @@ void
 MCBackgroundLayer::onEnter()
 {
     CCLayer::onEnter();
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                  callfuncO_selector(MCBackgroundLayer::roleWasDied),
+                                                                  kMCRoleDiedNotification,
+                                                                  NULL);
     schedule(schedule_selector(MCBackgroundLayer::update));
     if (isPlayBackgroundMusicImmediately_) {
         playMusic();
@@ -80,6 +84,8 @@ void
 MCBackgroundLayer::onExit()
 {
     unschedule(schedule_selector(MCBackgroundLayer::update));
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this,
+                                                                     kMCRoleDiedNotification);
     stopMusic();
     
     CCObject *obj;
@@ -153,5 +159,42 @@ MCBackgroundLayer::loadTeam(MCTeam *aTeam)
         shadow->bind(dynamic_cast<MCRole *>(obj));
         addChild(shadow);
         shadows_->addObject(shadow);
+    }
+}
+
+void
+MCBackgroundLayer::roleWasDied(CCObject *aRoleObject)
+{
+    MCRole *role = dynamic_cast<MCRole *>(aRoleObject);
+    CCObject *obj;
+    MCShadow *shadow;
+    MCShadow *shadowForRemove = NULL;
+    CCArray *shadows = enemyShadows_;
+    
+    /* objects */
+    CCARRAY_FOREACH(shadows, obj) {
+        shadow = dynamic_cast<MCShadow *>(obj);
+        if (shadow->getRole() == role) {
+            shadow->unbind();
+            shadowForRemove = shadow;
+            break;
+        }
+    }
+    if (shadowForRemove != NULL) {
+        enemyShadows_->removeObject(shadowForRemove);
+        return;
+    }
+    /* team */
+    shadows = shadows_;
+    CCARRAY_FOREACH(shadows, obj) {
+        shadow = dynamic_cast<MCShadow *>(obj);
+        if (shadow->getRole() == role) {
+            shadow->unbind();
+            shadowForRemove = shadow;
+            break;
+        }
+    }
+    if (shadowForRemove != NULL) {
+        shadows_->removeObject(shadowForRemove);
     }
 }

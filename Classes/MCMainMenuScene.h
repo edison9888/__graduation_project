@@ -39,7 +39,9 @@ public:
 protected:
     void continue_clicked(CCObject *aSender);    /* 继续游戏 */
     void playGame_clicked(CCObject *aSender);    /* 单人游戏 */
+#if MC_MULTIPLAYER_SUPPORT == 1
     void multiplayer_clicked(CCObject *aSender); /* 多人对战 */
+#endif
     void about_clicked(CCObject *aSender);       /* 关于 */
     void quit_clicked(CCObject *aSender);        /* 退出 */
     

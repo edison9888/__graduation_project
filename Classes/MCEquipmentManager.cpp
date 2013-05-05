@@ -120,7 +120,10 @@ MCEquipmentManager::levelUp(MCEquipmentItem *anEquipment)
         anEquipment->setOre(nextLevelOre);
         /* 重置计算 */
         anEquipment->ac_ = -1;
+        anEquipment->armorCheckPenalty_ = -1;
         anEquipment->attackCheck_ = -1;
+        anEquipment->damage_ = -1;
+        anEquipment->criticalHit_ = -1;
         
         return kMCHandleSucceed;
     }

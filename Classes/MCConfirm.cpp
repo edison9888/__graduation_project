@@ -182,7 +182,8 @@ MCConfirm::hideActionButton(CCNode* pSender)
 void
 MCConfirm::destroy()
 {
-    removeFromParentAndCleanup(false);
+    CCLog("will destroy");
+    removeFromParentAndCleanup(true);
 }
 
 MCConfirmDelegate *
