@@ -32,6 +32,11 @@ static const float kMCActionDuration = 0.2f;
 
 #pragma mark *** MCSkillBarItem ***
 
+MCSkillBarItem::~MCSkillBarItem()
+{
+    CC_SAFE_RELEASE(skill_);
+}
+
 bool
 MCSkillBarItem::init(MCSkill *aSkill)
 {
@@ -97,32 +102,23 @@ MCSkillBarItemGroup::init(MCRole *aRole)
     CCArray *skills;
     mc_size_t count;
     
-    if (aRole->getRoleType() == MCRole::MCHero) { /* 主角 */
-        MCEquipmentManager *equipmentManager = MCEquipmentManager::sharedEquipmentManager();
-        MCSkillType skillType = equipmentManager->getCurrentWeapon()->getID().class_;
-        
-        skills = MCSkillManager::sharedSkillManager()->skillsForSkillType(skillType);
-    } else { /* 佣兵 */
-        MCMercenary *mercenary = dynamic_cast<MCMercenary *>(aRole);
-        
-        skills = mercenary->getSkills();
-    }
+    skills = aRole->getSkills();
     
     count = skills->count();
     /* 主角和佣兵都至少有1个技能 */
     /* skill A */
-    skillA = dynamic_cast<MCSkill *>(skills->objectAtIndex(0));
+    skillA = dynamic_cast<MCSkill *>(dynamic_cast<MCSkill *>(skills->objectAtIndex(0))->copy());
     /* skill B */
     if (count > 1) {
-        skillB = dynamic_cast<MCSkill *>(skills->objectAtIndex(1));
+        skillB = dynamic_cast<MCSkill *>(dynamic_cast<MCSkill *>(skills->objectAtIndex(1))->copy());
     }
     /* skill C */
     if (count > 2) {
-        skillC = dynamic_cast<MCSkill *>(skills->objectAtIndex(2));
+        skillC = dynamic_cast<MCSkill *>(dynamic_cast<MCSkill *>(skills->objectAtIndex(2))->copy());
     }
     /* skill D */
     if (count > 3) {
-        skillD = dynamic_cast<MCSkill *>(skills->objectAtIndex(3));
+        skillD = dynamic_cast<MCSkill *>(dynamic_cast<MCSkill *>(skills->objectAtIndex(3))->copy());
     }
     
     skillBarItemA_ = new MCSkillBarItem;
@@ -229,6 +225,7 @@ MCSkillBar::isHidden()
 void
 MCSkillBar::showSkillsForRole(MCRole *aRole)
 {
+    cleanOld();
     currentSkillBarItemGroup_ = aRole
                                 ? dynamic_cast<MCSkillBarItemGroup *>(skillBarItemGroups_->objectForKey(aRole->getTag()))
                                 : NULL;
@@ -281,6 +278,17 @@ MCSkillBar::itemForTouch(CCTouch *pTouch)
 }
 
 void
+MCSkillBar::cleanOld()
+{
+    if (currentSkillBarItemGroup_) {
+        currentSkillBarItemGroup_->skillBarItemA_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemB_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemC_->removeFromParentAndCleanup(false);
+        currentSkillBarItemGroup_->skillBarItemD_->removeFromParentAndCleanup(false);
+    }
+}
+
+void
 MCSkillBar::align()
 {
     if (currentSkillBarItemGroup_) {
@@ -289,22 +297,18 @@ MCSkillBar::align()
         CCPoint centerPoint = ccp(winSize.width / 2, winSize.height - itemSize.height / 2);
         CCPoint itemPosition = ccp(centerPoint.x - itemSize.width * 1.5, centerPoint.y);
         
-        currentSkillBarItemGroup_->skillBarItemA_->removeFromParentAndCleanup(false);
         currentSkillBarItemGroup_->skillBarItemA_->setPosition(itemPosition);
         addChild(currentSkillBarItemGroup_->skillBarItemA_);
         
         itemPosition = ccp(centerPoint.x - itemSize.width * 0.5, centerPoint.y);
-        currentSkillBarItemGroup_->skillBarItemB_->removeFromParentAndCleanup(false);
         currentSkillBarItemGroup_->skillBarItemB_->setPosition(itemPosition);
         addChild(currentSkillBarItemGroup_->skillBarItemB_);
         
         itemPosition = ccp(centerPoint.x + itemSize.width * 0.5, centerPoint.y);
-        currentSkillBarItemGroup_->skillBarItemC_->removeFromParentAndCleanup(false);
         currentSkillBarItemGroup_->skillBarItemC_->setPosition(itemPosition);
         addChild(currentSkillBarItemGroup_->skillBarItemC_);
         
         itemPosition = ccp(centerPoint.x + itemSize.width * 1.5, centerPoint.y);
-        currentSkillBarItemGroup_->skillBarItemD_->removeFromParentAndCleanup(false);
         currentSkillBarItemGroup_->skillBarItemD_->setPosition(itemPosition);
         addChild(currentSkillBarItemGroup_->skillBarItemD_);
         

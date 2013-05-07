@@ -78,20 +78,22 @@ MCTeamLayer::selectAll()
         selectedRoles_->addObject(info->getRole());
     }
 }
+#endif
 
 void
 MCTeamLayer::unselectAll()
 {
     CCObject *obj;
     MCRoleBaseInfo *info;
+#if MC_SELECT_ALL_SUPPORT == 1
     selectedRoles_->removeAllObjects();
+#endif
     CCARRAY_FOREACH(group_->infoList_, obj) {
         info = (MCRoleBaseInfo *)obj;
         info->unselected();
         info->getRole()->getEntity()->getShadow()->unselected();
     }
 }
-#endif
 
 void
 MCTeamLayer::selectRole(MCRole *aRole)
@@ -236,7 +238,8 @@ MCTeamLayer::roleBaseInfoForTouch(CCTouch *aTouch)
 MCRoleBaseInfo *
 MCTeamLayer::collidesWithActionBarItem(MCActionBarItem *anActionBarItem)
 {
-    if (anActionBarItem->getBackpackItem()->item->getID().class_ != 'P') { /* 不是药水 */
+    if (!anActionBarItem
+        || anActionBarItem->getBackpackItem()->item->getID().class_ != 'P') { /* 不是药水 */
         return NULL;
     }
     CCPoint p = anActionBarItem->getPosition();
@@ -314,7 +317,6 @@ MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
                 break; /* 已经不够了，不必继续下去 */
             }
             /* 物品效果 */
-            CCLog("item effect");
             dynamic_cast<MCEffectiveItem *>(anActionBarItem->getBackpackItem()->item)->effect->attach(this, info->getRole());
         }
     }

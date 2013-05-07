@@ -121,6 +121,12 @@ MCMercenary::copy()
     }
     mercenary->trigger_ = trigger_;
     
+    CCObject *obj;
+    CCARRAY_FOREACH(skills_, obj) {
+        mercenary->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
+    }
+    mercenary->damageScore_ = -1;
+    
     return mercenary;
 }
 
@@ -240,6 +246,7 @@ MCNervousMercenary::copy()
     CCARRAY_FOREACH(skills_, obj) {
         mercenary->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
     }
+    mercenary->damageScore_ = -1;
     
     return mercenary;
 }

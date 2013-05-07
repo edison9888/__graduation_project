@@ -22,6 +22,8 @@ typedef mc_ushort_t mc_distance_t; /* 攻击距离 */
 
 typedef mc_short_t mc_ac_t;
 
+typedef mc_short_t mc_score_t; /* 评分 */
+
 enum {
     MCPuncture  = MCMakeEnum(0), /* 穿刺 */
     MCSlash     = MCMakeEnum(1), /* 挥砍 */

@@ -9,6 +9,7 @@
 #include "MCAI.h"
 #include "MCRole.h"
 #include "MCScene.h"
+#include "MCTeam.h"
 
 MCAI::MCAI()
 {
@@ -32,6 +33,7 @@ bool
 MCAI::init()
 {
     activating_ = false;
+    stateLocked_ = false;
     lastActivationTime_ = 0;
     
     return true;
@@ -89,38 +91,14 @@ void
 MCAI::update(float dt) /* 大脑在转动 */
 {
     MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
-    CCArray *roles = sceneContext->getObjects();
-    CCObject *obj;
-    MCRole *role;
-    MCAIRole *aiRole;
-    struct cc_timeval tv;
     
     /* 搜集视野内人物 */
-    CCARRAY_FOREACH(roles, obj) {
-        role = dynamic_cast<MCRole *>(obj);
-        if (vision_->collideWith(role->getEntity())) {
-            aiRole = roleInVision(role);
-            CCTime::gettimeofdayCocos2d(&tv, NULL);
-            if (aiRole) { /* 更新人物的发现时间 */
-                aiRole->foundTimestamp = tv;
-            } else { /* 初次发现人物 */
-                bool isEnemy = role->getRoleType() == MCRole::MCEnemy && role_->getRoleType() != MCRole::MCEnemy;
-                aiRole = new MCAIRole;
-                aiRole->autorelease();
-                aiRole->role = role;
-                aiRole->foundTimestamp = tv;
-                aiRole->isEnemy = isEnemy;
-                aiRole->aggro = 0;
-                delegate_->roleDidEnterVision(role, isEnemy);
-                if (isEnemy) {
-                    enemiesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
-                } else {
-                    rolesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
-                }
-            }
-        }
-    }
-    
+    checkRoles(sceneContext->getObjects());
+    checkRoles(MCTeam::sharedTeam()->getRoles());
+
+    /* 更新人物是否透支的状态 */
+    role_->isExhausted();
+
     changingState();
 }
 
@@ -165,9 +143,45 @@ MCAI::copy()
     MCAI *ai = new MCAI;
     
     ai->init();
-    ai->lastActivationTime_ = 0;
     
     return ai;
+}
+
+void
+MCAI::checkRoles(CCArray *roles)
+{
+    CCObject *obj;
+    MCRole *role;
+    MCAIRole *aiRole;
+    struct cc_timeval tv;
+    
+    CCARRAY_FOREACH(roles, obj) {
+        role = dynamic_cast<MCRole *>(obj);
+        if (role_ == role) {
+            continue;
+        }
+        if (vision_->collideWith(role->getEntity())) {
+            aiRole = roleInVision(role);
+            CCTime::gettimeofdayCocos2d(&tv, NULL);
+            if (aiRole) { /* 更新人物的发现时间 */
+                aiRole->foundTimestamp = tv;
+            } else { /* 初次发现人物 */
+                bool isEnemy = role_->isEnemy(role);
+                aiRole = new MCAIRole;
+                aiRole->autorelease();
+                aiRole->role = role;
+                aiRole->foundTimestamp = tv;
+                aiRole->isEnemy = isEnemy;
+                aiRole->aggro = 0;
+                delegate_->roleDidEnterVision(role, isEnemy);
+                if (isEnemy) {
+                    enemiesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
+                } else {
+                    rolesInVision_->setObject(aiRole, MCObjectIdToDickKey(role->getID()));
+                }
+            }
+        }
+    }
 }
 
 void

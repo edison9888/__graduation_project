@@ -74,7 +74,12 @@ public:
     /**
      * 攻击结束
      */
-    void attackDidFinish();
+    void attackDidFinish(CCObject *anObject);
+    
+    /**
+     * 攻击失败
+     */
+    void attackDidFail();
     
     /**
      * 状态切换
@@ -108,17 +113,18 @@ public:
     void performWhenDeathState();
     
     /* 动作 */
+    /* 能否发动攻击 */
+    virtual bool canAttackTarget(MCRole *aRole);
+    
     /* 普通攻击 */
-    virtual void attackTarget(MCRole *aTarget)  {
+    virtual void attackTarget(MCRole *aRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL)  {
         ai_->activate();
     }
     
     /* 技能攻击 */
-    virtual void attackTargetWithSkill(MCRole *aTarget, MCSkill *aSkill) {
-        ai_->activate();
-    }
+    virtual void attackTargetWithSkill(MCRole *aRole, MCSkill *aSkill, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
     
-    virtual void roleDidApproachTarget(CCObject *anObject) {}
+    virtual void roleDidApproachTarget(CCObject *anObject);
         
     /* MCOffensiveProtocol */
     /**
@@ -190,7 +196,12 @@ public:
     }
     
     inline bool isExhausted() {
+        exhausted_ = pp_ <= exhaustion_;
         return exhausted_;
+    }
+    
+    virtual inline bool isHero() {
+        return false;
     }
     
 protected:
@@ -223,7 +234,13 @@ protected:
     /* 点击活动键触发 */
     CC_SYNTHESIZE(MCScript *, trigger_, Trigger);
     
-    CC_SYNTHESIZE_RETAIN(CCObject *, userdata_, UserData);
+    CC_SYNTHESIZE_RETAIN(MCSkill *, skillWillUse_, SkillWillUse);
+    
+    struct cc_timeval lastAttackTimestamp_;
+    /* 攻击回调 */
+    CCObject *target_;
+    SEL_CallFuncO attackDidFinishSelector_;
+    CCObject *userObject_;
 };
 
 #endif /* defined(__Military_Confrontation__MCRole__) */

@@ -42,24 +42,47 @@ MCDungeonMaster::speak(const char *aMessage)
 
 /**
  * aRole将要攻击aTarget
+ * 由AI调用
  *
- * 攻击评分=攻击伤害预测值(即为攻击的最大值)+采取攻击之后的体力剩余值。（若采取攻击之后的体力剩余值为负，则忽略之）
+ * 筛选掉释放后会体力透支的技能攻击方式，然后在剩余的技能中选择评分最高的技能。
+ * 若没留下，则普通攻击。
  *
- * 攻击判定方式：
- * 若有范围攻击方式，则收集范围类攻击的评分。
- * 然后跟普通攻击评分对比。
- * 若更佳则采用范围攻击，否则采用单体。
- *
- * 攻击方式判定：
- * 自身体力值——收集所有攻击手段，若采取之，体力会在什么状态。若气绝则1分，若不则4分。
- * 对方状态——若有异常状态则4分，若没则1分。
  */
 void
-MCDungeonMaster::roleWillAttack(MCRole *aRole, MCRole *aTarget)
+MCDungeonMaster::roleWillAttack(MCRole *aRole, MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
 {
-    /* 攻击方式判定 */
-    /* 通常攻击评分 */
+    MCSkill *skill;
+    MCSkill *maxScoreSkill = NULL;
+    mc_score_t skillScore;
+    mc_score_t maxSkillScore = 0;
+    CCArray *skills = aRole->getSkills();
+    CCObject *obj;
+    bool isNotHero = !aRole->isHero();
+    
     /* 技能攻击评分 */
+    if (isNotHero) {
+        CCARRAY_FOREACH(skills, obj) {
+            skill = dynamic_cast<MCSkill *>(obj);
+            if (! skill->willBeExhausted(aRole)) { /* 必须使用后不体力透支才参与判定 */
+                skillScore = aRole->getSkillDamageScore(skill);
+                if (maxScoreSkill == NULL) {
+                    maxScoreSkill = skill;
+                    maxSkillScore = skillScore;
+                } else if (skillScore > maxSkillScore) {
+                    maxScoreSkill = skill;
+                    maxSkillScore = skillScore;
+                }
+            }
+        }
+    }
+    
+    if (isNotHero && maxScoreSkill != NULL) { /* 技能攻击 */
+        aRole->attackTargetWithSkill(aTargetRole, dynamic_cast<MCSkill *>(maxScoreSkill->copy()),
+                                     aTarget, aSelector, anUserObject);
+    } else { /* 尝试进行普通攻击，可能会体力不足 */
+        aRole->attackTarget(aTargetRole,
+                            aTarget, aSelector, anUserObject);
+    }
 }
 
 /**

@@ -188,8 +188,8 @@ mc_astar_algorithm_process(void *obj)
                 tempNode.setPosition(side->getPosition());
                 tempNode.setParent(currentPosition);
                 int g = currentPosition->getG()
-                + ((abs(side->getX() - currentPosition->getX()) == 1
-                    && abs(side->getY() - currentPosition->getY()) == 1) ? 14 : 10);
+                        + ((abs(side->getX() - currentPosition->getX()) == 1
+                            && abs(side->getY() - currentPosition->getY()) == 1) ? 14 : 10);
                 if (g < side->getG()) {
                     side->setParent(currentPosition);
                     side->setG(g);

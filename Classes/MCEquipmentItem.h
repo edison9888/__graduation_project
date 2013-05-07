@@ -50,6 +50,12 @@ public:
      */
     CC_PROPERTY_READONLY(mc_armor_check_penalty_t, armorCheckPenalty_, ArmorCheckPenalty);
     
+    /**
+     * 若非武器则返回-1
+     * 武器评分(没有加上体力状态评分)
+     */
+    CC_PROPERTY_READONLY(mc_score_t, damageScore_, DamageScore);
+    
     CC_SYNTHESIZE_READONLY(MCEquipment *, equipment_, Equipment);
     CC_SYNTHESIZE(MCOre *, ore_, Ore); /* 装备所用矿石 */
 };

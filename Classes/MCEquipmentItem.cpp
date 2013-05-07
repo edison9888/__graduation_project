@@ -33,6 +33,8 @@ MCEquipmentItem::init(MCEquipmentType aEquipmentType)
         attackCheck_ = -1;
         ac_ = -1;
         
+        damageScore_ = -1;
+        
         return true;
     }
     
@@ -169,5 +171,27 @@ MCEquipmentItem::getArmorCheckPenalty()
     }
     
     return armorCheckPenalty_;
+}
+
+/**
+ * 若非武器则返回-1
+ * 武器评分(没有加上体力状态评分)
+ */
+mc_score_t
+MCEquipmentItem::getDamageScore()
+{
+    if (equipment_->type != MCEquipment::MCWeapon) {
+        return -1;
+    }
+    if (damageScore_ == -1) {
+        MCWeapon *weapon = dynamic_cast<MCWeapon *>(equipment_);
+        
+        damageScore_ = ore_->getDamage()
+                        + MCDiceCount(weapon->damage)
+                        - weapon->consume
+                        + (weapon->effect != MCNormalState ? 4 : 0);
+    }
+    
+    return damageScore_;
 }
 

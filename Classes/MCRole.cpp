@@ -48,13 +48,15 @@ MCRole::MCRole()
     ai_ = NULL;
     roleType_ = MCRole::MCUnknownRole;
     trigger_ = NULL;
-    userdata_ = NULL;
+    skillWillUse_ = NULL;
+    lastAttackTimestamp_.tv_sec = 0;
+    lastAttackTimestamp_.tv_usec = 0;
 }
 
 
 MCRole::~MCRole()
 {
-    CC_SAFE_RELEASE(userdata_);
+    CC_SAFE_RELEASE(skillWillUse_);
     CC_SAFE_RELEASE(trigger_);
     CC_SAFE_RELEASE(ai_);
     CC_SAFE_RELEASE(entityMetadata_);
@@ -64,6 +66,10 @@ MCRole::~MCRole()
 bool
 MCRole::init()
 {
+    target_ = NULL;
+    attackDidFinishSelector_ = NULL;
+    userObject_ = NULL;
+    
     return true;
 }
 
@@ -162,9 +168,10 @@ MCRole::roleInVision(MCRole *aRole)
 void
 MCRole::roleDidEnterVision(MCRole *aRole, bool isEnermy)
 {
+    CCLog("%s saw %s[%s]", name_->getCString(), aRole->name_->getCString(), isEnermy?"敌人":"路人");
     if (isEnermy) {
 //        CCLog("敵(%s)、一人見つけた！", aRole->name_->getCString());
-        ai_->AIState_ = MCCombatantStatus;
+        ai_->setAIState(MCCombatantStatus);
     }
 }
 
@@ -182,7 +189,7 @@ MCRole::roleDidExitVision(MCRole *aRole, bool isEnermy)
 //    }
     /* 敌人消失 */
     if (ai_->getEnemiesInVision()->count() < 1) {
-        ai_->AIState_ = MCIdleState;
+        ai_->setAIState(MCIdleState);
     }
 }
 
@@ -202,10 +209,10 @@ MCRole::roleWasAttacked(const mc_effect_t &anEffect)
     } else { /* 持续性影响 */
         effects_.push_back(anEffect);
     }
-    CCLog("攻撃された");
+//    CCLog("攻撃された");
     /* 透支状态时是不会切换的！ */
     if (! exhausted_) {
-        ai_->AIState_ = MCCombatantStatus;
+        ai_->setAIState(MCCombatantStatus);
     }
 }
 
@@ -213,10 +220,25 @@ MCRole::roleWasAttacked(const mc_effect_t &anEffect)
  * 攻击结束
  */
 void
-MCRole::attackDidFinish()
+MCRole::attackDidFinish(CCObject *anObject)
 {
-    ai_->unactivate();
-    ai_->AIState_ = MCCombatantStatus;
+    MCAI *ai = ai_;
+    ai->unactivate();
+    ai->unlockState();
+    ai->setAIState(MCCombatantStatus);
+    CCTime::gettimeofdayCocos2d(&lastAttackTimestamp_, NULL);
+}
+
+/**
+ * 攻击失败
+ */
+void
+MCRole::attackDidFail()
+{
+    MCAI *ai = ai_;
+    ai->unactivate();
+    ai->unlockState();
+    ai->setAIState(MCCombatantStatus);
 }
 
 /**
@@ -234,11 +256,10 @@ MCRole::roleDidChangeStateTo(MCAIState anAIState)
 void
 MCRole::performWhenIdleState()
 {
-//    CCLog("くだらないなぁ");
     if (pp_ < exhaustion_) {
         exhausted_ = true;
         getEntity()->stopWalking();
-        ai_->AIState_ = MCRestingState;
+        ai_->setAIState(MCRestingState);
     }
 }
 
@@ -249,18 +270,22 @@ void
 MCRole::performWhenCombatantStatus()
 {
 //    CCLog("戦え！少年よ！");
-    unsigned int count = ai_->getEnemiesInVision()->count();
+    MCAI *ai = ai_;
+    unsigned int count = ai->getEnemiesInVision()->count();
+    
     if (! exhausted_) { /* 体力透支以上 */
         if (count > 0) {
-//            CCLog("MCAttackState");
-            ai_->AIState_ = MCAttackState;
+            CCLog("MCAttackState");
+            ai->setAIState(MCAttackState);
+            ai->lockState();
         } else {
 //            CCLog("MCIdleState");
-            ai_->AIState_ = MCIdleState;
+            ai->setAIState(MCIdleState);
         }
     } else { /* 体力透支，需要休息 */
 //        CCLog("MCRestingState");
-        ai_->AIState_ = MCRestingState;
+        ai->setAIState(MCRestingState);
+        ai->lockState();
     }
 }
 
@@ -275,10 +300,12 @@ MCRole::performWhenRestingState()
     
     /* 每秒2点体力 */
     pp_ += MCPPPerSecond(2) / animationInterval;
-    if (pp_ > maxPP_) {
+    if (pp_ >= maxPP_) {
+        CCLog("[%s]满体力原地复活", name_->getCString());
         pp_ = maxPP_;
         exhausted_ = false;
-        ai_->AIState_ = MCIdleState;
+        ai_->unlockState();
+        ai_->setAIState(MCIdleState);
     }
 }
 
@@ -288,19 +315,23 @@ MCRole::performWhenRestingState()
 void
 MCRole::performWhenAttackState()
 {
-    ai_->activate();
-        //    CCLog("攻撃せよ！");
+    MCAI *ai = ai_;
+    ai->lockState();
+    ai->activate();
+//    CCLog("攻撃せよ！");
     /* 根据仇恨值确定攻击对象 */
     MCRole *target = ai_->roleForMaxAggro();
     if (! target) {
-        CCLog("no one");
+        ai->unactivate();
+        ai->unlockState();
+//        CCLog("no one");
         return;
     }
+    
 //    CCLog("will attack %s", target->getName()->getCString());
     /* 交给DM判定攻击 */
-    MCDungeonMaster::sharedDungeonMaster()->roleWillAttack(this, target);
-    
-    attackDidFinish();
+    MCDungeonMaster::sharedDungeonMaster()->roleWillAttack(this, target,
+                                                           this, callfuncO_selector(MCRole::attackDidFinish));
 }
 
 /**
@@ -312,6 +343,86 @@ MCRole::performWhenDeathState()
     CCLog("死んだ");
     /* 死亡动画神马的还是算了 */
     died();
+}
+
+/* 能否发动攻击 */
+bool
+MCRole::canAttackTarget(MCRole *aRole)
+{
+    struct cc_timeval now;
+    CCTime::gettimeofdayCocos2d(&now, NULL);
+    double elapsed = CCTime::timersubCocos2d(&lastAttackTimestamp_, &now);
+    
+    if (elapsed > 500.0
+        || lastAttackTimestamp_.tv_sec == 0) { /* 攻击间隔大于0.5秒 */
+        return true;
+    }
+    
+    return false;
+}
+
+/* 技能攻击 */
+void
+MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
+{
+    ai_->activate();
+    
+    /* 检测攻击距离 */
+    MCRoleEntity *selfEntity = getEntity();
+    MCRoleEntity *targetEntity = aTargetRole->getEntity();
+    
+    MCOBB targetOBB = targetEntity->getOBB();
+    MCOBB selfOBB = selfEntity->getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    float distance = ccpLength(offset) / selfOBB.width - 1;
+    
+    if (aSkill->distance != 0 && distance > (float) aSkill->distance) { /* 太远了干不了，需要走过去 */
+        target_ = aTarget;
+        attackDidFinishSelector_ = aSelector;
+        userObject_ = anUserObject;
+        setSkillWillUse(aSkill);
+        /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
+//        selfEntity->approachTargetAndKeepDistance(aTarget,
+//                                                  this,
+//                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
+//                                                  aTarget,
+//                                                  aSkill->distance);
+        selfEntity->approachTarget(aTargetRole,
+                                   this,
+                                   callfuncO_selector(MCRole::roleDidApproachTarget),
+                                   aTargetRole);
+        return;
+    }
+    
+    /* 进入攻击判断 */
+//    printf("进入技能攻击判断\n");
+    pp_ -= aSkill->consume;
+    aSkill->setLauncher(this);
+    CCPoint center = selfEntity->getPosition();
+    center.x += selfOBB.extents.width;
+    center.y += selfOBB.extents.height;
+    selfEntity->face(offset);
+    aSkill->use(center, ccpToAngle(offset));
+    if (aTarget) {
+        (aTarget->*aSelector)(anUserObject ? anUserObject : this);
+    }
+    target_ = NULL;
+    attackDidFinishSelector_ = NULL;
+    userObject_ = NULL;
+}
+
+void
+MCRole::roleDidApproachTarget(CCObject *anObject)
+{
+    MCRole *target = dynamic_cast<MCRole *>(anObject);
+    MCSkill *skill = getSkillWillUse();
+    
+    if (skill) {
+        attackTargetWithSkill(target, skill, target_, attackDidFinishSelector_, userObject_);
+        setSkillWillUse(NULL);
+    } else {
+        attackTarget(target, target_, attackDidFinishSelector_, userObject_);
+    }
 }
 
 #pragma mark -

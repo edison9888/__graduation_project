@@ -21,7 +21,7 @@ USING_NS_CC;
  */
 class MCDungeonMaster : public CCObject {
 private:
-    MCDungeonMaster() { };
+    MCDungeonMaster() {}
     
 public:
     static MCDungeonMaster *sharedDungeonMaster();
@@ -31,8 +31,11 @@ public:
     /**
      * aRole将要攻击aTarget
      * 由AI调用
+     *
+     * 筛选掉释放后会体力透支的技能攻击方式，然后在剩余的技能中选择评分最高的技能。
+     * 若没留下，则普通攻击。
      */
-    void roleWillAttack(MCRole *aRole, MCRole *aTarget);
+    void roleWillAttack(MCRole *aRole, MCRole *aTargetRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
     
     /**
      * aRole攻击aTarget

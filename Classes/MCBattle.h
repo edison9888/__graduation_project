@@ -115,6 +115,19 @@ public:
      * D10+攻击伤害+防具检定减值
      */
     virtual mc_damage_t attackGetDamage(mc_damage_t anOffensiveDamage, mc_armor_check_penalty_t anArmorCheckPenalty) = 0;
+    
+    /**
+     * 获取人物的所有技能
+     */
+    virtual CCArray *getSkills() const { return NULL; }
+
+    /**
+     * 技能攻击评分
+     * 伤害值——最大伤害值*伤害调整*技能次数
+     * 对方状态——若有异常状态则4分，若没则0分。
+     * 攻击范围——(obb.width*obb.height)*m(m值待定)
+     */
+    virtual mc_score_t getSkillDamageScore(MCSkill *aSkill) { return 0; }
 };
 
 NS_MC_BATTLE_END

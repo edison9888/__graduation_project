@@ -25,7 +25,7 @@ MCCallbackableParticleSystemQuad::create(const char *plistFile)
 void
 MCCallbackableParticleSystemQuad::cleanup()
 {
-    if (target_) {
+    if (target_ != NULL) {
         (target_->*selector_)(userObject_ ? userObject_ : this);
     }
     CCParticleSystemQuad::cleanup();

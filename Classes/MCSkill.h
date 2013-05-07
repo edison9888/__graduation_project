@@ -79,6 +79,8 @@ public:
     
     bool canRoleUse(MCRole *aRole);
     
+    bool willBeExhausted(MCRole *aRole);
+    
     /**
      * 使用技能
      * anOrigin为技能释放的初始位置

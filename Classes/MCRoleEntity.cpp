@@ -158,6 +158,39 @@ MCRoleEntity::face(MCFacade aFacade)
     }
 }
 
+void
+MCRoleEntity::face(const CCPoint &delta)
+{
+    /* 疲惫ing，不接受命令 */
+    if (role_->exhausted_) {
+        return;
+    }
+    
+    float angle;
+    
+        //每个方向分配60度角的空间
+    MCGetAngleForPoint(delta, angle);
+    if (angle < 22.5f) {
+        if (delta.x > 0) {
+            face(MCFacingRight);
+        } else {
+            face(MCFacingLeft);
+        }
+    } else if (angle < 67.5f) {
+        if (delta.y > 0) {
+            face(MCFacingUp);
+        } else {
+            face(MCFacingDown);
+        }
+    } else {
+        if (delta.y > 0) {
+            face(MCFacingUp);
+        } else {
+            face(MCFacingDown);
+        }
+    }
+}
+
 #pragma mark -
 #pragma mark *** walk ***
 
@@ -242,7 +275,7 @@ MCRoleEntity::drag(const CCPoint &aDelta)
 
 /**
  * 积累步数消耗体力，用户战斗中移动
- * 1点体力/24像素
+ * 1点体力/36像素
  */
 void
 MCRoleEntity::move(const CCPoint &aDelta)
@@ -258,6 +291,33 @@ MCRoleEntity::move(const CCPoint &aDelta)
     setPosition(ccpAdd(m_obPosition, aDelta));
     
     role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+}
+
+bool
+MCRoleEntity::canMove(float aLength)
+{
+//    return ! isPositionLocked()
+//            && role_->pp_ - (aLength / (36 / CC_CONTENT_SCALE_FACTOR())) > role_->exhaustion_;
+    
+    if (lockPosition_) {
+        return false;
+    }
+    
+    mc_pp_t consume = aLength  / (36 / CC_CONTENT_SCALE_FACTOR());
+    mc_pp_t remaining = role_->pp_ - consume;
+    
+    if (remaining > 0) {
+        if (remaining < role_->exhaustion_) {
+            role_->exhausted_ = true;
+            MCAI *ai = role_->ai_;
+            ai->setAIState(MCRestingState);
+            ai->lockState();
+            ai->unactivate();
+        }
+        return true;
+    }
+    
+    return false;
 }
 
 bool
@@ -428,6 +488,12 @@ MCRoleEntity::approachTarget(MCRole *aTarget)
 void
 MCRoleEntity::approachTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata)
 {
+    /* 疲惫ing，不接受命令 */
+    if (role_->exhausted_
+        || lockPosition_) {
+        return;
+    }
+    
     MCRoleEntity *targetEntity = aTargetRole->getEntity();
     MCOBB targetOBB = targetEntity->getOBB();
     MCOBB selfOBB = getOBB();
@@ -435,6 +501,7 @@ MCRoleEntity::approachTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFun
     CCPoint targetPosition = ccp(targetOBB.center.x + selfOBB.width * (offset.x > 0 ? -1 : 1),
                                  targetOBB.center.y + selfOBB.height * (offset.y > 0 ? -1 : 1));
     
+    role_->ai_->activate();
     findPathAtMap(targetPosition, aTarget, aSelector, anUserdata);
 }
 
@@ -447,6 +514,12 @@ MCRoleEntity::approachTargetAndKeepDistance(MCRole *aTarget, mc_distance_t aDist
 void
 MCRoleEntity::approachTargetAndKeepDistance(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserdata, mc_distance_t aDistance)
 {
+    /* 疲惫ing，不接受命令 */
+    if (role_->exhausted_
+        || lockPosition_) {
+        return;
+    }
+    
     MCRoleEntity *targetEntity = aTargetRole->getEntity();
     MCOBB targetOBB = targetEntity->getOBB();
     MCOBB selfOBB = getOBB();
@@ -459,6 +532,7 @@ MCRoleEntity::approachTargetAndKeepDistance(MCRole *aTargetRole, CCObject *aTarg
     CCPoint targetPosition = ccp(targetOBB.center.x + selfOBB.width * (offset.x > 0 ? -1 : 1),
                                  targetOBB.center.y + selfOBB.height * (offset.y > 0 ? -1 : 1));
     
+    role_->ai_->activate();
     findPathAtMap(targetPosition, aTarget, aSelector, anUserdata);
 }
 
@@ -497,10 +571,19 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
         CCPoint offset = ccpSub(ccpAdd(target, mapOffset), m_obPosition);
         float length = ccpLength(offset);
         
+        if (! canMove(length) || role_->exhausted_) { /* 不能行走了 */
+            stopPathFinding();
+            stopWalking();
+            return;
+        }
+        
         algo->route.pop();
         walk(offset);
-        action->initWithTwoActions(CCMoveBy::create(kMCPathFindingMoveDuration, offset),
-                                   CCCallFuncO::create(this, callfuncO_selector(MCRoleEntity::walkWithPathFinding), algoObject));
+        action->initWithTwoActions(CCMoveBy::create(kMCPathFindingMoveDuration,
+                                                    offset),
+                                   CCCallFuncO::create(this,
+                                                       callfuncO_selector(MCRoleEntity::walkWithPathFinding),
+                                                       algoObject));
         moveToActions_->addObject(action);
         action->release();
         runAction(action);
@@ -513,6 +596,7 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
         pathFindingSelector_ = NULL;
         pathFindingSelectorUserdata_ = NULL;
         stopWalking();
+        role_->ai_->unactivate();
     }
 }
 

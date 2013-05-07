@@ -29,8 +29,8 @@ public:
     /* 选择控制 */
 #if MC_SELECT_ALL_SUPPORT == 1
     void selectAll();
-    void unselectAll();
 #endif
+    void unselectAll();
     void selectRole(MCRole *aRole);
     void unselectRole(MCRole *aRole);
     

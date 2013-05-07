@@ -34,11 +34,12 @@ public:
         
         MCHero *hero = MCHero::sharedHero();
         hero->setHP(40);
-        hero->setPP(80);
-//        mc_ssize_t ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+        hero->setPP(40);
+        mc_ssize_t ret; (void) ret;
+//        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
 //        MCRole *role = MCTeam::sharedTeam()->lastRole();
 //        role->setHP(40);
-//        role->setPP(40);
+//        role->setPP(100);
 //        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
 //        role = MCTeam::sharedTeam()->lastRole();
 //        role->setHP(60);
@@ -59,6 +60,7 @@ public:
 //        role->setPP(40);
         
         MCBackpack::sharedBackpack()->buyFireballTrapWide(2);
+        MCBackpack::sharedBackpack()->buyFireballTrapDamage(10);
         MCBackpack::sharedBackpack()->buyHealthPotion(20);
         MCBackpack::sharedBackpack()->buyPhysicalPotion(5);
         

@@ -82,7 +82,7 @@ MCSkillManager::skillForObjectId(mc_object_id_t anObjectId)
 MCSkill *
 MCSkillManager::protoSkillForObjectId(mc_object_id_t anObjectId)
 {
-    MCSkillType skillType = anObjectId.sub_class_;
+    MCSkillType skillType = anObjectId.sub_class_ - '0';
     CCArray *skills;
     CCObject *obj;
     MCSkill *skill;
@@ -357,7 +357,7 @@ MCSkillManager::loadSkills()
         /* continuable */
         skill->isContinuable = skillObject["continuable"].getBoolean();
         
-        MCSkillType skillType = s_id.sub_class_;
+        MCSkillType skillType = s_id.sub_class_ - '0';
         if (skillType == MCSwordSkill) {
             swordSkills_->addObject(skill);
         } else if (skillType == MCHammer) {

@@ -57,6 +57,7 @@ protected:
     CCMenu *selectAllMenu_;
 #endif
     void skillBarVisibleDidChange(CCObject *anObject);
+    void installTrap(CCObject *anObject);
     
     MCTeamLayer *teamLayer_; /* 队伍层 */
     MCActionBar *actionBar_; /* 道具栏 */

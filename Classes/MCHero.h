@@ -37,12 +37,10 @@ public:
     
     /* 动作 */
     /* 普通攻击 */
-    void attackTarget(MCRole *aTarget);
+    void attackTarget(MCRole *aTargetRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
     
-    /* 技能攻击 */
-    void attackTargetWithSkill(MCRole *aTarget, MCSkill *aSkill);
-    
-    void roleDidApproachTarget(CCObject *anObject);
+    /* 主角AI不自动释放技能 */
+    void attackTargetWithSkill(MCRole *aRole, MCSkill *aSkill, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL) { }
     
     /**
      * 主角挂了
@@ -90,6 +88,23 @@ public:
      * 普通攻击效果
      */
     MCEffect *effectForNormalAttack();
+    
+    /**
+     * 获取人物的所有技能
+     */
+    CCArray *getSkills() const;
+    
+    /**
+     * 技能攻击评分
+     * 伤害值——最大伤害值*伤害调整*技能次数
+     * 对方状态——若有异常状态则4分，若没则0分。
+     * 攻击范围——(obb.width*obb.height)*m(m值待定)
+     */
+    mc_score_t getSkillDamageScore(MCSkill *aSkill);
+    
+    inline bool isHero() {
+        return true;
+    }
     
     CCObject *copy() { return copyWithZone(0); }
 private:

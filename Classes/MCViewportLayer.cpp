@@ -69,7 +69,7 @@ MCViewportLayer::draw(void)
     CCLayer::draw();
     
     bool MC_SHOW_OBJECTS = true;
-    bool MC_SHOW_VISIONS = false;
+    bool MC_SHOW_VISIONS = true;
     bool MC_SHOW_ENTRANCES = false;
     bool MC_SHOW_SEMITRANSPARENTS = false;
     bool MC_SHOW_BARRIERS = false;

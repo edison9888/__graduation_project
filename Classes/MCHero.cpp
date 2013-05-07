@@ -10,6 +10,7 @@
 #include "MCAI.h"
 #include "MCEquipmentManager.h"
 #include "MCSkill.h"
+#include "MCSkillManager.h"
 #include "MCDungeonMaster.h"
 
 static MCHero *__shared_hero = NULL;
@@ -118,101 +119,62 @@ MCHero::roleOfFront()
 /* 动作 */
 /* 普通攻击 */
 void
-MCHero::attackTarget(MCRole *aTarget)
+MCHero::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
 {
     MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
     
-    if (weapon->consume > pp_) {
-        /* 不够体力 */
+    if (canAttackTarget(aTargetRole)
+        || weapon->consume > pp_ /* 不够体力 */
+        || ai_->isStateLocked() /* 状态被锁定 */) {
+        attackDidFail();
         return;
     }
     
-    MCRole::attackTarget(aTarget);
+    MCRole::attackTarget(aTargetRole);
     
     /* 检测攻击距离 */
     MCRoleEntity *selfEntity = getEntity();
-    MCOBB targetOBB = aTarget->getEntity()->getOBB();
+    MCOBB targetOBB = aTargetRole->getEntity()->getOBB();
     MCOBB selfOBB = selfEntity->getOBB();
     CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
     float distance = ccpLength(offset) / selfOBB.width - 1;
     
     if (distance > (float) weapon->distance) { /* 太远了干不了，需要走过去 */
+        target_ = aTarget;
+        attackDidFinishSelector_ = aSelector;
+        userObject_ = anUserObject;
         /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
 //        selfEntity->approachTargetAndKeepDistance(aTarget,
 //                                                  this,
 //                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
 //                                                  aTarget,
 //                                                  weapon->distance);
-        selfEntity->approachTarget(aTarget,
+        selfEntity->approachTarget(aTargetRole,
                                    this,
-                                   callfuncO_selector(MCHero::roleDidApproachTarget),
-                                   aTarget);
+                                   callfuncO_selector(MCRole::roleDidApproachTarget),
+                                   aTargetRole);
         return;
     }
     /* 进入攻击判断 */
-    printf("进入攻击判断\n");
+//    printf("进入攻击判断\n");
     pp_ -= weapon->consume;
-    MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTarget);
+    MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTargetRole);
+    if (aTarget) {
+        (aTarget->*aSelector)(anUserObject ? anUserObject : this);
+    }
+    target_ = NULL;
+    attackDidFinishSelector_ = NULL;
+    userObject_ = NULL;
 }
 
-/* 技能攻击 */
-void
-MCHero::attackTargetWithSkill(MCRole *aTarget, MCSkill *aSkill)
-{
-    MCRole::attackTargetWithSkill(aTarget, aSkill);
-    
-    /* 检测攻击距离 */
-    MCRoleEntity *selfEntity = getEntity();
-    MCRoleEntity *targetEntity = aTarget->getEntity();
-    
-    MCOBB targetOBB = targetEntity->getOBB();
-    MCOBB selfOBB = selfEntity->getOBB();
-    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
-    float distance = ccpLength(offset) / selfOBB.width - 1;
-    
-    if (distance > (float) aSkill->distance) { /* 太远了干不了，需要走过去 */
-        aTarget->setUserData(aSkill);
-        /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
-//        selfEntity->approachTargetAndKeepDistance(aTarget,
-//                                                  this,
-//                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
-//                                                  aTarget,
-//                                                  aSkill->distance);
-        selfEntity->approachTarget(aTarget,
-                                   this,
-                                   callfuncO_selector(MCHero::roleDidApproachTarget),
-                                   aTarget);
-        return;
-    }
-    
-    /* 进入攻击判断 */
-    printf("进入技能攻击判断\n");
-    aSkill->setLauncher(this);
-    CCPoint center = selfEntity->getPosition();
-    center.x += selfOBB.extents.width;
-    center.y += selfOBB.extents.height;
-    aSkill->use(center, ccpToAngle(offset));
-}
-
-void
-MCHero::roleDidApproachTarget(CCObject *anObject)
-{
-    MCRole *target = dynamic_cast<MCRole *>(anObject);
-    MCSkill *skill = dynamic_cast<MCSkill *>(target->getUserData());
-    
-    if (skill) {
-        target->setUserData(NULL);
-        attackTargetWithSkill(target, skill);
-    } else {
-        attackTarget(target);
-    }
-}
 /**
  * 死亡状态下回调
  */
 void
 MCHero::died()
 {
+    CCLog("hero is died");
+    return;
     MCRoleEntity *roleEntity = getEntity();
     roleEntity->removeFromParentAndCleanup(false);
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification);
@@ -330,4 +292,33 @@ MCHero::effectForNormalAttack()
     MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
     
     return weapon->attackEffect;
+}
+
+/**
+ * 获取人物的所有技能
+ */
+CCArray *
+MCHero::getSkills() const
+{
+    MCSkillType skillType = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getID().sub_class_ - '0';
+    
+    return MCSkillManager::sharedSkillManager()->skillsForSkillType(skillType);
+}
+
+/**
+ * 技能攻击评分
+ * 伤害值——最大伤害值*伤害调整*技能次数
+ * 对方状态——若有异常状态则4分，若没则0分。
+ * 攻击范围——(obb.width*obb.height)*m(m值待定)
+ */
+mc_score_t
+MCHero::getSkillDamageScore(MCSkill *aSkill)
+{
+    MCEquipmentItem *currentWeapon = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon();
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(currentWeapon->getEquipment());
+    
+    return MCDiceSize(weapon->damage)
+            + (aSkill->effect != MCNormalState ? 4 : 0)
+#warning m=2
+            + (aSkill->breadth * aSkill->length) * 2;
 }

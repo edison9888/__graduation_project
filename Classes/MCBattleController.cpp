@@ -10,6 +10,8 @@
 #include "MCTaskContext.h"
 #include "MCTaskManager.h"
 #include "MCBattleController.h"
+#include "MCScene.h"
+#include "MCMezzanine.h"
 
 #if MC_SELECT_ALL_SUPPORT == 1
 static const char *kMCMultiSelectionFilepath = "UI/bc_multi_selection.png";
@@ -171,16 +173,37 @@ MCBattleController::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 void
 MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
+#if MC_SELECT_ALL_SUPPORT == 1
+    CCArray *selectedRoles = teamLayer_->getSelectedRoles();
+#else
+    MCRole *selectedRole = teamLayer_->getSelectedRole();
+#endif
+    
     if (selectedActionBarItem_) {
         for (CCSetIterator iterator = pTouches->begin();
              iterator != pTouches->end();
              ++iterator) {
             CCTouch *touch = dynamic_cast<CCTouch *>(*iterator);
             if (selectedActionBarItem_->touchedPoint.equals(touch->getPreviousLocation())) {
+                CCPoint touchedLocation = touch->getLocation();
                 CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
                 selectedActionBarItem_->setPosition(ccpAdd(selectedActionBarItem_->getPosition(), offset));
                 selectedActionBarItem_->touchedPoint = touch->getLocation();
                 isDragging_ = true;
+                if (selectedActionBarItem_->isTrap()
+#if MC_SELECT_ALL_SUPPORT == 1
+                    && selectedRoles->count() > 0) {
+#else
+                    && selectedRole) {
+#endif
+                    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+                    MCScene *scene = sceneContext->getScene();
+                    MCMezzanine *mezzanine = scene->mezzanine();
+                    MCTrap *trap = dynamic_cast<MCTrap *>((selectedActionBarItem_->getBackpackItem()->item));
+                    trap->setPosition(touchedLocation);
+                    selectedActionBarItem_->setVisible(false);
+                    mezzanine->setDraggingTrap(trap);
+                }
                 break;
             }
         }
@@ -197,9 +220,9 @@ MCBattleController::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
             selectedSkillBarItem_ = NULL;
         }
 #if MC_SELECT_ALL_SUPPORT == 1
-    } else if (teamLayer_->getSelectedRoles()->count() == 0) { /* 拖动地图模式 */
+    } else if (selectedRoles->count() == 0) { /* 拖动地图模式 */
 #else
-    } else if (teamLayer_->getSelectedRole() == NULL) { /* 拖动地图模式 */
+    } else if (selectedRole == NULL) { /* 拖动地图模式 */
 #endif
         CCTouch *touch = (CCTouch *) pTouches->anyObject();
         CCPoint offset = ccpSub(touch->getLocation(), touch->getPreviousLocation());
@@ -220,9 +243,9 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     
     /* 队伍选择 */
     /* tags: #select,#team */
-    /* 镜头将移到选中对象身上，若有多个选中对象，则移到队伍第一个角色(在选中的人中序号第一)身上 */
     MCRoleBaseInfo *roleBaseInfo = teamLayer_->roleBaseInfoForTouch(touch);
     if (roleBaseInfo && roleBaseInfo->getTouched()) {
+        MCRole *selectedRole = teamLayer_->getSelectedRole();
         bool isSelected = roleBaseInfo->isSelected();
         MCRole *role = roleBaseInfo->getRole();
         double elapsed = 0;
@@ -232,6 +255,12 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             elapsed = CCTime::timersubCocos2d(&lastTouchedTime_, &touchedTime);
         }
         
+        if (selectedRole) {
+            teamLayer_->unselectRole(selectedRole);
+            skillBar_->showSkillsForRole(NULL);
+            skillBarItemSelectedEffect_->setVisible(false);
+            delegate_->controllerDidUnselectRole(this, role);
+        }
         /* 两次点击小于0.5秒则为聚焦人物，并且选中之 */
         if (elapsed < 500) {
             lastTouchedTime_.tv_sec = 0;
@@ -263,6 +292,12 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     lastTouchedTime_ = touchedTime;
     
     /* tags: #item,#use */
+#if MC_SELECT_ALL_SUPPORT == 1
+    CCArray *selectedRoles = teamLayer_->getSelectedRoles();
+    MCRole *selectedRole = selectedRoles->count() > 0 ? dynamic_cast<MCRole *>(selectedRoles->objectAtIndex(0)) : NULL;
+#else
+    MCRole *selectedRole = teamLayer_->getSelectedRole();
+#endif
     for (CCSetIterator iterator = pTouches->begin();
          iterator != pTouches->end();
          ++iterator) {
@@ -270,24 +305,60 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         MCRoleBaseInfo *selectedRoleBaseInfo;
         MCActionBarItem *touchedActionBarItem = actionBar_->itemForTouch(touch);
         
-        if (selectedActionBarItem_ != NULL
-            && selectedActionBarItem_ == touchedActionBarItem) {
-            findPath = false;
-            if (selectedActionBarItem_->getItemPosition().equals(selectedActionBarItem_->getPosition())) {
-                /* 直接点击使用道具 */
-                if (MCActionBarItemIsPotion(selectedActionBarItem_)) { /* 是药品才能使用 */
-                    teamLayer_->selectedRolesUseActionBarItem(selectedActionBarItem_);
-                    selectedActionBarItem_->updateCount();
+        if (selectedActionBarItem_ != NULL) {
+            bool isTrap = selectedActionBarItem_->isTrap();
+            
+            if (selectedActionBarItem_ == touchedActionBarItem) {
+                findPath = false;
+                if (selectedActionBarItem_->getBackpackItem()->count > 0) {
+                    if (selectedActionBarItem_->getItemPosition().equals(selectedActionBarItem_->getPosition())) {
+                        if (isTrap && selectedRole) {
+                            MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+                            MCScene *scene = sceneContext->getScene();
+                            MCMezzanine *mezzanine = scene->mezzanine();
+                            MCTrap *trap = dynamic_cast<MCTrap *>((selectedActionBarItem_->getBackpackItem()->item));
+                            /* 在选择的人物的自身位置安装陷阱 */
+                            trap = dynamic_cast<MCTrap *>(trap->copy());
+                            trap->autorelease();
+                            mezzanine->installTrap(trap, selectedRole->getEntity()->getPosition());
+                            --selectedActionBarItem_->getBackpackItem()->count;
+                            selectedActionBarItem_->updateCount();
+                        } else {
+                            /* 直接点击使用道具 */
+                            if (MCActionBarItemIsPotion(selectedActionBarItem_)) { /* 是药品才能使用 */
+                                teamLayer_->selectedRolesUseActionBarItem(selectedActionBarItem_);
+                                selectedActionBarItem_->updateCount();
+                            }
+                        }
+                    } else if (isTrap && selectedRole) {
+                        /* 到目标位置安装陷阱 */
+                        MCTrap *trap = dynamic_cast<MCTrap *>((selectedActionBarItem_->getBackpackItem()->item));
+                        CCPoint destinationPosition = touch->getLocation();
+                        /* 在选择的人物的自身位置安装陷阱 */
+                        MCRoleEntity *roleEntity = selectedRole->getEntity();
+                        trap = dynamic_cast<MCTrap *>(trap->copy());
+                        trap->setPosition(ccpSub(destinationPosition,
+                                                 MCSceneContextManager::sharedSceneContextManager()
+                                                 ->currentContext()
+                                                 ->getScene()
+                                                 ->getMapOffset()));
+                        trap->setUserObject(selectedActionBarItem_);
+                        roleEntity->findPath(destinationPosition,
+                                             this,
+                                             callfuncO_selector(MCBattleController::installTrap),
+                                             trap);
+                        
+                    }
                 }
-            } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedActionBarItem_))) {
-                /* 拖动使用道具 */
-                selectedRoleBaseInfo->setOpacity(255);
-                selectedRoleBaseInfo->useActionBarItem(selectedActionBarItem_);
-                /* 物品效果 */
-                dynamic_cast<MCEffectiveItem *>(selectedActionBarItem_->getBackpackItem()->item)->effect->attach(this,
-                                                                                                        selectedRoleBaseInfo->getRole());
-                selectedActionBarItem_->updateCount();
             }
+        } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedActionBarItem_))) {
+            /* 拖动使用道具 */
+            selectedRoleBaseInfo->setOpacity(255);
+            selectedRoleBaseInfo->useActionBarItem(selectedActionBarItem_);
+            /* 物品效果 */
+            dynamic_cast<MCEffectiveItem *>(selectedActionBarItem_->getBackpackItem()->item)->effect->attach(this,
+                                                                                                             selectedRoleBaseInfo->getRole());
+            selectedActionBarItem_->updateCount();
         }
         
         MCSkillBarItem *touchedSkillBarItem = skillBar_->itemForTouch(touch);
@@ -315,6 +386,13 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
     }
     
     if (selectedActionBarItem_) {
+        if (selectedActionBarItem_->isTrap()) {
+            MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+            MCScene *scene = sceneContext->getScene();
+            MCMezzanine *mezzanine = scene->mezzanine();
+            selectedActionBarItem_->setVisible(true);
+            mezzanine->setDraggingTrap(NULL);
+        }
         selectedActionBarItem_->resetPosition();
         if (selectedActionBarItem_->getBackpackItem()->count > 0) {
             selectedActionBarItem_->setOpacity(kMCNormalActionBarItemOpacity);
@@ -363,6 +441,13 @@ void
 MCBattleController::ccTouchesCancelled(CCSet *pTouches, CCEvent *pEvent)
 {
     if (selectedActionBarItem_) {
+        if (selectedActionBarItem_->isTrap()) {
+            MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+            MCScene *scene = sceneContext->getScene();
+            MCMezzanine *mezzanine = scene->mezzanine();
+            selectedActionBarItem_->setVisible(true);
+            mezzanine->setDraggingTrap(NULL);
+        }
         selectedActionBarItem_->resetPosition();
         selectedActionBarItem_->setOpacity(255);
         selectedActionBarItem_ = NULL;
@@ -407,3 +492,20 @@ MCBattleController::skillBarVisibleDidChange(CCObject *anObject)
     /* 由于是改变前的状态，所以隐藏了即为未隐藏 */
     skillBarItemSelectedEffect_->setVisible(skillBar_->isHidden());
 }
+    
+void
+MCBattleController::installTrap(CCObject *anObject)
+{
+    MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
+    MCScene *scene = sceneContext->getScene();
+    MCMezzanine *mezzanine = scene->mezzanine();
+    MCTrap *trap = dynamic_cast<MCTrap *>(anObject);
+    MCActionBarItem *selectedActionBarItem = dynamic_cast<MCActionBarItem *>(trap->getUserObject());
+    
+    --selectedActionBarItem->getBackpackItem()->count;
+    selectedActionBarItem->updateCount();
+    
+    mezzanine->installTrap(trap);
+    trap->release(); /* non-autorelease */
+}
+    

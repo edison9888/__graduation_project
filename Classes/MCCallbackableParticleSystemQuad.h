@@ -14,6 +14,11 @@ USING_NS_CC;
 
 class MCCallbackableParticleSystemQuad : public CCParticleSystemQuad {
 public:
+    MCCallbackableParticleSystemQuad()
+    : target_(NULL)
+    , selector_(NULL)
+    , userObject_(NULL) {}
+    
     static MCCallbackableParticleSystemQuad *create(const char *plistFile);
     
     void cleanup(void);

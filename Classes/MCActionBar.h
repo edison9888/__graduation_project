@@ -30,6 +30,10 @@ public:
     
     void updateCount();
     
+    inline bool isTrap() {
+        return backpackItem_->item->getID().class_ == 'T';
+    }
+    
 private:
     CC_SYNTHESIZE_READONLY(CCLabelTTF *, count_, Count);
     

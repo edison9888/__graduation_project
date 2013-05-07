@@ -124,6 +124,7 @@ MCEquipmentManager::levelUp(MCEquipmentItem *anEquipment)
         anEquipment->attackCheck_ = -1;
         anEquipment->damage_ = -1;
         anEquipment->criticalHit_ = -1;
+        anEquipment->damageScore_ = -1;
         
         return kMCHandleSucceed;
     }

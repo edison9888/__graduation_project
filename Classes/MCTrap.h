@@ -30,15 +30,28 @@ extern const char *kMCFlashTrap;
 
 const char *MCTrapGetNameWithTrapType(MCTrapType aTrapType);
 
+class MCRole;
+
 class MCTrap : public MCEffectiveItem {
 public:
+    ~MCTrap();
     bool init(mc_object_id_t anObjectId);
     
     static MCTrap *create(mc_object_id_t anObjectId);
     
     CCObject *copy();
     
-    CC_SYNTHESIZE(MCTrapType, trapType_, TrapType);
+    bool collidesWith(MCRole *aRole);
+    
+protected:
+    
+    CC_SYNTHESIZE(CCPoint, position_, Position);
+    
+    CC_SYNTHESIZE_RETAIN(CCObject *, userObject_, UserObject);
+    
+//    CC_SYNTHESIZE(MCTrapType, trapType_, TrapType);
+    
+    CC_SYNTHESIZE_READONLY(MCRole *, collidedTarget_, CollidedTarget);
 };
 
 #endif /* defined(__Military_Confrontation__MCTrap__) */

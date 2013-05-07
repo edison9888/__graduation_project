@@ -3,19 +3,44 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
+         contextName = "MCAI::roleForMaxAggro():MCAI.cpp">
       </ContextState>
       <ContextState
          contextName = "cocos2d::CCObject::release():CCObject.cpp">
       </ContextState>
       <ContextState
-         contextName = "MCEnemy::copy():MCEnemy.cpp">
+         contextName = "MCHero::attackTarget(MCRole*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), cocos2d::CCObject*):MCHero.cpp">
       </ContextState>
       <ContextState
          contextName = "MCEffect::copy():MCEffect.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(cocos2d::CCAction *)walkAction">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "mach_msg_trap:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "MCHero::sharedHero()-&gt;ai_">
+            </PersistentString>
+            <PersistentString
+               value = "MCHero::sharedHero()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
       </ContextState>
       <ContextState
          contextName = "MCScenePackage::loadObjects(JsonBox::Object&amp;):MCScenePackage.cpp">
@@ -26,16 +51,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
+         contextName = "MCEnemy::copy():MCEnemy.cpp">
       </ContextState>
       <ContextState
-         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
+         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
       </ContextState>
       <ContextState
-         contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
+         contextName = "MCRole::canAttackTarget(MCRole*):MCRole.cpp">
          <PersistentStrings>
             <PersistentString
-               value = "(cocos2d::CCAction *)walkAction">
+               value = "this-&gt;lastAttackTimestamp_">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

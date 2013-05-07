@@ -21,6 +21,8 @@ extern const char *kMCSkillBarVisibleDidChangeNotification;
 
 class MCSkillBarItem : public CCSprite {
 public:
+    ~MCSkillBarItem();
+    
     bool init(MCSkill *aSkill);
     
     static MCSkillBarItem *create(MCSkill *aSkill);
@@ -77,6 +79,7 @@ public:
     MCSkillBarItem *itemForTouch(CCTouch *pTouch);
     
 private:
+    void cleanOld();
     void align();
     
     CCMenu *toggleButton_;

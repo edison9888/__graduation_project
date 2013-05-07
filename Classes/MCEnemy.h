@@ -92,6 +92,21 @@ public:
     MCEffect *effectForNormalAttack();
     
     /**
+     * 技能攻击评分
+     * 伤害值——最大伤害值*伤害调整*技能次数
+     * 对方状态——若有异常状态则4分，若没则0分。
+     * 攻击范围——(obb.width*obb.height)*m(m值待定)
+     */
+    mc_score_t getSkillDamageScore(MCSkill *aSkill);
+    
+    /* 动作 */
+    /* 能否发动攻击 */
+    bool canAttackTarget(MCRole *aRole);
+    
+    /* 普通攻击 */
+    void attackTarget(MCRole *aTargetRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
+
+    /**
      * 死亡
      */
     void died();
@@ -118,6 +133,8 @@ protected:
     CC_SYNTHESIZE(MCEffect *, attackEffect_, AttackEffect); /* 攻击效果 */
     
     CCPoint center_; /* 活动中心点 */
+    
+    mc_score_t damageScore_; /* 普通攻击评分 */
 };
 
 #endif /* defined(__Military_Confrontation__MCEnemy__) */

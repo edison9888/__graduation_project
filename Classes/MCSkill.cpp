@@ -25,6 +25,12 @@ MCSkill::canRoleUse(MCRole *aRole)
     return aRole->getPP() >= consume;
 }
 
+bool
+MCSkill::willBeExhausted(MCRole *aRole)
+{
+    return aRole->getPP() - consume <= aRole->getExhaustion();
+}
+
 /**
  * 使用技能
  * anOrigin为技能释放的初始位置
@@ -42,6 +48,7 @@ MCSkill::use(const CCPoint &anOrigin, float anAngle)
               breadth * 24 / contentScaleFactor,
               length * 24 / contentScaleFactor,
               anAngle);
+    CCLog("%lu",effect_->retainCount());
     effect_->bind(this);
     CC_SAFE_RELEASE(fakeNode_);
     fakeNode_ = new CCNode;

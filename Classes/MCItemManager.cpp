@@ -14,6 +14,7 @@
 #include "MCBackpack.h"
 #include "MCOreManager.h"
 #include "MCEffectManager.h"
+#include "MCTrap.h"
 
 static const char *kMCEquipmentItemWeaponFilepath = "E001.jpkg";
 static const char *kMCEquipmentItemArmorFilepath = "E002.jpkg";
@@ -88,7 +89,11 @@ MCItemManager::effectiveItemForObjectId(mc_object_id_t anObjectId)
     MCEffectiveItem *effectiveItem = NULL;
     
     if (proto) {
-        effectiveItem = dynamic_cast<MCEffectiveItem *>(proto->copy());
+        if (proto->id_.class_ == 'P') {
+            effectiveItem = dynamic_cast<MCEffectiveItem *>(proto->copy());
+        } else {
+            effectiveItem = dynamic_cast<MCEffectiveItem *>(((MCTrap *) (proto))->copy());
+        }
         if (effectiveItem) {
             effectiveItem->autorelease();
         } else {
@@ -106,9 +111,9 @@ MCItemManager::protoItemForObjectId(mc_object_id_t anObjectId)
 {
     MCItem *item;
     
-    item = equipmentItemForObjectId(anObjectId);
+    item = protoEquipmentItemForObjectId(anObjectId);
     if (item == NULL) {
-        item = effectiveItemForObjectId(anObjectId);
+        item = protoEffectiveItemForObjectId(anObjectId);
     }
     
     return item;
@@ -286,6 +291,7 @@ MCItemManager::loadEffectiveItems()
     JsonBox::Value v;
     JsonBox::Object root;
     JsonBox::Object::iterator rootIterator;
+    MCEffectiveItem *item;
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEffectiveItemFilepath);
@@ -306,7 +312,16 @@ MCItemManager::loadEffectiveItems()
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCEffectiveItem *item = MCEffectiveItem::create();
+        
+        if (o_id.class_ == 'P') {
+            item = MCEffectiveItem::create();
+        } else {
+            MCTrap *trap = new MCTrap;
+            
+            trap->init(o_id);
+            trap->autorelease();
+            item = trap;
+        }
         CCString *ccstring;
         
         item->setID(o_id);
@@ -334,7 +349,7 @@ MCItemManager::loadEffectiveItems()
         effect->retain();
         
         item->setPrice(object["price"].getInt());
-        item->radius = object["radius"].getInt();
+        item->radius = object["radius"].getInt() * 24 / CC_CONTENT_SCALE_FACTOR(); /* 24为一个单位 */
         item->hp = object["hp"].getInt();
         item->pp = object["pp"].getInt();
         item->positive_state = object["positive-state"].getInt();

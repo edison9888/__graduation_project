@@ -10,6 +10,7 @@
 #include "MCEnemyAI.h"
 #include "MCScene.h"
 #include "MCSkill.h"
+#include "MCDungeonMaster.h"
 
 MCEnemy::~MCEnemy()
 {
@@ -27,6 +28,8 @@ MCEnemy::init(MCRoleRace aRoleRace)
     center_ = CCPointZero;
     skills_ = CCArray::create();
     skills_->retain();
+    
+    damageScore_ = -1;
     
     return true;
 }
@@ -215,6 +218,80 @@ MCEnemy::effectForNormalAttack()
 }
 
 /**
+ * 技能攻击评分
+ * 伤害值——最大伤害值*伤害调整*技能次数
+ * 对方状态——若有异常状态则4分，若没则0分。
+ * 攻击范围——(obb.width*obb.height)*m(m值待定)
+ */
+mc_score_t
+MCEnemy::getSkillDamageScore(MCSkill *aSkill)
+{
+    return damage_->size()
+            + (aSkill->effect != MCNormalState ? 4 : 0)
+#warning m=2
+            + (aSkill->breadth * aSkill->length) * 2;
+}
+
+/* 动作 */
+/* 能否发动攻击 */
+bool
+MCEnemy::canAttackTarget(MCRole *aRole)
+{
+    if (MCRole::canAttackTarget(aRole)
+        && pp_ >= consume_ /*足够体力 */) {
+        return true;
+    }
+    
+    return false;
+}
+
+/* 普通攻击 */
+void
+MCEnemy::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
+{
+    if (! canAttackTarget(aTargetRole)) {
+        attackDidFail();
+        return;
+    }
+    
+    MCRole::attackTarget(aTargetRole);
+    
+    /* 检测攻击距离 */
+    MCRoleEntity *selfEntity = getEntity();
+    MCOBB targetOBB = aTargetRole->getEntity()->getOBB();
+    MCOBB selfOBB = selfEntity->getOBB();
+    CCPoint offset = ccpSub(targetOBB.center, selfOBB.center);
+    float distance = ccpLength(offset) / selfOBB.width - 1;
+    
+    if (distance > (float) distance_) { /* 太远了干不了，需要走过去 */
+        target_ = aTarget;
+        attackDidFinishSelector_ = aSelector;
+        userObject_ = anUserObject;
+        /* approachTargetAndKeepDistance版本不能保持距离和approachTarget效果一样，暂时放弃 */
+//        selfEntity->approachTargetAndKeepDistance(aTarget,
+//                                                  this,
+//                                                  callfuncO_selector(MCHero::roleDidApproachTarget),
+//                                                  aTarget,
+//                                                  weapon->distance);
+        selfEntity->approachTarget(aTargetRole,
+                                   this,
+                                   callfuncO_selector(MCRole::roleDidApproachTarget),
+                                   aTargetRole);
+        return;
+    }
+    /* 进入攻击判断 */
+//    printf("进入攻击判断\n");
+    pp_ -= consume_;
+    MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTargetRole);
+    if (aTarget) {
+        (aTarget->*aSelector)(anUserObject ? anUserObject : this);
+    }
+    target_ = NULL;
+    attackDidFinishSelector_ = NULL;
+    userObject_ = NULL;
+}
+
+/**
  * 死亡
  */
 void
@@ -280,6 +357,7 @@ MCEnemy::copy()
     CCARRAY_FOREACH(skills_, obj) {
         enemy->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
     }
+    enemy->damageScore_ = -1;
     
     return enemy;
 }

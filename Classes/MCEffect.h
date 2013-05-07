@@ -41,6 +41,7 @@ public:
     typedef mc_enum_t MCEffectImplType;
     
     void attach(CCNode *aParent, MCRole *aRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
+    void attach(CCNode *aParent, const CCPoint &aPosition, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
     
     void bind(MCSkill *aSkill);
     MCSkill *unbind();

@@ -77,6 +77,8 @@ public:
     bool shouldBeSelected(const CCPoint &aPoint); /* AABB */
     
     void face(MCFacade aFacade);
+    void face(const CCPoint &delta);
+    
     void walk(MCFacade aFacade);
     void walk(const CCPoint &delta);
     
@@ -84,9 +86,11 @@ public:
     
     /**
      * 积累步数消耗体力，用户战斗中移动
-     * 1点体力/24像素
+     * 1点体力/36像素
      */
     void move(const CCPoint &aDelta);
+    
+    bool canMove(float aLength);
     
     /* 施法期间不给移动 */
     inline bool isPositionLocked() {

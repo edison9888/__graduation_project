@@ -13,6 +13,7 @@
 #include "MCEffect.h"
 
 class MCSkill;
+class MCTrap;
 
 class MCMezzanine : public CCLayer {
     friend class MCScene;
@@ -20,6 +21,15 @@ public:
     ~MCMezzanine();
     
     bool init();
+    
+    void draw();
+    
+    void drawDraggingTrap(MCTrap *aTrap);
+    
+    void installTrap(MCTrap *aTrap); /* 已设置好位置的陷阱 */
+    
+    /* aLocation为屏幕上位置 */
+    void installTrap(MCTrap *aTrap, const CCPoint &aLocation);
     
     void onEnter();
     void onExit();
@@ -32,10 +42,17 @@ public:
     
 private:
     void detectsSkills(MCRole *aRole);
-    
     void skillDidFinish(CCObject *anObject);
     
+    void detectsTraps(MCRole *aRole);
+    void trapDidTriggerByRole(MCTrap *aTrap, MCRole *aRole);
+    
+    CCDrawNode *drawer_;
+    
     CC_SYNTHESIZE(CCArray *, skills_, Skills);
+    CC_SYNTHESIZE(CCArray *, traps_, Traps);
+    
+    CC_SYNTHESIZE(MCTrap *, draggingTrap_, DraggingTrap);
 };
 
 #endif /* defined(__Military_Confrontation__MCMezzanine__) */

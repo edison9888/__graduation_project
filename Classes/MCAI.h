@@ -61,6 +61,10 @@ public:
     virtual void bind(MCRole *aRole);
     virtual MCRole *unbind();
     
+    inline bool isActivating() {
+        return activating_;
+    }
+    
     inline void unactivate() {
         activating_ = false;
         lastActivationTime_ = time(NULL);
@@ -68,6 +72,28 @@ public:
     
     inline void activate() {
         activating_ = true;
+    }
+    
+    inline bool isStateLocked() {
+        return stateLocked_;
+    }
+    
+    inline void lockState() {
+        stateLocked_ = true;
+    }
+    
+    inline void unlockState() {
+        stateLocked_ = false;
+    }
+    
+    inline MCAIState getAIState() {
+        return AIState_;
+    }
+    
+    inline void setAIState(MCAIState var) {
+        if (! stateLocked_) {
+            AIState_ = var;
+        }
     }
     
     /**
@@ -86,10 +112,12 @@ public:
     CREATE_FUNC(MCAI);
     
 protected:
+    virtual void checkRoles(CCArray *roles);
     virtual void changingState(); /* 状态切换 */
     
     MCRole *role_;
     bool activating_; /* 执行动作中 */
+    bool stateLocked_; /* 锁定状态不能切换 */
     
     CC_SYNTHESIZE_READONLY(CCDictionary *, rolesInVision_, RolesInVision);   /* 在视野中的非敌人 */
     CC_SYNTHESIZE_READONLY(CCDictionary *, enemiesInVision_, EnemiesInVision); /* 在视野中的敌人 */
@@ -100,7 +128,7 @@ protected:
     CC_SYNTHESIZE(MCAIStateMachineDelegate *, AIStateMachineDelegate_, AIStateMachineDelegate);
     CC_SYNTHESIZE_READONLY(MCVision *, vision_, Vision); /* 视野 */
     
-    CC_SYNTHESIZE(MCAIState, AIState_, AIState); /* 状态 */
+    MCAIState AIState_; /* 状态 */
 };
 
 class MCAIStateMachineDelegate {
