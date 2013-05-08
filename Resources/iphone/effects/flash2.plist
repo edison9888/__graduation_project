@@ -225,9 +225,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4032</integer>
-			<key>y</key>
 			<integer>0</integer>
+			<key>y</key>
+			<integer>192</integer>
 		</dict>
 		<key>flash2-22</key>
 		<dict>
@@ -240,9 +240,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4224</integer>
+			<integer>192</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>flash2-23</key>
 		<dict>
@@ -255,9 +255,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4416</integer>
+			<integer>384</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>flash2-24</key>
 		<dict>
@@ -270,9 +270,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4608</integer>
+			<integer>576</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>flash2-3</key>
 		<dict>

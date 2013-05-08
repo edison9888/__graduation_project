@@ -225,9 +225,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4032</integer>
-			<key>y</key>
 			<integer>0</integer>
+			<key>y</key>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-22</key>
 		<dict>
@@ -240,9 +240,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4224</integer>
+			<integer>192</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-23</key>
 		<dict>
@@ -255,9 +255,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4416</integer>
+			<integer>384</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-24</key>
 		<dict>
@@ -270,9 +270,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4608</integer>
+			<integer>576</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-25</key>
 		<dict>
@@ -285,9 +285,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4800</integer>
+			<integer>768</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-26</key>
 		<dict>
@@ -300,9 +300,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>4992</integer>
+			<integer>960</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-27</key>
 		<dict>
@@ -315,9 +315,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>5184</integer>
+			<integer>1152</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-28</key>
 		<dict>
@@ -330,9 +330,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>5376</integer>
+			<integer>1344</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-29</key>
 		<dict>
@@ -345,9 +345,9 @@
 			<key>width</key>
 			<integer>192</integer>
 			<key>x</key>
-			<integer>5568</integer>
+			<integer>1536</integer>
 			<key>y</key>
-			<integer>0</integer>
+			<integer>192</integer>
 		</dict>
 		<key>heal1-3</key>
 		<dict>

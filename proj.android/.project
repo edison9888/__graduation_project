@@ -34,7 +34,7 @@
 		<link>
 			<name>src/org/cocos2dx</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/library/cocos2dx/platform/android/java/src/org/cocos2dx</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/library/cocos2dx/platform/android/java/src/org/cocos2dx</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>

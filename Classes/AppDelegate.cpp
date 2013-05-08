@@ -38,20 +38,17 @@ bool AppDelegate::applicationDidFinishLaunching() {
     pDirector->setContentScaleFactor(MIN(32 * 25 / frameSize.width, 32 * 15 / frameSize.height));
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
         // if the frame's height is larger than the height of medium resource size, select large resource.
-	if (frameSize.height == smallResource.size.height)
-	{
+	if (frameSize.height == smallResource.size.height) {
         pEGLView->setDesignResolutionSize(smallResource.size.width, smallResource.size.height, kResolutionNoBorder);
-		searchPaths.push_back(smallResource.directory);
+        searchPaths.push_back(smallResource.directory);
 	}
         // if the frame's height is larger than the height of small resource size, select medium resource.
-    else if (frameSize.height == mediumResource.size.height)
-    {
+    else if (frameSize.height == mediumResource.size.height) {
         pEGLView->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height, kResolutionNoBorder);
         searchPaths.push_back(mediumResource.directory);
     }
         // if the frame's height is smaller than the height of medium resource size, select small resource.
-	else
-    {
+	else {
         pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height, kResolutionNoBorder);
 		searchPaths.push_back(largeResource.directory);
     }
@@ -65,6 +62,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
             || (frameSize.width == resources[i].size.height && frameSize.height == resources[i].size.width)) {
             searchPaths.push_back(resources[i].directory);
             pEGLView->setDesignResolutionSize(resources[i].size.width, resources[i].size.height, kResolutionNoBorder);
+            pDirector->setContentScaleFactor(MIN(32 * 25 / resources[i].size.width, 32 * 15 / resources[i].size.height));
             found = 1;
             break;
         }
@@ -72,24 +70,25 @@ bool AppDelegate::applicationDidFinishLaunching() {
     if (found == 0) {
 		searchPaths.push_back(resources[0].directory);
         pEGLView->setDesignResolutionSize(resources[0].size.width, resources[0].size.height, kResolutionNoBorder);
+        pDirector->setContentScaleFactor(MIN(32 * 25 / resources[0].size.width, 32 * 15 / resources[0].size.height));
     }
 #else
     // if the frame's height is larger than the height of medium resource size, select large resource.
-	if (frameSize.height > mediumResource.size.height)
-	{
-		searchPaths.push_back(largeResource.directory);
+	if (frameSize.height > mediumResource.size.height) {
+        searchPaths.push_back(largeResource.directory);
+        pEGLView->setDesignResolutionSize(largeResource.size.width, largeResource.size.height);
         pDirector->setContentScaleFactor(MIN(largeResource.size.height/smallResource.size.height, largeResource.size.width/smallResource.size.width));
 	}
     // if the frame's height is larger than the height of small resource size, select medium resource.
-    else if (frameSize.height > smallResource.size.height)
-    {
+    else if (frameSize.height > smallResource.size.height) {
         searchPaths.push_back(mediumResource.directory);
+        pEGLView->setDesignResolutionSize(mediumResource.size.width, mediumResource.size.height);
         pDirector->setContentScaleFactor(MIN(mediumResource.size.height/smallResource.size.height, mediumResource.size.width/smallResource.size.width));
     }
     // if the frame's height is smaller than the height of medium resource size, select small resource.
-	else
-    {
+	else {
 		searchPaths.push_back(smallResource.directory);
+        pEGLView->setDesignResolutionSize(smallResource.size.width, smallResource.size.height);
         pDirector->setContentScaleFactor(MIN(smallResource.size.height, smallResource.size.width));
     }
 #endif

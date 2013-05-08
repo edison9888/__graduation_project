@@ -10,7 +10,14 @@ LOCAL_MODULE := MC_shared
 
 LOCAL_MODULE_FILENAME := libMC
 
-LOCAL_CFLAGS += -DMC_ASTAR_USING_PTHREAD=1
+LOCAL_CFLAGS += \\
+					-DMC_COLLISION_USE_OBB=0 \\
+					-DMC_ASTAR_USING_PTHREAD=1 \\
+					-DMC_SELECT_ALL_SUPPORT=0 \\
+					-DMC_MULTIPLAYER_SUPPORT=0 \\
+					-DMC_BATTLE_INFO_LEVEL=0 \\
+					-DMC_DEBUG_NON_VISUAL_OBJECTS=1 \\
+					-DUSE_FILE32API \\
 
 LOCAL_SRC_FILES := main.cpp \\
 %s \\
@@ -18,8 +25,8 @@ LOCAL_SRC_FILES := main.cpp \\
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \\
 					$(LOCAL_PATH)/../../Classes/JSON/include \\
 					$(LOCAL_PATH)/../../Classes/JSON/include/JsonBox \\
-					$(LOCAL_PATH)/../../../library/CocosDenshion/include \\
-					$(LOCAL_PATH)/../../../library/extensions \\
+					$(LOCAL_PATH)/../library/CocosDenshion/include \\
+					$(LOCAL_PATH)/../library/extensions \\
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 

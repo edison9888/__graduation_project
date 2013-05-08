@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>angle</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>angleVariance</key>
 	<real>360</real>
 	<key>blendFuncDestination</key>
@@ -11,33 +11,33 @@
 	<key>blendFuncSource</key>
 	<integer>770</integer>
 	<key>duration</key>
-	<real>0.12999999523162842</real>
+	<real>0.1299999952316284</real>
 	<key>emitterType</key>
 	<real>1</real>
 	<key>finishColorAlpha</key>
-	<real>0.15231135487556458</real>
+	<real>0.1523113548755646</real>
 	<key>finishColorBlue</key>
-	<real>0.26499110460281372</real>
+	<real>0.2649911046028137</real>
 	<key>finishColorGreen</key>
-	<real>0.39981895685195923</real>
+	<real>0.3998189568519592</real>
 	<key>finishColorRed</key>
-	<real>0.24582047760486603</real>
+	<real>0.245820477604866</real>
 	<key>finishColorVarianceAlpha</key>
-	<real>0.39728942513465881</real>
+	<real>0.3972894251346588</real>
 	<key>finishColorVarianceBlue</key>
-	<real>0.071273647248744965</real>
+	<real>0.07127364724874496</real>
 	<key>finishColorVarianceGreen</key>
-	<real>0.79253822565078735</real>
+	<real>0.7925382256507874</real>
 	<key>finishColorVarianceRed</key>
-	<real>0.29005861282348633</real>
+	<real>0.2900586128234863</real>
 	<key>finishParticleSize</key>
 	<real>64</real>
 	<key>finishParticleSizeVariance</key>
 	<real>64</real>
 	<key>gravityx</key>
-	<real>-605.94830322265625</real>
+	<real>-605.9483032226562</real>
 	<key>gravityy</key>
-	<real>-47.460666656494141</real>
+	<real>-47.46066665649414</real>
 	<key>maxParticles</key>
 	<real>2000</real>
 	<key>maxRadius</key>
@@ -47,13 +47,13 @@
 	<key>minRadius</key>
 	<real>96</real>
 	<key>particleLifespan</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>particleLifespanVariance</key>
-	<real>1.2999999523162842</real>
+	<real>1.299999952316284</real>
 	<key>radialAccelVariance</key>
-	<real>192.60978698730469</real>
+	<real>192.6097869873047</real>
 	<key>radialAcceleration</key>
-	<real>740.28070068359375</real>
+	<real>740.2807006835938</real>
 	<key>rotatePerSecond</key>
 	<real>360</real>
 	<key>rotatePerSecondVariance</key>
@@ -67,9 +67,9 @@
 	<key>rotationStartVariance</key>
 	<real>-3600</real>
 	<key>sourcePositionVariancex</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>sourcePositionVariancey</key>
-	<real>0.0</real>
+	<real>0</real>
 	<key>sourcePositionx</key>
 	<real>330.9581298828125</real>
 	<key>sourcePositiony</key>
@@ -79,31 +79,29 @@
 	<key>speedVariance</key>
 	<real>749</real>
 	<key>startColorAlpha</key>
-	<real>0.92635983228683472</real>
+	<real>0.9263598322868347</real>
 	<key>startColorBlue</key>
-	<real>0.63823115825653076</real>
+	<real>0.6382311582565308</real>
 	<key>startColorGreen</key>
-	<real>0.64139074087142944</real>
+	<real>0.6413907408714294</real>
 	<key>startColorRed</key>
-	<real>0.14019341766834259</real>
+	<real>0.1401934176683426</real>
 	<key>startColorVarianceAlpha</key>
-	<real>0.52464312314987183</real>
+	<real>0.5246431231498718</real>
 	<key>startColorVarianceBlue</key>
 	<real>0.1649017333984375</real>
 	<key>startColorVarianceGreen</key>
-	<real>0.38395863771438599</real>
+	<real>0.383958637714386</real>
 	<key>startColorVarianceRed</key>
-	<real>0.70612156391143799</real>
+	<real>0.706121563911438</real>
 	<key>startParticleSize</key>
 	<real>64</real>
 	<key>startParticleSizeVariance</key>
 	<real>64</real>
 	<key>tangentialAccelVariance</key>
-	<real>-5.9832377433776855</real>
+	<real>-5.983237743377686</real>
 	<key>tangentialAcceleration</key>
-	<real>49.690933227539062</real>
-	<key>textureFileName</key>
-	<string>particleTexture.png</string>
+	<real>49.69093322753906</real>
 	<key>textureImageData</key>
 	<string>H4sIAAAAAAAAAwFmA5n8iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADLUlEQVRYCcXX51JbQRCEUeOc/f6v6ZzxHKFPLAoI84epmrp7985294QVxcXl5eWjh7Sn9yB/MWcej19sXQb87/iP8f+yiztWAOmzcYL5k/F9AX9m7/fWf83zTmLOVeD5AHECWieiKpR95D8nlhPcepbH7TYBL+dI/mrWRCRkrQIBZY9Q5vzb+PdxQj2P2ikBCPnrxb0TRMQpAYiRIa9lVcregR0TgATZm/G3W7cmxn5VaA6qQNkjEkNAMbPcDOpBJfYF6DMByJC/H3+3XSfC97IziATov8FD8HUcDmzZs+bETSF0Z+cEICeCE0TYOQFlHznSZoTQkwIc5PW+FqwC7NUGVagCXTvlXzNHXnXE5LsrulYAYFduX4Ts11b4LlaWlbXBWzNH2GxojzN4jgogJgENYreganyYGELsq1YCAOp9CZX5eivEwy9mltcvPvqwirBHSGKIQE6Eitg35forO5mxSo5cDJyVHIf3TRVSIxNgiUgIUO5Abel2qII4hLJnSk5M7XC2rMPGU5s2APO++11PiKBVUECEyAq5athHyvS6TO2vhOHB72/ILK+VtHnb0+EEAkeiLZGV2UpyG94cvRbgh+KcGyzenZb5l3FPbbBfzDks3zcmE9aBCIBF1FCt16meO98M6L3BEpeohIUHP65ZXvXJM2IH8oCAATZYiJWc+a7swJF/HvddnHjnuLgwE4RvY1XAAVMuwAHvHPA61cUDNnD6DUws8k/j2kJEZ8NahdjbWIBeVvJIgSISh4yJ8931SgBwpMhVwtPZKiIeaSJmeWWrgMolENh6pSKXrTjftcKU66m9ziViFSI+AWJ3tgoQADTwrtdKLvvinE2AfcAylTXyj9tn1UiE8ztbBdhUIiD2u9ez3PS5LP0QJe6UgKpgJhpOuPBv2DEBMubAmbI3H0BqDYEJcBOAy06mqpCI/xIw5zYViFx/gZc98IZyX0DtITIR+4M4n27afgX6CgB52dffsq9FawWqkipUCWLyWR7aKQEiHVwFuHbrX7batApNRO3wPOj77O3swf8zuquAneJZaEPZ14KqcOOKrYdOre8j4BTWvfZl8qD2D7ghcomuE8XXAAAAAElFTkSuQmCCksg8PmYDAAA=</string>
 </dict>

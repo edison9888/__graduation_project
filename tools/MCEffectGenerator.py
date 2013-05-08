@@ -55,8 +55,16 @@ class MCEffect:
         firstEffectFrame = effectFrames[0]
         frameSize =firstEffectFrame.size
         
+        frameWidth = frameSize[0]
+        frameHeight = frameSize[1]
+        framesLength = len(effectFrames)
+        
+        nw = 4096 / frameWidth #一行几个
+        nh = framesLength / nw + (0 if (framesLength % nw) == 0 else 1)
+        canvasSize = (frameWidth * nw, frameHeight * nh)
+        
         # new a texture canvas
-        canvas = Image.new('RGBA', (frameSize[0] * len(effectFrames), frameSize[1]))
+        canvas = Image.new('RGBA', canvasSize)
         
         plist = plistlib.Plist()
         frames = plistlib.Dict()
@@ -80,6 +88,9 @@ class MCEffect:
 
             x += effectFrame.size[0]
             c += 1
+            if c == nw:
+                x = 0
+                y += frameHeight
         plist.frames = frames
         
         metadata = plistlib.Dict()

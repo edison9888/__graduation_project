@@ -6,7 +6,14 @@ LOCAL_MODULE := MC_shared
 
 LOCAL_MODULE_FILENAME := libMC
 
-LOCAL_CFLAGS += -DMC_ASTAR_USING_PTHREAD=1
+LOCAL_CFLAGS += \
+					-DMC_COLLISION_USE_OBB=0 \
+					-DMC_ASTAR_USING_PTHREAD=1 \
+					-DMC_SELECT_ALL_SUPPORT=0 \
+					-DMC_MULTIPLAYER_SUPPORT=0 \
+					-DMC_BATTLE_INFO_LEVEL=0 \
+					-DMC_DEBUG_NON_VISUAL_OBJECTS=1 \
+					-DUSE_FILE32API \
 
 LOCAL_SRC_FILES := main.cpp \
 					../../Classes/AppDelegate.cpp \
@@ -17,21 +24,22 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCBackpack.cpp \
 					../../Classes/MCBarrier.cpp \
 					../../Classes/MCBase64.cpp \
+					../../Classes/MCBaseInfoLayer.cpp \
 					../../Classes/MCBattle.cpp \
 					../../Classes/MCBattleController.cpp \
 					../../Classes/MCBattleControllerLayer.cpp \
 					../../Classes/MCBattleFieldScene.cpp \
+					../../Classes/MCCallbackableParticleSystemQuad.cpp \
 					../../Classes/MCCamera.cpp \
 					../../Classes/MCConfirm.cpp \
 					../../Classes/MCControllerDelegate.cpp \
 					../../Classes/MCControllerLayer.cpp \
-					../../Classes/MCDetail.cpp \
-					../../Classes/MCDetailLayer.cpp \
 					../../Classes/MCDialog.cpp \
 					../../Classes/MCDice.cpp \
 					../../Classes/MCDungeonMaster.cpp \
 					../../Classes/MCEffect.cpp \
 					../../Classes/MCEffectiveItem.cpp \
+					../../Classes/MCEffectManager.cpp \
 					../../Classes/MCEnemy.cpp \
 					../../Classes/MCEnemyAI.cpp \
 					../../Classes/MCEnhancingEquipmentUI.cpp \
@@ -45,7 +53,6 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCFlagManager.cpp \
 					../../Classes/MCGameScene.cpp \
 					../../Classes/MCGameState.cpp \
-					../../Classes/MCGeometry.cpp \
 					../../Classes/MCHero.cpp \
 					../../Classes/MCHiringMercenaryUI.cpp \
 					../../Classes/MCIssuingTaskUI.cpp \
@@ -59,17 +66,17 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCMainMenuScene.cpp \
 					../../Classes/MCMercenary.cpp \
 					../../Classes/MCMercenaryAI.cpp \
+					../../Classes/MCMercenaryLayer.cpp \
 					../../Classes/MCMercenaryManager.cpp \
+					../../Classes/MCMezzanine.cpp \
 					../../Classes/MCMiscUtil.cpp \
-					../../Classes/MCMutiplayerBattleImpl.cpp \
-					../../Classes/MCNormalBattleImpl.cpp \
 					../../Classes/MCNPC.cpp \
 					../../Classes/MCNPCAI.cpp \
 					../../Classes/MCOBB.cpp \
 					../../Classes/MCObjectLayer.cpp \
 					../../Classes/MCOre.cpp \
 					../../Classes/MCOreManager.cpp \
-					../../Classes/MCPotion.cpp \
+					../../Classes/MCPlayerInfo.cpp \
 					../../Classes/MCPropsLayer.cpp \
 					../../Classes/MCRegion.cpp \
 					../../Classes/MCRegionManager.cpp \
@@ -86,6 +93,8 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCSemiTransparent.cpp \
 					../../Classes/MCShadow.cpp \
 					../../Classes/MCSkill.cpp \
+					../../Classes/MCSkillBar.cpp \
+					../../Classes/MCSkillLayer.cpp \
 					../../Classes/MCSkillManager.cpp \
 					../../Classes/MCSlider.cpp \
 					../../Classes/MCSplashScene.cpp \
@@ -104,6 +113,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCTestBattleController.cpp \
 					../../Classes/MCTestbed.cpp \
 					../../Classes/MCTestDetail.cpp \
+					../../Classes/MCTestEffect.cpp \
 					../../Classes/MCTestGameScene.cpp \
 					../../Classes/MCTestLua.cpp \
 					../../Classes/MCTestManagers.cpp \
@@ -116,7 +126,6 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCToast.cpp \
 					../../Classes/MCTradingPropsUI.cpp \
 					../../Classes/MCTrap.cpp \
-					../../Classes/MCTrigger.cpp \
 					../../Classes/MCViewportLayer.cpp \
 					../../Classes/MCVision.cpp \
 					../../Classes/MCWeaponSelector.cpp \
@@ -132,8 +141,8 @@ LOCAL_SRC_FILES := main.cpp \
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes \
 					$(LOCAL_PATH)/../../Classes/JSON/include \
 					$(LOCAL_PATH)/../../Classes/JSON/include/JsonBox \
-					$(LOCAL_PATH)/../../../library/CocosDenshion/include \
-					$(LOCAL_PATH)/../../../library/extensions \
+					$(LOCAL_PATH)/../library/CocosDenshion/include \
+					$(LOCAL_PATH)/../library/extensions \
 
 LOCAL_STATIC_LIBRARIES := curl_static_prebuilt
 

@@ -15,6 +15,10 @@ using namespace std;
 #include "MCGameState.h"
 #include "MCEffectManager.h"
 
+#ifndef UINT16_MAX
+#define UINT16_MAX        65535
+#endif /* UINT16_MAX */
+
 const char *kMCSkillPackageFilepath = "SXXX.jpkg";
 
 static const char *kMCSkillsKey = "c2tpbGxz"; /* skills的BASE64编码 */
