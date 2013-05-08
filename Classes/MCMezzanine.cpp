@@ -209,9 +209,10 @@ void
 MCMezzanine::trapDidTriggerByRole(MCTrap *aTrap, MCRole *aRole)
 {
     CCPoint mapOffset = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene()->getMapOffset();
-    MCEffect *hitEffect = dynamic_cast<MCEffect *>(aTrap->effect->copy());
+//    MCEffect *hitEffect = dynamic_cast<MCEffect *>(aTrap->effect->copy());
+    MCEffect *hitEffect = aTrap->effect;
     
-    hitEffect->autorelease();
+//    hitEffect->autorelease();
     hitEffect->attach(this, ccpAdd(aTrap->getPosition(), mapOffset));
     
     /* 命中伤害 */

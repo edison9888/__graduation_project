@@ -292,6 +292,7 @@ MCItemManager::loadEffectiveItems()
     JsonBox::Object root;
     JsonBox::Object::iterator rootIterator;
     MCEffectiveItem *item;
+    MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     CCString* pstrFileContent = CCString::createWithContentsOfFile(kMCEffectiveItemFilepath);
@@ -343,7 +344,6 @@ MCItemManager::loadEffectiveItems()
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        MCEffectManager *effectManager = MCEffectManager::sharedEffectManager();
         MCEffect *effect = effectManager->effectForObjectId(e_id);
         item->effect = effect;
         effect->retain();

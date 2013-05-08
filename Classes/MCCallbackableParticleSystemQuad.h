@@ -24,27 +24,15 @@ public:
     void cleanup(void);
     
     inline void setCallback(CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject=NULL) {
-        target_ = aTarget;
-        selector_ = aSelector;
-        userObject_ = anUserObject;
-    }
-    
-    inline CCObject *getTarget() {
-        return target_;
-    }
-    
-    inline SEL_CallFuncO getSelector() {
-        return selector_;
-    }
-    
-    inline CCObject *getUserObject() {
-        return userObject_;
+        setTarget(aTarget);
+        setSelector(aSelector);
+        setUserObject(anUserObject);
     }
     
 protected:
-    CCObject *target_;
-    SEL_CallFuncO selector_;
-    CCObject *userObject_;
+    CC_SYNTHESIZE_RETAIN(CCObject *, target_, Target);
+    CC_SYNTHESIZE(SEL_CallFuncO, selector_, Selector);
+    CC_SYNTHESIZE_RETAIN(CCObject *, userObject_, UserObject);
 };
 
 #endif /* defined(__Military_Confrontation__MCCallbackableParticleSystemQuad__) */

@@ -129,6 +129,7 @@ MCEffect::detachParticles(CCObject *anObject)
         binding_->getLauncher()->getEntity()->unlockPosition();
     }
     if (target_ != NULL) {
-        (target_->*selector_)(userObject_ ? userObject_ : this);
+        (target_->*selector_)(userObject_);
     }
+    CC_SAFE_RELEASE(this);
 }

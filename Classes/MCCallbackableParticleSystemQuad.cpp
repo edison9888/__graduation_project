@@ -26,7 +26,9 @@ void
 MCCallbackableParticleSystemQuad::cleanup()
 {
     if (target_ != NULL) {
-        (target_->*selector_)(userObject_ ? userObject_ : this);
+        (target_->*selector_)(userObject_);
     }
+    setTarget(NULL);
+    setUserObject(NULL);
     CCParticleSystemQuad::cleanup();
 }

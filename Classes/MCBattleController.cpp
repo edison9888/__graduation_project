@@ -508,4 +508,3 @@ MCBattleController::installTrap(CCObject *anObject)
     mezzanine->installTrap(trap);
     trap->release(); /* non-autorelease */
 }
-    

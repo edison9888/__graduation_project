@@ -106,19 +106,19 @@ bool
 MCActionBar::init()
 {
     if (CCLayer::init()) {
-        MCTaskContext *taskContxt = MCTaskManager::sharedTaskManager()->getCurrentTask()->getTaskContext();
+        MCTaskContext *taskContext = MCTaskManager::sharedTaskManager()->getCurrentTask()->getTaskContext();
         CCPoint anchorPoint = ccp(0.5f, 0.0f);
         
-        trapWide_ = MCActionBarItem::create(taskContxt->getTrapWide());
+        trapWide_ = MCActionBarItem::create(taskContext->getTrapWide());
         addChild(trapWide_);
         trapWide_->setAnchorPoint(anchorPoint);
-        trapDamage_ = MCActionBarItem::create(taskContxt->getTrapDamage());
+        trapDamage_ = MCActionBarItem::create(taskContext->getTrapDamage());
         addChild(trapDamage_);
         trapDamage_->setAnchorPoint(anchorPoint);
-        healthPotion_ = MCActionBarItem::create(taskContxt->getHealthPotion());
+        healthPotion_ = MCActionBarItem::create(taskContext->getHealthPotion());
         addChild(healthPotion_);
         healthPotion_->setAnchorPoint(anchorPoint);
-        physicalPotion_ = MCActionBarItem::create(taskContxt->getPhysicalPotion());
+        physicalPotion_ = MCActionBarItem::create(taskContext->getPhysicalPotion());
         addChild(physicalPotion_);
         physicalPotion_->setAnchorPoint(anchorPoint);
         
