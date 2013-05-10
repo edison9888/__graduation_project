@@ -54,7 +54,6 @@ MCMezzanine::draw()
     
     /* 绘制拖拽ing的陷阱的范围 */
     if (draggingTrap_) {
-//        drawer->drawDot(ccpSub(draggingTrap_->getPosition(), mapOffset),
         drawer->drawDot(draggingTrap_->getPosition(),
                         draggingTrap_->radius,
                         color);
@@ -67,16 +66,9 @@ MCMezzanine::draw()
     CCARRAY_FOREACH(traps, obj) {
         trap = dynamic_cast<MCTrap *>(obj);
         drawer->drawDot(ccpAdd(trap->getPosition(), mapOffset),
-//        drawer->drawDot(ccpSub(trap->getPosition(), mapOffset),
                         trap->radius,
                         color);
     }
-}
-
-void
-MCMezzanine::drawDraggingTrap(MCTrap *aTrap)
-{
-    
 }
 
 /* 已设置好位置的陷阱 */
@@ -209,10 +201,8 @@ void
 MCMezzanine::trapDidTriggerByRole(MCTrap *aTrap, MCRole *aRole)
 {
     CCPoint mapOffset = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene()->getMapOffset();
-//    MCEffect *hitEffect = dynamic_cast<MCEffect *>(aTrap->effect->copy());
     MCEffect *hitEffect = aTrap->effect;
     
-//    hitEffect->autorelease();
     hitEffect->attach(this, ccpAdd(aTrap->getPosition(), mapOffset));
     
     /* 命中伤害 */

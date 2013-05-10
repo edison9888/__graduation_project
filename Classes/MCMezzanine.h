@@ -24,8 +24,6 @@ public:
     
     void draw();
     
-    void drawDraggingTrap(MCTrap *aTrap);
-    
     void installTrap(MCTrap *aTrap); /* 已设置好位置的陷阱 */
     
     /* aLocation为屏幕上位置 */

@@ -11,17 +11,17 @@
 	<key>blendFuncSource</key>
 	<integer>770</integer>
 	<key>duration</key>
-	<real>0.239999994635582</real>
+	<real>0.4</real>
 	<key>emitterType</key>
 	<real>0</real>
 	<key>finishColorAlpha</key>
-	<real>0.3100000023841858</real>
+	<real>0.31</real>
 	<key>finishColorBlue</key>
 	<real>0</real>
 	<key>finishColorGreen</key>
-	<real>0.3100000023841858</real>
+	<real>0.31</real>
 	<key>finishColorRed</key>
-	<real>0.7400000095367432</real>
+	<real>0.74</real>
 	<key>finishColorVarianceAlpha</key>
 	<real>0</real>
 	<key>finishColorVarianceBlue</key>
@@ -49,7 +49,7 @@
 	<key>particleLifespan</key>
 	<real>0</real>
 	<key>particleLifespanVariance</key>
-	<real>0.6000000238418579</real>
+	<real>0.6</real>
 	<key>radialAccelVariance</key>
 	<real>0</real>
 	<key>radialAcceleration</key>

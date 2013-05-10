@@ -118,7 +118,9 @@ MCTrap::copy()
     trap->icon_ = CCString::create(icon_->getCString()); /* 会被释放掉，所以要copy一个 */
     trap->icon_->retain();
     trap->radius = radius;
-    trap->effect = dynamic_cast<MCEffect *>(effect->copy());
+//    trap->effect = dynamic_cast<MCEffect *>(effect->copy());
+    trap->effect = effect;
+    effect->retain();
     
     /* effect */
     trap->hp = hp;             /* HP变化值 */

@@ -11,7 +11,7 @@
 	<key>blendFuncSource</key>
 	<integer>772</integer>
 	<key>duration</key>
-	<real>0.300000011920929</real>
+	<real>0.4</real>
 	<key>emitterType</key>
 	<real>0</real>
 	<key>finishColorAlpha</key>
@@ -19,9 +19,9 @@
 	<key>finishColorBlue</key>
 	<real>0</real>
 	<key>finishColorGreen</key>
-	<real>0.4600000083446503</real>
+	<real>0.46</real>
 	<key>finishColorRed</key>
-	<real>1</real>
+	<integer>1</integer>
 	<key>finishColorVarianceAlpha</key>
 	<real>0</real>
 	<key>finishColorVarianceBlue</key>
@@ -39,17 +39,17 @@
 	<key>gravityy</key>
 	<real>0</real>
 	<key>maxParticles</key>
-	<real>506</real>
+	<integer>1000</integer>
 	<key>maxRadius</key>
-	<real>100</real>
+	<integer>100</integer>
 	<key>maxRadiusVariance</key>
 	<real>0</real>
 	<key>minRadius</key>
 	<real>0</real>
 	<key>particleLifespan</key>
-	<real>0.5921000242233276</real>
+	<real>0.75</real>
 	<key>particleLifespanVariance</key>
-	<real>0.328900009393692</real>
+	<real>0.4</real>
 	<key>radialAccelVariance</key>
 	<real>0</real>
 	<key>radialAcceleration</key>
@@ -75,17 +75,17 @@
 	<key>sourcePositiony</key>
 	<real>246</real>
 	<key>speed</key>
-	<real>111.8399963378906</real>
+	<integer>128</integer>
 	<key>speedVariance</key>
-	<real>388.1600036621094</real>
+	<integer>400</integer>
 	<key>startColorAlpha</key>
 	<real>0.5</real>
 	<key>startColorBlue</key>
 	<real>0</real>
 	<key>startColorGreen</key>
-	<real>0.4600000083446503</real>
+	<real>0.46</real>
 	<key>startColorRed</key>
-	<real>1</real>
+	<integer>1</integer>
 	<key>startColorVarianceAlpha</key>
 	<real>0</real>
 	<key>startColorVarianceBlue</key>
@@ -95,9 +95,9 @@
 	<key>startColorVarianceRed</key>
 	<real>0</real>
 	<key>startParticleSize</key>
-	<real>30.73999977111816</real>
+	<integer>30</integer>
 	<key>startParticleSizeVariance</key>
-	<real>64</real>
+	<integer>64</integer>
 	<key>tangentialAccelVariance</key>
 	<real>0</real>
 	<key>tangentialAcceleration</key>

@@ -45,6 +45,7 @@ MCEffect::attach(CCNode *aParent, const CCPoint &aPosition, CCObject *aTarget, S
     selector_ = aSelector;
     userObject_ = anUserObject;
     if (implType_ == MCEffect::MCSpriteSheet) {
+        retain();
         CCAnimate *animate = CCAnimate::create(animation_);
         animation_->retain();
         CCSprite *effectSprite = CCSprite::createWithSpriteFrameName(effect_->getCString());
@@ -57,8 +58,10 @@ MCEffect::attach(CCNode *aParent, const CCPoint &aPosition, CCObject *aTarget, S
                                                                                      callfuncO_selector(MCEffect::detach),
                                                                                      effectSprite)));
     } else if (implType_ == MCEffect::MCPList) {
-        MCCallbackableParticleSystemQuad *particleEffect = MCCallbackableParticleSystemQuad::create(effect_->getCString());
+        retain();
+        MCCallbackableParticleSystemQuad *particleEffect = new MCCallbackableParticleSystemQuad;
         
+        particleEffect->initWithFile(effect_->getCString());
         particleEffect->setPosition(aPosition);
         particleEffect->setAutoRemoveOnFinish(true);
         particleEffect->setCallback(this, callfuncO_selector(MCEffect::detachParticles));
@@ -70,6 +73,7 @@ MCEffect::attach(CCNode *aParent, const CCPoint &aPosition, CCObject *aTarget, S
 //            }
         }
         aParent->addChild(particleEffect);
+        particleEffect->release();
     }
 }
 
