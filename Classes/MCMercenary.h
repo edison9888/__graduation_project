@@ -58,6 +58,11 @@ public:
     
     MCRoleEntity *getEntity();
     
+    /**
+     * 死亡
+     */
+    void died();
+    
     CCObject *copy();
     
     CC_SYNTHESIZE_READONLY(MCMercenaryType, mercenaryType_, MercenaryType); /* 佣兵类型 */

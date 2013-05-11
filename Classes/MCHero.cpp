@@ -123,7 +123,7 @@ MCHero::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSele
 {
     MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
     
-    if (canAttackTarget(aTargetRole)
+    if (!canAttackTarget(aTargetRole)
         || weapon->consume > pp_ /* 不够体力 */
         || ai_->isStateLocked() /* 状态被锁定 */) {
         attackDidFail();

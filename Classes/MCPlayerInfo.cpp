@@ -11,6 +11,8 @@
 #include "MCPropsLayer.h"
 #include "MCTaskLayer.h"
 #include "MCEquipmentLayer.h"
+#include "MCSkillLayer.h"
+#include "MCMercenaryLayer.h"
 #include "MCGameState.h"
 
 #include <cocos-ext.h>
@@ -143,6 +145,12 @@ MCPlayerInfo::init()
         equipmentLayer_ = MCEquipmentLayer::create();
         addChild(equipmentLayer_);
         
+        skillLayer_ = MCSkillLayer::create();
+        addChild(skillLayer_);
+        
+        mercenaryLayer_ = MCMercenaryLayer::create();
+        addChild(mercenaryLayer_);
+        
         return true;
     }
     
@@ -227,11 +235,15 @@ MCPlayerInfo::showEquipment() /* 显示装备选项卡 */
 void
 MCPlayerInfo::showSkills() /* 显示技能选项卡 */
 {
+    skillLayer_->show();
+    lastShownLayer_ = skillLayer_;
 }
 
 void
 MCPlayerInfo::showMercenary() /* 显示佣兵选项卡 */
 {
+    mercenaryLayer_->show();
+    lastShownLayer_ = mercenaryLayer_;
 }
 
 void

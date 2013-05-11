@@ -207,7 +207,7 @@ MCObjectLayer::onEnter()
 //                break;
                 roles->addObject(role);
 #warning just one
-                break;
+//                break;
             }
         }
         

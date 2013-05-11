@@ -542,7 +542,7 @@ MCEnhancingEquipmentUI::levelUp_click(CCObject *aSender)
                                                       equipmentItem->getPrice()
                                                       + nextLevelOre->getPrice())->getCString());
     } else {
-        MCToast::make(this, "等级已満，不能再升级！");
+        MCToast::make(this, "等级已満，不能再升级！")->show();
     }
 }
 

@@ -13,6 +13,8 @@
 #include "MCTeam.h"
 #include "MCInterfaceMacros.h"
 
+const char *MCMercenaryManagerChoiceMercenaryName();
+
 class MCMercenaryManager {
 private:
     MCMercenaryManager();
@@ -35,7 +37,7 @@ public:
     /**
      * 解雇
      */
-    void dismiss(mc_object_id_t anObjectId);
+    void dismiss(MCMercenary *aMercenary);
     
     void saveData();
     void loadData();

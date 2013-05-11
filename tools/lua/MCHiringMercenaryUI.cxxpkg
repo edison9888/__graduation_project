@@ -1,0 +1,21 @@
+class MCHiringMercenaryUI {
+    bool init();
+    
+    void initPosition();
+    void attach(MCScene *aScene);
+    void detach();
+    
+    /* CCScrollViewDelegate */
+    void scrollViewDidScroll(CCScrollView *view) {}
+    void scrollViewDidZoom(CCScrollView *view) {}
+    
+    /* CCTableViewDataSource */
+    CCSize cellSizeForTable(CCTableView *table);
+    CCTableViewCell *tableCellAtIndex(CCTableView *table, unsigned int idx);
+    unsigned int numberOfCellsInTableView(CCTableView *table);
+    
+    /* CCTableViewDelegate */
+    void tableCellTouched(CCTableView *table, CCTableViewCell *cell);
+    
+    static MCHiringMercenaryUI *create();
+};

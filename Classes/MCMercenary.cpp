@@ -76,6 +76,21 @@ MCMercenary::getEntity()
     return roleEntity;
 }
 
+/**
+ * 死亡
+ */
+void
+MCMercenary::died()
+{
+    MCRoleEntity *roleEntity = getEntity();
+    roleEntity->stopPathFinding();
+    roleEntity->stopWalking();
+    roleEntity->getSpriteSheet()->removeFromParentAndCleanup(true);
+    entity_ = NULL;
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification,
+                                                                       this);
+}
+
 CCObject *
 MCMercenary::copy()
 {

@@ -56,13 +56,13 @@ public:
             'M', '0', '0', '1'
         };
 
-        mc_ssize_t ret;
+        mc_ssize_t ret; (void) ret;
         m_id.sub_class_ = '9';
         m_id.sub_index_ = '1';
         ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
-        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
-        m_id.sub_index_ = '2';
-        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+//        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
+//        m_id.sub_index_ = '2';
+//        ret = MCMercenaryManager::sharedMercenaryManager()->hire(m_id);
         
         m_id.sub_class_ = '0';
         m_id.index_ = '0';

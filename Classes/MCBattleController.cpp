@@ -348,17 +348,17 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
                                              callfuncO_selector(MCBattleController::installTrap),
                                              trap);
                         
+                    } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedActionBarItem_)) != NULL) {
+                        /* 拖动使用道具 */
+                        selectedRoleBaseInfo->setOpacity(255);
+                        selectedRoleBaseInfo->useActionBarItem(selectedActionBarItem_);
+                        /* 物品效果 */
+                        dynamic_cast<MCEffectiveItem *>(selectedActionBarItem_->getBackpackItem()->item)->effect->attach(this,
+                                                                                                                         selectedRoleBaseInfo->getRole());
+                        selectedActionBarItem_->updateCount();
                     }
                 }
-            }
-        } else if ((selectedRoleBaseInfo = teamLayer_->collidesWithActionBarItem(selectedActionBarItem_))) {
-            /* 拖动使用道具 */
-            selectedRoleBaseInfo->setOpacity(255);
-            selectedRoleBaseInfo->useActionBarItem(selectedActionBarItem_);
-            /* 物品效果 */
-            dynamic_cast<MCEffectiveItem *>(selectedActionBarItem_->getBackpackItem()->item)->effect->attach(this,
-                                                                                                             selectedRoleBaseInfo->getRole());
-            selectedActionBarItem_->updateCount();
+            } 
         }
         
         MCSkillBarItem *touchedSkillBarItem = skillBar_->itemForTouch(touch);

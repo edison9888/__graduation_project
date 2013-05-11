@@ -12,18 +12,18 @@
          contextName = "MCHero::attackTarget(MCRole*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), cocos2d::CCObject*):MCHero.cpp">
       </ContextState>
       <ContextState
-         contextName = "MCEffect::copy():MCEffect.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
-      </ContextState>
-      <ContextState
          contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
          <PersistentStrings>
             <PersistentString
                value = "(cocos2d::CCAction *)walkAction">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCEffect::copy():MCEffect.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
       </ContextState>
       <ContextState
          contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
@@ -61,6 +61,14 @@
          <PersistentStrings>
             <PersistentString
                value = "this-&gt;lastAttackTimestamp_">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCTeam::isFull():MCTeam.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "this-&gt;teams_">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

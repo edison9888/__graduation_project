@@ -29,6 +29,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     std::vector<std::string> searchPaths;
 
+#if MC_ADAPTIVE_RESOLUTION == 1
     // Set the design resolution
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_MAC || CC_TARGET_PLATFORM == CC_PLATFORM_LINUX || CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
     pEGLView->setDesignResolutionSize(PCResource.size.width, PCResource.size.height, kResolutionExactFit);
@@ -91,7 +92,22 @@ bool AppDelegate::applicationDidFinishLaunching() {
         pEGLView->setDesignResolutionSize(smallResource.size.width, smallResource.size.height);
         pDirector->setContentScaleFactor(MIN(smallResource.size.height, smallResource.size.width));
     }
-#endif
+#endif // platforms
+#else
+    CCSize designSize = CCSizeMake(960, 640);
+    
+    searchPaths.push_back(PCResource.directory);
+    if (frameSize.height > 1280) {
+        CCSize resourceSize = CCSizeMake(2048, 1536);
+        std::vector<std::string> searchPaths;
+//        searchPaths.push_back("hd"); //没资源
+        pDirector->setContentScaleFactor(0.75 * resourceSize.height / designSize.height);
+    } else {
+        pDirector->setContentScaleFactor(0.75);
+    }
+    
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionFixedWidth);
+#endif // MC_ADAPTIVE_RESOLUTION == 0
     CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
 	
     // turn on display FPS

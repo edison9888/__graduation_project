@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Sun May  5 13:37:26 2013.
+** Generated automatically by tolua++-1.0.92 on Fri May 10 17:09:48 2013.
 */
 
 /****************************************************************************
@@ -26,9 +26,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  THE SOFTWARE.
  ****************************************************************************/
-
+ 
 #include "MCLuaCocos2d.h"
-
 
 
 
@@ -457,10 +456,11 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTransitionCrossFade");
  tolua_usertype(tolua_S,"MCMezzanine");
  tolua_usertype(tolua_S,"CCActionEase");
+ tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"CCParallaxNode");
  tolua_usertype(tolua_S,"CCRotateTo");
- tolua_usertype(tolua_S,"CCEaseElasticInOut");
  tolua_usertype(tolua_S,"MCTaskManager");
+ tolua_usertype(tolua_S,"MCHiringMercenaryUI");
  tolua_usertype(tolua_S,"CCTransitionSlideInR");
  tolua_usertype(tolua_S,"CCShakyTiles3D");
  tolua_usertype(tolua_S,"MCTradingPropsUI");
@@ -58263,6 +58263,376 @@ static int tolua_Cocos2d_MCTradingPropsUI_create00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: init of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_init00
+static int tolua_Cocos2d_MCHiringMercenaryUI_init00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'init'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->init();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'init'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: initPosition of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_initPosition00
+static int tolua_Cocos2d_MCHiringMercenaryUI_initPosition00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'initPosition'", NULL);
+#endif
+  {
+   self->initPosition();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'initPosition'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: attach of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_attach00
+static int tolua_Cocos2d_MCHiringMercenaryUI_attach00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"MCScene",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  MCScene* aScene = ((MCScene*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'attach'", NULL);
+#endif
+  {
+   self->attach(aScene);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'attach'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: detach of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_detach00
+static int tolua_Cocos2d_MCHiringMercenaryUI_detach00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'detach'", NULL);
+#endif
+  {
+   self->detach();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'detach'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scrollViewDidScroll of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidScroll00
+static int tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidScroll00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCScrollView",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCScrollView* view = ((CCScrollView*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scrollViewDidScroll'", NULL);
+#endif
+  {
+   self->scrollViewDidScroll(view);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'scrollViewDidScroll'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: scrollViewDidZoom of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidZoom00
+static int tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidZoom00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCScrollView",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCScrollView* view = ((CCScrollView*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'scrollViewDidZoom'", NULL);
+#endif
+  {
+   self->scrollViewDidZoom(view);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'scrollViewDidZoom'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: cellSizeForTable of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_cellSizeForTable00
+static int tolua_Cocos2d_MCHiringMercenaryUI_cellSizeForTable00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTableView",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCTableView* table = ((CCTableView*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'cellSizeForTable'", NULL);
+#endif
+  {
+   CCSize tolua_ret = (CCSize)  self->cellSizeForTable(table);
+   {
+#ifdef __cplusplus
+    void* tolua_obj = Mtolua_new((CCSize)(tolua_ret));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#else
+    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(CCSize));
+     tolua_pushusertype(tolua_S,tolua_obj,"CCSize");
+    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
+#endif
+   }
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'cellSizeForTable'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tableCellAtIndex of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_tableCellAtIndex00
+static int tolua_Cocos2d_MCHiringMercenaryUI_tableCellAtIndex00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTableView",0,&tolua_err) ||
+     !tolua_isnumber(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCTableView* table = ((CCTableView*)  tolua_tousertype(tolua_S,2,0));
+  unsigned int idx = ((unsigned int)  tolua_tonumber(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tableCellAtIndex'", NULL);
+#endif
+  {
+   CCTableViewCell* tolua_ret = (CCTableViewCell*)  self->tableCellAtIndex(table,idx);
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"CCTableViewCell");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tableCellAtIndex'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: numberOfCellsInTableView of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_numberOfCellsInTableView00
+static int tolua_Cocos2d_MCHiringMercenaryUI_numberOfCellsInTableView00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTableView",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,3,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCTableView* table = ((CCTableView*)  tolua_tousertype(tolua_S,2,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'numberOfCellsInTableView'", NULL);
+#endif
+  {
+   unsigned int tolua_ret = (unsigned int)  self->numberOfCellsInTableView(table);
+   tolua_pushnumber(tolua_S,(lua_Number)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'numberOfCellsInTableView'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: tableCellTouched of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_tableCellTouched00
+static int tolua_Cocos2d_MCHiringMercenaryUI_tableCellTouched00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,2,"CCTableView",0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"CCTableViewCell",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCHiringMercenaryUI* self = (MCHiringMercenaryUI*)  tolua_tousertype(tolua_S,1,0);
+  CCTableView* table = ((CCTableView*)  tolua_tousertype(tolua_S,2,0));
+  CCTableViewCell* cell = ((CCTableViewCell*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'tableCellTouched'", NULL);
+#endif
+  {
+   self->tableCellTouched(table,cell);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'tableCellTouched'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: create of class  MCHiringMercenaryUI */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCHiringMercenaryUI_create00
+static int tolua_Cocos2d_MCHiringMercenaryUI_create00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"MCHiringMercenaryUI",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   MCHiringMercenaryUI* tolua_ret = (MCHiringMercenaryUI*)  MCHiringMercenaryUI::create();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCHiringMercenaryUI");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'create'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: sharedTaskManager of class  MCTaskManager */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_MCTaskManager_sharedTaskManager00
 static int tolua_Cocos2d_MCTaskManager_sharedTaskManager00(lua_State* tolua_S)
@@ -62888,6 +63258,20 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"numberOfCellsInTableView",tolua_Cocos2d_MCTradingPropsUI_numberOfCellsInTableView00);
    tolua_function(tolua_S,"tableCellTouched",tolua_Cocos2d_MCTradingPropsUI_tableCellTouched00);
    tolua_function(tolua_S,"create",tolua_Cocos2d_MCTradingPropsUI_create00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"MCHiringMercenaryUI","MCHiringMercenaryUI","",NULL);
+  tolua_beginmodule(tolua_S,"MCHiringMercenaryUI");
+   tolua_function(tolua_S,"init",tolua_Cocos2d_MCHiringMercenaryUI_init00);
+   tolua_function(tolua_S,"initPosition",tolua_Cocos2d_MCHiringMercenaryUI_initPosition00);
+   tolua_function(tolua_S,"attach",tolua_Cocos2d_MCHiringMercenaryUI_attach00);
+   tolua_function(tolua_S,"detach",tolua_Cocos2d_MCHiringMercenaryUI_detach00);
+   tolua_function(tolua_S,"scrollViewDidScroll",tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidScroll00);
+   tolua_function(tolua_S,"scrollViewDidZoom",tolua_Cocos2d_MCHiringMercenaryUI_scrollViewDidZoom00);
+   tolua_function(tolua_S,"cellSizeForTable",tolua_Cocos2d_MCHiringMercenaryUI_cellSizeForTable00);
+   tolua_function(tolua_S,"tableCellAtIndex",tolua_Cocos2d_MCHiringMercenaryUI_tableCellAtIndex00);
+   tolua_function(tolua_S,"numberOfCellsInTableView",tolua_Cocos2d_MCHiringMercenaryUI_numberOfCellsInTableView00);
+   tolua_function(tolua_S,"tableCellTouched",tolua_Cocos2d_MCHiringMercenaryUI_tableCellTouched00);
+   tolua_function(tolua_S,"create",tolua_Cocos2d_MCHiringMercenaryUI_create00);
   tolua_endmodule(tolua_S);
   tolua_cclass(tolua_S,"MCTaskManager","MCTaskManager","",NULL);
   tolua_beginmodule(tolua_S,"MCTaskManager");

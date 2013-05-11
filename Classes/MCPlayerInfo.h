@@ -18,6 +18,8 @@ class MCStateLayer;
 class MCPropsLayer;
 class MCTaskLayer;
 class MCEquipmentLayer;
+class MCSkillLayer;
+class MCMercenaryLayer;
 
 class MCPlayerInfo : public CCLayer, public MCConfirmDelegate {
 public:
@@ -51,6 +53,8 @@ private:
     MCPropsLayer     *propsLayer_;
     MCTaskLayer      *taskLayer_;
     MCEquipmentLayer *equipmentLayer_;
+    MCSkillLayer     *skillLayer_;
+    MCMercenaryLayer *mercenaryLayer_;
     
     CCLayer *viewSelector_;
 };

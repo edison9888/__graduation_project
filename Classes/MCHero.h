@@ -39,9 +39,6 @@ public:
     /* 普通攻击 */
     void attackTarget(MCRole *aTargetRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
     
-    /* 主角AI不自动释放技能 */
-    void attackTargetWithSkill(MCRole *aRole, MCSkill *aSkill, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL) { }
-    
     /**
      * 主角挂了
      */

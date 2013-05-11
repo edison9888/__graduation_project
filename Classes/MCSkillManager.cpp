@@ -93,7 +93,7 @@ MCSkillManager::protoSkillForObjectId(mc_object_id_t anObjectId)
     
     if (skillType == MCSwordSkill) {
         skills = swordSkills_;
-    } else if (skillType == MCHammer) {
+    } else if (skillType == MCHammerSkill) {
         skills = hammerSkills_;
     } else if (skillType == MCAxeSkill) {
         skills = axeSkills_;
@@ -121,7 +121,7 @@ MCSkillManager::skillsForSkillType(MCSkillType aSkillType)
 {
     if (aSkillType == MCSwordSkill) {
         return swordSkills_;
-    } else if (aSkillType == MCHammer) {
+    } else if (aSkillType == MCHammerSkill) {
         return hammerSkills_;
     } else if (aSkillType == MCAxeSkill) {
         return axeSkills_;
@@ -364,7 +364,7 @@ MCSkillManager::loadSkills()
         MCSkillType skillType = s_id.sub_class_ - '0';
         if (skillType == MCSwordSkill) {
             swordSkills_->addObject(skill);
-        } else if (skillType == MCHammer) {
+        } else if (skillType == MCHammerSkill) {
             hammerSkills_->addObject(skill);
         } else if (skillType == MCAxeSkill) {
             axeSkills_->addObject(skill);

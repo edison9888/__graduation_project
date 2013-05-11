@@ -299,7 +299,7 @@ MCEnemy::died()
 {
     MCSceneContext *sceneContext = MCSceneContextManager::sharedSceneContextManager()->currentContext();
     sceneContext->enemyWasDied(this);
-    
+        
     MCRoleEntity *roleEntity = getEntity();
     roleEntity->stopPathFinding();
     roleEntity->stopWalking();
