@@ -96,7 +96,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 #else
     CCSize designSize = CCSizeMake(960, 640);
     
-    searchPaths.push_back(PCResource.directory);
+    searchPaths.push_back(CommonResource.directory);
     if (frameSize.height > 1280) {
         CCSize resourceSize = CCSizeMake(2048, 1536);
         std::vector<std::string> searchPaths;

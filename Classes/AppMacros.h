@@ -41,6 +41,7 @@ typedef struct tagResource
 }Resource;
 
 
+#if MC_ADAPTIVE_RESOLUTION == 1
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 static Resource smallResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
 //static Resource mediumResource =  { cocos2d::CCSizeMake(1024, 768),  "ipad"   };
@@ -63,6 +64,9 @@ static Resource resources[] = {
 //static Resource PCResource  =  { cocos2d::CCSizeMake(800, 480),   "iphone" };
 static Resource PCResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
 #endif // WIN32、MAC、LINUX
+#else
+static Resource CommonResource  =  { cocos2d::CCSizeMake(960, 640),   "iphone" };
+#endif
 
 // The font size 24 is designed for small resolution, so we should change it to fit for current design resolution
 #define TITLE_FONT_SIZE  (cocos2d::CCEGLView::sharedOpenGLView()->getDesignResolutionSize().width / smallResource.size.width * 24)

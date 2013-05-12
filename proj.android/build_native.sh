@@ -1,4 +1,4 @@
-APPNAME="Military Confrontation_Info"
+APPNAME="Military Confrontation"
 
 # options
 
@@ -28,10 +28,24 @@ exit 0
 esac
 done
 
-# path
+# read local.properties
+
+_LOCALPROPERTIES_FILE=$(dirname "$0")"/local.properties"
+if [ -f "$_LOCALPROPERTIES_FILE" ]
+then
+[ -r "$_LOCALPROPERTIES_FILE" ] || die "Fatal Error: $_LOCALPROPERTIES_FILE exists but is unreadable"
+
+# strip out entries with a "." because Bash cannot process variables with a "."
+_PROPERTIES=`sed '/\./d' "$_LOCALPROPERTIES_FILE"`
+for line in "$_PROPERTIES"; do
+declare "$line";
+done
+fi
+
+# paths
 
 if [ -z "${NDK_ROOT+aaa}" ];then
-echo "please define NDK_ROOT"
+echo "NDK_ROOT not defined. Please define NDK_ROOT in your environment or in local.properties"
 exit 1
 fi
 
@@ -49,7 +63,7 @@ echo "APP_ANDROID_ROOT = $APP_ANDROID_ROOT"
 
 # make sure assets is exist
 if [ -d "$APP_ANDROID_ROOT"/assets ]; then
-    rm -rf "$APP_ANDROID_ROOT"/assets
+rm -rf "$APP_ANDROID_ROOT"/assets
 fi
 
 mkdir "$APP_ANDROID_ROOT"/assets
@@ -58,15 +72,27 @@ mkdir "$APP_ANDROID_ROOT"/assets
 for file in "$APP_ROOT"/Resources/*
 do
 if [ -d "$file" ]; then
-    cp -rf "$file" "$APP_ANDROID_ROOT"/assets
+cp -rf "$file" "$APP_ANDROID_ROOT"/assets
 fi
 
 if [ -f "$file" ]; then
-    cp "$file" "$APP_ANDROID_ROOT"/assets
+cp "$file" "$APP_ANDROID_ROOT"/assets
 fi
 done
 
-echo "Using prebuilt externals"
-set -x
+# remove test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_image_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba8888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgb888.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_rgba4444.pvr.gz
+rm -f "$APP_ANDROID_ROOT"/assets/Images/test_1021x1024_a8.pvr.gz
+
+if [[ "$buildexternalsfromsource" ]]; then
+echo "Building external dependencies from source"
 "$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
-    "NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
+"NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/source"
+else
+echo "Using prebuilt externals"
+"$NDK_ROOT"/ndk-build -C "$APP_ANDROID_ROOT" $* \
+"NDK_MODULE_PATH=${COCOS2DX_ROOT}:${COCOS2DX_ROOT}/cocos2dx/platform/third_party/android/prebuilt"
+fi
