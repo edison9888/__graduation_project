@@ -53,11 +53,11 @@ private:
     CCArray *otherSkills_; /* 佣兵和敌人的技能 */
     
     /* 熟练度 */
-    mc_proficiency_t swordProficiency_;
-    mc_proficiency_t hammerProficiency_;
-    mc_proficiency_t axeProficiency_;
-    mc_proficiency_t spearProficiency_;
-    mc_proficiency_t bowProficiency_;
+    CC_SYNTHESIZE_READONLY(mc_proficiency_t, swordProficiency_, SwordProficiency);
+    CC_SYNTHESIZE_READONLY(mc_proficiency_t, hammerProficiency_, HammerProficiency);
+    CC_SYNTHESIZE_READONLY(mc_proficiency_t, axeProficiency_, AxeProficiency);
+    CC_SYNTHESIZE_READONLY(mc_proficiency_t, spearProficiency_, SpearProficiency);
+    CC_SYNTHESIZE_READONLY(mc_proficiency_t, bowProficiency_, BowProficiency);
 };
 
 #endif /* defined(__Military_Confrontation__MCSkillManager__) */

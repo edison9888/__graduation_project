@@ -118,6 +118,14 @@ MCSkillLayer::init()
         icon_->setPosition(ccp(winSize.width - 64.0f / contentScaleFactor,
                                winSize.height - 64.0f / contentScaleFactor));
         
+        proficiency_ = CCLabelTTF::create("熟练度", "", fontSize);
+        addChild(proficiency_);
+        
+        proficiency_->setAnchorPoint(ccp(1, 0));
+        proficiency_->setPosition(ccp(winSize.width - 64.0f / contentScaleFactor,
+                                      64.0f / contentScaleFactor));
+        proficiency_->setVisible(false);
+        
         selectedCell_ = NULL;
         selectedSkill_ = NULL;
         
@@ -238,6 +246,7 @@ MCSkillLayer::tableCellTouched(CCTableView *table, CCTableViewCell *cell)
     
     contentTableView_->reloadData();
     contentTableView_->setVisible(true);
+    proficiency_->setVisible(true);
 }
 
 void
@@ -245,6 +254,7 @@ MCSkillLayer::loadData()
 {
     icon_->setVisible(false);
     contentTableView_->setVisible(false);
+    proficiency_->setVisible(false);
 }
 
 void
@@ -252,9 +262,36 @@ MCSkillLayer::selectSkillType(CCObject *anObject)
 {
     CCMenuItemLabel *menuItem = dynamic_cast<CCMenuItemLabel *>(anObject);
     MCSkillType skillType = (MCSkillType) menuItem->getTag();
+    MCSkillManager *skillManager = MCSkillManager::sharedSkillManager();
+    const char *weapon = NULL;
+    mc_proficiency_t proficiency;
     
+    if (skillType == MCSwordSkill) {
+        weapon = "剑";
+        proficiency = skillManager->getSwordProficiency();
+    } else if (skillType == MCHammerSkill) {
+        weapon = "锤";
+        proficiency = skillManager->getHammerProficiency();
+    } else if (skillType == MCAxeSkill) {
+        weapon = "斧";
+        proficiency = skillManager->getAxeProficiency();
+    } else if (skillType == MCSpearSkill) {
+        weapon = "枪";
+        proficiency = skillManager->getSpearProficiency();
+    } else if (skillType == MCBowSkill) {
+        weapon = "弓";
+        proficiency = skillManager->getBowProficiency();
+    } else {
+        proficiency = 0;
+    }
     icon_->setVisible(false);
     contentTableView_->setVisible(false);
+    if (weapon != NULL) {
+        proficiency_->setString(CCString::createWithFormat("%s的熟练度: %hu",
+                                                           weapon,
+                                                           proficiency)->getCString());
+    }
+    proficiency_->setVisible(true);
     skills_ = MCSkillManager::sharedSkillManager()->skillsForSkillType(skillType);
     tableView_->reloadData();
 }

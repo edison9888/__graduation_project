@@ -27,6 +27,7 @@ MCViewportLayer::init()
         barriers = CCArray::create();
         barriers->retain();
         objects->addObject(MCHero::sharedHero());
+        mezzanine = NULL;
         return true;
     }
     
@@ -235,7 +236,7 @@ MCViewportLayer::draw(void)
 #endif
         
         /* skills */
-        if (MC_SHOW_SKILLS) {
+        if (MC_SHOW_SKILLS && mezzanine) {
             CCPoint points[4];
             CCArray *skills = mezzanine->getSkills();
             CCARRAY_FOREACH(skills, obj) {

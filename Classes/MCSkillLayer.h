@@ -52,6 +52,8 @@ private:
     
     MCSkill *selectedSkill_;
     
+    CCLabelTTF *proficiency_;
+    
     JsonBox::Array content_;
     CCArray *skills_;
 };

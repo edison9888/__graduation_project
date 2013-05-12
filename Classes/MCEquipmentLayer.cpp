@@ -10,6 +10,8 @@
 #include "MCEquipmentLayer.h"
 #include "MCHero.h"
 #include "MCEquipmentManager.h"
+#include "MCToast.h"
+#include "MCTaskManager.h"
 
 #include <cocos-ext.h>
 USING_NS_CC_EXT;
@@ -528,6 +530,10 @@ MCEquipmentLayer::itemDidClick(CCObject *obj)
 void
 MCEquipmentLayer::changeWeapon(CCObject *obj)
 {
+    if (MCTaskManager::sharedTaskManager()->isTaskActiviting()) {
+        MCToast::make(this, "任务中不允许切换武器！")->show();
+        return;
+    }
     MCWeaponSelector::weaponSelector(this, this);
 }
 

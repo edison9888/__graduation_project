@@ -284,6 +284,14 @@ MCScene::onExit()
     CCScene::onExit();
     
     MCSceneContextManager::sharedSceneContextManager()->popContext();
+    
+    MCTaskManager *taskManager = MCTaskManager::sharedTaskManager();
+    
+    /* 没有接受任务则会销毁场景 */
+    if (!taskManager->isTaskAccepted()
+        && !taskManager->isTaskActiviting()) {
+        MCSceneManager::sharedSceneManager()->cleanupSceneWithObjectId(scenePackage_->getID());
+    }
 }
 
 void

@@ -166,7 +166,6 @@ MCBackpack::saveData()
     /* 储存金钱 */
     backpack[kMCMoneyKey] = JsonBox::Value(money_);
     
-    /* 储存当前使用的武器 */
     JsonBox::Value backpackValue(backpack);
     ostringstream outputStream;
     backpackValue.writeToStream(outputStream);
