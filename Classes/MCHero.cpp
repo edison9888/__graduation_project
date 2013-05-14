@@ -121,7 +121,8 @@ MCHero::roleOfFront()
 void
 MCHero::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
 {
-    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    MCEquipmentItem *currentWeapon = MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon();
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(currentWeapon->getEquipment());
     
     if (!canAttackTarget(aTargetRole)
         || weapon->consume > pp_ /* 不够体力 */
@@ -155,9 +156,10 @@ MCHero::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSele
                                    aTargetRole);
         return;
     }
-    /* 进入攻击判断 */
-//    printf("进入攻击判断\n");
     pp_ -= weapon->consume;
+    /* 提升熟练度 */
+    MCSkillManager::sharedSkillManager()->improveProficiency(currentWeapon->getID().sub_class_ - '0');
+    /* 进入攻击判断 */
     MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTargetRole);
     if (aTarget) {
         (aTarget->*aSelector)(anUserObject ? anUserObject : this);

@@ -11,6 +11,7 @@
 #include "MCGameState.h"
 #include "MCScene.h"
 #include "MCEffectManager.h"
+#include "MCSkillManager.h"
 
 const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码没有最后的= */
 const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
@@ -105,7 +106,8 @@ MCDungeonMaster::roleAttackTarget(MCRole *aRole, MCRole *aTarget)
         bool isCriticalHit = aRole->attackCheckCriticalHit(diceRange);
         
         /* 决定伤害值 */
-        mc_damage_t damage = aRole->attackGetDamage(aRole->getOffensiveDamage(), aTarget->getArmorCheckPenalty());
+        mc_damage_t damage = aRole->attackGetDamage(aRole->getOffensiveDamage(),
+                                                    aTarget->getArmorCheckPenalty());
         if (isCriticalHit) {
             damage *= aRole->getCriticalHit();
         }
