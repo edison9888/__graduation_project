@@ -12,6 +12,8 @@
 #include "MCTaskTarget.h"
 #include "MCTaskContext.h"
 #include "MCRegionManager.h"
+#include "MCTeam.h"
+#include "MCMercenary.h"
 
 MCTask::MCTask()
 {
@@ -169,8 +171,6 @@ MCTask::generateTaskContext()
     
     if (taskContext_ == NULL) {
         taskContext_ = new MCTaskContext;
-        taskContext_->healthPotion_->count = backpack->getHealthPotion()->count;
-        taskContext_->physicalPotion_->count = backpack->getPhysicalPotion()->count;
         switch (trapType_) {
             case MCFireballTrap:
                 taskContext_->trapWide_->item = backpack->getFireballTrapWide()->item;
@@ -235,6 +235,32 @@ MCTask::generateTaskContext()
         
         taskContext_->task_ = this;
         taskContext_->taskRegion_ = region_;
+        
+        /* 佣兵技能效果 */
+        CCArray *team = MCTeam::sharedTeam()->getRoles();
+        CCArray *skills;
+        CCObject *obj;
+        CCObject *sobj;
+        MCRole *role;
+        MCMercenary *mercenary;
+        MCSkill *skill;
+        CCARRAY_FOREACH(team, obj) {
+            role = dynamic_cast<MCRole *>(obj);
+            if (! role->isHero()) {
+                mercenary = dynamic_cast<MCMercenary *>(role);
+                skills = mercenary->getSkills();
+                CCARRAY_FOREACH(skills, sobj) {
+                    skill = dynamic_cast<MCSkill *>(sobj);
+                    if (skill->getID().sub_class_ == '6') { /* 佣兵被动技能 */
+                        taskContext_->hp_ += skill->hp;
+                        taskContext_->pp_ += skill->pp;
+                        taskContext_->damageBonus_ += skill->damageBonus;
+                        taskContext_->armorCheckPenalty_ += skill->armorCheckPenalty;
+                        taskContext_->special_ |= skill->special;
+                    }
+                }
+            }
+        }
     }
 }
 

@@ -14,6 +14,12 @@ MCTaskContext::MCTaskContext()
     trapDamage_ = new MCBackpackItem;
     healthPotion_ = new MCBackpackItem;
     physicalPotion_ = new MCBackpackItem;
+    
+    hp_ = 0;
+    pp_ = 0;
+    damageBonus_ = 0;
+    armorCheckPenalty_ = 0;
+    special_ = MCNoSpecial;
 }
 
 MCTaskContext::~MCTaskContext()

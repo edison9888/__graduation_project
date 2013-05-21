@@ -128,7 +128,7 @@ MCSkill::skillDidHitTarget(MCRole *aTarget)
     
     if (! isContinuable) {
         /* 不是可持续的技能的话，命中后就将消失 */
-#warning todo
+        mezzanine->detach(this);
     }
 }
 

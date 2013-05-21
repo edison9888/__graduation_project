@@ -37,6 +37,12 @@ MCLoadingSharedScene()
     return __shared_loading_scene;
 }
 
+MCLoading::~MCLoading()
+{
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this,
+                                                                     kMCSceneDidLoadNotification);
+}
+
 bool
 MCLoading::init()
 {
@@ -55,6 +61,11 @@ MCLoading::init()
         points_->setAnchorPoint(ccp(0, 0));
         points_->setPosition(ccp(label->getPositionX() + 4,
                                  label->getPositionY()));
+        
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                      callfuncO_selector(MCLoading::sceneDidLoad),
+                                                                      kMCSceneDidLoadNotification,
+                                                                      NULL);
         
         return true;
     }
@@ -90,10 +101,6 @@ void
 MCLoading::loadNewScene()
 {
     setOpacity(0);
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(MCLoading::sceneDidLoad),
-                                                                  kMCSceneDidLoadNotification,
-                                                                  NULL);
     CCDirector::sharedDirector()->pushScene(MCLoadingSharedScene());
     schedule(schedule_selector(MCLoading::loading));
     runAction(CCFadeIn::create(kMCActionDuration));

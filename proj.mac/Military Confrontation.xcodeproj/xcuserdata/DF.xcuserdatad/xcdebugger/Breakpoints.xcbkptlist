@@ -33,32 +33,6 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "../Classes/MCAStar.cpp"
-         timestampString = "389503839.238664"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "217"
-         endingLineNumber = "217"
-         landmarkName = "mc_astar_algorithm_process(void *obj)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "../Classes/MCAStar.cpp"
-         timestampString = "389503851.133366"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "239"
-         endingLineNumber = "239"
-         landmarkName = "mc_astar_algorithm_process(void *obj)"
-         landmarkType = "7">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "../Classes/MCRoleEntity.cpp"
          timestampString = "389592210.983213"
          startingColumnNumber = "9223372036854775807"
@@ -86,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCRole.cpp"
-         timestampString = "389631400.672955"
+         timestampString = "390821596.108236"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "356"
-         endingLineNumber = "356"
+         startingLineNumber = "359"
+         endingLineNumber = "359"
          landmarkName = "MCRole::canAttackTarget(MCRole *aRole)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCRole.cpp"
-         timestampString = "389858858.861237"
+         timestampString = "390821596.108236"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "369"
-         endingLineNumber = "369"
+         startingLineNumber = "372"
+         endingLineNumber = "372"
          landmarkName = "MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)"
          landmarkType = "5">
       </FileBreakpoint>

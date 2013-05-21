@@ -32,12 +32,18 @@
          contextName = "mach_msg_trap:(null)">
          <PersistentStrings>
             <PersistentString
-               value = "MCHero::sharedHero()-&gt;ai_">
-            </PersistentString>
-            <PersistentString
                value = "MCHero::sharedHero()">
             </PersistentString>
+            <PersistentString
+               value = "MCTeam::sharedTeam()">
+            </PersistentString>
+            <PersistentString
+               value = "MCHero::sharedHero()-&gt;ai_">
+            </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCTaskManager::taskDidFinish(cocos2d::CCObject*):MCTaskManager.cpp">
       </ContextState>
       <ContextState
          contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
@@ -52,6 +58,9 @@
       </ContextState>
       <ContextState
          contextName = "MCEnemy::copy():MCEnemy.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCIssuingTaskUI::generate():MCIssuingTaskUI.cpp">
       </ContextState>
       <ContextState
          contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
@@ -69,6 +78,22 @@
          <PersistentStrings>
             <PersistentString
                value = "this-&gt;teams_">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleBaseInfoGroup::MCRoleBaseInfoGroup():MCRoleBaseInfo.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "MCTeam::sharedTeam()-&gt;teams_">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCTeamLayer::init():MCTeamLayer.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "MCTeam::sharedTeam()-&gt;teams_">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

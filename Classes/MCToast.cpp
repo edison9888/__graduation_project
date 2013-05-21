@@ -10,8 +10,6 @@
 
 static const float kMCActionDuration = 0.1f;
 
-static MCToast *__default_toast = NULL;
-
 bool
 MCToast::init()
 {
@@ -56,17 +54,13 @@ MCToast::init()
 MCToast *
 MCToast::make(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
 {
-    MCToast *toast;
+    MCToast *toast = new MCToast;
     
-    if (__default_toast == NULL) {
-        __default_toast = new MCToast;
-        if (__default_toast && __default_toast->init()) {
-        } else {
-            delete __default_toast;
-            __default_toast = NULL;
-        }
+    if (toast && toast->init()) {
+    } else {
+        delete toast;
+        toast = NULL;
     }
-    toast = __default_toast;
     
     toast->parent_ = aParent;
     toast->message_ = CCString::create(aMessage);
@@ -79,11 +73,14 @@ MCToast::make(CCNode *aParent, const char *aMessage, MCToastLength aToastLength)
 void
 MCToast::show()
 {
-    CCAssert(parent_ != NULL, "parent node is null!");
     dialogue_->setString(message_->getCString());
     CC_SAFE_RELEASE(message_);
     m_obPosition = ccp(0, -edge_->getContentSize().height);
-    parent_->addChild(this);
+    if (parent_ == NULL) {
+        CCDirector::sharedDirector()->getRunningScene()->addChild(this);
+    } else {
+        parent_->addChild(this);
+    }
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
     scheduleOnce(schedule_selector(MCToast::hide), length_);
 }
@@ -107,5 +104,5 @@ MCToast::hide(CCObject *obj)
 void
 MCToast::destroy(CCObject *obj)
 {
-    removeFromParentAndCleanup(true);
+    removeFromParentAndCleanup(false);
 }

@@ -15,6 +15,7 @@ USING_NS_CC;
 
 class MCLoading : public CCLayerColor {
 public:
+    ~MCLoading();
     bool init();
     
     static MCLoading *sharedLoading();

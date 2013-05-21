@@ -1,8 +1,27 @@
-class MCDungeonMaster  {
+class MCDungeonMaster {
     static MCDungeonMaster *sharedDungeonMaster();
     
-    void saveSpawnPoint();
+    void speak(const char *aMessage);
+    
+    /**
+     * aRole将要攻击aTarget
+     * 由AI调用
+     *
+     * 筛选掉释放后会体力透支的技能攻击方式，然后在剩余的技能中选择评分最高的技能。
+     * 若没留下，则普通攻击。
+     */
+//    void roleWillAttack(MCRole *aRole, MCRole *aTargetRole, CCObject *aTarget=NULL, SEL_CallFuncO aSelector=NULL, CCObject *anUserObject=NULL);
 
-  mc_object_id_t getSpawnPointID();
-  void setSpawnPointID(mc_object_id_t var);
+    /**
+     * aRole攻击aTarget
+     */
+    void roleAttackTarget(MCRole *aRole, MCRole *aTarget);
+    
+    void destroyGameWorld();
+    
+    void saveSpawnPoint();
+    void loadSpawnPoint();
+
+    mc_object_id_t getSpawnPointID();
+    void setSpawnPointID(mc_object_id_t var);
 };

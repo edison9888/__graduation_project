@@ -173,6 +173,13 @@ public:
         return false;
     }
     
+    inline void restoreState() {
+        roleState_ = MCNormalState;
+        hp_ = maxHP_;
+        pp_ = maxPP_;
+        exhausted_ = false;
+    }
+    
     inline mc_hp_t updateHP(mc_hp_t var) {
         hp_ += var;
         if (hp_ > maxHP_) {
@@ -235,6 +242,10 @@ protected:
     CC_SYNTHESIZE(MCScript *, trigger_, Trigger);
     
     CC_SYNTHESIZE_RETAIN(MCSkill *, skillWillUse_, SkillWillUse);
+    
+    /* 被动提升的属性 */
+    CC_SYNTHESIZE(mc_damage_t, additionalDamageBonus_, AdditionalDamageBonus);
+    CC_SYNTHESIZE(mc_armor_check_penalty_t, additionalArmorCheckPenalty_, AdditionalArmorCheckPenalty);
     
     struct cc_timeval lastAttackTimestamp_;
     /* 攻击回调 */

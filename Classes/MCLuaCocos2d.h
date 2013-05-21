@@ -25,5 +25,6 @@
 
 /* system */
 #include "MCDungeonMaster.h"
+#include "MCFlagManager.h"
 
 #endif

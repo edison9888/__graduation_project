@@ -38,7 +38,10 @@ public:
     ~MCSceneContext();
     
     void enemyWasDied(MCRole *aRole); /* 敌方人物挂了 */
-        
+    
+protected:
+    void missionCompleted(CCObject *anTaskObject);
+    
     CC_SYNTHESIZE_READONLY(CCArray *, objects_, Objects); /* 场景对象 */
     CC_SYNTHESIZE_READONLY(MCScene *, scene_, Scene);
     CC_SYNTHESIZE_READONLY(bool, inited_, Inited); /* 是否初始化过场景对象 */

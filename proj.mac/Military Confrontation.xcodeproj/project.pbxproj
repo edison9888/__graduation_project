@@ -422,6 +422,7 @@
 		A30DDB0A16B664D20001C53F /* MCNPC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCNPC.h; path = ../Classes/MCNPC.h; sourceTree = "<group>"; };
 		A30DDB0C16B664DA0001C53F /* MCEnemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCEnemy.cpp; path = ../Classes/MCEnemy.cpp; sourceTree = "<group>"; };
 		A30DDB0D16B664DA0001C53F /* MCEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCEnemy.h; path = ../Classes/MCEnemy.h; sourceTree = "<group>"; };
+		A30FAE45174A59D900B38501 /* MCFlagManager.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCFlagManager.cxxpkg; path = ../tools/lua/MCFlagManager.cxxpkg; sourceTree = "<group>"; };
 		A312D2C616EF3EBC008AAD4B /* MCRoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCRoleManager.cpp; path = ../Classes/MCRoleManager.cpp; sourceTree = "<group>"; };
 		A312D2C716EF3EBC008AAD4B /* MCRoleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCRoleManager.h; path = ../Classes/MCRoleManager.h; sourceTree = "<group>"; };
 		A312D2CA16EF41FC008AAD4B /* MCTestRoleManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCTestRoleManager.cpp; path = ../Classes/MCTestRoleManager.cpp; sourceTree = "<group>"; };
@@ -1512,6 +1513,7 @@
 			isa = PBXGroup;
 			children = (
 				A38B8285171B1A5200ABF7B4 /* MCDungeonMaster.cxxpkg */,
+				A30FAE45174A59D900B38501 /* MCFlagManager.cxxpkg */,
 			);
 			name = System;
 			sourceTree = "<group>";
@@ -3014,6 +3016,7 @@
 					"$(inherited)",
 					CC_ENABLE_BOX2D_INTEGRATION,
 					"MC_ADAPTIVE_RESOLUTION=0",
+					"MC_DEBUG_ASTAR=0",
 				);
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
@@ -3062,6 +3065,7 @@
 					CC_TARGET_OS_MAC,
 					CC_ENABLE_BOX2D_INTEGRATION,
 					"MC_ADAPTIVE_RESOLUTION=0",
+					"MC_DEBUG_ASTAR=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = "";

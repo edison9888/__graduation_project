@@ -153,6 +153,13 @@ MCMezzanine::attach(MCSkill *aSkill)
 }
 
 void
+MCMezzanine::detach(MCSkill *aSkill)
+{
+    removeChild(aSkill->fakeNode());
+    skills_->removeObject(aSkill);
+}
+
+void
 MCMezzanine::detectsSkills(MCRole *aRole)
 {
     CCObject *obj;

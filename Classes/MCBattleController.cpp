@@ -34,6 +34,9 @@ MCActionBarItemIsPotion(MCActionBarItem *anActionBarItem)
 
 MCBattleController::~MCBattleController()
 {
+    CC_SAFE_RELEASE(teamLayer_);
+    CC_SAFE_RELEASE(actionBar_);
+    CC_SAFE_RELEASE(skillBar_);
     CC_SAFE_RELEASE(skillBarItemSelectedEffect_);
 }
 

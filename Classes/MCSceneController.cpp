@@ -48,7 +48,20 @@ MCSceneController::sharedSceneController()
  * 死亡或者开始游戏的时候加载，场景为最后的重生点场景
  */
 void
-MCSceneController::loadSpawnScene()
+MCSceneController::loadSpawnScene(float delay)
+{
+    CCScheduler *m_pScheduler = CCDirector::sharedDirector()->getScheduler();
+    
+    m_pScheduler->scheduleSelector(schedule_selector(MCSceneController::_loadSpawnScene),
+                                   this,
+                                   0.0f,
+                                   0,
+                                   delay,
+                                   false);
+}
+
+void
+MCSceneController::_loadSpawnScene(float dt)
 {
     MCDungeonMaster *dm = MCDungeonMaster::sharedDungeonMaster();
     
@@ -90,7 +103,6 @@ MCSceneController::requestChangingScene()
 void
 MCSceneController::__loadScene()
 {
-    CCLog("will load scene");
     MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(expectedSceneId_);
     expectedScene_ = newScene;
     CCString *entranceName = newScene->getEntranceName();
@@ -102,7 +114,6 @@ MCSceneController::__loadScene()
         newScene->setEntranceName(entranceName);
         entranceName->retain();
     }
-    CCLog("did load scene");
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCSceneDidLoadNotification);
 }

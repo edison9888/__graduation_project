@@ -1,0 +1,38 @@
+class MCFlagManager {
+    
+    static MCFlagManager *sharedFlagManager();
+    
+    MCFlag *flagForObjectId(mc_object_id_t anObjectId);
+    MCFlagState flagStateForObjectId(mc_object_id_t anObjectId);
+    
+    void updateFlag(MCFlag *aFlag);
+    
+    /**
+     * 清除数据
+     */
+    void erase();
+    
+    /**
+     * save all flags
+     */
+    void saveAllFlags();
+    
+    bool isTaskStarted();
+    
+    void setTaskStarted(bool flag);
+
+    bool isAreaBlocked();
+    
+    void unblockArea();
+    
+    bool isSpawnFlagOn();
+    
+    void setSpawnFlagOff();
+    
+    void spawn();
+    
+    /**
+     * load all flags
+     */
+    void loadAllFlags();
+};

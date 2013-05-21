@@ -36,6 +36,16 @@ MCTeam::sharedTeam()
     return __shared_team;
 }
 
+/* 恢复人物状态 */
+void
+MCTeam::restoreRoles()
+{
+    CCObject *obj;
+    CCARRAY_FOREACH(teams_, obj) {
+        dynamic_cast<MCRole *>(obj)->restoreState();
+    }
+}
+
 CCArray *
 MCTeam::getRoles()
 {
@@ -46,7 +56,7 @@ MCRole *
 MCTeam::roleAtIndex(mc_index_t anIndex)
 {
     if (anIndex < teams_->count()) {
-        return (MCRole *) teams_->objectAtIndex(anIndex);
+        return dynamic_cast<MCRole *>(teams_->objectAtIndex(anIndex));
     }
     
     return NULL;
@@ -58,7 +68,7 @@ MCTeam::hasRole(MCRole *aRole)
     CCObject *obj;
     MCRole *role;
     CCARRAY_FOREACH(teams_, obj) {
-        role = (MCRole *)obj;
+        role = dynamic_cast<MCRole *>(obj);
         if (role == aRole) {
             return true;
         }

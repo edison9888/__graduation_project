@@ -96,7 +96,7 @@ MCMainMenu::confirmDidClickYesButton(MCConfirm *aConfirm)
     if (confirmOperation_ == MCStartNewGameOperation) {
         MCDungeonMaster::sharedDungeonMaster()->destroyGameWorld();
         MCGameState::sharedGameState()->load();
-        MCSceneController::sharedSceneController()->loadSpawnScene();
+        MCSceneController::sharedSceneController()->loadSpawnScene(0.0f);
     } else if (confirmOperation_ == MCQuitOperation) {
         CCDirector::sharedDirector()->end();
         
@@ -110,7 +110,7 @@ void
 MCMainMenu::continue_clicked(CCObject *aSender)    /* 继续游戏 */
 {
     MCGameState::sharedGameState()->load();
-    MCSceneController::sharedSceneController()->loadSpawnScene();
+    MCSceneController::sharedSceneController()->loadSpawnScene(0.0f);
 }
 
 void
@@ -121,7 +121,7 @@ MCMainMenu::playGame_clicked(CCObject *aSender)    /* 单人游戏 */
         MCConfirm::confirm(this, this, "要开始新游戏吗？");
     } else {
         MCGameState::sharedGameState()->load();
-        MCSceneController::sharedSceneController()->loadSpawnScene();
+        MCSceneController::sharedSceneController()->loadSpawnScene(0.0f);
     }
 }
 

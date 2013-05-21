@@ -19,6 +19,9 @@ public:
     
     static MCTeam *sharedTeam();
     
+    /* 恢复人物状态 */
+    void restoreRoles();
+    
     CCArray *getRoles();
     MCRole *roleAtIndex(mc_index_t anIndex);
     

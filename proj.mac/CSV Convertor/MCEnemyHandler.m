@@ -14,7 +14,7 @@ static const NSUInteger kMCIDIndex = 0;
 MCDefineIndexAndKey(Name, 1, name);
 MCDefineIndexAndKey(SpriteSheet, 2, sprite-sheet);
 MCDefineIndexAndKey(EffectID, 3, effect-id);
-MCDefineIndexAndKey(AI, 4, AI);
+MCDefineIndexAndKey(RoleRace, 4, role-race);
 MCDefineIndexAndKey(HP, 5, HP);
 MCDefineIndexAndKey(PP, 6, PP);
 MCDefineIndexAndKey(Consume, 7, consume);
@@ -71,7 +71,7 @@ MCDefineIndexAndKey(EffectCheck, 26, effect-check);
     /* effect-id */
     [content setObject:[data objectAtIndex:kMCEffectIDIndex] forKey:kMCEffectIDKey];
     /* AI */
-    [content setObject:[data objectAtIndex:kMCAIIndex] forKey:kMCAIKey];
+    [content setObject:@([[data objectAtIndex:kMCRoleRaceIndex] integerValue]) forKey:kMCRoleRaceKey];
     /* HP */
     [content setObject:@([[data objectAtIndex:kMCHPIndex] integerValue]) forKey:kMCHPKey];
     /* PP */

@@ -20,7 +20,7 @@ enum {
 };
 typedef mc_enum_t MCChangeSceneMethod;
 
-class MCSceneController {
+class MCSceneController : public CCObject {
 private:
     MCSceneController();
 public:
@@ -31,7 +31,7 @@ public:
     /**
      * 死亡或者开始游戏的时候加载，场景为最后的重生点场景
      */
-    void loadSpawnScene();
+    void loadSpawnScene(float delay);
     
     /**
      * 提交期待转换的场景信息
@@ -56,6 +56,9 @@ public:
      * 切换当前场景为aNewScene
      */
     void __changeScene();
+    
+protected:
+    void _loadSpawnScene(float dt);
     
 private:
     bool loadSpawnScene_;

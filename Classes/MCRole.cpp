@@ -51,6 +51,9 @@ MCRole::MCRole()
     skillWillUse_ = NULL;
     lastAttackTimestamp_.tv_sec = 0;
     lastAttackTimestamp_.tv_usec = 0;
+    
+    additionalDamageBonus_ = 0;
+    additionalArmorCheckPenalty_ = 0;
 }
 
 
@@ -490,7 +493,7 @@ MCRole::attackCheckCriticalHit(MCDiceRange aRange)
 mc_damage_t
 MCRole::attackGetDamage(mc_damage_t anOffensiveDamage, mc_armor_check_penalty_t anArmorCheckPenalty)
 {
-    mc_damage_t damage = anOffensiveDamage + anArmorCheckPenalty;
+    mc_damage_t damage = anOffensiveDamage + anArmorCheckPenalty + additionalDamageBonus_ + additionalArmorCheckPenalty_;
 #if MC_BATTLE_INFO_LEVEL == 1
     printf("伤害判定：%hi + %hi => %hi%s\n",
            anOffensiveDamage,

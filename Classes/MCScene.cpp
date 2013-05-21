@@ -38,7 +38,8 @@ MCSceneContext::~MCSceneContext()
 void
 MCSceneContext::enemyWasDied(MCRole *aRole)
 {
-    MCTaskContext *taskContext = MCTaskManager::sharedTaskManager()->getCurrentTask()->getTaskContext();
+    MCTask *currentTask = MCTaskManager::sharedTaskManager()->getCurrentTask();
+    MCTaskContext *taskContext = currentTask->getTaskContext();
     CCArray *targets = taskContext->getTask()->getTargets();
     CCObject *obj;
     MCTaskTarget *target;
@@ -59,11 +60,28 @@ MCSceneContext::enemyWasDied(MCRole *aRole)
         }
     }
     
+    done = true;
     if (done) {
         /* 任务完成! */
-#warning todo: 任务完成!
-        CCLog("任务完成!");
+        CCSize winSize = CCDirectorGetWindowsSize();
+        CCLabelTTF *missionCompleted = CCLabelTTF::create("任务完成", "", 56 / CC_CONTENT_SCALE_FACTOR());
+        scene_->mezzanine()->addChild(missionCompleted);
+        missionCompleted->setAnchorPoint(ccp(0.5, 1));
+        missionCompleted->setPosition(ccp(winSize.width / 2, 0));
+        missionCompleted->runAction(CCSequence::create(CCMoveBy::create(0.4, ccp(0, winSize.height / 2)),
+                                                       CCDelayTime::create(0.5),
+                                                       CCMoveBy::create(0.6, ccp(0, winSize.height)),
+                                                       CCCallFuncO::create(this,
+                                                                           callfuncO_selector(MCSceneContext::missionCompleted),
+                                                                           currentTask),
+                                                       NULL));
     }
+}
+
+void
+MCSceneContext::missionCompleted(CCObject *anTaskObject)
+{
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCTaskDidFinishNotification, anTaskObject);
 }
 
 #pragma mark *** MCSceneContextManager ***

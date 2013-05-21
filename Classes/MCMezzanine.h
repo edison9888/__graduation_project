@@ -35,6 +35,7 @@ public:
     void flow(float dt);
     
     void attach(MCSkill *aSkill);
+    void detach(MCSkill *aSkill);
     
     CREATE_FUNC(MCMezzanine);
     

@@ -316,8 +316,8 @@ MCTaskLayer::loadData()
             targetsList.append(CCString::createWithFormat("%s %u/%u  \n",
                                                           roleManager->protoEnemyForObjectId(target->objectID)
                                                                      ->getName()->getCString(),
-                                                          target->count,
-                                                          target->remaining)->getCString());
+                                                          target->remaining,
+                                                          target->count)->getCString());
         }
         targets_->setString(targetsList.c_str());
         

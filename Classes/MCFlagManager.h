@@ -43,6 +43,10 @@ public:
         taskFlag_->setState(flag ? MCOnState : MCOffState);
     }
     
+    inline bool isAreaBlocked() {
+        return areaBlockedFlag_->getState() == MCOnState;
+    }
+    
     inline void unblockArea() {
         areaBlockedFlag_->setState(MCOffState);
     }

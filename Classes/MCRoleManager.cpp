@@ -329,16 +329,8 @@ MCRoleManager::loadEnemyData()
         MCEnemy *enemy = new MCEnemy;
         
         enemy->setID(enemy_id);
-        /* AI String */
-        const char *c_str_ai_id = enemyObject["AI"].getString().c_str();
-        mc_object_id_t ai_id = {
-            c_str_ai_id[0],
-            c_str_ai_id[1],
-            c_str_ai_id[2],
-            c_str_ai_id[3]
-        };
-        /* 敌人的类型由AI的ID那里获取，实际上的AI设置在生成精灵的时候设置 */
-        enemy->init(ai_id.index_ == '0' ? MCTerrestrial : MCFlying);
+        /* role-race Integer */
+        enemy->init(enemyObject["role-race"].getInt());
         enemy->autorelease();
         /* name String */
         ccstring = CCString::create(enemyObject["name"].getString().c_str());
@@ -355,7 +347,7 @@ MCRoleManager::loadEnemyData()
                                               c_str_o_id + 1);
         enemy->setSpriteSheet(ccstring);
         ccstring->retain();
-        /* effect-id */
+        /* effect-id String */
         c_str_o_id = enemyObject["effect-id"].getString().c_str();
         mc_object_id_t e_id = {
             c_str_o_id[0],

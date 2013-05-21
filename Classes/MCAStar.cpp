@@ -217,11 +217,17 @@ mc_astar_algorithm_process(void *obj)
     
     side = CCArrayGetAStarNodeByPoint(openList, endPoint->getPosition());
     if (side != NULL) {
+#if MC_DEBUG_ASTAR == 1
+        mapAltas[startPoint->getX() + startPoint->getY() * mapWidth] = 3;
+        mapAltas[endPoint->getX() + endPoint->getY() * mapWidth] = 7;
+#endif
         for (;;) {
             CCPoint target = ccp(side->getX() * edge, side->getY() * edge);
             route.push(target);
-            mapAltas[(mc_ssize_t) side->getX() + (mc_ssize_t) side->getY() * mapWidth] = 7;
-            side->getParent();
+#if MC_DEBUG_ASTAR == 1
+            mapAltas[(mc_ssize_t) side->getX() + (mc_ssize_t) side->getY() * mapWidth] = 4;
+#endif
+            
             if (side->getParent() == NULL
                 || (side->getParent() != NULL && side->getParent()->getParent() == NULL)) {
                 break;
@@ -229,11 +235,22 @@ mc_astar_algorithm_process(void *obj)
             side = side->getParent();
         }
     }
+#if MC_DEBUG_ASTAR == 1
+        CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
+              startPoint->getX() * (float) edge, startPoint->getY() * (float) edge,
+              endPoint->getX() * (float) edge, endPoint->getY() * (float) edge);
+        
+        for (mc_ssize_t y = mapWidth - 1; y >= 0; --y) {
+            for (mc_ssize_t x = 0; x < mapWidth; ++x) {
+                printf("%d ", mapAltas[x + y * mapWidth]);
+            }
+            printf("\n");
+        }
+    mapAltas[startPoint->getX() + startPoint->getY() * mapWidth] = 0;
+    mapAltas[endPoint->getX() + endPoint->getY() * mapWidth] = 0;
+#endif
     CC_SAFE_RELEASE(openList);
     CC_SAFE_RELEASE(closedList);
-//    CCLog("start-altas(%.0f %.0f) end-altas(%.0f %.0f)",
-//          startPoint->getX() * (float) edge, startPoint->getY() * (float) edge,
-//          endPoint->getX() * (float) edge, endPoint->getY() * (float) edge);
     
     /* 发出算法结束的通知 */
     if (algo->isProcessing()) {

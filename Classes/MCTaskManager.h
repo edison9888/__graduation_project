@@ -11,7 +11,9 @@
 
 #include "MCTaskAccessor.h"
 
-class MCTaskManager {
+extern const char *kMCTaskDidFinishNotification;
+
+class MCTaskManager : public CCObject {
 private:
     MCTaskManager() :
     currentTask_(NULL) {};
