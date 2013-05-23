@@ -37,6 +37,7 @@ public:
     void saveData();
     
     void improveProficiency(MCSkillType aSkillType);
+    mc_proficiency_t proficiencyForSkillType(MCSkillType aSkillType);
     
 private:
     void loadSkills();

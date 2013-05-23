@@ -13,7 +13,7 @@
 #include <cocos2d.h>
 USING_NS_CC;
 
-extern const GLubyte kMCSkillBarItemInvalidOpacity;
+extern const GLubyte kMCSkillBarItemColdTimeOpacity;
 extern const GLubyte kMCSkillBarItemPassiveSkillOpacity;
 extern const GLubyte kMCSkillBarItemActiveSkillOpacity;
 
@@ -26,6 +26,12 @@ public:
     bool init(MCSkill *aSkill);
     
     static MCSkillBarItem *create(MCSkill *aSkill);
+    
+    /* cold time */
+    void intoColdTime();
+    bool inColdTime();
+    
+    bool selectable();
     
     inline bool isSelected() {
         return isSelected_;
@@ -40,6 +46,8 @@ public:
     }
     
 private:
+    void coldTimeDidFinish(CCObject *anObject);
+    
     CC_SYNTHESIZE_READONLY(CCLabelTTF *, pp_, PP);
     CC_SYNTHESIZE_READONLY(MCSkill *, skill_, Skill);
     

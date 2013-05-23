@@ -217,6 +217,25 @@ MCRoleBaseInfoGroup::~MCRoleBaseInfoGroup()
     CC_SAFE_RELEASE(infoList_);
 }
 
+MCRoleBaseInfo *
+MCRoleBaseInfoGroup::roleBaseInfoForRole(MCRole *aRole)
+{
+    if (aRole == NULL) {
+        return NULL;
+    }
+    
+    CCObject *obj;
+    MCRoleBaseInfo *info;
+    CCARRAY_FOREACH(infoList_, obj) {
+        info = dynamic_cast<MCRoleBaseInfo *>(obj);
+        if (info->getRole() == aRole) {
+            return info;
+        }
+    }
+    
+    return NULL;
+}
+
 void
 MCRoleBaseInfoGroup::addRoleBaseInfo(MCRoleBaseInfo *anInfo)
 {
@@ -231,9 +250,10 @@ MCRoleBaseInfoGroup::addRoleBaseInfo(MCRoleBaseInfo *anInfo)
 void
 MCRoleBaseInfoGroup::removeRoleBaseInfo(MCRoleBaseInfo *anInfo)
 {
+    team_->removeRole(anInfo->getRole());
     infoList_->removeObject(anInfo);
     removeChild(anInfo);
-    team_->removeRole(anInfo->getRole());
+    align();
 }
 
 mc_size_t

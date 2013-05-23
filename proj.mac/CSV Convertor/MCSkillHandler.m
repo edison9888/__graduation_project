@@ -21,7 +21,7 @@ MCDefineIndexAndKey(Distance, 7, distance);
 MCDefineIndexAndKey(Length, 8, length);
 MCDefineIndexAndKey(Breadth, 9, breadth);
 MCDefineIndexAndKey(Consume, 10, consume);
-MCDefineIndexAndKey(RequireProficiency, 11, require-proficiency);
+MCDefineIndexAndKey(RequiredProficiency, 11, required-proficiency);
 MCDefineIndexAndKey(Revise, 12, revise);
 MCDefineIndexAndKey(Count, 13, count);
 MCDefineIndexAndKey(HP, 14, hp);
@@ -109,7 +109,7 @@ MCDefineIndexAndKey(TriggerType, 22, trigger-type);
     /* consume */
     [content setObject:@([[data objectAtIndex:kMCConsumeIndex] integerValue]) forKey:kMCConsumeKey];
     /* required-proficiency */
-    [content setObject:@([[data objectAtIndex:kMCRequireProficiencyIndex] integerValue]) forKey:kMCRequireProficiencyKey];
+    [content setObject:@([[data objectAtIndex:kMCRequiredProficiencyIndex] integerValue]) forKey:kMCRequiredProficiencyKey];
     /* revise */
     [content setObject:@([[data objectAtIndex:kMCReviseIndex] floatValue]) forKey:kMCReviseKey];
     /* count */

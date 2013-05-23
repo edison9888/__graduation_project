@@ -60,7 +60,6 @@ MCSceneContext::enemyWasDied(MCRole *aRole)
         }
     }
     
-    done = true;
     if (done) {
         /* 任务完成! */
         CCSize winSize = CCDirectorGetWindowsSize();

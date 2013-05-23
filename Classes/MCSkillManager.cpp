@@ -21,7 +21,11 @@ using namespace std;
 
 const char *kMCSkillPackageFilepath = "SXXX.jpkg";
 
+#if MC_DEBUG_SAVEDATA == 1
+static const char *kMCSkillsKey = "skills";
+#else
 static const char *kMCSkillsKey = "c2tpbGxz"; /* skills的BASE64编码 */
+#endif
 
 static MCSkillManager *__shared_skill_manager = NULL;
 
@@ -143,10 +147,14 @@ MCSkillManager::loadData()
     string data = userDefault->getStringForKey(kMCSkillsKey, "");
     
     if (data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         JsonBox::Value v;
         v.loadFromString(output);
         
@@ -157,7 +165,9 @@ MCSkillManager::loadData()
         axeProficiency_ = proficiency.at(2).getInt();
         spearProficiency_ = proficiency.at(3).getInt();
         bowProficiency_ = proficiency.at(4).getInt();
+#if MC_DEBUG_SAVEDATA != 1
         delete []output;
+#endif
     } else {
         swordProficiency_ = 0;
         hammerProficiency_ = 0;
@@ -182,12 +192,18 @@ MCSkillManager::saveData()
     ostringstream outputStream;
     proficiencyValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCSkillsKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -214,6 +230,24 @@ MCSkillManager::improveProficiency(MCSkillType aSkillType)
             bowProficiency_ += 1;
         }
     }
+}
+
+mc_proficiency_t
+MCSkillManager::proficiencyForSkillType(MCSkillType aSkillType)
+{
+    if (aSkillType == MCSwordSkill) {
+        return swordProficiency_;
+    } else if (aSkillType == MCHammerSkill) {
+        return hammerProficiency_;
+    } else if (aSkillType == MCAxeSkill) {
+        return axeProficiency_;
+    } else if (aSkillType == MCSpearSkill) {
+        return spearProficiency_;
+    } else if (aSkillType == MCBowSkill) {
+        return bowProficiency_;
+    }
+    
+    return 0;
 }
 
 /*

@@ -6,47 +6,18 @@
          contextName = "MCAI::roleForMaxAggro():MCAI.cpp">
       </ContextState>
       <ContextState
-         contextName = "cocos2d::CCObject::release():CCObject.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCHero::attackTarget(MCRole*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), cocos2d::CCObject*):MCHero.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
-         <PersistentStrings>
-            <PersistentString
-               value = "(cocos2d::CCAction *)walkAction">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "MCEffect::copy():MCEffect.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
-      </ContextState>
-      <ContextState
          contextName = "mach_msg_trap:(null)">
          <PersistentStrings>
             <PersistentString
-               value = "MCHero::sharedHero()">
+               value = "MCHero::sharedHero()-&gt;ai_">
             </PersistentString>
             <PersistentString
                value = "MCTeam::sharedTeam()">
             </PersistentString>
             <PersistentString
-               value = "MCHero::sharedHero()-&gt;ai_">
+               value = "MCHero::sharedHero()">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "MCTaskManager::taskDidFinish(cocos2d::CCObject*):MCTaskManager.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
       </ContextState>
       <ContextState
          contextName = "MCScenePackage::loadObjects(JsonBox::Object&amp;):MCScenePackage.cpp">
@@ -57,13 +28,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "MCTask::copy():MCTask.cpp">
+      </ContextState>
+      <ContextState
          contextName = "MCEnemy::copy():MCEnemy.cpp">
       </ContextState>
       <ContextState
-         contextName = "MCIssuingTaskUI::generate():MCIssuingTaskUI.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
+         contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
       </ContextState>
       <ContextState
          contextName = "MCRole::canAttackTarget(MCRole*):MCRole.cpp">
@@ -74,12 +45,44 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "MCTeam::addRole(MCRole*):MCTeam.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCAutoreleasePool::clear():CCAutoreleasePool.cpp">
+      </ContextState>
+      <ContextState
          contextName = "MCTeam::isFull():MCTeam.h">
          <PersistentStrings>
             <PersistentString
                value = "this-&gt;teams_">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCHero::attackTarget(MCRole*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), cocos2d::CCObject*):MCHero.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCTask::generateTaskContext():MCTask.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::canMove(float):MCRoleEntity.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "MCTaskManager::sharedTaskManager()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCEffect::copy():MCEffect.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "cocos2d::CCObject::release():CCObject.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCIssuingTaskUI::generate():MCIssuingTaskUI.cpp">
       </ContextState>
       <ContextState
          contextName = "MCRoleBaseInfoGroup::MCRoleBaseInfoGroup():MCRoleBaseInfo.cpp">
@@ -94,6 +97,20 @@
          <PersistentStrings>
             <PersistentString
                value = "MCTeam::sharedTeam()-&gt;teams_">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCEffectManager::loadEffects():MCEffectManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCTaskManager::taskDidFinish(cocos2d::CCObject*):MCTaskManager.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::stopWalkAction():MCRoleEntity.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "(cocos2d::CCAction *)walkAction">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -11,6 +11,7 @@
 #include "MCScene.h"
 #include "MCMezzanine.h"
 #include "MCEffectManager.h"
+#include "MCSkillManager.h"
 
 const char *kMCSkillActionIsDoneNotification = "kMCSkillActionIsDoneNotification";
 
@@ -19,10 +20,23 @@ MCSkill::~MCSkill()
     CC_SAFE_RELEASE(fakeNode_);
 }
 
+/* 足够体力使用，并且不是被动技能 */
 bool
 MCSkill::canRoleUse(MCRole *aRole)
 {
-    return aRole->getPP() >= consume;
+    return triggerType != MCPassiveSkill && aRole->getPP() >= consume;
+}
+
+/**
+ * 足够熟练度使用。
+ * 熟练度虽然在战斗中增加到可以使用，但是技能依然要等到下次战斗才能使用。
+ */
+bool
+MCSkill::masteredForRole(MCRole *aRole)
+{
+    mc_proficiency_t proficiency = MCSkillManager::sharedSkillManager()->proficiencyForSkillType(getID().sub_class_ - '0');
+    
+    return proficiency >= requiredProficiency;
 }
 
 bool
@@ -48,13 +62,14 @@ MCSkill::use(const CCPoint &anOrigin, float anAngle)
               breadth * 24 / contentScaleFactor,
               length * 24 / contentScaleFactor,
               anAngle);
-    CCLog("%lu",effect_->retainCount());
     effect_->bind(this);
     CC_SAFE_RELEASE(fakeNode_);
     fakeNode_ = new CCNode;
     fakeNode_->init();
     fakeNode_->setUserObject(this);
     fakeNode_->setPosition(anOrigin);
+    
+    CCTime::gettimeofdayCocos2d(&lastUsedTime, NULL);
     
     MCEffect *launchingEffect = MCEffectManager::sharedEffectManager()->launchingEffect();
     launchingEffect->retain();

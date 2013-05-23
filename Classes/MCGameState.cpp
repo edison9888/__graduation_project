@@ -17,7 +17,11 @@
 #include "MCDungeonMaster.h"
 #include "MCMercenaryManager.h"
 
+#if MC_DEBUG_SAVEDATA == 1
+const char *kMCSaveFileExistsKey = "save-file-exists";
+#else
 const char *kMCSaveFileExistsKey = "c2F2ZS1maWxlLWV4aXN0cw"; /* save-file-exists的BASE64编码没有最后的== */
+#endif
 
 static MCGameState *__shared_game_state = NULL;
 

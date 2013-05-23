@@ -54,6 +54,8 @@ public:
     void selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem);
     
 private:
+    void roleWasDied(CCObject *anObject);
+    
     void toggle();
     
     MCRoleBaseInfoGroup *group_;

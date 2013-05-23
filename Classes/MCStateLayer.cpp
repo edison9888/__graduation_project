@@ -170,7 +170,7 @@ MCStateLayer::loadData()
     hp_->setString(CCString::createWithFormat("%hi/%hi", hero->getHP(), hero->getMaxHP())->getCString());
     
     /* PP */
-    pp_->setString(CCString::createWithFormat("%hi/%hi", hero->getPP(), hero->getMaxPP())->getCString());
+    pp_->setString(CCString::createWithFormat("%.0f/%.0f", hero->getPP(), hero->getMaxPP())->getCString());
     
     /* state */
     MCRoleState roleState = hero->getRoleState();

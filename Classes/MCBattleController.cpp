@@ -115,7 +115,11 @@ MCBattleController::selectTarget(MCRole *aRole)
     if (skill) {
         /* 技能攻击 */
         if (skill->canRoleUse(selectedRole)) {
-            selectedRole->attackTargetWithSkill(aRole, skill);
+            selectedRole->attackTargetWithSkill(aRole,
+                                                skill,
+                                                this,
+                                                callfuncO_selector(MCBattleController::skillDidLaunch),
+                                                lastSelectedSkillBarItem_);
         }
     } else {
         /* 普通攻击 */
@@ -369,19 +373,19 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             && selectedSkillBarItem_ == touchedSkillBarItem) {
             
             findPath = false;
+            if (lastSelectedSkillBarItem_) {
+                lastSelectedSkillBarItem_->unselected();
+            }
             if (touchedSkillBarItem->isSelected()) {
                 skillBarItemSelectedEffect_->removeFromParentAndCleanup(false);
                 touchedSkillBarItem->unselected();
                 touchedSkillBarItem = NULL;
-            } else {
+            } else if (touchedSkillBarItem->selectable()) {
                 if (! skillBarItemSelectedEffect_->getParent()) {
                     addChild(skillBarItemSelectedEffect_);
                 }
                 skillBarItemSelectedEffect_->setPosition(touchedSkillBarItem->getPosition());
                 touchedSkillBarItem->selected();
-            }
-            if (lastSelectedSkillBarItem_) {
-                lastSelectedSkillBarItem_->unselected();
             }
             lastSelectedSkillBarItem_ = touchedSkillBarItem;
             selectedSkillBarItem_ = NULL;
@@ -488,6 +492,18 @@ MCBattleController::didSelectAll(CCObject *aSender)
     }
 }
 #endif
+    
+void
+MCBattleController::skillDidLaunch(CCObject *anObject)
+{
+    MCSkillBarItem *launchedSkillBarItem = dynamic_cast<MCSkillBarItem *>(anObject);
+    
+    if (launchedSkillBarItem) {
+        skillBarItemSelectedEffect_->removeFromParentAndCleanup(false);
+        lastSelectedSkillBarItem_ = NULL;
+        launchedSkillBarItem->intoColdTime();
+    }
+}
     
 void
 MCBattleController::skillBarVisibleDidChange(CCObject *anObject)

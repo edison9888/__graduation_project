@@ -23,7 +23,11 @@ using namespace std;
 static const char *kMCTaskPackageFilepath = "T000.jpkg";
 const char *kMCTaskDidFinishNotification = "kMCTaskDidFinishNotification";
 
+#if MC_DEBUG_SAVEDATA == 1
+static const char *kMCCurrentTaskKey = "current-task";
+#else
 static const char *kMCCurrentTaskKey = "Y3VycmVudC10YXNr"; /* current-task的BASE64编码 */
+#endif
 
 static mc_object_id_t kMCAreaBlockedTaskId = {
     'T', '2', '1', '0'
@@ -89,12 +93,18 @@ MCTaskManager::saveData()
         data.append(c_s_o_id);
     }
     
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     CCUserDefault::sharedUserDefault()->setStringForKey(kMCCurrentTaskKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 /**
@@ -107,10 +117,14 @@ MCTaskManager::loadData()
     
     string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCCurrentTaskKey, "");
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char  *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         data.assign(output);
         
         const char *c_s_o_id = data.c_str();

@@ -12,6 +12,7 @@
 #include "MCEntrance.h"
 #include "MCAStar.h"
 #include "MCSkill.h"
+#include "MCTeam.h"
 
 MCMercenary::MCMercenary()
 {
@@ -82,6 +83,8 @@ MCMercenary::getEntity()
 void
 MCMercenary::died()
 {
+    MCTeam::sharedTeam()->removeRole(this);
+    
     MCRoleEntity *roleEntity = getEntity();
     roleEntity->stopPathFinding();
     roleEntity->stopWalking();
@@ -108,6 +111,7 @@ MCMercenary::copy()
     mercenary->roleRace_ = roleRace_;
     mercenary->hp_ = hp_;
     mercenary->pp_ = pp_;
+    mercenary->consume_ = consume_;
     mercenary->maxHP_ = maxHP_;
     mercenary->maxPP_ = maxPP_;
     mercenary->exhaustion_ = exhaustion_;

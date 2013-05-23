@@ -33,10 +33,17 @@ MCDefineConstantString(kMCFlashDamageIcon);
     //warning: 木有测试过
 
 const mc_size_t kMCItemMax = 99;
+#if MC_DEBUG_SAVEDATA == 1
+static const char *kMCMoneyKey = "money";
+static const char *kMCBackpackKey = "backpack";
+static const char *kMCEffectiveItemsKey = "effective-items";
+static const char *kMCZero = "0";
+#else
 static const char *kMCMoneyKey = "bW9uZXk"; /* money的BASE64编码没有最后的= */
 static const char *kMCBackpackKey = "YmFja3BhY2s"; /* backpack的BASE64编码没有最后的= */
 static const char *kMCEffectiveItemsKey = "ZWZmZWN0aXZlLWl0ZW1z"; /* effective-items的BASE64编码 */
 static const char *kMCZero = "MA=="; /* 0的BASE64编码没有最后的== */
+#endif
 
 static MCBackpack *__shared_backpack = NULL;
 static bool __icon_loaded = false;
@@ -138,12 +145,6 @@ MCBackpack::spend(mc_price_t money)
 void
 MCBackpack::erase()
 {
-//    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-//    
-//    userDefault->setStringForKey(kMCMoneyKey, "");
-//    userDefault->setStringForKey(kMCBackpackKey, "");
-//    userDefault->setStringForKey(kMCEffectiveItemsKey, "");
-//    
     delete __shared_backpack;
     __shared_backpack = NULL;
 }
@@ -170,12 +171,18 @@ MCBackpack::saveData()
     ostringstream outputStream;
     backpackValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCBackpackKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -192,10 +199,14 @@ MCBackpack::loadData()
     if (MCGameState::sharedGameState()->isSaveFileExists()) {
         string data = userDefault->getStringForKey(kMCBackpackKey, kMCZero);
         if (data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+            const char *output = data.c_str();
+#else
             const char *input = data.c_str();
             char *output;
             mc_size_t len = strlen(input);
             MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
             JsonBox::Value v;
             v.loadFromString(output);
             
@@ -232,12 +243,18 @@ MCBackpack::saveEffectiveItems()
     ostringstream outputStream;
     effectiveItemsValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCEffectiveItemsKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -249,10 +266,14 @@ MCBackpack::loadEffectiveItems()
     
     if (MCGameState::sharedGameState()->isSaveFileExists()
         && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         JsonBox::Value v;
         v.loadFromString(output);
         
@@ -270,7 +291,9 @@ MCBackpack::loadEffectiveItems()
         fogTrapDamage_->count = effectiveItems.at(9).getInt();
         flashTrapWide_->count = effectiveItems.at(10).getInt();
         flashTrapDamage_->count = effectiveItems.at(11).getInt();
+#if MC_DEBUG_SAVEDATA != 1
         delete []output;
+#endif
     } else {
         healthPotion_->count = 0;
         physicalPotion_->count = 0;

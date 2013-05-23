@@ -13,8 +13,13 @@
 #include "MCEffectManager.h"
 #include "MCSkillManager.h"
 
+#if MC_DEBUG_SAVEDATA == 1
+const char *kMCSpawnPointKey = "spawn-point";
+const char *kMCSpawnPointDefaultValue = "M001";
+#else
 const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码没有最后的= */
 const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
+#endif
 
 static const mc_object_id_t kMCDefaultSpawnPointSceneId = {'M', '0', '0', '1'};
 
@@ -77,7 +82,7 @@ MCDungeonMaster::roleWillAttack(MCRole *aRole, MCRole *aTargetRole, CCObject *aT
         }
     }
     
-    if (isNotHero && maxScoreSkill != NULL) { /* 技能攻击 */
+    if (isNotHero && maxScoreSkill != NULL && maxScoreSkill->canRoleUse(aRole)) { /* 技能攻击 */
         aRole->attackTargetWithSkill(aTargetRole, dynamic_cast<MCSkill *>(maxScoreSkill->copy()),
                                      aTarget, aSelector, anUserObject);
     } else { /* 尝试进行普通攻击，可能会体力不足 */
@@ -140,12 +145,18 @@ MCDungeonMaster::saveSpawnPoint()
     c_str_sp_id[1] = spawnPointID_.sub_class_;
     c_str_sp_id[2] = spawnPointID_.index_;
     c_str_sp_id[3] = spawnPointID_.sub_index_;
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = c_str_sp_id;
+#else
     const char *input = c_str_sp_id;
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     CCUserDefault::sharedUserDefault()->setStringForKey(kMCSpawnPointKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -153,10 +164,14 @@ MCDungeonMaster::loadSpawnPoint()
 {
     std::string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCSpawnPointKey, kMCSpawnPointDefaultValue);
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         data.assign(output);
         const char *c_str_o_id = data.c_str();
         mc_object_id_t o_id = {

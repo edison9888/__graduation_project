@@ -84,6 +84,7 @@ public:
     
     CREATE_FUNC(MCRoleBaseInfoGroup);
     
+    MCRoleBaseInfo *roleBaseInfoForRole(MCRole *aRole);
     void addRoleBaseInfo(MCRoleBaseInfo *anInfo);
     void removeRoleBaseInfo(MCRoleBaseInfo *anInfo);
     mc_size_t size();

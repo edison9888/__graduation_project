@@ -20,6 +20,8 @@ static const float kMCActionDuration = 0.2f;
 
 MCTeamLayer::~MCTeamLayer()
 {
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this,
+                                                                     kMCRoleDiedNotification);
 #if MC_SELECT_ALL_SUPPORT == 1
     CC_SAFE_RELEASE(selectedRoles_);
 #else
@@ -57,6 +59,10 @@ MCTeamLayer::init()
 #else
         selectedRole_ = NULL;
 #endif
+        CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
+                                                                      callfuncO_selector(MCTeamLayer::roleWasDied),
+                                                                      kMCRoleDiedNotification,
+                                                                      NULL);
 
         return true;
     }
@@ -319,6 +325,15 @@ MCTeamLayer::selectedRolesUseActionBarItem(MCActionBarItem *anActionBarItem)
             /* 物品效果 */
             dynamic_cast<MCEffectiveItem *>(anActionBarItem->getBackpackItem()->item)->effect->attach(this, info->getRole());
         }
+    }
+}
+
+void
+MCTeamLayer::roleWasDied(CCObject *anObject)
+{
+    MCRoleBaseInfo *roleBaseInfo = group_->roleBaseInfoForRole(dynamic_cast<MCRole *>(anObject));
+    if (roleBaseInfo) {
+        group_->removeRoleBaseInfo(roleBaseInfo);
     }
 }
 

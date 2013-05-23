@@ -17,6 +17,7 @@
 #include "MCMercenaryManager.h"
 #include "MCBackpack.h"
 #include "MCTaskManager.h"
+#include "MCSkillManager.h"
 
 class MCTestBattleController : public MCTestLayer {
 public:
@@ -70,6 +71,11 @@ public:
         MCTask *task = MCTaskManager::sharedTaskManager()->taskWithObjectId(t_id);
         MCTaskManager::sharedTaskManager()->acceptTask(task);
         MCTaskManager::sharedTaskManager()->startCurrentTask();
+        
+        MCSkillManager *sm = MCSkillManager::sharedSkillManager();
+        for (int i =0; i<501; i++) {
+            sm->improveProficiency(MCSwordSkill);
+        }
         
         m_id.sub_class_ = '1';
         m_id.index_ = '0';

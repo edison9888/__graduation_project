@@ -15,7 +15,11 @@ using namespace std;
 #include "MCFlagManager.h"
 #include "MCGameState.h"
 
+#if MC_DEBUG_SAVEDATA == 1
+const char *kMCFlagsKey = "flags";
+#else
 const char *kMCFlagsKey = "ZmxhZ3M"; /* flags的BASE64编码没有最后的= */
+#endif
 
 static MCFlagManager *__shared_flag_manager = NULL;
 
@@ -145,10 +149,14 @@ MCFlagManager::loadAllFlags()
     /* 从存档读取数据 */
     string data = CCUserDefault::sharedUserDefault()->getStringForKey(kMCFlagsKey, "");
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char  *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         data.assign(output);
         vector<string> result = split(data, ",");
         for (vector<string>::iterator iterator = result.begin(); iterator != result.end(); ++iterator) {
@@ -182,10 +190,6 @@ MCFlagManager::loadAllFlags()
 void
 MCFlagManager::erase()
 {
-//    CCUserDefault *userDefault = CCUserDefault::sharedUserDefault();
-//    
-//    userDefault->setStringForKey(kMCFlagsKey, "");
-    
     delete __shared_flag_manager;
     __shared_flag_manager = NULL;
 }
@@ -219,10 +223,16 @@ MCFlagManager::saveAllFlags()
     if (data.size() > 0) {
         data.erase(data.size() - 1);
     }
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     CCUserDefault::sharedUserDefault()->setStringForKey(kMCFlagsKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }

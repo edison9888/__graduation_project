@@ -67,7 +67,10 @@ public:
     : name_(NULL)
     , icon_(NULL)
     , effect_(NULL)
-    , fakeNode_(NULL) {}
+    , fakeNode_(NULL) {
+        lastUsedTime.tv_sec = 0;
+        lastUsedTime.tv_usec = 0;
+    }
     
     ~MCSkill();
     
@@ -77,7 +80,14 @@ public:
     };
     typedef mc_enum_t MCTriggerType;
     
+    /* 足够体力使用，并且不是被动技能 */
     bool canRoleUse(MCRole *aRole);
+    
+    /** 
+     * 足够熟练度使用。
+     * 熟练度虽然在战斗中增加到可以使用，但是技能依然要等到下次战斗才能使用。
+     */
+    bool masteredForRole(MCRole *aRole);
     
     bool willBeExhausted(MCRole *aRole);
     
@@ -125,6 +135,8 @@ public:
     MCDiceRange effectCheck; /* 附带效果判定 */
     MCTriggerType triggerType; /* 效果触发类型 */
     bool isContinuable; /* 是否为可持续的，即命中后是否继续存在至结束 */
+    
+    struct cc_timeval lastUsedTime; /* 上次使用时间 */
     
     CC_SYNTHESIZE(CCString *, name_, Name);
     CC_SYNTHESIZE(CCString *, icon_, Icon);

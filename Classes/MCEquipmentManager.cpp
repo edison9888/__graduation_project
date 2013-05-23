@@ -16,9 +16,15 @@ using namespace std;
 #include "MCItemManager.h"
 #include "MCGameState.h"
 
+#if MC_DEBUG_SAVEDATA == 1
+static const char *kMCEquipmentManagerKey = "equipment-manager";
+static const char *kMCCurrentWeaponKey = "current-weapon";
+static const char *kMCEquipmentItemsKey = "equipment-items";
+#else
 static const char *kMCEquipmentManagerKey = "ZXF1aXBtZW50LW1hbmFnZXI"; /* equipment-manager的BASE64编码没有最后的= */
 static const char *kMCCurrentWeaponKey = "Y3VycmVudC13ZWFwb24"; /* current-weapon的BASE64编码没有最后的= */
 static const char *kMCEquipmentItemsKey = "ZXF1aXBtZW50LWl0ZW1z"; /* equipment-items的BASE64编码 */
+#endif
 
 static MCEquipmentManager *__shared_equipment_manager = NULL;
 
@@ -155,12 +161,18 @@ MCEquipmentManager::saveData()
     ostringstream outputStream;
     equipmentManagerValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCEquipmentManagerKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -173,10 +185,14 @@ MCEquipmentManager::loadData()
     
     string data = userDefault->getStringForKey(kMCEquipmentManagerKey, "");
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         JsonBox::Value v;
         v.loadFromString(output);
         
@@ -429,12 +445,18 @@ MCEquipmentManager::saveEquipmentItems()
     ostringstream outputStream;
     effectiveItemsValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCEquipmentItemsKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -479,10 +501,14 @@ MCEquipmentManager::loadEquipmentItems()
     armors_->addObject(shinGuard_);
     
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         JsonBox::Value v;
         v.loadFromString(output);
         
@@ -507,6 +533,8 @@ MCEquipmentManager::loadEquipmentItems()
             };
             itemManager->equipmentItemForObjectId(o_id)->setOre(oreManager->oreForObjectId(ore_id));
         }
+#if MC_DEBUG_SAVEDATA != 1
         delete []output;
+#endif
     }
 }

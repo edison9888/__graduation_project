@@ -56,6 +56,7 @@ protected:
     /* 选择按钮 */
     CCMenu *selectAllMenu_;
 #endif
+    void skillDidLaunch(CCObject *anObject);
     void skillBarVisibleDidChange(CCObject *anObject);
     void installTrap(CCObject *anObject);
     

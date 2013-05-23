@@ -521,7 +521,11 @@ MCMercenaryManagerChoiceMercenaryName()
     return kMCMercernaryNames[rand() % sizeof(kMCMercernaryNames) / sizeof(const char *)];
 }
 
+#if MC_DEBUG_SAVEDATA == 1
+static const char *kMCMercenariesKey = "mercenaries";
+#else
 static const char *kMCMercenariesKey = "bWVyY2VuYXJpZXM"; /* mercenaries的BASE64编码没有最后的= */
+#endif
 static const char *kMCMercenariesFilepath = "M000.jpkg";
 static const char *kMCSpriteSheetBaseDirectory = "spritesheets";
 
@@ -545,7 +549,6 @@ MCMercenaryManager::sharedMercenaryManager()
     if (__shared_mercenary_manager == NULL) {
         __shared_mercenary_manager = new MCMercenaryManager;
         __shared_mercenary_manager->loadMercenaries();
-        __shared_mercenary_manager->loadData();
     }
     
     return __shared_mercenary_manager;
@@ -843,12 +846,18 @@ MCMercenaryManager::saveData()
     ostringstream outputStream;
     mercenariesValue.writeToStream(outputStream);
     string data = outputStream.str();
+#if MC_DEBUG_SAVEDATA == 1
+    const char *output = data.c_str();
+#else
     const char *input = data.c_str();
     char  *output;
     mc_size_t len = strlen(input);
     MCBase64Encode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
     userDefault->setStringForKey(kMCMercenariesKey, output);
+#if MC_DEBUG_SAVEDATA != 1
     delete []output;
+#endif
 }
 
 void
@@ -858,10 +867,14 @@ MCMercenaryManager::loadData()
     string data = userDefault->getStringForKey(kMCMercenariesKey, "");
     
     if (MCGameState::sharedGameState()->isSaveFileExists() && data.size() > 0) {
+#if MC_DEBUG_SAVEDATA == 1
+        const char *output = data.c_str();
+#else
         const char *input = data.c_str();
         char *output;
         mc_size_t len = strlen(input);
         MCBase64Decode((mc_byte_t *) input, len, (mc_byte_t **) &output);
+#endif
         JsonBox::Value v;
         v.loadFromString(output);
         
@@ -884,6 +897,8 @@ MCMercenaryManager::loadData()
             name->retain();
             hired_->addRole(mercenary);
         }
+#if MC_DEBUG_SAVEDATA != 1
         delete []output;
+#endif
     }
 }

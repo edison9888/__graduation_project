@@ -11,6 +11,8 @@
 #include "MCScene.h"
 #include "MCAStar.h"
 #include "MCRoleManager.h"
+#include "MCTaskManager.h"
+#include "MCTaskContext.h"
 
 static float kMCPathFindingMoveDuration = 0.2f;
 
@@ -290,17 +292,25 @@ MCRoleEntity::move(const CCPoint &aDelta)
     
     setPosition(ccpAdd(m_obPosition, aDelta));
     
-    role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+    MCTask *currentTask = MCTaskManager::sharedTaskManager()->getCurrentTask();
+    
+    if (currentTask != NULL
+        && (currentTask->getTaskContext()->getSpecial() & MCIgnorePP) != MCIgnorePP) { /* 木有忽略PP消耗 */
+        role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+    }
 }
 
 bool
 MCRoleEntity::canMove(float aLength)
 {
-//    return ! isPositionLocked()
-//            && role_->pp_ - (aLength / (36 / CC_CONTENT_SCALE_FACTOR())) > role_->exhaustion_;
-    
     if (lockPosition_) {
         return false;
+    }
+    MCTask *currentTask = MCTaskManager::sharedTaskManager()->getCurrentTask();
+    
+    if (currentTask != NULL
+        && (currentTask->getTaskContext()->getSpecial() & MCIgnorePP) == MCIgnorePP) { /* 已经忽略PP消耗 */
+        return true;
     }
     
     mc_pp_t consume = aLength  / (36 / CC_CONTENT_SCALE_FACTOR());
@@ -587,7 +597,12 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
         moveToActions_->addObject(action);
         action->release();
         runAction(action);
-        role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+        
+        MCTask *currentTask = MCTaskManager::sharedTaskManager()->getCurrentTask();
+        if (currentTask != NULL
+            && (currentTask->getTaskContext()->getSpecial() & MCIgnorePP) != MCIgnorePP) { /* 木有忽略PP消耗 */
+            role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+        }
     } else {
         if (target_ && pathFindingSelector_) {
             (target_->*pathFindingSelector_)(pathFindingSelectorUserdata_ ? pathFindingSelectorUserdata_ : this);

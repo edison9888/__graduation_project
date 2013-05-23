@@ -363,6 +363,7 @@ MCHiringMercenaryUI::confirmDidClickYesButton(MCConfirm *aConfirm)
     mc_price_t money = backpack->getMoney();
     mc_cost_t cost = mercenary->getCost();
     CCString *name = CCString::create(mercenaryObject["name"].getString());
+    float fontSize = 32.0f / CC_CONTENT_SCALE_FACTOR();
     
     backpack->setMoney(money - (mc_price_t) cost);
     mercenary->setName(name);
@@ -382,6 +383,7 @@ MCHiringMercenaryUI::confirmDidClickYesButton(MCConfirm *aConfirm)
     }
     
     tableView_->reloadData();
+    money_->setString(CCString::createWithFormat("%d", backpack->getMoney())->getCString());
 }
 
 void
