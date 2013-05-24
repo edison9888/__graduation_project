@@ -64,7 +64,8 @@ MCAI::unbind()
 }
 
 /**
- * 无敌人则返回NULL
+ * 无敌人则返回NULL。
+ * 混乱状态下由随机数决定,选最大的。
  */
 MCRole *
 MCAI::roleForMaxAggro()
@@ -74,13 +75,43 @@ MCAI::roleForMaxAggro()
     CCDictionary *roles = enemiesInVision_;
     CCDictElement *rolesElement;
     
-    /* 搜集视野内人物 */
-    CCDICT_FOREACH(roles, rolesElement) {
-        aiRole = dynamic_cast<MCAIRole *>(rolesElement->getObject());
-        if (maxAggroAIRole == NULL) {
-            maxAggroAIRole = aiRole;
-        } else if (aiRole->aggro > maxAggroAIRole->aggro) {
-            maxAggroAIRole = aiRole;
+    if (role_->hasState(MCChaosState)) { /* 混乱状态 */
+        int randomNumber;
+        int lastRandomNumber;
+        /* 敌人 */
+        CCDictElement *enemiesElement;
+        CCDICT_FOREACH(roles, enemiesElement) {
+            aiRole = dynamic_cast<MCAIRole *>(enemiesElement->getObject());
+            randomNumber = rand() % 1000;
+            if (maxAggroAIRole == NULL) {
+                maxAggroAIRole = aiRole;
+            } else if (randomNumber > lastRandomNumber) {
+                maxAggroAIRole = aiRole;
+            }
+            lastRandomNumber = randomNumber;
+        }
+        
+        /* 自己人 */
+        roles = rolesInVision_;
+        CCDICT_FOREACH(roles, rolesElement) {
+            aiRole = dynamic_cast<MCAIRole *>(rolesElement->getObject());
+            randomNumber = rand() % 1000;
+            if (maxAggroAIRole == NULL) {
+                maxAggroAIRole = aiRole;
+            } else if (randomNumber > lastRandomNumber) {
+                maxAggroAIRole = aiRole;
+            }
+            lastRandomNumber = randomNumber;
+        }
+    } else {
+        /* 搜集视野内人物 */
+        CCDICT_FOREACH(roles, rolesElement) {
+            aiRole = dynamic_cast<MCAIRole *>(rolesElement->getObject());
+            if (maxAggroAIRole == NULL) {
+                maxAggroAIRole = aiRole;
+            } else if (aiRole->aggro > maxAggroAIRole->aggro) {
+                maxAggroAIRole = aiRole;
+            }
         }
     }
     
@@ -187,7 +218,10 @@ MCAI::checkRoles(CCArray *roles)
 void
 MCAI::changingState() /* 状态切换 */
 {
-    if (activating_) {
+    if (activating_
+        /* 眩晕or麻痹状态下罢工 */
+        || role_->hasState(MCParalysisState)
+        || role_->hasState(MCVertigoState)) {
         return;
     }
     AIStateMachineDelegate_->activate(AIState_);

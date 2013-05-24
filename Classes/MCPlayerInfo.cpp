@@ -33,8 +33,6 @@ static const float kMCActionDuration = 0.1f;
 
 static const char *kMCBackgroundFilepath = "bg.png";
 
-static MCPlayerInfo *__default_detail = NULL;
-
 class __MCViewSelectorLayer : public CCLayer {
 public:
     bool initWithTarget(CCObject *target);
@@ -151,6 +149,9 @@ MCPlayerInfo::init()
         mercenaryLayer_ = MCMercenaryLayer::create();
         addChild(mercenaryLayer_);
         
+        setAnchorPoint(CCPointZero);
+        setPosition(ccp(0, CCDirectorGetWindowsSize().height));
+        
         return true;
     }
     
@@ -160,32 +161,21 @@ MCPlayerInfo::init()
 MCPlayerInfo *
 MCPlayerInfo::create()
 {
-    if (__default_detail == NULL) {
-        __default_detail = new MCPlayerInfo;
-        if (__default_detail && __default_detail->init()) {
-        } else {
-            CC_SAFE_DELETE(__default_detail);
-            __default_detail = NULL;
-        }
-    }
-    if (__default_detail->m_pParent) {
-        __default_detail->removeFromParentAndCleanup(false);
+    MCPlayerInfo *playerInfo = new MCPlayerInfo;
+    
+    if (playerInfo && playerInfo->init()) {
+    } else {
+        CC_SAFE_DELETE(playerInfo);
+        playerInfo = NULL;
     }
     
-    return __default_detail;
-}
-
-void
-MCPlayerInfo::initPosition()
-{
-    CCSize winSize = CCDirectorGetWindowsSize();
-    setAnchorPoint(ccp(0, 0));
-    setPosition(ccp(0, winSize.height));
+    return playerInfo;
 }
 
 void
 MCPlayerInfo::show()
 {
+    setPosition(ccp(0, CCDirectorGetWindowsSize().height));
     menuItem_clicked(((__MCViewSelectorLayer *) viewSelector_)->getDefaultMenuItem());
     runAction(CCMoveTo::create(kMCActionDuration, CCPointZero));
 }
@@ -193,14 +183,8 @@ MCPlayerInfo::show()
 void
 MCPlayerInfo::hide()
 {
-    CCSize winSize = CCDirectorGetWindowsSize();
-    runAction(CCMoveTo::create(kMCActionDuration, ccp(0, winSize.height)));
-}
-
-void
-MCPlayerInfo::onExit()
-{
-    CCLayer::onExit();
+    runAction(CCMoveTo::create(kMCActionDuration,
+                               ccp(0, CCDirectorGetWindowsSize().height)));
 }
 
 void

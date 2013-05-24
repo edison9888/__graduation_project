@@ -987,8 +987,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				A33479A81742824700A14ADD /* libsqlite3.dylib */,
-				A33479A61742822B00A14ADD /* libcurl.a */,
 				A326A842173B52CF00904739 /* cocos2dx.xcodeproj */,
 				A3331EB91742752700A2AF7D /* CocosDenshion.xcodeproj */,
 				BF23D4E2143315EB00657E08 /* Classes */,
@@ -1007,6 +1005,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A33479A81742824700A14ADD /* libsqlite3.dylib */,
+				A33479A61742822B00A14ADD /* libcurl.a */,
 				BF492B6912891AC600A09262 /* libz.dylib */,
 				BF137426128A8E4600D9F789 /* QuartzCore.framework */,
 				BF492D4B1289302400A09262 /* OpenGLES.framework */,

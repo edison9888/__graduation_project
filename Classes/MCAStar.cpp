@@ -109,7 +109,9 @@ mc_astar_algorithm_process(void *obj)
 {
     MCAStarAlgorithm *algo = (MCAStarAlgorithm *) obj;
     std::stack<CCPoint> &route = algo->route;
+#if MC_DEBUG_ASTAR == 1
     mc_byte_t *mapAltas = algo->getMapAltas();
+#endif
     mc_size_t edge = algo->getEdge();
     MCAStarNode *startPoint = algo->getStartPoint();
     MCAStarNode *endPoint = algo->getEndPoint();

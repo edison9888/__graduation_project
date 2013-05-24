@@ -201,7 +201,6 @@ MCScene::initWithScenePackage(MCScenePackage *aPackage)
         playerInfoMenu_ = detailMenu;
         
         playerInfo_ = MCPlayerInfo::create();
-        playerInfo_->initPosition();
         addChild(playerInfo_);
         CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
                                                                       callfuncO_selector(MCScene::playerInfoDidHide),
@@ -290,14 +289,11 @@ MCScene::onEnter()
     sceneCamera_->restore();
     sceneCamera_->locate();
     sceneCamera_->focusHero();
-    
-    schedule(schedule_selector(MCScene::update));
 }
 
 void
 MCScene::onExit()
 {
-    unschedule(schedule_selector(MCScene::update));
     CCScene::onExit();
     
     MCSceneContextManager::sharedSceneContextManager()->popContext();
@@ -307,15 +303,10 @@ MCScene::onExit()
     /* 没有接受任务则会销毁场景 */
     if (!taskManager->isTaskAccepted()
         && !taskManager->isTaskActiviting()) {
-        MCSceneManager::sharedSceneManager()->cleanupSceneWithObjectId(scenePackage_->getID());
+        MCSceneManager::sharedSceneManager()->autoreleaseSceneWithObjectId(scenePackage_->getID());
+    } else {
+        MCSceneManager::sharedSceneManager()->autoreleaseTaskSceneWithObjectId(scenePackage_->getID());
     }
-}
-
-void
-MCScene::update(float dt)
-{
-    CCScene::update(dt);
-//    CCPointLog(sceneCamera_->getViewport().origin);
 }
 
 /**

@@ -296,7 +296,16 @@ MCRoleEntity::move(const CCPoint &aDelta)
     
     if (currentTask != NULL
         && (currentTask->getTaskContext()->getSpecial() & MCIgnorePP) != MCIgnorePP) { /* 木有忽略PP消耗 */
-        role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+        mc_pp_t consume = length / (36 / CC_CONTENT_SCALE_FACTOR());
+        
+        if ((role_->roleState_ & MCCurseState) == MCCurseState) { /* 被诅咒了，移动减少的体力值增加(double)，发动攻击会扣血(一半) */
+            consume *= 2;
+        }
+        
+        role_->pp_ -= consume;
+        if (role_->pp_ < 0) {
+            role_->pp_ = 0;
+        }
     }
 }
 
@@ -601,7 +610,16 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
         MCTask *currentTask = MCTaskManager::sharedTaskManager()->getCurrentTask();
         if (currentTask != NULL
             && (currentTask->getTaskContext()->getSpecial() & MCIgnorePP) != MCIgnorePP) { /* 木有忽略PP消耗 */
-            role_->pp_ -= length / (36 / CC_CONTENT_SCALE_FACTOR());
+            mc_pp_t consume = length / (36 / CC_CONTENT_SCALE_FACTOR());
+            
+            if ((role_->roleState_ & MCCurseState) == MCCurseState) { /* 被诅咒了，移动减少的体力值增加(double)，发动攻击会扣血(一半) */
+                consume *= 2;
+            }
+            
+            role_->pp_ -= consume;
+            if (role_->pp_ < 0) {
+                role_->pp_ = 0;
+            }
         }
     } else {
         if (target_ && pathFindingSelector_) {

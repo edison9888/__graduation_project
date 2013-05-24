@@ -224,13 +224,13 @@ MCRoleManager::loadNPCData()
         npcObject = npcsIterator->second.getObject();
         role = new MCNPC;
         CCAssert(role != NULL, "内存不足！");
-        ccstring = CCString::create(npcObject["face"].getString().c_str());
+        ccstring = CCString::create(npcObject["face"].getString());
         role->setFace(ccstring);
         ccstring->retain();
-        ccstring = CCString::create(npcObject["name"].getString().c_str());
+        ccstring = CCString::create(npcObject["name"].getString());
         role->setName(ccstring);
         ccstring->retain();
-        ccstring = CCString::create(npcObject["sprite-sheet"].getString().c_str());
+        ccstring = CCString::create(npcObject["sprite-sheet"].getString());
         role->setSpriteSheet(ccstring);
         ccstring->retain();
         if (npcObject["trigger"].isString()) { /* 暂时只有NPC有脚本 */
@@ -238,10 +238,10 @@ MCRoleManager::loadNPCData()
             role->setTrigger(trigger);
             trigger->retain();
         }
-        ccstring = CCString::create(npcObject["description"].getString().c_str());
+        ccstring = CCString::create(npcObject["description"].getString());
         role->setDescription(ccstring);
         ccstring->retain();
-        ccstring = CCString::create(npcObject["default-dialogue"].getString().c_str());
+        ccstring = CCString::create(npcObject["default-dialogue"].getString());
         role->setDefaultDialogue(ccstring);
         ccstring->retain();
         role->setID(object_id);
@@ -333,11 +333,11 @@ MCRoleManager::loadEnemyData()
         enemy->init(enemyObject["role-race"].getInt());
         enemy->autorelease();
         /* name String */
-        ccstring = CCString::create(enemyObject["name"].getString().c_str());
+        ccstring = CCString::create(enemyObject["name"].getString());
         enemy->setName(ccstring);
         ccstring->retain();
         /* face String */
-        ccstring = CCString::create(enemyObject["face"].getString().c_str());
+        ccstring = CCString::create(enemyObject["face"].getString());
         enemy->setFace(ccstring);
         ccstring->retain();
         /* build sprite sheet file path */
@@ -479,7 +479,7 @@ MCRoleManager::loadEnemyData()
             enemy->effect_ = MCNormalState;
         }
         /* description String */
-        ccstring = CCString::create(enemyObject["description"].getString().c_str());
+        ccstring = CCString::create(enemyObject["description"].getString());
         enemy->setDescription(ccstring);
         ccstring->retain();
         

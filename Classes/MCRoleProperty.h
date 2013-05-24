@@ -37,12 +37,12 @@ typedef mc_enum_t MCRoleRace;
  */
 enum {
     MCNormalState    = 0,             /* 正常 */ /* 通常状态 */
-    MCCurseState     = MCMakeEnum(0), /* 诅咒 */ /* 移动减少的体力值增加，发动攻击会扣血 */
+    MCCurseState     = MCMakeEnum(0), /* 诅咒 */ /* 移动减少的体力值增加(double)，发动攻击会扣血(一半) */
     MCParalysisState = MCMakeEnum(1), /* 麻痹 */ /* 不动几秒钟 */
     MCVertigoState   = MCMakeEnum(2), /* 眩晕 */ /* 不动几秒钟 */
-    MCPoisonedState  = MCMakeEnum(3), /* 中毒 */ /* 持续扣血 */
-    MCBlindingState  = MCMakeEnum(4), /* 盲 */   /* 命中下降 */
-    MCChaosState     = MCMakeEnum(5)  /* 混乱 */ /* 把所有人当做敌人 */
+    MCPoisonedState  = MCMakeEnum(3), /* 中毒 */ /* 持续扣血，每秒3点血 */
+    MCBlindingState  = MCMakeEnum(4), /* 盲 */   /* 命中下降，-3点敏捷 */
+    MCChaosState     = MCMakeEnum(5)  /* 混乱 */ /* 角色不受玩家控制，把所有人当做敌人 */
 };
 typedef mc_enum_t MCRoleState;
 

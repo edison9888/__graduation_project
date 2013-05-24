@@ -312,7 +312,11 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         MCRoleBaseInfo *selectedRoleBaseInfo;
         MCActionBarItem *touchedActionBarItem = actionBar_->itemForTouch(touch);
         
-        if (selectedActionBarItem_ != NULL) {
+        if (selectedActionBarItem_ != NULL
+            && !selectedRole->hasState(MCChaosState) /* 混乱了不接受控制 */
+            /* 眩晕or麻痹状态下罢工 */
+            && !selectedRole->hasState(MCParalysisState)
+            && !selectedRole->hasState(MCVertigoState)) {
             bool isTrap = selectedActionBarItem_->isTrap();
             
             if (selectedActionBarItem_ == touchedActionBarItem) {
@@ -422,9 +426,19 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
         if (findPath && selectedRoles->count() > 0) {
             CCARRAY_FOREACH(selectedRoles, obj) {
                 MCRole *role = dynamic_cast<MCRole *>(obj);
+                if (role->hasState(MCChaosState) /* 混乱了不接受控制 */
+                    /* 眩晕or麻痹状态下罢工 */
+                    || selectedRole->hasState(MCParalysisState)
+                    || selectedRole->hasState(MCVertigoState)) {
+                    continue;
+                }
 #else
                 MCRole *role = teamLayer_->getSelectedRole();
-                if (findPath && role) {
+                if (findPath && role
+                    && !role->hasState(MCChaosState) /* 混乱了不接受控制 */
+                    /* 眩晕or麻痹状态下罢工 */
+                    && !selectedRole->hasState(MCParalysisState)
+                    && !selectedRole->hasState(MCVertigoState)) {
 #endif
                     CCPoint location = touch->getLocation();
                     /* 来个粒子效果 */

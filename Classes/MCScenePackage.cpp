@@ -102,17 +102,17 @@ MCScenePackage::loadFromFile(const char *aPackagePath)
     isInternalScene_ = root["internal"].getInt() == 1 ? true : false;
     
     /* name String */
-    name_ = CCString::create(root["name"].getString().c_str());
+    name_ = CCString::create(root["name"].getString());
     name_->retain();
     
     /* trigger String */
     if (root["trigger"].isString()) {
-        triggerFilepath_ = CCString::create(root["trigger"].getString().c_str());
+        triggerFilepath_ = CCString::create(root["trigger"].getString());
         triggerFilepath_->retain();
     }
     
     /* description String */
-    description_ = CCString::create(root["description"].getString().c_str());
+    description_ = CCString::create(root["description"].getString());
     description_->retain();
     
     /* objects Array */
@@ -206,7 +206,7 @@ MCScenePackage::loadScenes(JsonBox::Object &aRoot)
             c_str_o_id[2],
             c_str_o_id[3]
         };
-        ccstring = CCString::create(destination["destination"].getString().c_str());
+        ccstring = CCString::create(destination["destination"].getString());
         entrance->setDestination(ccstring);
         ccstring->retain();
         entrance->setID(o_id);

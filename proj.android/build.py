@@ -26,6 +26,8 @@ def main():
             output = 'bin/%s-%s.apk'%(kMCProjectName, arg[2:])
             if arg == kMCCommandOptionClean:
                 sign_package = False
+    print cmd
+    return
     if len(sys.argv) < 2:
         print './build.py [--debug|--release|--clean] [--re-generate] [--re-build]'
         sys.exit(0)

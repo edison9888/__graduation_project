@@ -97,7 +97,8 @@ public:
     }
     
     /**
-     * 无敌人则返回NULL
+     * 无敌人则返回NULL。
+     * 混乱状态下由随机数决定,选最大的。
      */
     MCRole *roleForMaxAggro();
     

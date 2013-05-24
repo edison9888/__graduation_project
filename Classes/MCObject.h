@@ -30,7 +30,7 @@ public:
     
     CC_SYNTHESIZE(mc_object_id_t, id_, ID); /* 物件ID */
     CC_SYNTHESIZE(mc_tag_t, tag_, Tag); /* 物件标签 */
-    CC_SYNTHESIZE(CCString *, name_, Name); /* 物件名称 */
+    CC_SYNTHESIZE(CCString *, name_, Name);
     CC_SYNTHESIZE(CCString *, description_, Description); /* 物件描述 */
 };
 

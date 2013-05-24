@@ -120,12 +120,22 @@ MCDungeonMaster::roleAttackTarget(MCRole *aRole, MCRole *aTarget)
         printf("伤害值: %hi\n", damage);
 #endif
         
+        MCRoleState attackWithState = aRole->attackWithState(); /* 某些有特殊效果的普通攻击 */
         mc_effect_t effect = {
             -damage,
-            aRole->attackWithState(), /* 某些有特殊效果的普通攻击 */
-            0.0f
+            attackWithState,
+            attackWithState == MCNormalBattle ? 0.0f : 3.0f /* 送3秒钟效果 */
         };
         aTarget->roleWasAttacked(effect);
+        
+        if (aRole->hasState(MCCurseState)) { /* 被诅咒了，移动减少的体力值增加(double)，发动攻击会扣血(一半) */
+            mc_effect_t effect = {
+                -damage / 2,
+                MCNormalBattle,
+                0.0f
+            };
+            aRole->roleWasAttacked(effect);
+        }
     } else {
         MCEffectManager::sharedEffectManager()->missEffect()->attach(scene, aTarget);
     }

@@ -9,6 +9,7 @@
 #ifndef __Military_Confrontation__MCSceneManager__
 #define __Military_Confrontation__MCSceneManager__
 
+#include <vector>
 #include "MCScenePackage.h"
 
 class MCScene;
@@ -34,12 +35,25 @@ public:
      * 清除由sceneWithObjectId:方法生成的MCGameScene对象
      */
     void cleanupSceneWithObjectId(mc_object_id_t anObjectId);
+    
+    /* 自动清理场景 */
+    void autoreleaseSceneWithObjectId(mc_object_id_t anObjectId);
+    
+    /* 自动清理任务场景 */
+    void autoreleaseTaskSceneWithObjectId(mc_object_id_t anObjectId);
 private:
+    /**
+     * 任务完成通知
+     */
+    void taskDidFinish(CCObject *obj);
+    
     void loadSceneListFile();
     
 private:
     CCDictionary *scenes_; /* 以mc_object_id_t为key */
     CCDictionary *scenePackages_; /* 以mc_object_id_t为key */
+    std::vector<mc_object_id_t> trash_; /* 销毁队列 */
+    std::vector<mc_object_id_t> taskTrash_; /* 任务场景的销毁队列 */
 };
 
 class MCSceneDelegate {

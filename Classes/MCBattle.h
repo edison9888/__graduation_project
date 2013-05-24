@@ -39,7 +39,7 @@ typedef struct {
     mc_lasting_time_t    remaining_time; /* 剩余效果时间 */
 } mc_effect_t;
 
-typedef mc_ushort_t mc_offensive_t;
+typedef mc_short_t mc_offensive_t;
 
 enum {
     MCNormalBattle,

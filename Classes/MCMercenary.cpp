@@ -83,8 +83,6 @@ MCMercenary::getEntity()
 void
 MCMercenary::died()
 {
-    MCTeam::sharedTeam()->removeRole(this);
-    
     MCRoleEntity *roleEntity = getEntity();
     roleEntity->stopPathFinding();
     roleEntity->stopWalking();

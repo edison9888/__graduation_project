@@ -36,16 +36,13 @@ MCEffectiveItem::copy()
     
     effectiveItem->id_ = id_;
     effectiveItem->tag_ = tag_;
-    effectiveItem->name_ = CCString::create(name_->getCString()); /* 会被释放掉，所以要copy一个 */
-    effectiveItem->name_->retain();
+    effectiveItem->name_ = new CCString(name_->getCString()); /* 会被释放掉，所以要copy一个 */
     if (description_ != NULL) {
-        effectiveItem->description_ = CCString::create(description_->getCString()); /* 会被释放掉，所以要copy一个 */
-        effectiveItem->description_->retain();
+        effectiveItem->description_ = new CCString(description_->getCString()); /* 会被释放掉，所以要copy一个 */
     }
     effectiveItem->price_ = price_;
     effectiveItem->itemType_ = itemType_;
-    effectiveItem->icon_ = CCString::create(icon_->getCString()); /* 会被释放掉，所以要copy一个 */
-    effectiveItem->icon_->retain();
+    effectiveItem->icon_ = new CCString(icon_->getCString()); /* 会被释放掉，所以要copy一个 */
     effectiveItem->radius = radius;
     effectiveItem->effect = dynamic_cast<MCEffect *>(effect->copy());
     

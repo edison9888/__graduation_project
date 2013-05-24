@@ -63,9 +63,7 @@ MCSceneController::loadSpawnScene(float delay)
 void
 MCSceneController::_loadSpawnScene(float dt)
 {
-    MCDungeonMaster *dm = MCDungeonMaster::sharedDungeonMaster();
-    
-    pushExpectedScene(dm->getSpawnPointID(), NULL);
+    pushExpectedScene(MCDungeonMaster::sharedDungeonMaster()->getSpawnPointID(), NULL);
     loadSpawnScene_ = true;
     requestChangingScene();
 }
@@ -78,10 +76,9 @@ MCSceneController::pushExpectedScene(mc_object_id_t anObjectId, const char *anEn
 {
     expectedSceneId_ = anObjectId;
     if (anEntranceName) {
-        entranceName_ = new CCString;
-        entranceName_->initWithFormat("%s", anEntranceName);
+        entranceName_ = anEntranceName;
     } else {
-        entranceName_ = NULL;
+        entranceName_.clear();
     }
     method_ = method;
 }
@@ -105,14 +102,8 @@ MCSceneController::__loadScene()
 {
     MCScene *newScene = MCSceneManager::sharedSceneManager()->sceneWithObjectId(expectedSceneId_);
     expectedScene_ = newScene;
-    CCString *entranceName = newScene->getEntranceName();
-    if (entranceName) {
-        entranceName->release();
-    }
-    if (entranceName_) { /* entranceName_在载入到重生点场景时为NULL */
-        entranceName = CCString::create(entranceName_->getCString());
-        newScene->setEntranceName(entranceName);
-        entranceName->retain();
+    if (! entranceName_.empty()) { /* entranceName_在载入到重生点场景时为NULL */
+        newScene->setEntranceName(entranceName_);
     }
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCSceneDidLoadNotification);
@@ -127,10 +118,9 @@ void
 MCSceneController::__changeScene()
 {
     if ((expectedScene_ == NULL && method_ != MCPopScene)
-        || (entranceName_ == NULL && !loadSpawnScene_)
-        || (entranceName_ != NULL && !expectedScene_->hasEntrance(entranceName_->getCString()) && method_ != MCPopScene)) {
+        || (entranceName_.empty() && !loadSpawnScene_)
+        || (!entranceName_.empty() && !expectedScene_->hasEntrance(entranceName_.c_str()) && method_ != MCPopScene)) {
         expectedScene_ = NULL;
-        CC_SAFE_RELEASE_NULL(entranceName_);
         return;
     }
     
@@ -151,7 +141,7 @@ MCSceneController::__changeScene()
 //        currentScene_ = expectedScene_;
 //    }
     expectedScene_ = NULL;
-    CC_SAFE_RELEASE_NULL(entranceName_);
+    entranceName_.clear();
     
 #if MC_DEBUG_SERVER == 1
     MCSimpleGameSceneContextServer::defaultSimpleGameSceneContextServer()->notifySceneDidChange();

@@ -12,6 +12,9 @@
 #include "MCGameScene.h"
 #include "MCBattleFieldScene.h"
 #include "MCFlagManager.h"
+#include "MCTaskManager.h"
+
+const int kMCQueueMaxSize = 4;
 
 static MCScene *
 MCSceneMake(MCScenePackageType aScenePackageType) {
@@ -41,6 +44,7 @@ MCSceneManager::MCSceneManager()
 
 MCSceneManager::~MCSceneManager()
 {
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, kMCTaskDidFinishNotification);
     CC_SAFE_RELEASE(scenes_);
     CC_SAFE_RELEASE(scenePackages_);
 }
@@ -52,6 +56,12 @@ MCSceneManager::sharedSceneManager()
         __shared_scene_manager = new MCSceneManager;
         if (__shared_scene_manager) {
             __shared_scene_manager->loadSceneListFile();
+            
+            CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
+            notificationCenter->addObserver(__shared_scene_manager,
+                                            callfuncO_selector(MCSceneManager::taskDidFinish),
+                                            kMCTaskDidFinishNotification,
+                                            NULL);
         }
     }
     
@@ -97,11 +107,55 @@ MCSceneManager::cleanupSceneWithObjectId(mc_object_id_t anObjectId)
 {
     int key = MCObjectIdToDickKey(anObjectId);
     MCScene *scene = (MCScene *) scenes_->objectForKey(key);
-    CCLog("scene: %p", scene);
     if (scene) {
         scenes_->removeObjectForKey(key);
         scene->cleanup();
     }
+}
+
+/* 自动清理场景 */
+void
+MCSceneManager::autoreleaseSceneWithObjectId(mc_object_id_t anObjectId)
+{
+    bool found = false;
+    for (std::vector<mc_object_id_t>::iterator iterator = trash_.begin();
+         iterator != trash_.end();
+         ++iterator) {
+        mc_object_id_t oid = *iterator;
+        if (MCObjectIdIsEqualsTo(oid, anObjectId)) {
+            found = true;
+            break;
+        }
+    }
+    
+    if (! found) {
+        trash_.push_back(anObjectId);
+    }
+    if (trash_.size() > kMCQueueMaxSize) {
+        cleanupSceneWithObjectId(trash_.front());
+        trash_.erase(trash_.begin());
+    }
+}
+
+/* 自动清理任务场景 */
+void
+MCSceneManager::autoreleaseTaskSceneWithObjectId(mc_object_id_t anObjectId)
+{
+    taskTrash_.push_back(anObjectId);
+}
+
+/**
+ * 任务完成通知
+ */
+void
+MCSceneManager::taskDidFinish(CCObject *obj)
+{
+    for (std::vector<mc_object_id_t>::iterator iterator = taskTrash_.begin();
+         iterator != taskTrash_.end();
+         ++iterator) {
+        cleanupSceneWithObjectId(*iterator);
+    }
+    taskTrash_.clear();
 }
 
 void

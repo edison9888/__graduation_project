@@ -134,17 +134,13 @@ MCEffectManager::loadEffects()
             std::string path = effectValueRoot["path"].getString();
             const char *cpath = path.c_str();
             const char *basename = __basename(cpath);
-            effect->effect_ = CCString::createWithFormat("%s-0", basename);
+            effect->effect_ = new CCString;
+            effect->effect_->initWithFormat("%s-0", basename);
             effect->animation_ = loadAnimation(cpath); /* non autorelease */
             effect->animation_->setDelayPerUnit(effect->duration_ / effect->animation_->getFrames()->count());
         } else if (effect->implType_ == MCEffect::MCPList) {
-            effect->effect_ = CCString::create(effectValueRoot["path"].getString().c_str());
+            effect->effect_ = new CCString(effectValueRoot["path"].getString());
         }
-#warning 尚存effect->implType_等于0的未处理数据
-        if (effect->effect_ == NULL) {
-            effect->effect_ = CCString::create("(NULL)");
-        }
-        effect->effect_->retain();
         
         effects_->setObject(effect, MCObjectIdToDickKey(e_id));
         effect->release();

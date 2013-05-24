@@ -30,11 +30,8 @@ public:
     void menuItem_clicked(CCObject* aSender);
     void backward(CCObject* aSender);
     
-    void initPosition();
     void show();
     void hide();
-    
-    void onExit();
     
     void showState(); /* 显示状态选项卡 */
     void showProps(); /* 显示道具选项卡 */

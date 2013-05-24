@@ -140,6 +140,9 @@ public:
      * 对方防御等级=10+最大防御加值+敏捷调整值"
      */
     bool attackCheckHit(mc_offensive_t anOffensive, mc_ac_t anAC) {
+        if (hasState(MCCurseState)) { /* 瞎了狗眼，命中下降，-3点敏捷 */
+            anOffensive -= 3;
+        }
 #if MC_BATTLE_INFO_LEVEL == 1
         printf("攻击对抗：%hu %s %hu => %s\n",
                anOffensive,
@@ -209,6 +212,10 @@ public:
     
     virtual inline bool isHero() {
         return false;
+    }
+    
+    virtual inline bool hasState(MCRoleState aRoleState) {
+        return (roleState_ & aRoleState) == aRoleState;
     }
     
 protected:

@@ -66,7 +66,7 @@ private:
     MCScene *currentScene_;
     
     MCScene *expectedScene_;
-    CCString *entranceName_;
+    std::string entranceName_;
     MCChangeSceneMethod method_;
     
     CC_SYNTHESIZE_PASS_BY_REF(mc_object_id_t, expectedSceneId_, ExpectedSceneId)

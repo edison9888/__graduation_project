@@ -100,8 +100,7 @@ MCEffect::copy()
     
     effect->id_ = id_;
     effect->implType_ = implType_;
-    effect->effect_ = CCString::create(effect_->getCString()); /* 会被释放掉，所以要copy一个 */
-    effect->effect_->retain();
+    effect->effect_ = new CCString(effect_->getCString()); /* 会被释放掉，所以要copy一个 */
     if (implType_ == MCEffect::MCSpriteSheet
         && animation_ != NULL) {
         effect->animation_ = animation_;

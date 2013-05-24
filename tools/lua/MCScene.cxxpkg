@@ -58,7 +58,7 @@ class MCScene {
      * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。
      * 若为空，
      */
-    CCString *getEntranceName();
+    std::string &getEntranceName();
     MCCamera *getSceneCamera();
     CCPoint getDefaultLocation();
     MCAStar *getAStar();

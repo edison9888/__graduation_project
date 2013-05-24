@@ -76,7 +76,7 @@ public:
     , viewport_(NULL)
 #endif
     , background_(NULL)
-    , entranceName_(NULL)
+    , entranceName_("")
     , trigger_(NULL)
     , context_(NULL)
     , abortTaskConfirm_(NULL) { }
@@ -110,7 +110,6 @@ public:
     
     void onEnter();
     void onExit();
-    void update(float dt);
     
     virtual void installController() {}
     
@@ -151,6 +150,18 @@ public:
         return mezzanine_;
     }
     
+    inline std::string &getEntranceName() {
+        return entranceName_;
+    }
+    
+    inline void setEntranceName(const char *anEntranceName) {
+        entranceName_.assign(anEntranceName);
+    }
+    
+    inline void setEntranceName(const std::string &anEntranceName) {
+        entranceName_.assign(anEntranceName);
+    }
+    
     virtual void showPlayerInfo();
     
     virtual void detectsCollidesWithSemiTransparents(MCRole *aRole);
@@ -186,7 +197,7 @@ protected:
      * 若不为空，则人物出现在该入口位置(除非改场景有重生点并且需要重生)。
      * 若为空，
      */
-    CC_SYNTHESIZE(CCString *, entranceName_, EntranceName);
+    std::string entranceName_;
     
     CC_SYNTHESIZE_READONLY(MCCamera *, sceneCamera_, SceneCamera);
     CC_SYNTHESIZE_READONLY(CCPoint, defaultLocation_, DefaultLocation);

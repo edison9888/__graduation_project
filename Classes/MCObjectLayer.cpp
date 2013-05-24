@@ -239,11 +239,10 @@ MCObjectLayer::onEnter()
         rolePosition = ccp(spawnPoint->valueForKey("x")->floatValue() / contentScaleFactor,
                            spawnPoint->valueForKey("y")->floatValue() / contentScaleFactor);
         flagManager->setSpawnFlagOff();
-    } else if (scene->getEntranceName()) {
+    } else if (!scene->getEntranceName().empty()) {
         MCEntrance *entrance = dynamic_cast<MCEntrance *>(scene->getEntrances()
-                                                          ->objectForKey(scene->getEntranceName()
-                                                                         ->getCString()));
-        scene->getEntranceName()->release();
+                                                          ->objectForKey(scene->getEntranceName()));
+        scene->getEntranceName().clear();
         CCAssert(entrance != NULL, "场景没有入口！");
 #if (MC_COLLISION_USE_OBB == 1)
         MCOBB obb = entrance->getOBB();

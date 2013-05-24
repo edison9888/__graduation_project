@@ -9,10 +9,13 @@
          contextName = "mach_msg_trap:(null)">
          <PersistentStrings>
             <PersistentString
-               value = "MCHero::sharedHero()-&gt;ai_">
+               value = "MCTeam::sharedTeam()">
             </PersistentString>
             <PersistentString
-               value = "MCTeam::sharedTeam()">
+               value = "MCSceneContextManager::sharedSceneContextManager()-&gt;currentContext()-&gt;scene_-&gt;playerInfo_-&gt;m_obPosition">
+            </PersistentString>
+            <PersistentString
+               value = "MCHero::sharedHero()-&gt;ai_">
             </PersistentString>
             <PersistentString
                value = "MCHero::sharedHero()">
@@ -35,6 +38,12 @@
       </ContextState>
       <ContextState
          contextName = "MCAStarAlgorithm::process(cocos2d::CCObject*):MCAStar.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCPlayerInfo::show():MCPlayerInfo.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCScene::showPlayerInfo():MCScene.cpp">
       </ContextState>
       <ContextState
          contextName = "MCRole::canAttackTarget(MCRole*):MCRole.cpp">
@@ -62,18 +71,18 @@
          contextName = "MCHero::attackTarget(MCRole*, cocos2d::CCObject*, void (cocos2d::CCObject::*)(cocos2d::CCObject*), cocos2d::CCObject*):MCHero.cpp">
       </ContextState>
       <ContextState
-         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
-      </ContextState>
-      <ContextState
-         contextName = "MCTask::generateTaskContext():MCTask.cpp">
-      </ContextState>
-      <ContextState
          contextName = "MCRoleEntity::canMove(float):MCRoleEntity.cpp">
          <PersistentStrings>
             <PersistentString
                value = "MCTaskManager::sharedTaskManager()">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MCRoleEntity::walkWithPathFinding(cocos2d::CCObject*):MCRoleEntity.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "MCTask::generateTaskContext():MCTask.cpp">
       </ContextState>
       <ContextState
          contextName = "MCEffect::copy():MCEffect.cpp">
