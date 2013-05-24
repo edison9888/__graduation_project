@@ -181,7 +181,6 @@
 		A3AAAF201709C34600784259 /* MCShadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3AAAF1E1709C34600784259 /* MCShadow.cpp */; };
 		A3ADDC4B174F4EDA00409A77 /* MCSimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC49174F4EDA00409A77 /* MCSimpleAudioEngine.cpp */; };
 		A3ADDC4F174F6F9500409A77 /* MCGameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC4D174F6F9500409A77 /* MCGameOverScene.cpp */; };
-		A3ADDC50174F6F9500409A77 /* MCGameOverScene.h in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC4E174F6F9500409A77 /* MCGameOverScene.h */; };
 		A3B1636D16B00E84009F95EE /* MCMainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636916B00E84009F95EE /* MCMainMenuScene.cpp */; };
 		A3B1636E16B00E84009F95EE /* MCSplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */; };
 		A3B1637116B00E99009F95EE /* MCItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636F16B00E99009F95EE /* MCItem.cpp */; };
@@ -2857,7 +2856,6 @@
 				A366990E173CCB94005E1D97 /* b2Rope.cpp in Sources */,
 				A3ADDC4B174F4EDA00409A77 /* MCSimpleAudioEngine.cpp in Sources */,
 				A3ADDC4F174F6F9500409A77 /* MCGameOverScene.cpp in Sources */,
-				A3ADDC50174F6F9500409A77 /* MCGameOverScene.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

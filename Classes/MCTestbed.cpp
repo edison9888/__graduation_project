@@ -25,7 +25,6 @@
 #include "MCTestUI.h"
 #include "MCTestEffect.h"
 
-const int LINE_SPACE = 40;
 const CCPoint curPos = ccp(0, 0);
 
 typedef CCScene *(MCCreateFunction)();
@@ -60,27 +59,27 @@ public:
 };
 
 static struct __mc_test_scene __test_scenes[] = {
-    {"Enter the Game", MCTestGame::scene},
-    {"Enter Menu Scene", MCTestMenuScene::scene},
-    {"Test Detail", MCTestDetail::scene},
-    {"Test A*", MCTestAStar::scene},
-    {"Test Particle", MCTestParticle::scene},
-    {"Test Game Scene", MCTestGameScene::scene},
-    {"Test Battle Controller", MCTestBattleController::scene},
-    {"Test Issuing Task UI", MCTestIssuingTaskUI::scene},
-    {"Test Trading Props UI", MCTestTradingPropsUI::scene},
-    {"Test Enhancing Equipment UI", MCTestEnhancingEquipmentUI::scene},
-    {"Test Hiring Mercenary UI", MCTestHiringMercenaryUI::scene},
-    {"Test Effect", MCTestEffect::scene},
-    {"Test Lua", MCTestLua::scene},
-    {"Test Flag Manager", MCTestFlagManager::scene},
-    {"Test Task Manager", MCTestTaskManager::scene},
-    {"Test Backpack ", MCTestBackpack::scene},
-    {"Test Role Manager", MCTestRoleManager::scene},
-    {"Test Viewport", MCTestViewport::scene},
-    {"Test OBB", MCTestOBB::scene},
-    {"Test Role Base Info", MCTestRoleBaseInfo::scene},
-    {"Quit", __mc_quit::scene}
+    {"进入游戏", MCTestGame::scene},
+    {"跳过启动界面", MCTestMenuScene::scene},
+//    {"Test Detail", MCTestDetail::scene},
+//    {"Test A*", MCTestAStar::scene},
+//    {"Test Particle", MCTestParticle::scene},
+    {"测试游戏场景", MCTestGameScene::scene},
+    {"测试战斗场景", MCTestBattleController::scene},
+//    {"Test Issuing Task UI", MCTestIssuingTaskUI::scene},
+//    {"Test Trading Props UI", MCTestTradingPropsUI::scene},
+//    {"Test Enhancing Equipment UI", MCTestEnhancingEquipmentUI::scene},
+//    {"Test Hiring Mercenary UI", MCTestHiringMercenaryUI::scene},
+//    {"Test Effect", MCTestEffect::scene},
+//    {"Test Lua", MCTestLua::scene},
+//    {"Test Flag Manager", MCTestFlagManager::scene},
+//    {"Test Task Manager", MCTestTaskManager::scene},
+//    {"Test Backpack ", MCTestBackpack::scene},
+//    {"Test Role Manager", MCTestRoleManager::scene},
+//    {"Test Viewport", MCTestViewport::scene},
+//    {"Test OBB", MCTestOBB::scene},
+//    {"Test Role Base Info", MCTestRoleBaseInfo::scene},
+//    {"Quit", __mc_quit::scene}
 };
 
 bool
@@ -88,20 +87,24 @@ MCTestbed::init()
 {
     if (CCLayer::init()) {
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         size_t count = sizeof(__test_scenes) / sizeof(struct __mc_test_scene);
         CCMenu *menu = CCMenu::create();
+        float lineSpace = 64.0f / contentScaleFactor;
         menu_ = menu;
         addChild(menu);
         
         for (int i = 0; i < count; ++i) {
-            CCLabelTTF *label = CCLabelTTF::create(__test_scenes[i].name, "arial", 24);
+            CCLabelTTF *label = CCLabelTTF::create(__test_scenes[i].name,
+                                                   "",
+                                                   48.0f / contentScaleFactor);
             CCMenuItemLabel *item = CCMenuItemLabel::create(label, this, menu_selector(MCTestbed::testbedDidSelectScene));
             item->setUserData((void *)__test_scenes[i].createFunction);
             menu->addChild(item, i + 10000);
-            item->setPosition(winSize.width / 2, (winSize.height - (i + 1) * LINE_SPACE));
+            item->setPosition(winSize.width / 2, (winSize.height - (i + 1) * lineSpace));
         }
         
-        menu->setContentSize(CCSizeMake(winSize.width, (count + 1) * LINE_SPACE));
+        menu->setContentSize(CCSizeMake(winSize.width, (count + 1) * lineSpace));
         menu->setPosition(curPos);
         
         setTouchEnabled(true);
@@ -139,12 +142,13 @@ MCTestbed::moveMenu(const CCPoint &delta) {
     float newY = current.y + delta.y;
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     size_t count = sizeof(__test_scenes) / sizeof(struct __mc_test_scene);
+    float lineSpace = 64.0f / CC_CONTENT_SCALE_FACTOR();
     
     if (newY < 0)
         newY = 0;
     
-    if( newY > ((count + 1) * LINE_SPACE - winSize.height))
-        newY = ((count + 1) * LINE_SPACE - winSize.height);
+    if( newY > ((count + 1) * lineSpace - winSize.height))
+        newY = ((count + 1) * lineSpace - winSize.height);
     
     menu_->setPosition(current.x, newY);
 }

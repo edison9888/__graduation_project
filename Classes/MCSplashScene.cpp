@@ -8,19 +8,24 @@
 
 #include "MCSplashScene.h"
 
+static const CCSize kMCLogoSize = CCSizeMake(623, 424);
+
 int Tag_logo = 1;
 
 bool
 MCSplash::init()
 {
-    if (CCLayerColor::initWithColor(ccc4(24, 24, 24, 255)))
-    {
+    if (CCLayerColor::initWithColor(ccc4(0, 0, 0, 255))) {
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+        float contentScaleFactor = CC_CONTENT_SCALE_FACTOR();
         CCSprite *logo = CCSprite::create("logo.jpg");
+        float expectedHeight = 240.0f / contentScaleFactor;
+        float scale = expectedHeight / kMCLogoSize.height;
+        
+        logo->runAction(CCScaleTo::create(0.0f, scale));
+    
         addChild(logo);
         logo->setTag(Tag_logo);
-        logo->setScaleX(winSize.width / logo->getContentSize().width);
-        logo->setScaleY(winSize.height / logo->getContentSize().height);
         logo->setPosition(ccp(winSize.width / 2, winSize.height / 2));
         logo->setOpacity(0);
         
