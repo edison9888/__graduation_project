@@ -61,6 +61,7 @@ MCWeapon::copy()
     weapon->effect = effect;
     weapon->effectCheck = effectCheck;
     weapon->attackEffect = dynamic_cast<MCEffect *>(attackEffect->copy());
+    weapon->actionEffect.assign(actionEffect);
     
     return weapon;
 }

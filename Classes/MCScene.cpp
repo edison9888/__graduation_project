@@ -21,6 +21,7 @@
 #include "MCMezzanine.h"
 #include "MCTaskContext.h"
 #include "MCTaskTarget.h"
+#include "MCSimpleAudioEngine.h"
 
 MCSceneContext::MCSceneContext()
 {
@@ -289,6 +290,8 @@ MCScene::onEnter()
     sceneCamera_->restore();
     sceneCamera_->locate();
     sceneCamera_->focusHero();
+    
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->playMusic();
 }
 
 void

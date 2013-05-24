@@ -757,6 +757,10 @@ MCMercenaryManager::loadMercenaries()
         ccstring = CCString::create(mercenaryObject["description"].getString().c_str());
         mercenary->setDescription(ccstring);
         ccstring->retain();
+        /* action-effect String */
+        ccstring = CCString::create(mercenaryObject["action-effect"].getString().c_str());
+        mercenary->setActionEffect(ccstring);
+        ccstring->retain();
         
         mercenaries_->setObject(mercenary, MCObjectIdToDickKey(m_id));
     }

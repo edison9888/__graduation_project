@@ -12,6 +12,8 @@
 #include "MCSkill.h"
 #include "MCSkillManager.h"
 #include "MCDungeonMaster.h"
+#include "MCGameOverScene.h"
+#include "MCGameState.h"
 
 static MCHero *__shared_hero = NULL;
 const char *kMCHeroFacePath = "faces/x-000.png";
@@ -175,11 +177,15 @@ MCHero::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSele
 void
 MCHero::died()
 {
-    CCLog("hero is died");
-    return;
-    MCRoleEntity *roleEntity = getEntity();
-    roleEntity->removeFromParentAndCleanup(false);
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCRoleDiedNotification);
+    
+    /* 存档 */
+    MCGameState::sharedGameState()->save();
+    
+    /* 死亡界面 */
+    CCDirector::sharedDirector()->replaceScene(CCTransitionZoomFlipAngular::create(0.5f,
+                                                                                   MCGameOver::scene(),
+                                                                                   kCCTransitionOrientationDownOver));
 }
 
 #pragma mark -
@@ -323,4 +329,15 @@ MCHero::getSkillDamageScore(MCSkill *aSkill)
             + (aSkill->effect != MCNormalState ? 4 : 0)
 #warning m=2
             + (aSkill->breadth * aSkill->length) * 2;
+}
+
+/**
+ * 攻击音效
+ */
+const char *
+MCHero::actionEffect()
+{
+    MCWeapon *weapon = dynamic_cast<MCWeapon *>(MCEquipmentManager::sharedEquipmentManager()->getCurrentWeapon()->getEquipment());
+    
+    return weapon->actionEffect.c_str();
 }

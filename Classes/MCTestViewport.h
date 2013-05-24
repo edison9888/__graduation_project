@@ -32,17 +32,12 @@ public:
         p->setTMXTiledMapPath(CCFileUtils::sharedFileUtils()->fullPathForFilename("maps/village.tmx").c_str());
         p->setBackgroundMusic(CCFileUtils::sharedFileUtils()->fullPathForFilename("sounds/bgm-b.mp3").c_str());
         this->initWithScenePackage(p);
-        this->setSilent();
         MCHero::sharedHero()->getEntity()->setPosition(ccp(160, 160));
         
         MCNPC *role = new MCNPC;
         addChild(role->getEntity()->getSpriteSheet());
         role->getEntity()->setPosition(ccp(200, 200));
         return true;
-    }
-    
-    void setSilent() {
-        background_->setPlayBackgroundMusicImmediately(false);
     }
 };
 

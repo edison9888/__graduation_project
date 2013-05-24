@@ -10,10 +10,13 @@
 #include "MCRoleBaseInfo.h"
 #include "MCActionBar.h"
 #include "MCEffectiveItem.h"
+#include "MCSimpleAudioEngine.h"
 
 static const char *kMCRoleBaseInfoFaceBoxFilepath = "UI/bi_face_box.png";
 static const char *kMCRoleBaseInfoFaceBoxSelectedFilepath = "UI/bi_face_box_selected.png";
 static const char *kMCRoleBaseInfoValueBoxFilepath = "UI/rbi_value_box.png";
+
+static const char *kMCPotionEffecFilepath = "voices/potion.wav";
 
 static const float kMCFontSize = 18;
 
@@ -180,8 +183,10 @@ MCRoleBaseInfo::useActionBarItem(MCActionBarItem *anActionBarItem)
     MCBackpackItem *backpackItem = (MCBackpackItem *) anActionBarItem->getBackpackItem();
     if (backpackItem->use()) { /* 能够使用才执行，已经减去1 */
         MCEffectiveItem *item = (MCEffectiveItem *) backpackItem->item;
+        
         role_->updateHP(item->hp);
         role_->updatePP(item->pp);
+        MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCPotionEffecFilepath);
         
         return true;
     }

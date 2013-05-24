@@ -380,11 +380,11 @@ MCBattleController::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
             if (lastSelectedSkillBarItem_) {
                 lastSelectedSkillBarItem_->unselected();
             }
-            if (touchedSkillBarItem->isSelected()) {
+            if (touchedSkillBarItem->isSelected()) { /* 取消选择技能 */
                 skillBarItemSelectedEffect_->removeFromParentAndCleanup(false);
                 touchedSkillBarItem->unselected();
                 touchedSkillBarItem = NULL;
-            } else if (touchedSkillBarItem->selectable()) {
+            } else if (touchedSkillBarItem->selectable()) { /* 选择技能 */
                 if (! skillBarItemSelectedEffect_->getParent()) {
                     addChild(skillBarItemSelectedEffect_);
                 }
@@ -514,6 +514,7 @@ MCBattleController::skillDidLaunch(CCObject *anObject)
     
     if (launchedSkillBarItem) {
         skillBarItemSelectedEffect_->removeFromParentAndCleanup(false);
+        lastSelectedSkillBarItem_->unselected();
         lastSelectedSkillBarItem_ = NULL;
         launchedSkillBarItem->intoColdTime();
     }

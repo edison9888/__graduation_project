@@ -179,6 +179,9 @@
 		A3A72C911719A3F7009C65A5 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A72C901719A3F7009C65A5 /* libsqlite3.dylib */; };
 		A3A8FAEA16EED83A004EE947 /* MCTestViewport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3A8FAE816EED83A004EE947 /* MCTestViewport.cpp */; };
 		A3AAAF201709C34600784259 /* MCShadow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3AAAF1E1709C34600784259 /* MCShadow.cpp */; };
+		A3ADDC4B174F4EDA00409A77 /* MCSimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC49174F4EDA00409A77 /* MCSimpleAudioEngine.cpp */; };
+		A3ADDC4F174F6F9500409A77 /* MCGameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC4D174F6F9500409A77 /* MCGameOverScene.cpp */; };
+		A3ADDC50174F6F9500409A77 /* MCGameOverScene.h in Sources */ = {isa = PBXBuildFile; fileRef = A3ADDC4E174F6F9500409A77 /* MCGameOverScene.h */; };
 		A3B1636D16B00E84009F95EE /* MCMainMenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636916B00E84009F95EE /* MCMainMenuScene.cpp */; };
 		A3B1636E16B00E84009F95EE /* MCSplashScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */; };
 		A3B1637116B00E99009F95EE /* MCItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3B1636F16B00E99009F95EE /* MCItem.cpp */; };
@@ -709,6 +712,10 @@
 		A3A8FAE916EED83A004EE947 /* MCTestViewport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestViewport.h; path = ../Classes/MCTestViewport.h; sourceTree = "<group>"; };
 		A3AAAF1E1709C34600784259 /* MCShadow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCShadow.cpp; path = ../Classes/MCShadow.cpp; sourceTree = "<group>"; };
 		A3AAAF1F1709C34600784259 /* MCShadow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCShadow.h; path = ../Classes/MCShadow.h; sourceTree = "<group>"; };
+		A3ADDC49174F4EDA00409A77 /* MCSimpleAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSimpleAudioEngine.cpp; path = ../Classes/MCSimpleAudioEngine.cpp; sourceTree = "<group>"; };
+		A3ADDC4A174F4EDA00409A77 /* MCSimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCSimpleAudioEngine.h; path = ../Classes/MCSimpleAudioEngine.h; sourceTree = "<group>"; };
+		A3ADDC4D174F6F9500409A77 /* MCGameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCGameOverScene.cpp; path = ../Classes/MCGameOverScene.cpp; sourceTree = "<group>"; };
+		A3ADDC4E174F6F9500409A77 /* MCGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCGameOverScene.h; path = ../Classes/MCGameOverScene.h; sourceTree = "<group>"; };
 		A3B1636916B00E84009F95EE /* MCMainMenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCMainMenuScene.cpp; path = ../Classes/MCMainMenuScene.cpp; sourceTree = "<group>"; };
 		A3B1636A16B00E84009F95EE /* MCMainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCMainMenuScene.h; path = ../Classes/MCMainMenuScene.h; sourceTree = "<group>"; };
 		A3B1636B16B00E84009F95EE /* MCSplashScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCSplashScene.cpp; path = ../Classes/MCSplashScene.cpp; sourceTree = "<group>"; };
@@ -1560,6 +1567,15 @@
 			name = Base64;
 			sourceTree = "<group>";
 		};
+		A3ADDC48174F4EC200409A77 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				A3ADDC49174F4EDA00409A77 /* MCSimpleAudioEngine.cpp */,
+				A3ADDC4A174F4EDA00409A77 /* MCSimpleAudioEngine.h */,
+			);
+			name = Audio;
+			sourceTree = "<group>";
+		};
 		A3B1635E16AFFEA9009F95EE /* Item */ = {
 			isa = PBXGroup;
 			children = (
@@ -2071,6 +2087,7 @@
 				A396598716E64C5500857F79 /* MCGameState.cpp */,
 				A396598816E64C5500857F79 /* MCGameState.h */,
 				A30A0AC616FAC66B00F1F5B9 /* MCInterfaceMacros.h */,
+				A3ADDC48174F4EC200409A77 /* Audio */,
 				A36CD5A41724103800DC7726 /* Flag */,
 				A36CD59D17240FE300DC7726 /* Effect */,
 				A353F20F1717D15E0038D726 /* Region */,
@@ -2188,6 +2205,8 @@
 				A3B1636A16B00E84009F95EE /* MCMainMenuScene.h */,
 				A353BC01170FE63D005A4058 /* MCLoadingScene.cpp */,
 				A353BC02170FE63D005A4058 /* MCLoadingScene.h */,
+				A3ADDC4D174F6F9500409A77 /* MCGameOverScene.cpp */,
+				A3ADDC4E174F6F9500409A77 /* MCGameOverScene.h */,
 			);
 			name = "Game Scene";
 			sourceTree = "<group>";
@@ -2836,6 +2855,9 @@
 				A36698FB173CCB94005E1D97 /* b2WeldJoint.cpp in Sources */,
 				A36698FD173CCB94005E1D97 /* b2WheelJoint.cpp in Sources */,
 				A366990E173CCB94005E1D97 /* b2Rope.cpp in Sources */,
+				A3ADDC4B174F4EDA00409A77 /* MCSimpleAudioEngine.cpp in Sources */,
+				A3ADDC4F174F6F9500409A77 /* MCGameOverScene.cpp in Sources */,
+				A3ADDC50174F6F9500409A77 /* MCGameOverScene.h in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

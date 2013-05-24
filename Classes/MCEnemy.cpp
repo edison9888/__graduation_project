@@ -16,6 +16,7 @@ MCEnemy::~MCEnemy()
 {
     CC_SAFE_RELEASE(skills_);
     CC_SAFE_RELEASE(attackEffect_);
+    CC_SAFE_RELEASE(actionEffect_);
 }
 
 bool
@@ -358,6 +359,8 @@ MCEnemy::copy()
         enemy->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
     }
     enemy->damageScore_ = -1;
+    enemy->actionEffect_ = CCString::create(actionEffect_->getCString()); /* 会被释放掉，所以要copy一个 */
+    enemy->actionEffect_->retain();
     
     return enemy;
 }

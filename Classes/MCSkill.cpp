@@ -12,8 +12,11 @@
 #include "MCMezzanine.h"
 #include "MCEffectManager.h"
 #include "MCSkillManager.h"
+#include "MCSimpleAudioEngine.h"
 
 const char *kMCSkillActionIsDoneNotification = "kMCSkillActionIsDoneNotification";
+
+static const char *kMCHitEffecFilepath = "voices/trap.wav"; /* 比较坑，用陷阱的声音 */
 
 MCSkill::~MCSkill()
 {
@@ -145,6 +148,9 @@ MCSkill::skillDidHitTarget(MCRole *aTarget)
         /* 不是可持续的技能的话，命中后就将消失 */
         mezzanine->detach(this);
     }
+    
+    /* 命中音效 */
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCHitEffecFilepath);
 }
 
 CCObject *

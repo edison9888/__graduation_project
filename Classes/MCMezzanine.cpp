@@ -10,6 +10,9 @@
 #include "MCTeam.h"
 #include "MCSkill.h"
 #include "MCTrap.h"
+#include "MCSimpleAudioEngine.h"
+
+static const char *kMCTrapEffecFilepath = "voices/trap.wav";
 
 MCMezzanine::~MCMezzanine()
 {
@@ -220,4 +223,6 @@ MCMezzanine::trapDidTriggerByRole(MCTrap *aTrap, MCRole *aRole)
     };
     aRole->roleWasAttacked(effect);
     traps_->removeObject(aTrap);
+    
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCTrapEffecFilepath);
 }

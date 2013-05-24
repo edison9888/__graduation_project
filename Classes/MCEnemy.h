@@ -99,6 +99,13 @@ public:
      */
     mc_score_t getSkillDamageScore(MCSkill *aSkill);
     
+    /**
+     * 攻击音效
+     */
+    inline const char *actionEffect() {
+        return actionEffect_->getCString();
+    }
+    
     /* 动作 */
     /* 能否发动攻击 */
     bool canAttackTarget(MCRole *aRole);
@@ -131,6 +138,8 @@ protected:
     CC_SYNTHESIZE(MCDiceRange, effectCheck_, EffectCheck); /* 附带效果判定 */
     
     CC_SYNTHESIZE(MCEffect *, attackEffect_, AttackEffect); /* 攻击效果 */
+    
+    CC_SYNTHESIZE(CCString *, actionEffect_, ActionEffect); /* 攻击效果音 */
     
     CCPoint center_; /* 活动中心点 */
     

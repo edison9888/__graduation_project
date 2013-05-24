@@ -12,6 +12,7 @@
 #include "MCScene.h"
 #include "MCEffectManager.h"
 #include "MCSkillManager.h"
+#include "MCSimpleAudioEngine.h"
 
 #if MC_DEBUG_SAVEDATA == 1
 const char *kMCSpawnPointKey = "spawn-point";
@@ -20,6 +21,8 @@ const char *kMCSpawnPointDefaultValue = "M001";
 const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码没有最后的= */
 const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
 #endif
+
+static const char *kMCMissEffect = "voices/miss.wav";
 
 static const mc_object_id_t kMCDefaultSpawnPointSceneId = {'M', '0', '0', '1'};
 
@@ -101,6 +104,7 @@ MCDungeonMaster::roleAttackTarget(MCRole *aRole, MCRole *aTarget)
     MCScene *scene = MCSceneContextManager::sharedSceneContextManager()->currentContext()->getScene();
     aRole->effectForNormalAttack()->attach(scene, aTarget);
     
+    
     /* 命中判定 */
     bool hit = aRole->attackCheckHit(aRole->getOffensive(), aTarget->getAC());
     
@@ -136,8 +140,16 @@ MCDungeonMaster::roleAttackTarget(MCRole *aRole, MCRole *aTarget)
             };
             aRole->roleWasAttacked(effect);
         }
+        
+        /* 声音效果 */
+        const char *actionEffect = aRole->actionEffect();
+        if (actionEffect) {
+            MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(actionEffect);
+        }
     } else {
         MCEffectManager::sharedEffectManager()->missEffect()->attach(scene, aTarget);
+        /* 声音效果 */
+        MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCMissEffect);
     }
 }
 

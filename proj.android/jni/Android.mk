@@ -42,6 +42,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCFaceBox.cpp \
 					../../Classes/MCFlag.cpp \
 					../../Classes/MCFlagManager.cpp \
+					../../Classes/MCGameOverScene.cpp \
 					../../Classes/MCGameScene.cpp \
 					../../Classes/MCGameState.cpp \
 					../../Classes/MCHero.cpp \
@@ -83,6 +84,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCScript.cpp \
 					../../Classes/MCSemiTransparent.cpp \
 					../../Classes/MCShadow.cpp \
+					../../Classes/MCSimpleAudioEngine.cpp \
 					../../Classes/MCSkill.cpp \
 					../../Classes/MCSkillBar.cpp \
 					../../Classes/MCSkillLayer.cpp \

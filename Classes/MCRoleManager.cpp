@@ -482,6 +482,10 @@ MCRoleManager::loadEnemyData()
         ccstring = CCString::create(enemyObject["description"].getString());
         enemy->setDescription(ccstring);
         ccstring->retain();
+        /* action-effect String */
+        ccstring = CCString::create(enemyObject["action-effect"].getString().c_str());
+        enemy->setActionEffect(ccstring);
+        ccstring->retain();
         
         enemies_->setObject(enemy, MCObjectIdToDickKey(enemy_id));
     }

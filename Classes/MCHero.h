@@ -99,6 +99,11 @@ public:
      */
     mc_score_t getSkillDamageScore(MCSkill *aSkill);
     
+    /**
+     * 攻击音效
+     */
+    const char *actionEffect();
+    
     inline bool isHero() {
         return true;
     }

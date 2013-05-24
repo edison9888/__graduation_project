@@ -19,8 +19,7 @@ class MCBackgroundLayer : public CCLayer {
     
 public:
     MCBackgroundLayer()
-    : isPlayBackgroundMusicImmediately_(false)
-    , enemyShadows_(NULL)
+    : enemyShadows_(NULL)
     , shadows_(NULL) {}
     
     ~MCBackgroundLayer();
@@ -40,17 +39,7 @@ public:
     void loadTeam(MCTeam *aTeam);
     void roleWasDied(CCObject *aRoleObject);
     
-    inline bool isPlayBackgroundMusicImmediately() {
-        return isPlayBackgroundMusicImmediately_;
-    }
-    
-    inline void setPlayBackgroundMusicImmediately(bool var) {
-        isPlayBackgroundMusicImmediately_ = var;
-    }
-    
 private:
-    bool isPlayBackgroundMusicImmediately_;
-    
     CCArray *enemyShadows_; /* 敌人影子 */
     CCArray *shadows_; /* 主角和佣兵的影子 */
     

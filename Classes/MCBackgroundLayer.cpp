@@ -6,12 +6,12 @@
 //  Copyright (c) 2013年 Bullets in a Burning Box, Inc. All rights reserved.
 //
 
-#include "SimpleAudioEngine.h"
+#include "MCSimpleAudioEngine.h"
 #include "MCBackgroundLayer.h"
 #include "MCShadow.h"
 #include "MCTeam.h"
 
-using namespace CocosDenshion;
+const bool kMCIsPlayBackgroundMusicImmediately = true;
 
 MCBackgroundLayer::~MCBackgroundLayer()
 {
@@ -75,8 +75,8 @@ MCBackgroundLayer::onEnter()
                                                                   kMCRoleDiedNotification,
                                                                   NULL);
     schedule(schedule_selector(MCBackgroundLayer::update));
-    if (isPlayBackgroundMusicImmediately_) {
-        playMusic();
+    if (kMCIsPlayBackgroundMusicImmediately) {
+        MCSimpleAudioEngine::sharedSimpleAudioEngine()->setExpectedMusic(backgroundMusic_->getCString());
     }
 }
 
@@ -118,21 +118,13 @@ MCBackgroundLayer::update(float dt)
 void
 MCBackgroundLayer::playMusic()
 {
-    SimpleAudioEngine *audioEngine = SimpleAudioEngine::sharedEngine();
-    if (audioEngine->isBackgroundMusicPlaying()) {
-        audioEngine->stopBackgroundMusic(true);
-    }
-    audioEngine->preloadBackgroundMusic(backgroundMusic_->getCString());
-    audioEngine->playBackgroundMusic(backgroundMusic_->getCString(), true);
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->playMusic();
 }
 
 void
 MCBackgroundLayer::stopMusic()
 {
-    SimpleAudioEngine *audioEngine = SimpleAudioEngine::sharedEngine();
-    if (audioEngine->isBackgroundMusicPlaying()) {
-        audioEngine->stopBackgroundMusic(true);
-    }
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->stopMusic();
 }
 
 void

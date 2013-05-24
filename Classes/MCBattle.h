@@ -128,6 +128,11 @@ public:
      * 攻击范围——(obb.width*obb.height)*m(m值待定)
      */
     virtual mc_score_t getSkillDamageScore(MCSkill *aSkill) { return 0; }
+    
+    /**
+     * 攻击音效
+     */
+    virtual const char *actionEffect() { return NULL; }
 };
 
 NS_MC_BATTLE_END

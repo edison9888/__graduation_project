@@ -235,6 +235,10 @@ MCItemManager::loadEquipmentItems()
                               ? (float) object["consume"].getDouble()
                               : (float) object["consume"].getInt();
         equipment->dexterity = object["dexterity"].getInt();
+        
+        /* action-effect String */
+        equipment->actionEffect.assign(object["action-effect"].getString());
+        
         /* 读取默认矿石，加载背包的时候更新为正确矿石 */
         item->ore_ = oreManager->defaultOre();
         equipmentItems_->setObject(item, MCObjectIdToDickKey(o_id));

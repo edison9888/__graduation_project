@@ -24,6 +24,7 @@ MCDefineIndexAndKey(Effect, 14, effect);
 MCDefineIndexAndKey(EffectCheck, 15, effect-check);
 MCDefineIndexAndKey(Consume, 16, consume);
 MCDefineIndexAndKey(Dexterity, 17, dexterity);
+MCDefineIndexAndKey(ActionEffect, 18, action-effect);
 
 @implementation MCWeaponHandler
 
@@ -155,6 +156,8 @@ MCDefineIndexAndKey(Dexterity, 17, dexterity);
     [content setObject:@([[data objectAtIndex:kMCConsumeIndex] floatValue]) forKey:kMCConsumeKey];
     /* dexterity */
     [content setObject:@([[data objectAtIndex:kMCDexterityIndex] integerValue]) forKey:kMCDexterityKey];
+    /* action-effect */
+    [content setObject:[data objectAtIndex:kMCActionEffectIndex] forKey:kMCActionEffectKey];
     
     [self setObject:content forKey:ID];
 }

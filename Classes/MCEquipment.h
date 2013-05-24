@@ -48,6 +48,7 @@ public:
     MCDiceRange effectCheck; /* 效果判定 */
     
     MCEffect *attackEffect; /* 攻击效果 */
+    std::string actionEffect; /* 攻击音效 */
 };
 
 

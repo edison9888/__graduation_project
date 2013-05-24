@@ -10,10 +10,13 @@
 #include "MCAI.h"
 #include "MCScript.h"
 #include "MCDungeonMaster.h"
+#include "MCSimpleAudioEngine.h"
 
 #define MCPPPerSecond(sec) ((sec) / 1000.0)
 
 const char *kMCRoleDiedNotification = "kMCRoleDiedNotification";
+
+static const char *kMCSkillEffect = "voices/skill.wav";
 
 static const char *__mc_directions[4] = {
     "up",
@@ -406,6 +409,7 @@ MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aT
     center.y += selfOBB.extents.height;
     selfEntity->face(offset);
     aSkill->use(center, ccpToAngle(offset));
+    MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCSkillEffect);
     if (aTarget) {
         (aTarget->*aSelector)(anUserObject ? anUserObject : this);
     }

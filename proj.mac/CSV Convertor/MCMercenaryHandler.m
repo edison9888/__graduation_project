@@ -40,6 +40,7 @@ static const NSString   *kMCSkillsKey = @"skills";
 
 MCDefineIndexAndKey(Effect, 27, effect);
 MCDefineIndexAndKey(EffectCheck, 28, effect-check);
+MCDefineIndexAndKey(ActionEffect, 29, action-effect);
 
 @implementation MCMercenaryHandler
 
@@ -178,6 +179,8 @@ MCDefineIndexAndKey(EffectCheck, 28, effect-check);
         [content setObject:[NSNull null] forKey:kMCEffectKey];
         [content setObject:[NSNull null] forKey:kMCEffectCheckKey];
     }
+    /* action-effect */
+    [content setObject:[data objectAtIndex:kMCActionEffectIndex] forKey:kMCActionEffectKey];
     
     [self setObject:content forKey:ID];
 }

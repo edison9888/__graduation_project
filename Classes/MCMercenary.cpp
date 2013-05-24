@@ -21,7 +21,6 @@ MCMercenary::MCMercenary()
 
 MCMercenary::~MCMercenary()
 {
-    
 }
 
 bool
@@ -143,6 +142,8 @@ MCMercenary::copy()
         mercenary->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
     }
     mercenary->damageScore_ = -1;
+    mercenary->actionEffect_ = CCString::create(actionEffect_->getCString()); /* 会被释放掉，所以要copy一个 */
+    mercenary->actionEffect_->retain();
     
     return mercenary;
 }
@@ -264,6 +265,8 @@ MCNervousMercenary::copy()
         mercenary->skills_->addObject(dynamic_cast<MCSkill *>(obj)->copy());
     }
     mercenary->damageScore_ = -1;
+    mercenary->actionEffect_ = CCString::create(actionEffect_->getCString()); /* 会被释放掉，所以要copy一个 */
+    mercenary->actionEffect_->retain();
     
     return mercenary;
 }
