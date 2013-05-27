@@ -22,6 +22,9 @@ public:
     /* 恢复人物状态 */
     void restoreRoles();
     
+    /* hero失踪之谜！折中解决方案~ */
+    void ensureHero();
+    
     CCArray *getRoles();
     MCRole *roleAtIndex(mc_index_t anIndex);
     

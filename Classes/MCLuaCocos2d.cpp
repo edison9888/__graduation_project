@@ -1,6 +1,6 @@
 /*
 ** Lua binding: Cocos2d
-** Generated automatically by tolua++-1.0.92 on Fri May 24 14:34:03 2013.
+** Generated automatically by tolua++-1.0.92 on Sat May 25 10:51:46 2013.
 */
 
 /****************************************************************************
@@ -463,6 +463,7 @@ static void tolua_reg_types (lua_State* tolua_S)
  tolua_usertype(tolua_S,"CCTintTo");
  tolua_usertype(tolua_S,"CCRGBAProtocol");
  tolua_usertype(tolua_S,"CCTransitionCrossFade");
+ tolua_usertype(tolua_S,"MCGameState");
  tolua_usertype(tolua_S,"MCMezzanine");
  tolua_usertype(tolua_S,"MCRole");
  tolua_usertype(tolua_S,"CCActionEase");
@@ -60075,6 +60076,37 @@ static int tolua_Cocos2d_MCDungeonMaster_speak00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
+/* method: introduce of class  MCDungeonMaster */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCDungeonMaster_introduce00
+static int tolua_Cocos2d_MCDungeonMaster_introduce00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCDungeonMaster",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCDungeonMaster* self = (MCDungeonMaster*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'introduce'", NULL);
+#endif
+  {
+   self->introduce();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'introduce'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
 /* method: roleAttackTarget of class  MCDungeonMaster */
 #ifndef TOLUA_DISABLE_tolua_Cocos2d_MCDungeonMaster_roleAttackTarget00
 static int tolua_Cocos2d_MCDungeonMaster_roleAttackTarget00(lua_State* tolua_S)
@@ -60727,6 +60759,159 @@ static int tolua_Cocos2d_MCFlagManager_loadAllFlags00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'loadAllFlags'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: sharedGameState of class  MCGameState */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCGameState_sharedGameState00
+static int tolua_Cocos2d_MCGameState_sharedGameState00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertable(tolua_S,1,"MCGameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  {
+   MCGameState* tolua_ret = (MCGameState*)  MCGameState::sharedGameState();
+    tolua_pushusertype(tolua_S,(void*)tolua_ret,"MCGameState");
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'sharedGameState'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: isSaveFileExists of class  MCGameState */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCGameState_isSaveFileExists00
+static int tolua_Cocos2d_MCGameState_isSaveFileExists00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCGameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCGameState* self = (MCGameState*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'isSaveFileExists'", NULL);
+#endif
+  {
+   bool tolua_ret = (bool)  self->isSaveFileExists();
+   tolua_pushboolean(tolua_S,(bool)tolua_ret);
+  }
+ }
+ return 1;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'isSaveFileExists'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: erase of class  MCGameState */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCGameState_erase00
+static int tolua_Cocos2d_MCGameState_erase00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCGameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCGameState* self = (MCGameState*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'erase'", NULL);
+#endif
+  {
+   self->erase();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'erase'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: save of class  MCGameState */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCGameState_save00
+static int tolua_Cocos2d_MCGameState_save00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCGameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCGameState* self = (MCGameState*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'save'", NULL);
+#endif
+  {
+   self->save();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'save'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: load of class  MCGameState */
+#ifndef TOLUA_DISABLE_tolua_Cocos2d_MCGameState_load00
+static int tolua_Cocos2d_MCGameState_load00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"MCGameState",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,2,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  MCGameState* self = (MCGameState*)  tolua_tousertype(tolua_S,1,0);
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'load'", NULL);
+#endif
+  {
+   self->load();
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'load'.",&tolua_err);
  return 0;
 #endif
 }
@@ -63928,6 +64113,7 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"MCDungeonMaster");
    tolua_function(tolua_S,"sharedDungeonMaster",tolua_Cocos2d_MCDungeonMaster_sharedDungeonMaster00);
    tolua_function(tolua_S,"speak",tolua_Cocos2d_MCDungeonMaster_speak00);
+   tolua_function(tolua_S,"introduce",tolua_Cocos2d_MCDungeonMaster_introduce00);
    tolua_function(tolua_S,"roleAttackTarget",tolua_Cocos2d_MCDungeonMaster_roleAttackTarget00);
    tolua_function(tolua_S,"destroyGameWorld",tolua_Cocos2d_MCDungeonMaster_destroyGameWorld00);
    tolua_function(tolua_S,"saveSpawnPoint",tolua_Cocos2d_MCDungeonMaster_saveSpawnPoint00);
@@ -63951,6 +64137,14 @@ TOLUA_API int tolua_Cocos2d_open (lua_State* tolua_S)
    tolua_function(tolua_S,"setSpawnFlagOff",tolua_Cocos2d_MCFlagManager_setSpawnFlagOff00);
    tolua_function(tolua_S,"spawn",tolua_Cocos2d_MCFlagManager_spawn00);
    tolua_function(tolua_S,"loadAllFlags",tolua_Cocos2d_MCFlagManager_loadAllFlags00);
+  tolua_endmodule(tolua_S);
+  tolua_cclass(tolua_S,"MCGameState","MCGameState","",NULL);
+  tolua_beginmodule(tolua_S,"MCGameState");
+   tolua_function(tolua_S,"sharedGameState",tolua_Cocos2d_MCGameState_sharedGameState00);
+   tolua_function(tolua_S,"isSaveFileExists",tolua_Cocos2d_MCGameState_isSaveFileExists00);
+   tolua_function(tolua_S,"erase",tolua_Cocos2d_MCGameState_erase00);
+   tolua_function(tolua_S,"save",tolua_Cocos2d_MCGameState_save00);
+   tolua_function(tolua_S,"load",tolua_Cocos2d_MCGameState_load00);
   tolua_endmodule(tolua_S);
  tolua_endmodule(tolua_S);
  return 1;

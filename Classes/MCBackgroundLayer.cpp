@@ -10,6 +10,7 @@
 #include "MCBackgroundLayer.h"
 #include "MCShadow.h"
 #include "MCTeam.h"
+#include "MCTaskManager.h"
 
 const bool kMCIsPlayBackgroundMusicImmediately = true;
 
@@ -70,10 +71,15 @@ void
 MCBackgroundLayer::onEnter()
 {
     CCLayer::onEnter();
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(MCBackgroundLayer::roleWasDied),
-                                                                  kMCRoleDiedNotification,
-                                                                  NULL);
+    CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
+    notificationCenter->addObserver(this,
+                                    callfuncO_selector(MCBackgroundLayer::taskDidFinish),
+                                    kMCTaskDidFinishNotification,
+                                    NULL);
+    notificationCenter->addObserver(this,
+                                    callfuncO_selector(MCBackgroundLayer::roleWasDied),
+                                    kMCRoleDiedNotification,
+                                    NULL);
     schedule(schedule_selector(MCBackgroundLayer::update));
     if (kMCIsPlayBackgroundMusicImmediately) {
         MCSimpleAudioEngine::sharedSimpleAudioEngine()->setExpectedMusic(backgroundMusic_->getCString());
@@ -84,9 +90,11 @@ void
 MCBackgroundLayer::onExit()
 {
     unschedule(schedule_selector(MCBackgroundLayer::update));
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this,
-                                                                     kMCRoleDiedNotification);
-    stopMusic();
+    CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
+    notificationCenter->removeObserver(this,
+                                       kMCRoleDiedNotification);
+    notificationCenter->removeObserver(this,
+                                       kMCTaskDidFinishNotification);
     
     CCObject *obj;
     CCARRAY_FOREACH(enemyShadows_, obj) {
@@ -189,4 +197,18 @@ MCBackgroundLayer::roleWasDied(CCObject *aRoleObject)
     if (shadowForRemove != NULL) {
         shadows_->removeObject(shadowForRemove);
     }
+}
+
+void
+MCBackgroundLayer::taskDidFinish(CCObject *anObject)
+{
+    CCObject *obj;
+    CCARRAY_FOREACH(enemyShadows_, obj) {
+        dynamic_cast<MCShadow *>(obj)->unbind();
+    }
+    enemyShadows_->removeAllObjects();
+    CCARRAY_FOREACH(shadows_, obj) {
+        dynamic_cast<MCShadow *>(obj)->unbind();
+    }
+    shadows_->removeAllObjects();
 }

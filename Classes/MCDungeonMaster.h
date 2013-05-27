@@ -28,6 +28,9 @@ public:
     
     void speak(const char *aMessage);
     
+    /* 刚开始游戏时游戏介绍 */
+    void introduce();
+    
     /**
      * aRole将要攻击aTarget
      * 由AI调用
@@ -48,6 +51,7 @@ public:
     void loadSpawnPoint();
     
 private:
+    void introduce(const char **sentences);
     void dismiss(void *anUserdata);
     
 private:

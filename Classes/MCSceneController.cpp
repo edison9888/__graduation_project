@@ -63,6 +63,7 @@ MCSceneController::loadSpawnScene(float delay)
 void
 MCSceneController::_loadSpawnScene(float dt)
 {
+    MCFlagManager::sharedFlagManager()->spawn();
     pushExpectedScene(MCDungeonMaster::sharedDungeonMaster()->getSpawnPointID(), NULL);
     loadSpawnScene_ = true;
     requestChangingScene();

@@ -114,7 +114,7 @@ MCMercenary::copy()
     mercenary->exhaustion_ = exhaustion_;
     mercenary->tired_ = tired_;
     mercenary->dexterity_ = dexterity_;
-    mercenary->roleState_ = roleState_;
+    mercenary->roleState_ = MCNormalState;
     mercenary->face_ = CCString::create(face_->getCString()); /* 会被释放掉，所以要copy一个 */
     mercenary->face_->retain();
     mercenary->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */
@@ -237,7 +237,7 @@ MCNervousMercenary::copy()
     mercenary->exhaustion_ = exhaustion_;
     mercenary->tired_ = tired_;
     mercenary->dexterity_ = dexterity_;
-    mercenary->roleState_ = roleState_;
+    mercenary->roleState_ = MCNormalState;
     mercenary->face_ = CCString::create(face_->getCString()); /* 会被释放掉，所以要copy一个 */
     mercenary->face_->retain();
     mercenary->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */

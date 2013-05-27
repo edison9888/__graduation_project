@@ -24,6 +24,7 @@ MCEnemy::init(MCRoleRace aRoleRace)
 {
     roleType_ = MCRole::MCEnemy;
     setRoleRace(aRoleRace);
+    roleState_ = MCNormalState;
     face_ = NULL;
     defaultDialogue_ = NULL;
     center_ = CCPointZero;
@@ -256,6 +257,7 @@ MCEnemy::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSel
     }
     
     MCRole::attackTarget(aTargetRole);
+    ai_->lockState();
     
     /* 检测攻击距离 */
     MCRoleEntity *selfEntity = getEntity();
@@ -284,6 +286,7 @@ MCEnemy::attackTarget(MCRole *aTargetRole, CCObject *aTarget, SEL_CallFuncO aSel
 //    printf("进入攻击判断\n");
     pp_ -= consume_;
     MCDungeonMaster::sharedDungeonMaster()->roleAttackTarget(this, aTargetRole);
+    ai_->unlockState();
     if (aTarget) {
         (aTarget->*aSelector)(anUserObject ? anUserObject : this);
     }
@@ -333,7 +336,7 @@ MCEnemy::copy()
     enemy->exhaustion_ = exhaustion_;
     enemy->tired_ = tired_;
     enemy->dexterity_ = dexterity_;
-    enemy->roleState_ = roleState_;
+    enemy->roleState_ = MCNormalState;
     enemy->face_ = NULL;
     enemy->spriteSheet_ = CCString::create(spriteSheet_->getCString()); /* 会被释放掉，所以要copy一个 */
     enemy->spriteSheet_->retain();

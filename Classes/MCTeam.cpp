@@ -46,6 +46,17 @@ MCTeam::restoreRoles()
     }
 }
 
+/* hero失踪之谜！折中解决方案~ */
+void
+MCTeam::ensureHero()
+{
+    MCHero *hero = MCHero::sharedHero();
+    
+    if (!hasRole(hero)) {
+        teams_->insertObject(hero, 0);
+    }
+}
+
 CCArray *
 MCTeam::getRoles()
 {

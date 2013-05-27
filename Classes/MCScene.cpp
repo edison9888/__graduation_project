@@ -46,11 +46,13 @@ MCSceneContext::enemyWasDied(MCRole *aRole)
     MCTaskTarget *target;
     mc_object_id_t enemyId = aRole->getID();
     bool done = true;
+    bool isTarget = false;
     
     objects_->removeObject(aRole);
     CCARRAY_FOREACH(targets, obj) {
         target = dynamic_cast<MCTaskTarget *>(obj);
         if (MCObjectIdIsEqualsTo(target->objectID, enemyId)) {
+            isTarget = true;
             if (target->remaining > 0) {
                 --target->remaining;
             }
@@ -61,7 +63,7 @@ MCSceneContext::enemyWasDied(MCRole *aRole)
         }
     }
     
-    if (done) {
+    if (done && isTarget) {
         /* 任务完成! */
         CCSize winSize = CCDirectorGetWindowsSize();
         CCLabelTTF *missionCompleted = CCLabelTTF::create("任务完成", "", 56 / CC_CONTENT_SCALE_FACTOR());
@@ -81,6 +83,7 @@ MCSceneContext::enemyWasDied(MCRole *aRole)
 void
 MCSceneContext::missionCompleted(CCObject *anTaskObject)
 {
+    MCSceneManager::sharedSceneManager()->autoreleaseTaskSceneWithObjectId(scene_->getScenePackage()->getID());
     CCNotificationCenter::sharedNotificationCenter()->postNotification(kMCTaskDidFinishNotification, anTaskObject);
 }
 

@@ -40,6 +40,8 @@ public:
     void roleWasDied(CCObject *aRoleObject);
     
 private:
+    void taskDidFinish(CCObject *anObject);
+    
     CCArray *enemyShadows_; /* 敌人影子 */
     CCArray *shadows_; /* 主角和佣兵的影子 */
     

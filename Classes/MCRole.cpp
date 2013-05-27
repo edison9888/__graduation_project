@@ -174,7 +174,7 @@ MCRole::roleInVision(MCRole *aRole)
 void
 MCRole::roleDidEnterVision(MCRole *aRole, bool isEnermy)
 {
-    CCLog("%s saw %s[%s]", name_->getCString(), aRole->name_->getCString(), isEnermy?"敌人":"路人");
+//    CCLog("%s saw %s[%s]", name_->getCString(), aRole->name_->getCString(), isEnermy?"敌人":"路人");
     if (isEnermy) {
 //        CCLog("敵(%s)、一人見つけた！", aRole->name_->getCString());
         ai_->setAIState(MCCombatantStatus);
@@ -255,7 +255,9 @@ MCRole::roleDidChangeStateTo(MCAIState anAIState)
 {
 }
 
-/* MCAIStateMachineDelegate */
+#pragma mark -
+#pragma mark *** MCAIStateMachineDelegate ***
+
 /**
  * 空闲状态下回调
  */
@@ -281,7 +283,7 @@ MCRole::performWhenCombatantStatus()
     
     if (! exhausted_) { /* 体力透支以上 */
         if (count > 0) {
-            CCLog("MCAttackState");
+//            CCLog("MCAttackState");
             ai->setAIState(MCAttackState);
             ai->lockState();
         } else {
@@ -302,6 +304,10 @@ void
 MCRole::performWhenRestingState()
 {
 //    CCLog("やすみたいなー");
+    if (ai_->activating_) {
+        return;
+    }
+    
     double animationInterval = CCDirector::sharedDirector()->getAnimationInterval();
     
     /* 每秒2点体力 */
@@ -372,6 +378,7 @@ void
 MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)
 {
     ai_->activate();
+    ai_->lockState();
     
     /* 检测攻击距离 */
     MCRoleEntity *selfEntity = getEntity();
@@ -410,6 +417,7 @@ MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aT
     selfEntity->face(offset);
     aSkill->use(center, ccpToAngle(offset));
     MCSimpleAudioEngine::sharedSimpleAudioEngine()->playEffect(kMCSkillEffect);
+    ai_->unlockState();
     if (aTarget) {
         (aTarget->*aSelector)(anUserObject ? anUserObject : this);
     }

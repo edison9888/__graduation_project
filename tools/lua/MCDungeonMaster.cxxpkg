@@ -3,6 +3,9 @@ class MCDungeonMaster {
     
     void speak(const char *aMessage);
     
+    /* 刚开始游戏时游戏介绍 */
+    void introduce();
+    
     /**
      * aRole将要攻击aTarget
      * 由AI调用

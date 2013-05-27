@@ -46,6 +46,7 @@ LOCAL_SRC_FILES := main.cpp \
 					../../Classes/MCGameScene.cpp \
 					../../Classes/MCGameState.cpp \
 					../../Classes/MCHero.cpp \
+					../../Classes/MCHeroAI.cpp \
 					../../Classes/MCHiringMercenaryUI.cpp \
 					../../Classes/MCIssuingTaskUI.cpp \
 					../../Classes/MCItem.cpp \

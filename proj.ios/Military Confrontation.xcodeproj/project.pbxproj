@@ -232,6 +232,9 @@
 		A39FB06B16B275E8007FECB7 /* Object.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB06316B275E8007FECB7 /* Object.cpp */; };
 		A39FB06C16B275E8007FECB7 /* SolidusEscaper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB06416B275E8007FECB7 /* SolidusEscaper.cpp */; };
 		A39FB06D16B275E8007FECB7 /* Value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A39FB06516B275E8007FECB7 /* Value.cpp */; };
+		A3BB38F117506A3B00FC3DA6 /* MCSimpleAudioEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BB38EF17506A3B00FC3DA6 /* MCSimpleAudioEngine.cpp */; };
+		A3BB38F517506A5F00FC3DA6 /* MCHeroAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BB38F317506A5F00FC3DA6 /* MCHeroAI.cpp */; };
+		A3BB38F917506A8900FC3DA6 /* MCGameOverScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3BB38F717506A8900FC3DA6 /* MCGameOverScene.cpp */; };
 		A3C3852A170211A500F28B15 /* MCOBB.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C38528170211A500F28B15 /* MCOBB.cpp */; };
 		A3C38544170211C400F28B15 /* MCTestAStar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C3852C170211C400F28B15 /* MCTestAStar.cpp */; };
 		A3C38546170211C400F28B15 /* MCTestBattleController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3C3852E170211C400F28B15 /* MCTestBattleController.cpp */; };
@@ -305,9 +308,6 @@
 		BF23D4E7143315EB00657E08 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BF23D4E3143315EB00657E08 /* AppDelegate.cpp */; };
 		BF365AA812A103F70050DCF4 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF365AA712A103F70050DCF4 /* AppController.mm */; };
 		BF4DE6AD138BB89600CF907D /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BF4DE6AC138BB89600CF907D /* RootViewController.mm */; };
-		D446FD79161028E9000ADA7B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FD78161028E9000ADA7B /* Default.png */; };
-		D446FD7B161028ED000ADA7B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FD7A161028ED000ADA7B /* Default@2x.png */; };
-		D446FD7D161028F4000ADA7B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D446FD7C161028F4000ADA7B /* Default-568h@2x.png */; };
 		D4ABB4B313B4395300552E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D4ABB4B213B4395300552E6E /* main.m */; };
 		D4EF94E815BD319200D803EB /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94E715BD319200D803EB /* Icon-57.png */; };
 		D4EF94EA15BD319500D803EB /* Icon-114.png in Resources */ = {isa = PBXBuildFile; fileRef = D4EF94E915BD319500D803EB /* Icon-114.png */; };
@@ -795,6 +795,12 @@
 		A39FB06316B275E8007FECB7 /* Object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Object.cpp; sourceTree = "<group>"; };
 		A39FB06416B275E8007FECB7 /* SolidusEscaper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolidusEscaper.cpp; sourceTree = "<group>"; };
 		A39FB06516B275E8007FECB7 /* Value.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Value.cpp; sourceTree = "<group>"; };
+		A3BB38EF17506A3B00FC3DA6 /* MCSimpleAudioEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCSimpleAudioEngine.cpp; sourceTree = "<group>"; };
+		A3BB38F017506A3B00FC3DA6 /* MCSimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCSimpleAudioEngine.h; sourceTree = "<group>"; };
+		A3BB38F317506A5F00FC3DA6 /* MCHeroAI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCHeroAI.cpp; sourceTree = "<group>"; };
+		A3BB38F417506A5F00FC3DA6 /* MCHeroAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCHeroAI.h; sourceTree = "<group>"; };
+		A3BB38F717506A8900FC3DA6 /* MCGameOverScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCGameOverScene.cpp; sourceTree = "<group>"; };
+		A3BB38F817506A8900FC3DA6 /* MCGameOverScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCGameOverScene.h; sourceTree = "<group>"; };
 		A3C38528170211A500F28B15 /* MCOBB.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCOBB.cpp; sourceTree = "<group>"; };
 		A3C38529170211A500F28B15 /* MCOBB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCOBB.h; sourceTree = "<group>"; };
 		A3C3852C170211C400F28B15 /* MCTestAStar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MCTestAStar.cpp; sourceTree = "<group>"; };
@@ -1116,6 +1122,8 @@
 				A3331DB11742736600A2AF7D /* MCLoadingScene.cpp */,
 				A3331DB21742736600A2AF7D /* MCLoadingScene.h */,
 				A39FB03A16B27593007FECB7 /* MCMainMenuScene.h */,
+				A3BB38F717506A8900FC3DA6 /* MCGameOverScene.cpp */,
+				A3BB38F817506A8900FC3DA6 /* MCGameOverScene.h */,
 			);
 			name = "Game Scene";
 			sourceTree = "<group>";
@@ -1174,6 +1182,8 @@
 				A3C3861F1702148900F28B15 /* MCAI.h */,
 				A3331DD0174274A600A2AF7D /* MCNPCAI.cpp */,
 				A3331DD1174274A600A2AF7D /* MCNPCAI.h */,
+				A3BB38F317506A5F00FC3DA6 /* MCHeroAI.cpp */,
+				A3BB38F417506A5F00FC3DA6 /* MCHeroAI.h */,
 				A3331DCE174274A600A2AF7D /* MCMercenaryAI.cpp */,
 				A3331DCF174274A600A2AF7D /* MCMercenaryAI.h */,
 				A3331DD6174274B300A2AF7D /* MCEnemyAI.cpp */,
@@ -1830,6 +1840,7 @@
 				A3C3859B1702131A00F28B15 /* MCGameState.cpp */,
 				A3C3859C1702131A00F28B15 /* MCGameState.h */,
 				A3C385B31702134C00F28B15 /* MCInterfaceMacros.h */,
+				A3BB38EE17506A2300FC3DA6 /* Audio */,
 				A3331DBE174273E300A2AF7D /* Flag */,
 				A3331DBF174273F000A2AF7D /* Effect */,
 				A3331DCD1742747E00A2AF7D /* Region */,
@@ -2011,6 +2022,15 @@
 			);
 			name = src;
 			path = ../Classes/JSON/src;
+			sourceTree = "<group>";
+		};
+		A3BB38EE17506A2300FC3DA6 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				A3BB38EF17506A3B00FC3DA6 /* MCSimpleAudioEngine.cpp */,
+				A3BB38F017506A3B00FC3DA6 /* MCSimpleAudioEngine.h */,
+			);
+			name = Audio;
 			sourceTree = "<group>";
 		};
 		A3C3858E170212C900F28B15 /* Algorithm */ = {
@@ -2206,9 +2226,6 @@
 				D4EF94EC15BD319B00D803EB /* Icon-72.png in Resources */,
 				D4EF94EE15BD319D00D803EB /* Icon-144.png in Resources */,
 				15003FA315D2601D00B6775A /* iphone in Resources */,
-				D446FD79161028E9000ADA7B /* Default.png in Resources */,
-				D446FD7B161028ED000ADA7B /* Default@2x.png in Resources */,
-				D446FD7D161028F4000ADA7B /* Default-568h@2x.png in Resources */,
 				1A1CF3691626CEFF00AFC938 /* ipad in Resources */,
 				1A1CF36A1626CEFF00AFC938 /* ipadhd in Resources */,
 			);
@@ -2503,6 +2520,9 @@
 				A33323641742786C00A2AF7D /* b2Rope.cpp in Sources */,
 				A333236A1742794A00A2AF7D /* MCCallbackableParticleSystemQuad.cpp in Sources */,
 				A333236E174279F400A2AF7D /* MCMezzanine.cpp in Sources */,
+				A3BB38F117506A3B00FC3DA6 /* MCSimpleAudioEngine.cpp in Sources */,
+				A3BB38F517506A5F00FC3DA6 /* MCHeroAI.cpp in Sources */,
+				A3BB38F917506A8900FC3DA6 /* MCGameOverScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2597,8 +2617,8 @@
 					"MC_COLLISION_USE_OBB=0",
 					"MC_ASTAR_USING_PTHREAD=1",
 					"MC_MULTIPLAYER_SUPPORT=0",
-					"MC_BATTLE_INFO_LEVEL=1",
-					"MC_DEBUG_NON_VISUAL_OBJECTS=1",
+					"MC_BATTLE_INFO_LEVEL=0",
+					"MC_DEBUG_NON_VISUAL_OBJECTS=0",
 					"MC_ADAPTIVE_RESOLUTION=0",
 					CC_ENABLE_BOX2D_INTEGRATION,
 				);

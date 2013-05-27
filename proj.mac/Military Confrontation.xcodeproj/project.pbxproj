@@ -331,6 +331,7 @@
 		A3F9EA4E16FB30AD00150CFB /* MCCSVConvertor.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA4C16FB30AD00150CFB /* MCCSVConvertor.m */; };
 		A3F9EA5216FB33CD00150CFB /* MCCSVHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */; };
 		A3F9EA5C16FB3CE700150CFB /* MCEnemyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */; };
+		A3FDA0FF174FE3060039451B /* MCHeroAI.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3FDA0FD174FE3050039451B /* MCHeroAI.cpp */; };
 		A3FE729D16BCC29300AE9739 /* MCHero.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A3FE729B16BCC29300AE9739 /* MCHero.cpp */; };
 /* End PBXBuildFile section */
 
@@ -756,6 +757,7 @@
 		A3B7F9B316F61C5000F3D0C5 /* MCTestAStar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCTestAStar.h; path = ../Classes/MCTestAStar.h; sourceTree = "<group>"; };
 		A3BB130416F7765400E4F394 /* MCBackpack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCBackpack.cpp; path = ../Classes/MCBackpack.cpp; sourceTree = "<group>"; };
 		A3BB130516F7765400E4F394 /* MCBackpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCBackpack.h; path = ../Classes/MCBackpack.h; sourceTree = "<group>"; };
+		A3BB38EB17505E4F00FC3DA6 /* MCGameState.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCGameState.cxxpkg; path = ../tools/lua/MCGameState.cxxpkg; sourceTree = "<group>"; };
 		A3BFAA48171A680F00096D16 /* MCTaskManager.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCTaskManager.cxxpkg; path = ../tools/lua/MCTaskManager.cxxpkg; sourceTree = "<group>"; };
 		A3BFAA4B171A6E9600096D16 /* MCTask.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCTask.cxxpkg; path = ../tools/lua/MCTask.cxxpkg; sourceTree = "<group>"; };
 		A3BFAA4C171A6ED300096D16 /* MCRegion.cxxpkg */ = {isa = PBXFileReference; lastKnownFileType = text; name = MCRegion.cxxpkg; path = ../tools/lua/MCRegion.cxxpkg; sourceTree = "<group>"; };
@@ -1020,6 +1022,8 @@
 		A3F9EA5016FB33CD00150CFB /* MCCSVHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCSVHandler.m; sourceTree = "<group>"; };
 		A3F9EA5916FB3CE700150CFB /* MCEnemyHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = MCEnemyHandler.h; sourceTree = "<group>"; };
 		A3F9EA5A16FB3CE700150CFB /* MCEnemyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCEnemyHandler.m; sourceTree = "<group>"; };
+		A3FDA0FD174FE3050039451B /* MCHeroAI.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCHeroAI.cpp; path = ../Classes/MCHeroAI.cpp; sourceTree = "<group>"; };
+		A3FDA0FE174FE3060039451B /* MCHeroAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; name = MCHeroAI.h; path = ../Classes/MCHeroAI.h; sourceTree = "<group>"; };
 		A3FE729B16BCC29300AE9739 /* MCHero.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MCHero.cpp; path = ../Classes/MCHero.cpp; sourceTree = "<group>"; };
 		A3FE729C16BCC29300AE9739 /* MCHero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MCHero.h; path = ../Classes/MCHero.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1296,6 +1300,8 @@
 				A30A0ABF16FABB5500F1F5B9 /* MCAI.h */,
 				A3629381171D55AC00DF4D27 /* MCNPCAI.cpp */,
 				A3629382171D55AC00DF4D27 /* MCNPCAI.h */,
+				A3FDA0FD174FE3050039451B /* MCHeroAI.cpp */,
+				A3FDA0FE174FE3060039451B /* MCHeroAI.h */,
 				A3629379171D307200DF4D27 /* MCMercenaryAI.cpp */,
 				A362937A171D307200DF4D27 /* MCMercenaryAI.h */,
 				A362937D171D3D7500DF4D27 /* MCEnemyAI.cpp */,
@@ -1520,6 +1526,7 @@
 			children = (
 				A38B8285171B1A5200ABF7B4 /* MCDungeonMaster.cxxpkg */,
 				A30FAE45174A59D900B38501 /* MCFlagManager.cxxpkg */,
+				A3BB38EB17505E4F00FC3DA6 /* MCGameState.cxxpkg */,
 			);
 			name = System;
 			sourceTree = "<group>";
@@ -2856,6 +2863,7 @@
 				A366990E173CCB94005E1D97 /* b2Rope.cpp in Sources */,
 				A3ADDC4B174F4EDA00409A77 /* MCSimpleAudioEngine.cpp in Sources */,
 				A3ADDC4F174F6F9500409A77 /* MCGameOverScene.cpp in Sources */,
+				A3FDA0FF174FE3060039451B /* MCHeroAI.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3029,8 +3037,8 @@
 					"MC_ASTAR_USING_PTHREAD=1",
 					"MC_SELECT_ALL_SUPPORT=0",
 					"MC_MULTIPLAYER_SUPPORT=0",
-					"MC_BATTLE_INFO_LEVEL=0",
-					"MC_DEBUG_NON_VISUAL_OBJECTS=0",
+					"MC_BATTLE_INFO_LEVEL=1",
+					"MC_DEBUG_NON_VISUAL_OBJECTS=1",
 					"DEBUG=1",
 					USE_FILE32API,
 					"$(inherited)",
@@ -3081,8 +3089,8 @@
 					"MC_COLLISION_USE_OBB=0",
 					"MC_ASTAR_USING_PTHREAD=1",
 					"MC_MULTIPLAYER_SUPPORT=0",
-					"MC_BATTLE_INFO_LEVEL=1",
-					"MC_DEBUG_NON_VISUAL_OBJECTS=1",
+					"MC_BATTLE_INFO_LEVEL=0",
+					"MC_DEBUG_NON_VISUAL_OBJECTS=0",
 					CC_TARGET_OS_MAC,
 					CC_ENABLE_BOX2D_INTEGRATION,
 					"MC_ADAPTIVE_RESOLUTION=0",

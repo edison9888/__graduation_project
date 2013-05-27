@@ -72,6 +72,7 @@ public:
     
     inline void activate() {
         activating_ = true;
+        lastActivationTime_ = time(NULL);
     }
     
     inline bool isStateLocked() {

@@ -79,7 +79,7 @@ static struct __mc_test_scene __test_scenes[] = {
 //    {"Test Viewport", MCTestViewport::scene},
 //    {"Test OBB", MCTestOBB::scene},
 //    {"Test Role Base Info", MCTestRoleBaseInfo::scene},
-//    {"Quit", __mc_quit::scene}
+    {"退出", __mc_quit::scene}
 };
 
 bool

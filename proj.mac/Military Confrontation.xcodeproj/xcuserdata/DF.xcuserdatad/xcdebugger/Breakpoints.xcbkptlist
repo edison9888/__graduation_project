@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCRole.cpp"
-         timestampString = "391081457.470623"
+         timestampString = "391111745.583293"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "362"
-         endingLineNumber = "362"
+         startingLineNumber = "368"
+         endingLineNumber = "368"
          landmarkName = "MCRole::canAttackTarget(MCRole *aRole)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "../Classes/MCRole.cpp"
-         timestampString = "391081457.470623"
+         timestampString = "391112639.007844"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "375"
-         endingLineNumber = "375"
+         startingLineNumber = "382"
+         endingLineNumber = "382"
          landmarkName = "MCRole::attackTargetWithSkill(MCRole *aTargetRole, MCSkill *aSkill, CCObject *aTarget, SEL_CallFuncO aSelector, CCObject *anUserObject)"
          landmarkType = "5">
       </FileBreakpoint>

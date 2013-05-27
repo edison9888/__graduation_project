@@ -18,7 +18,12 @@ local function main()
     ---------------
     
     local currentScene = MCSceneContextManager:sharedSceneContextManager():currentContext():getScene()
-    MCDungeonMaster:sharedDungeonMaster():setSpawnPointID(currentScene:getScenePackage():getID())
+    local dm = MCDungeonMaster:sharedDungeonMaster()
+
+    dm:setSpawnPointID(currentScene:getScenePackage():getID())
+    if not MCGameState:sharedGameState():isSaveFileExists() then
+        dm:introduce() -刚开始游戏时游戏介绍
+    end
     
 end
 

@@ -7,7 +7,7 @@
 //
 
 #include "MCHero.h"
-#include "MCAI.h"
+#include "MCHeroAI.h"
 #include "MCEquipmentManager.h"
 #include "MCSkill.h"
 #include "MCSkillManager.h"
@@ -78,7 +78,7 @@ MCHero::getEntity()
     
     /* AI */
     if (ai_ == NULL) {
-        ai_ = MCAI::create();
+        ai_ = MCHeroAI::create();
         ai_->retain();
         ai_->bind(this);
     }
@@ -264,7 +264,7 @@ MCHero::getOffensiveDamage()
 mc_armor_check_penalty_t
 MCHero::getArmorCheckPenalty()
 {
-    return MCEquipmentManager::sharedEquipmentManager()->getArmorCheckPenalty();
+    return -MCEquipmentManager::sharedEquipmentManager()->getArmorCheckPenalty(); /* 人物的计算出来是正值 */
 }
 
 /**

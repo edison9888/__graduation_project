@@ -203,6 +203,9 @@ MCRoleBaseInfoGroup::MCRoleBaseInfoGroup()
     infoList_ = CCArray::create();
     infoList_->retain();
     
+    /* hero失踪之谜！折中解决方案~ */
+    team_->ensureHero();
+    
     CCArray *roles = team_->getRoles();
     CCObject *obj;
     MCRole *role;

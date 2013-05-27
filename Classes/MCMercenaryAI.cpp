@@ -14,6 +14,17 @@ MCMercenaryAI::changingState()
     if (activating_) {
         return;
     }
+    
+    /* 3秒不动切换到休息状态 */
+    time_t lastActivationTime = lastActivationTime_;
+    time_t now = time(NULL);
+    
+    /* 停3秒 */
+    if (now - lastActivationTime > 3) {
+        AIState_ = MCRestingState;
+        lastActivationTime_ = now;
+    }
+    
     dynamic_cast<MCMercenaryAIStateMachineDelegate *>(AIStateMachineDelegate_)->activate(AIState_);
 }
 

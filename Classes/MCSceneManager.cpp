@@ -40,6 +40,12 @@ MCSceneManager::MCSceneManager()
     scenes_->retain();
     scenePackages_ = CCDictionary::create();
     scenePackages_->retain();
+    
+    CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
+    notificationCenter->addObserver(this,
+                                    callfuncO_selector(MCSceneManager::taskDidFinish),
+                                    kMCTaskDidFinishNotification,
+                                    NULL);
 }
 
 MCSceneManager::~MCSceneManager()
@@ -56,12 +62,6 @@ MCSceneManager::sharedSceneManager()
         __shared_scene_manager = new MCSceneManager;
         if (__shared_scene_manager) {
             __shared_scene_manager->loadSceneListFile();
-            
-            CCNotificationCenter *notificationCenter = CCNotificationCenter::sharedNotificationCenter();
-            notificationCenter->addObserver(__shared_scene_manager,
-                                            callfuncO_selector(MCSceneManager::taskDidFinish),
-                                            kMCTaskDidFinishNotification,
-                                            NULL);
         }
     }
     
@@ -141,7 +141,18 @@ MCSceneManager::autoreleaseSceneWithObjectId(mc_object_id_t anObjectId)
 void
 MCSceneManager::autoreleaseTaskSceneWithObjectId(mc_object_id_t anObjectId)
 {
-    taskTrash_.push_back(anObjectId);
+    bool found = false;
+    for (std::vector<mc_object_id_t>::iterator iterator = taskTrash_.begin();
+         iterator != taskTrash_.end();
+         ++iterator) {
+        mc_object_id_t oid = *iterator;
+        if (MCObjectIdIsEqualsTo(oid, anObjectId)) {
+            found = true;
+        }
+    }
+    if (! found) {
+        taskTrash_.push_back(anObjectId);
+    }
 }
 
 /**

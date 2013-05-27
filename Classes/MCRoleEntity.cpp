@@ -287,6 +287,7 @@ MCRoleEntity::move(const CCPoint &aDelta)
         || lockPosition_) {
         return;
     }
+    role_->ai_->activate();
     
     float length = ccpLength(aDelta);
     
@@ -596,6 +597,7 @@ MCRoleEntity::walkWithPathFinding(CCObject *algoObject)
             return;
         }
         
+        role_->ai_->activate();
         algo->route.pop();
         walk(offset);
         action->initWithTwoActions(CCMoveBy::create(kMCPathFindingMoveDuration,

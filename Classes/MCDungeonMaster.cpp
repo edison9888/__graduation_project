@@ -22,6 +22,14 @@ const char *kMCSpawnPointKey = "c3Bhd24tcG9pbnQ"; /* spawn-point的BASE64编码�
 const char *kMCSpawnPointDefaultValue = "TTAwMQ=="; /* M001的BASE64编码没有最后的== */
 #endif
 
+static const char *kMCIntroduction[] = {
+    "欢迎来到我的游戏。",
+    "游戏玩法很简单，去任务屋接受任务然后到野外杀怪。没有接受任务的时候，野外是没有怪的。",
+    "任务屋里有佣兵雇佣处。",
+    "物品交易与装备升级也在一个屋子里。至于位置，自己找吧，就这么几间屋子~~~~",
+    NULL
+};
+
 static const char *kMCMissEffect = "voices/miss.wav";
 
 static const mc_object_id_t kMCDefaultSpawnPointSceneId = {'M', '0', '0', '1'};
@@ -43,10 +51,14 @@ MCDungeonMaster::speak(const char *aMessage)
 {
     MCDialog *dmDialog = MCDialog::sharedDialog(MCDMDialog);
     dmDialog->setMessage(aMessage);
-    dmDialog->setDismissSelector(this,
-                                 dismiss_selector(MCDungeonMaster::dismiss),
-                                 NULL);
     dmDialog->attach(CCDirector::sharedDirector()->getRunningScene());
+}
+
+/* 刚开始游戏时游戏介绍 */
+void
+MCDungeonMaster::introduce()
+{
+    introduce(kMCIntroduction);
 }
 
 /**
@@ -209,6 +221,22 @@ MCDungeonMaster::loadSpawnPoint()
 }
 
 void
+MCDungeonMaster::introduce(const char **sentences)
+{
+    MCDialog *dmDialog = MCDialog::sharedDialog(MCDMDialog);
+    dmDialog->setMessage(*sentences++);
+    dmDialog->setDismissSelector(this,
+                                 dismiss_selector(MCDungeonMaster::dismiss),
+                                 sentences);
+    dmDialog->attach(CCDirector::sharedDirector()->getRunningScene());
+}
+
+void
 MCDungeonMaster::dismiss(void *anUserdata)
 {
+    const char **sentences = (const char **) anUserdata;
+    
+    if (*sentences != NULL) {
+        introduce(sentences);
+    }
 }
